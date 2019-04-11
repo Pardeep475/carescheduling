@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">CareScheduling</string>
+    <string name="email">yourname@gmail.com</string>
+    <string name="password">password</string>
+    <string name="log_on">Log On</string>
+    <string name="forgot_password">forgot_password</string>
+    <string name="remember_me">Remember me</string>
+    <string name="log_on_offline">Log on offline</string>
+</resources>
