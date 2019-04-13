@@ -20,19 +20,6 @@ public abstract class BaseFragment extends Fragment {
     //    protected ApiInterface apiInterface;
     protected Dialog dialog;
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(getLayout(), container, false);
-        setUpLayout(view);
-        return view;
-    }
-
-    protected abstract int getLayout();
-
-    protected abstract boolean isFullScreen(boolean isFullScreen);
-
-    protected abstract void setUpLayout(View view);
 
     @Override
     public void onResume() {
@@ -43,7 +30,7 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        dialog = Utils.initProgressDialog(getActivity());
     }
 
     protected void showDialog() {

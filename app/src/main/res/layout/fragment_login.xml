@@ -6,9 +6,10 @@
         <variable
             name="loginBeanData"
             type="com.example.carescheduling.Ui.LoginActivity.beans.LoginBeanData" />
+
         <variable
-            name="loginClickHandler"
-            type="com.example.carescheduling.Ui.LoginActivity.View.LoginActivity.LoginClickHandler"/>
+            name="loginPresenter"
+            type="com.example.carescheduling.Ui.LoginActivity.presenter.LoginPresenter" />
     </data>
 
     <RelativeLayout
@@ -17,11 +18,11 @@
 
         <EditText
             android:id="@+id/edt_email"
-            android:layout_marginTop="@dimen/fifty_dp"
             android:layout_width="match_parent"
-            android:text="@{loginBeanData.userEmail}"
             android:layout_height="wrap_content"
-            android:hint="@string/email" />
+            android:layout_marginTop="@dimen/fifty_dp"
+            android:hint="@string/email"
+            android:text="@{loginBeanData.userEmail}" />
 
         <EditText
             android:id="@+id/edt_password"
@@ -29,38 +30,39 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/edt_email"
             android:layout_marginTop="@dimen/ten_dp"
-            android:hint="@string/password" />
+            android:hint="@string/password"
+            android:text="@{loginBeanData.userPassword}" />
 
         <Button
             android:id="@+id/btn_log_on"
-            android:layout_below="@+id/edt_password"
-            android:text="@string/log_on"
-            android:onClick="@{(v) -> loginClickHandler.getUsersDetail()}"
-            android:layout_marginTop="@dimen/fifty_dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edt_password"
+            android:layout_marginTop="@dimen/fifty_dp"
+            android:onClick="@{(v)-> loginPresenter.getUserData()}"
+            android:text="@string/log_on" />
 
         <Button
             android:id="@+id/btn_forgot_password"
-            android:layout_below="@+id/btn_log_on"
-            android:text="@string/forgot_password"
-            android:layout_marginTop="@dimen/ten_dp"
             android:layout_width="match_parent"
-            android:onClick="@{(v) -> loginClickHandler.forgotPasswordClick()}"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btn_log_on"
+            android:layout_marginTop="@dimen/ten_dp"
+
+            android:text="@string/forgot_password" />
 
         <CheckBox
             android:id="@+id/cb_remember_me"
             android:layout_width="wrap_content"
-            android:text="@string/remember_me"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/btn_forgot_password"
-            android:layout_height="wrap_content" />
+            android:text="@string/remember_me" />
 
         <CheckBox
-            android:layout_below="@+id/cb_remember_me"
-            android:layout_width="wrap_content"
             android:id="@+id/cb_log_on_offline"
-            android:text="@string/log_on_offline"
-            android:layout_height="wrap_content" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cb_remember_me"
+            android:text="@string/log_on_offline" />
     </RelativeLayout>
 </layout>

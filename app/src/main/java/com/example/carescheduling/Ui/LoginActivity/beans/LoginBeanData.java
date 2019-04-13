@@ -6,15 +6,15 @@ import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 
 
-
 public class LoginBeanData extends BaseObservable {
-    private String userEmail,userPassword;
+    private String userEmail, userPassword;
 
     public LoginBeanData(String userEmail, String userPassword) {
         this.userEmail = userEmail;
         this.userPassword = userPassword;
     }
-@Bindable
+
+    @Bindable
     public String getUserEmail() {
         return userEmail;
     }
@@ -23,7 +23,8 @@ public class LoginBeanData extends BaseObservable {
         this.userEmail = userEmail;
         notifyPropertyChanged(BR.userEmail);
     }
-@Bindable
+
+    @Bindable
     public String getUserPassword() {
         return userPassword;
 

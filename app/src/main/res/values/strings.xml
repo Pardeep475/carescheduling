@@ -6,4 +6,15 @@
     <string name="forgot_password">forgot_password</string>
     <string name="remember_me">Remember me</string>
     <string name="log_on_offline">Log on offline</string>
+    <string name="title_activity_dashboard">Dashboard</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="user_name">Username: </string>
+    <string name="_continue">Continue</string>
+    <string name="f_second_text">Your user is registered with more than one customer, \n Please choose the customer to login with!</string>
+
 </resources>
