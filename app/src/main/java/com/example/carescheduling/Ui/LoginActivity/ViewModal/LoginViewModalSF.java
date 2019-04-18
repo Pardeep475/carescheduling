@@ -22,12 +22,14 @@ import retrofit2.Response;
 public class LoginViewModalSF extends AndroidViewModel {
     private ApiService apiService;
     private CompositeDisposable compositeDisposable;
+
     public LoginViewModalSF(@NonNull Application application) {
         super(application);
         apiService = ApiClient.getClient(application)
                 .create(ApiService.class);
         compositeDisposable = new CompositeDisposable();
     }
+
     public LiveData<JsonElement> getClientData(String userEmail, String userPassword,String branchId) {
         final MutableLiveData<JsonElement> data = new MutableLiveData<>();
 

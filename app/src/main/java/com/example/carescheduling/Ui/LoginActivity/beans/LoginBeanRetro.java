@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 public class LoginBeanRetro implements Serializable {
 
+
     @SerializedName("Data")
     private Data data;
     @SerializedName("ResponseMessage")

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:paddingStart="@dimen/sixteen_dp"
+    android:paddingEnd="@dimen/sixteen_dp"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:text="@string/_username"
+        android:layout_marginTop="@dimen/twenty_dp"
+        android:gravity="start"
+        android:textAlignment="textStart" />
+
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/edt_user_spinner"
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/sixteen_dp"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:text="@string/change_my_password"
+        android:layout_marginTop="@dimen/twenty_dp"
+        android:gravity="start"
+        android:textAlignment="textStart" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:text="@string/password_question"
+        android:layout_marginTop="@dimen/twenty_dp"
+        android:gravity="start"
+        android:textAlignment="textStart" />
+
+    <EditText
+        android:id="@+id/edt_password_question"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/_password_question"
+        android:layout_marginTop="@dimen/sixteen_dp"
+        android:background="@android:color/white"
+        android:paddingStart="@dimen/ten_dp"
+        android:paddingTop="@dimen/ten_dp"
+        android:paddingEnd="@dimen/ten_dp"
+        android:paddingBottom="@dimen/ten_dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:text="@string/password_answer"
+        android:layout_marginTop="@dimen/twenty_dp"
+        android:gravity="start"
+        android:textAlignment="textStart" />
+
+    <EditText
+        android:id="@+id/edt_password_question_answer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/_password_answer"
+        android:layout_marginTop="@dimen/sixteen_dp"
+        android:background="@android:color/white"
+        android:paddingStart="@dimen/ten_dp"
+        android:paddingTop="@dimen/ten_dp"
+        android:paddingEnd="@dimen/ten_dp"
+        android:paddingBottom="@dimen/ten_dp"
+        />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/thirty_dp"
+        android:id="@+id/btn_save_password"
+        android:text="@string/save"
+        android:layout_height="wrap_content" />
+</LinearLayout>

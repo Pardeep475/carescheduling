@@ -1,32 +1,31 @@
 package com.example.carescheduling.Ui.LoginActivity.View;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Toast;
 
 import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseFragment;
 import com.example.carescheduling.Ui.Dashboard.view.Dashboard;
+import com.example.carescheduling.Ui.LoginActivity.adapter.CustomAdapter;
 import com.example.carescheduling.Ui.LoginActivity.ViewModal.LoginViewModalSF;
 import com.example.carescheduling.Ui.LoginActivity.beans.LoginBeanRetro;
 import com.example.carescheduling.Ui.LoginActivity.presenter.LoginFSecondPresenter;
 import com.example.carescheduling.databinding.FragmentLoginFsecondBinding;
 import com.google.gson.JsonElement;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
-public class LoginFSecond extends BaseFragment implements LoginFSecondPresenter {
+public class LoginFSecond extends BaseFragment implements LoginFSecondPresenter, AdapterView.OnItemSelectedListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String USER_EMAIL = "USER_EMAIL";
@@ -81,6 +80,10 @@ public class LoginFSecond extends BaseFragment implements LoginFSecondPresenter 
         loginFSecondBinding.setLoginFSecondPresenter(this);
         loginFSecondBinding.setUserEmail(userEmail);
         loginViewModalSF = ViewModelProviders.of(this).get(LoginViewModalSF.class);
+        CustomAdapter adapter = new CustomAdapter(getActivity(),
+                R.layout.item_spinner_sf, R.id.title, branchList);
+        loginFSecondBinding.spinnerLoginSf.setAdapter(adapter);
+        loginFSecondBinding.spinnerLoginSf.setOnItemClickListener((AdapterView.OnItemClickListener) this);
     }
 
 
@@ -89,12 +92,12 @@ public class LoginFSecond extends BaseFragment implements LoginFSecondPresenter 
         showDialog();
         loginViewModalSF.getClientData(userEmail, userPassword, branchList.get(0).getBranchId())
                 .observe(this, new Observer<JsonElement>() {
-            @Override
-            public void onChanged(JsonElement jsonElement) {
-                hideDialog();
-                goToDashboard();
-            }
-        });
+                    @Override
+                    public void onChanged(JsonElement jsonElement) {
+                        hideDialog();
+                        goToDashboard();
+                    }
+                });
 
     }
 
@@ -102,5 +105,15 @@ public class LoginFSecond extends BaseFragment implements LoginFSecondPresenter 
         Intent intent = new Intent(getActivity(), Dashboard.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        Toast.makeText(getActivity(), "" + branchList.get(position), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }

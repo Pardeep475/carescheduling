@@ -5,17 +5,19 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 
 import com.example.carescheduling.R;
+import com.example.carescheduling.databinding.ActivityDashboardBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
 
 import android.view.MenuItem;
 import android.widget.TextView;
 
 public class Dashboard extends AppCompatActivity {
 
-    private TextView mTextMessage;
-
+    private ActivityDashboardBinding activityDashboardBinding;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -23,13 +25,13 @@ public class Dashboard extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_home);
+                    setFragment(SettingF.newInstance());
                     return true;
                 case R.id.navigation_dashboard:
-                    mTextMessage.setText(R.string.title_dashboard);
+                    setFragment(HomeF.newInstance());
                     return true;
                 case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.title_notifications);
+                    setFragment(ProfileF.newInstance());
                     return true;
             }
             return false;
@@ -39,11 +41,13 @@ public class Dashboard extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dashboard);
+        activityDashboardBinding = DataBindingUtil.setContentView(this, R.layout.activity_dashboard);
+        activityDashboardBinding.navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+    }
 
-        mTextMessage = (TextView) findViewById(R.id.message);
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+    private void setFragment(Fragment fragment) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fl_dashboard_main_container, fragment).commitAllowingStateLoss();
     }
 
 }

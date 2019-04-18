@@ -16,5 +16,28 @@
     <string name="user_name">Username: </string>
     <string name="_continue">Continue</string>
     <string name="f_second_text">Your user is registered with more than one customer, \n Please choose the customer to login with!</string>
+    <string name="post_code">Post code:</string>
+    <string name="address_finder">Address finder</string>
+    <string name="house_number">House \n number</string>
+    <string name="house_name">House name:</string>
+    <string name="street_name">Street name:</string>
+    <string name="town">Town:</string>
+    <string name="city">City:</string>
+    <string name="country">Country:</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="user_profile">User Profile</string>
+    <string name="telephone">Telephone:</string>
+    <string name="_email">Email:</string>
+    <string name="mobile">Mobile:</string>
+    <string name="current_password">Current password</string>
+    <string name="new_password">New password</string>
+    <string name="repeat_new_password">Repeat new password</string>
+    <string name="_username">User name:</string>
+    <string name="change_my_password">Change my password</string>
+    <string name="password_question">Password question:</string>
+    <string name="_password_question">Enter password question</string>
+    <string name="password_answer">Password question answer:</string>
+    <string name="_password_answer">Enter password answer</string>
 
 </resources>
