@@ -43,6 +43,7 @@ public class Dashboard extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         activityDashboardBinding = DataBindingUtil.setContentView(this, R.layout.activity_dashboard);
         activityDashboardBinding.navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        setFragment(SettingF.newInstance());
     }
 
     private void setFragment(Fragment fragment) {

@@ -1,20 +1,19 @@
 package com.example.carescheduling.Ui.Dashboard.view;
 
-import android.content.Context;
-import android.net.Uri;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.example.carescheduling.R;
+import com.example.carescheduling.Ui.Base.BaseFragment;
+import com.example.carescheduling.Ui.Dashboard.presenter.ProfileClickHandler;
+import com.example.carescheduling.Ui.LoginActivity.View.LoginActivity;
 import com.example.carescheduling.databinding.FragmentProfileBinding;
 
-public class ProfileF extends Fragment {
+public class ProfileF extends BaseFragment implements ProfileClickHandler {
    private FragmentProfileBinding fragmentProfileBinding;
     // TODO: Rename and change types and number of parameters
     public static ProfileF newInstance() {
@@ -35,8 +34,22 @@ public class ProfileF extends Fragment {
         fragmentProfileBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_profile
         ,container,false);
         View view = fragmentProfileBinding.getRoot();
+        setUpView(view);
         return view;
     }
 
+    private void setUpView(View view) {
+        sessionManager = getSessionManager();
+        fragmentProfileBinding.setClickhandler(this);
+    }
 
+
+    @Override
+    public void logout() {
+        sessionManager.cleanAllData();
+        Intent intent = new Intent(getActivity(), LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        getActivity().finish();
+    }
 }

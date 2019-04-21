@@ -15,12 +15,12 @@ public class LoginBeanRetro implements Serializable {
     @SerializedName("Success")
     private boolean success;
 
-    public Data getData() {
-        return data;
-    }
-
     public void setData(Data data) {
         this.data = data;
+    }
+
+    public Data getData() {
+        return data;
     }
 
     public String getMessage() {
@@ -44,6 +44,8 @@ public class LoginBeanRetro implements Serializable {
         private String branchId;
         @SerializedName("BranchList")
         private ArrayList<BranchList> branchList;
+        @SerializedName("UserPersons")
+        private ArrayList<UserPersons> userPersons;
 
         public String getBranchId() {
             return branchId;
@@ -60,6 +62,14 @@ public class LoginBeanRetro implements Serializable {
         public void setBranchList(ArrayList<BranchList> branchList) {
             this.branchList = branchList;
         }
+
+        public ArrayList<UserPersons> getUserPersons() {
+            return userPersons;
+        }
+
+        public void setUserPersons(ArrayList<UserPersons> userPersons) {
+            this.userPersons = userPersons;
+        }
     }
 
     public class BranchList implements Serializable {
@@ -67,6 +77,8 @@ public class LoginBeanRetro implements Serializable {
         private String branchName;
         @SerializedName("BranchId")
         private String branchId;
+        @SerializedName("CustomerId")
+        private String customerId;
 
         public String getBranchName() {
             return branchName;
@@ -82,6 +94,39 @@ public class LoginBeanRetro implements Serializable {
 
         public void setBranchId(String branchId) {
             this.branchId = branchId;
+        }
+        public String getCustomerId() {
+            return customerId;
+        }
+
+        public void setCustomerId(String customerId) {
+            this.customerId = customerId;
+        }
+    }
+
+    public class UserPersons implements Serializable {
+        @SerializedName("User")
+        private User user;
+
+        public User getUser() {
+            return user;
+        }
+
+        public void setUser(User user) {
+            this.user = user;
+        }
+    }
+
+    public class User implements Serializable {
+        @SerializedName("PersonId")
+        private String personId;
+
+        public String getPersonId() {
+            return personId;
+        }
+
+        public void setPersonId(String personId) {
+            this.personId = personId;
         }
     }
 }

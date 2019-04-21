@@ -92,14 +92,14 @@ public class LoginF extends BaseFragment implements LoginPresenter {
             public void onChanged(LoginBeanRetro loginBeanRetro) {
                 hideDialog();
                 Log.e("LoginSuccess", "liveData");
-                goToLoginFSecond(userEmail,userPassword,loginBeanRetro.getData().getBranchList());
+                goToLoginFSecond(userEmail,userPassword,loginBeanRetro.getData());
             }
         });
     }
 
 
-    private void goToLoginFSecond(String email,String userPassword, ArrayList<LoginBeanRetro.BranchList> branchList){
+    private void goToLoginFSecond(String email,String userPassword, LoginBeanRetro.Data data){
         getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.rl_main_login,LoginFSecond.newInstance(email,userPassword,branchList)).commitAllowingStateLoss();
+                .replace(R.id.rl_main_login,LoginFSecond.newInstance(email,userPassword,data)).commitAllowingStateLoss();
     }
 }

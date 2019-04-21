@@ -9,6 +9,7 @@ import android.os.Handler;
 
 import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseActivity;
+import com.example.carescheduling.Ui.Dashboard.view.Dashboard;
 import com.example.carescheduling.Ui.LoginActivity.View.LoginActivity;
 
 public class SplashActivity extends BaseActivity {
@@ -21,17 +22,24 @@ public class SplashActivity extends BaseActivity {
         initialSetUp();
     }
 
-    private void initialSetUp(){
-       myHandler.postDelayed(runnable,3000);
+    private void initialSetUp() {
+        sessionManager = getSessionManager();
+        myHandler.postDelayed(runnable, 3000);
     }
 
 
     Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
-            startActivity(intent);
-            finish();
+            if (sessionManager.IsUserLogin()) {
+                Intent intent = new Intent(SplashActivity.this, Dashboard.class);
+                startActivity(intent);
+                finish();
+            } else {
+                Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
         }
     };
 

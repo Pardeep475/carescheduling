@@ -11,4 +11,5 @@
     <dimen name="one_fifty_dp">150dp</dimen>
     <dimen name="thirty_dp">30dp</dimen>
     <dimen name="sixteen_dp">16dp</dimen>
+    <dimen name="forteen_sp">14sp</dimen>
 </resources>

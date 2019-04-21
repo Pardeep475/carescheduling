@@ -1,6 +1,7 @@
 package com.example.carescheduling.Ui.Dashboard.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -12,9 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.carescheduling.R;
+import com.example.carescheduling.Ui.Base.BaseFragment;
+import com.example.carescheduling.Ui.Dashboard.presenter.ProfileClickHandler;
+import com.example.carescheduling.Ui.LoginActivity.View.LoginActivity;
 import com.example.carescheduling.databinding.FragmentHomeBinding;
 
-public class HomeF extends Fragment {
+public class HomeF extends BaseFragment implements ProfileClickHandler {
     private FragmentHomeBinding fragmentHomeBinding;
 
     // TODO: Rename and change types and number of parameters
@@ -35,7 +39,20 @@ public class HomeF extends Fragment {
         fragmentHomeBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_home
                 , container, false);
         View view = fragmentHomeBinding.getRoot();
+        setUpView(view);
         return view;
     }
 
+    private void setUpView(View view) {
+        sessionManager = getSessionManager();
+        fragmentHomeBinding.setClickhandler(this);
+    }
+    @Override
+    public void logout() {
+        sessionManager.cleanAllData();
+        Intent intent = new Intent(getActivity(), LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        getActivity().finish();
+    }
 }

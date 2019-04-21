@@ -26,4 +26,6 @@ public class Data implements Serializable {
     public void setBranchList(ArrayList<BranchList> branchList) {
         this.branchList = branchList;
     }
+
+
 }

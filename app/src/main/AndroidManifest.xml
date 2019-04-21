@@ -25,13 +25,15 @@
         <activity
             android:name=".Ui.Dashboard.view.Dashboard"
             android:label="@string/title_activity_dashboard"></activity>
-        <activity android:name=".Ui.Splash.View.SplashActivity" />
-        <activity android:name=".Ui.LoginActivity.View.LoginActivity">
+        <activity android:name=".Ui.Splash.View.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".Ui.LoginActivity.View.LoginActivity">
+
         </activity>
     </application>
 

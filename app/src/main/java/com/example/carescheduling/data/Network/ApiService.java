@@ -15,4 +15,7 @@ public interface ApiService {
 
     @GET("AuthenticateUser/{userEmail}/{userPassword}/{branch_id}")
     Observable<Response<JsonElement>> getClientDetail(@Path("userEmail") String userEmail, @Path("userPassword") String userPassword, @Path("branch_id") String branchId);
+
+    @GET("GetMyProfile/{person_id}/{customer_id}/{branch_id}")
+    Observable<Response<JsonElement>> getProfile(@Path("person_id") String PersonId,@Path("customer_id") String CustomerId,@Path("branch_id") String BranchId);
 }

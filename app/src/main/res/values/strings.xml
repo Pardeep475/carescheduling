@@ -39,5 +39,8 @@
     <string name="_password_question">Enter password question</string>
     <string name="password_answer">Password question answer:</string>
     <string name="_password_answer">Enter password answer</string>
+    <string name="profile">Profile</string>
+    <string name="logout">Logout</string>
+    <string name="settings">Setting</string>
 
 </resources>

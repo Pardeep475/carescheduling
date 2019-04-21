@@ -4,11 +4,15 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
+import androidx.annotation.NonNull;
+
 public class BranchList implements Serializable {
     @SerializedName("BranchName")
     private String branchName;
     @SerializedName("BranchId")
     private String branchId;
+    @SerializedName("CustomerId")
+    private String customerId;
 
     public String getBranchName() {
         return branchName;
@@ -24,5 +28,19 @@ public class BranchList implements Serializable {
 
     public void setBranchId(String branchId) {
         this.branchId = branchId;
+    }
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return branchName;
     }
 }

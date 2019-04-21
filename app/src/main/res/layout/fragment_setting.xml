@@ -3,19 +3,50 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="clickhandler"
+            type="com.example.carescheduling.Ui.Dashboard.presenter.ProfileClickHandler" />
     </data>
-
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".Ui.Dashboard.view.SettingF">
+        <RelativeLayout
+            android:id="@+id/rl_tool"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:background="@color/colorPrimary">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="@string/settings"
+                android:textColor="@color/white"
+                android:textSize="@dimen/forteen_sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/ten_dp"
+                android:gravity="center"
+                android:onClick="@{(v)->clickhandler.logout()}"
+                android:text="@string/logout"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/forteen_sp" />
+
+        </RelativeLayout>
         <!-- TODO: Update blank fragment layout -->
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_height="wrap_content"
             android:text="@string/hello_blank_fragment" />
 
-    </FrameLayout>
+    </RelativeLayout>
+
 </layout>
