@@ -1,5 +1,7 @@
 package com.example.carescheduling.data.Network;
 
+import com.example.carescheduling.Ui.Dashboard.beans.EditMyProfile;
+import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
 import com.example.carescheduling.Ui.LoginActivity.beans.LoginBeanRetro;
 import com.google.gson.JsonElement;
 
@@ -17,5 +19,8 @@ public interface ApiService {
     Observable<Response<JsonElement>> getClientDetail(@Path("userEmail") String userEmail, @Path("userPassword") String userPassword, @Path("branch_id") String branchId);
 
     @GET("GetMyProfile/{person_id}/{customer_id}/{branch_id}")
-    Observable<Response<JsonElement>> getProfile(@Path("person_id") String PersonId,@Path("customer_id") String CustomerId,@Path("branch_id") String BranchId);
+    Observable<Response<ProfileBean>> getProfile(@Path("person_id") String PersonId, @Path("customer_id") String CustomerId, @Path("branch_id") String BranchId);
+
+    @GET("GetCustomerWithoutAddressByCustomerId/{customer_id}")
+    Observable<Response<EditMyProfile>> editMyProfile(@Path("customer_id")String customerId);
 }

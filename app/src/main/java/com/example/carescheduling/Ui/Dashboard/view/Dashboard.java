@@ -5,19 +5,29 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 
 import com.example.carescheduling.R;
+import com.example.carescheduling.Ui.Base.BaseActivity;
+import com.example.carescheduling.Ui.Dashboard.ViewModel.DashboardViewModel;
+import com.example.carescheduling.Ui.Dashboard.beans.EditMyProfile;
+import com.example.carescheduling.data.Local.SessionManager;
 import com.example.carescheduling.databinding.ActivityDashboardBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
+import android.se.omapi.Session;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-public class Dashboard extends AppCompatActivity {
+public class Dashboard extends BaseActivity {
 
     private ActivityDashboardBinding activityDashboardBinding;
+    private DashboardViewModel dashboardViewModel;
+    private SessionManager sessionManager;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -42,8 +52,17 @@ public class Dashboard extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityDashboardBinding = DataBindingUtil.setContentView(this, R.layout.activity_dashboard);
+        sessionManager = getSessionManager();
+        dashboardViewModel = ViewModelProviders.of(this).get(DashboardViewModel.class);
         activityDashboardBinding.navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         setFragment(SettingF.newInstance());
+        LiveData<EditMyProfile> editMyProfileLiveData = dashboardViewModel.getEditMyProfileData(sessionManager.getCustomerId());
+        editMyProfileLiveData.observe(this, new Observer<EditMyProfile>() {
+            @Override
+            public void onChanged(EditMyProfile editMyProfile) {
+           EditMyProfile myProfile = editMyProfile;
+            }
+        });
     }
 
     private void setFragment(Fragment fragment) {
