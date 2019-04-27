@@ -1,153 +1,210 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <RelativeLayout
+    <data>
+        <variable
+            name="editClickHandler"
+            type="com.example.carescheduling.Ui.Dashboard.presenter.EditProfileClickHandler"/>
+        <variable
+            name="clickhandler"
+            type="com.example.carescheduling.Ui.Dashboard.presenter.ProfileClickHandler" />
+    </data>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/twenty_dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/img_user_profile"
-            android:layout_width="@dimen/one_fifty_dp"
-            android:layout_height="@dimen/one_fifty_dp"
-            android:contentDescription="@string/user_profile" />
-
-        <TextView
-            android:id="@+id/txt_user_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/ten_dp"
-            android:layout_toEndOf="@+id/img_user_profile" />
-
-        <TextView
-            android:id="@+id/txt_address_one"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/txt_user_name"
-            android:layout_marginStart="@dimen/ten_dp"
-            android:layout_marginTop="@dimen/five_dp"
-            android:layout_toEndOf="@+id/img_user_profile" />
-
-        <TextView
-            android:id="@+id/txt_address_two"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/txt_address_one"
-            android:layout_marginStart="@dimen/ten_dp"
-            android:layout_marginTop="@dimen/five_dp"
-            android:layout_toEndOf="@+id/img_user_profile" />
-
-        <TextView
-            android:id="@+id/txt_address_three"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/txt_address_two"
-            android:layout_marginStart="@dimen/ten_dp"
-            android:layout_marginTop="@dimen/five_dp"
-            android:layout_toEndOf="@+id/img_user_profile" />
-
-        <LinearLayout
-            android:id="@+id/ll_telephone"
+        <RelativeLayout
+            android:id="@+id/rl_tool"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/img_user_profile"
-            android:layout_marginTop="@dimen/twenty_dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight=".7"
-                android:gravity="start"
-                android:text="@string/telephone"
-                android:textAlignment="textStart" />
-
-            <TextView
-                android:id="@+id/txt_telephone"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.3"
-                android:gravity="start"
-                android:textAlignment="textStart" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_mobile"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/ll_telephone"
-            android:layout_marginTop="@dimen/twenty_dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight=".7"
-                android:gravity="start"
-                android:text="@string/mobile"
-                android:textAlignment="textStart" />
-
-            <TextView
-                android:id="@+id/txt_mobile"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.3"
-                android:gravity="start"
-                android:textAlignment="textStart" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/ll_mobile"
-            android:layout_marginTop="@dimen/twenty_dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight=".7"
-                android:gravity="start"
-                android:text="@string/_email"
-                android:textAlignment="textStart" />
-
-            <TextView
-                android:id="@+id/txt_email"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.3"
-                android:gravity="start"
-                android:textAlignment="textStart" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_edit_profile"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/ll_email"
-            android:layout_marginTop="@dimen/thirty_dp"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/img_user_edit"
-                android:layout_width="@dimen/twenty_dp"
-                android:layout_height="@dimen/twenty_dp"
-                android:contentDescription="@string/user_profile" />
+            android:layout_height="?actionBarSize"
+            android:background="@color/colorPrimary">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="start"
-                android:layout_marginStart="@dimen/ten_dp"
-                android:layout_gravity="center_vertical"
-                android:textAlignment="textStart" />
-        </LinearLayout>
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="@string/profile"
+                android:textColor="@color/white"
+                android:textSize="@dimen/forteen_sp" />
+            <ImageView
+                android:onClick="@{(v)->clickhandler.logout()}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_logout"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:tint="@color/white"
+                android:layout_marginEnd="@dimen/ten_dp"
+                android:contentDescription="@string/user_profile" />
 
-    </RelativeLayout>
-</ScrollView>
+        </RelativeLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/twenty_dp">
+
+                <ImageView
+                    android:id="@+id/img_user_profile"
+                    android:layout_width="@dimen/one_fifty_dp"
+                    android:layout_height="@dimen/one_fifty_dp"
+                    android:src="@drawable/user_placeholder"
+                    android:contentDescription="@string/user_profile" />
+
+                <TextView
+                    android:id="@+id/txt_user_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/ten_dp"
+                    android:layout_toEndOf="@+id/img_user_profile" />
+
+                <TextView
+                    android:id="@+id/txt_address_one"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txt_user_name"
+                    android:layout_marginStart="@dimen/ten_dp"
+                    android:layout_marginTop="@dimen/five_dp"
+                    android:layout_toEndOf="@+id/img_user_profile" />
+
+                <TextView
+                    android:id="@+id/txt_address_two"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txt_address_one"
+                    android:layout_marginStart="@dimen/ten_dp"
+                    android:layout_marginTop="@dimen/five_dp"
+                    android:layout_toEndOf="@+id/img_user_profile" />
+
+                <TextView
+                    android:id="@+id/txt_address_three"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txt_address_two"
+                    android:layout_marginStart="@dimen/ten_dp"
+                    android:layout_marginTop="@dimen/five_dp"
+                    android:layout_toEndOf="@+id/img_user_profile" />
+
+                <LinearLayout
+                    android:id="@+id/ll_telephone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/img_user_profile"
+                    android:layout_marginTop="@dimen/twenty_dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight=".7"
+                        android:gravity="start"
+                        android:text="@string/telephone"
+                        android:textAlignment="textStart" />
+
+                    <TextView
+                        android:id="@+id/txt_telephone"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.3"
+                        android:gravity="start"
+                        android:textAlignment="textStart" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_mobile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ll_telephone"
+                    android:layout_marginTop="@dimen/twenty_dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight=".7"
+                        android:gravity="start"
+                        android:text="@string/mobile"
+                        android:textAlignment="textStart" />
+
+                    <TextView
+                        android:id="@+id/txt_mobile"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.3"
+                        android:gravity="start"
+                        android:textAlignment="textStart" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ll_mobile"
+                    android:layout_marginTop="@dimen/twenty_dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight=".7"
+                        android:gravity="start"
+                        android:text="@string/_email"
+                        android:textAlignment="textStart" />
+
+                    <TextView
+                        android:id="@+id/txt_email"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.3"
+                        android:gravity="start"
+                        android:textAlignment="textStart" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_edit_profile"
+                    android:layout_width="wrap_content"
+                    android:paddingEnd="@dimen/ten_dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ll_email"
+                    android:paddingTop="@dimen/ten_dp"
+                    android:paddingBottom="@dimen/ten_dp"
+                    android:onClick="@{(v)->editClickHandler.EditBtnClick()}"
+                    android:layout_marginTop="@dimen/thirty_dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/img_user_edit"
+                        android:layout_width="@dimen/twenty_dp"
+                        android:layout_height="@dimen/twenty_dp"
+                        app:srcCompat="@drawable/ic_edit"
+                        android:tint="@color/blue"
+                        android:contentDescription="@string/user_profile" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/ten_dp"
+                        android:gravity="start"
+                        android:textColor="@color/blue"
+                        android:text="@string/edit_profile"
+                        android:textAlignment="textStart" />
+                </LinearLayout>
+
+            </RelativeLayout>
+        </ScrollView>
+    </LinearLayout>
+
+</layout>

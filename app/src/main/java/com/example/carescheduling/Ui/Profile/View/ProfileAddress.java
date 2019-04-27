@@ -1,4 +1,4 @@
-package com.example.carescheduling.Ui.Dashboard.view;
+package com.example.carescheduling.Ui.Profile.View;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,14 +11,15 @@ import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseFragment;
 import com.example.carescheduling.Ui.Dashboard.presenter.ProfileClickHandler;
 import com.example.carescheduling.Ui.LoginActivity.View.LoginActivity;
-import com.example.carescheduling.databinding.FragmentProfileBinding;
+import com.example.carescheduling.databinding.ProfileAddressBinding;
+//import com.example.carescheduling.databinding.FragmentProfileBinding;
 
-public class ProfileF extends BaseFragment implements ProfileClickHandler {
-   private FragmentProfileBinding fragmentProfileBinding;
+public class ProfileAddress extends BaseFragment implements ProfileClickHandler {
+   private ProfileAddressBinding profileAddressBinding;
     // TODO: Rename and change types and number of parameters
-    public static ProfileF newInstance() {
+    public static ProfileAddress newInstance() {
 
-        return new ProfileF();
+        return new ProfileAddress();
     }
 
     @Override
@@ -31,16 +32,17 @@ public class ProfileF extends BaseFragment implements ProfileClickHandler {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        fragmentProfileBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_profile
+        profileAddressBinding= DataBindingUtil.inflate(inflater,R.layout.profile_address
         ,container,false);
-        View view = fragmentProfileBinding.getRoot();
+        View view = profileAddressBinding.getRoot();
         setUpView(view);
         return view;
+
     }
 
     private void setUpView(View view) {
         sessionManager = getSessionManager();
-        fragmentProfileBinding.setClickhandler(this);
+//        fragmentProfileBinding.setClickhandler(this);
     }
 
 

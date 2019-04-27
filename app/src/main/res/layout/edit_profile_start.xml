@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+<variable
+    name="editProfileStartClick"
+    type="com.example.carescheduling.Ui.Profile.presenter.EditProfileStartClick"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:id="@+id/rl_tool"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:background="@color/colorPrimary">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_left_back"
+                android:layout_alignParentStart="true"
+                android:paddingStart="@dimen/ten_dp"
+                android:paddingEnd="@dimen/ten_dp"
+                android:layout_centerVertical="true"
+                android:tint="@color/white"
+              android:onClick="@{(v)-> editProfileStartClick.backButton()}"
+                android:contentDescription="@string/user_profile" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="@string/settings"
+                android:textColor="@color/white"
+                android:textSize="@dimen/forteen_sp" />
+
+            <ImageView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_tick"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:tint="@color/white"
+                android:visibility="invisible"
+                android:layout_marginEnd="@dimen/ten_dp"
+                android:contentDescription="@string/user_profile" />
+
+        </RelativeLayout>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:background="@color/dark_blue"
+                    android:paddingTop="@dimen/ten_dp"
+                    android:onClick="@{(v)-> editProfileStartClick.EditMyProfileInfo()}"
+                    android:layout_marginTop="@dimen/twenty_dp"
+                    android:paddingBottom="@dimen/ten_dp"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:text="@string/edit_my_profile_info"
+                        android:textColor="@color/white"
+                        android:layout_marginLeft="@dimen/sixteen_dp"
+                        android:layout_marginRight="@dimen/sixteen_dp"
+                        android:padding="@dimen/sixteen_dp"
+                        android:textAllCaps="true" />
+
+                    <ImageView
+                        android:id="@+id/img_next_arrow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        app:srcCompat="@drawable/ic_right_arrow"
+                        android:tint="@color/white"
+                        android:padding="@dimen/five_dp"
+                        android:layout_marginEnd="@dimen/ten_dp"
+                        android:layout_centerVertical="true"
+                        android:contentDescription="@string/user_profile" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:background="@color/dark_blue"
+                    android:paddingTop="@dimen/ten_dp"
+                    android:layout_marginTop="@dimen/ten_dp"
+                    android:onClick="@{(v)-> editProfileStartClick.EditMyAddress()}"
+                    android:paddingBottom="@dimen/ten_dp"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:text="@string/edit_my_address"
+                        android:textColor="@color/white"
+                        android:layout_marginLeft="@dimen/sixteen_dp"
+                        android:layout_marginRight="@dimen/sixteen_dp"
+                        android:padding="@dimen/sixteen_dp"
+                        android:textAllCaps="true" />
+
+                    <ImageView
+                        android:id="@+id/img_next_arrow_addressess"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        app:srcCompat="@drawable/ic_right_arrow"
+                        android:tint="@color/white"
+                        android:padding="@dimen/five_dp"
+                        android:layout_marginEnd="@dimen/ten_dp"
+                        android:layout_centerVertical="true"
+                        android:contentDescription="@string/user_profile" />
+
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:background="@color/dark_blue"
+                    android:paddingTop="@dimen/ten_dp"
+                    android:layout_marginTop="@dimen/ten_dp"
+                    android:paddingBottom="@dimen/ten_dp"
+                    android:onClick="@{(v)-> editProfileStartClick.EditMyPicture()}"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:text="@string/edit_my_picture"
+                        android:textColor="@color/white"
+                        android:layout_marginLeft="@dimen/sixteen_dp"
+                        android:layout_marginRight="@dimen/sixteen_dp"
+                        android:padding="@dimen/sixteen_dp"
+                        android:textAllCaps="true" />
+
+                    <ImageView
+                        android:id="@+id/img_next_arrow_picture"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        app:srcCompat="@drawable/ic_right_arrow"
+                        android:tint="@color/white"
+                        android:padding="@dimen/five_dp"
+                        android:layout_marginEnd="@dimen/ten_dp"
+                        android:layout_centerVertical="true"
+                        android:contentDescription="@string/user_profile" />
+
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:background="@color/red"
+                    android:paddingTop="@dimen/ten_dp"
+                    android:layout_marginTop="@dimen/fifty_dp"
+                    android:onClick="@{(v)-> editProfileStartClick.EditMyUser()}"
+                    android:paddingBottom="@dimen/ten_dp"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:text="@string/edit_my_user"
+                        android:textColor="@color/white"
+                        android:layout_marginLeft="@dimen/sixteen_dp"
+                        android:layout_marginRight="@dimen/sixteen_dp"
+                        android:padding="@dimen/sixteen_dp"
+                        android:textAllCaps="true" />
+
+                    <ImageView
+                        android:id="@+id/img_next_arrow_user"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        app:srcCompat="@drawable/ic_right_arrow"
+                        android:tint="@color/white"
+                        android:padding="@dimen/five_dp"
+                        android:layout_marginEnd="@dimen/ten_dp"
+                        android:layout_centerVertical="true"
+                        android:contentDescription="@string/user_profile" />
+
+                </RelativeLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/add_new_info"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/forteen_sp"
+                    android:padding="@dimen/sixteen_dp"
+                    />
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+</layout>

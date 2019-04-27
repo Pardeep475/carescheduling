@@ -12,22 +12,20 @@ import com.example.carescheduling.data.Local.SessionManager;
 import com.example.carescheduling.databinding.ActivityDashboardBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import android.se.omapi.Session;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 public class Dashboard extends BaseActivity {
 
     private ActivityDashboardBinding activityDashboardBinding;
     private DashboardViewModel dashboardViewModel;
     private SessionManager sessionManager;
+
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -41,7 +39,7 @@ public class Dashboard extends BaseActivity {
                     setFragment(HomeF.newInstance());
                     return true;
                 case R.id.navigation_notifications:
-                    setFragment(ProfileF.newInstance());
+                    setFragment(ProfileResult.newInstance());
                     return true;
             }
             return false;
