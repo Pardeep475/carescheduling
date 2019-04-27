@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:text="@string/settings"
+                android:text="@string/profile"
                 android:textColor="@color/white"
                 android:textSize="@dimen/forteen_sp" />
 
@@ -164,10 +164,10 @@
                 </RelativeLayout>
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:background="@color/red"
+                    android:background="@color/dark_blue"
                     android:paddingTop="@dimen/ten_dp"
                     android:layout_marginTop="@dimen/fifty_dp"
-                    android:onClick="@{(v)-> editProfileStartClick.EditMyUser()}"
+                    android:onClick="@{(v)-> editProfileStartClick.EditChangePassword()}"
                     android:paddingBottom="@dimen/ten_dp"
                     android:layout_height="wrap_content">
 
@@ -176,7 +176,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:text="@string/edit_my_user"
+                        android:text="@string/change_password"
                         android:textColor="@color/white"
                         android:layout_marginLeft="@dimen/sixteen_dp"
                         android:layout_marginRight="@dimen/sixteen_dp"

@@ -3,9 +3,10 @@ package com.example.carescheduling.Ui.Dashboard.beans;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class ProfileBean {
+public class ProfileBean implements Serializable {
 
     @SerializedName("Data")
     @Expose
@@ -64,7 +65,7 @@ public class ProfileBean {
     }
 
 
-    public class Address {
+    public class Address implements Serializable{
 
         @SerializedName("AddressId")
         @Expose
@@ -267,7 +268,7 @@ public class ProfileBean {
 
     }
 
-    public class Address_ {
+    public class Address_ implements Serializable{
 
         @SerializedName("AddressId")
         @Expose
@@ -470,7 +471,7 @@ public class ProfileBean {
 
     }
 
-    public class Country {
+    public class Country implements Serializable{
 
         @SerializedName("ContinentName")
         @Expose
@@ -563,7 +564,7 @@ public class ProfileBean {
 
     }
 
-    public class CountryPostCode {
+    public class CountryPostCode implements Serializable{
 
         @SerializedName("Address")
         @Expose
@@ -733,7 +734,7 @@ public class ProfileBean {
 
     }
 
-    public class Data {
+    public class Data implements Serializable {
 
         @SerializedName("BirthDate")
         @Expose
@@ -903,7 +904,7 @@ public class ProfileBean {
 
     }
 
-    public class Person {
+    public class Person implements Serializable{
 
         @SerializedName("BirthDate")
         @Expose
@@ -1205,7 +1206,7 @@ public class ProfileBean {
 
     }
 
-    public class PersonAddress {
+    public class PersonAddress implements Serializable{
 
         @SerializedName("AddressId")
         @Expose
@@ -1265,7 +1266,7 @@ public class ProfileBean {
 
     }
 
-    public class PersonAddress_ {
+    public class PersonAddress_ implements Serializable{
 
         @SerializedName("Address")
         @Expose
@@ -1314,7 +1315,7 @@ public class ProfileBean {
 
     }
 
-    public class PersonDisability {
+    public class PersonDisability implements Serializable{
 
         @SerializedName("CustomerId")
         @Expose
@@ -1352,7 +1353,7 @@ public class ProfileBean {
 
     }
 
-    public class PersonDynamicProperty {
+    public class PersonDynamicProperty implements Serializable{
 
         @SerializedName("CustomerId")
         @Expose
@@ -1401,7 +1402,7 @@ public class ProfileBean {
 
     }
 
-    public class PersonEmail {
+    public class PersonEmail implements Serializable{
 
         @SerializedName("CustomerId")
         @Expose
@@ -1461,7 +1462,7 @@ public class ProfileBean {
 
     }
 
-    public class PersonEthnicity {
+    public class PersonEthnicity implements Serializable{
 
         @SerializedName("CustomerId")
         @Expose
@@ -1499,7 +1500,7 @@ public class ProfileBean {
 
     }
 
-    public class PersonLanguage {
+    public class PersonLanguage implements Serializable{
 
         @SerializedName("CustomerId")
         @Expose
@@ -1548,7 +1549,7 @@ public class ProfileBean {
 
     }
 
-    public class PersonLanguageCode {
+    public class PersonLanguageCode implements Serializable{
 
         @SerializedName("CountryName")
         @Expose
@@ -1608,7 +1609,7 @@ public class ProfileBean {
 
     }
 
-    public class PersonMaritalstatus {
+    public class PersonMaritalstatus implements Serializable{
 
         @SerializedName("CustomerId")
         @Expose
@@ -1646,7 +1647,7 @@ public class ProfileBean {
 
     }
 
-    public class PersonNationality {
+    public class PersonNationality implements Serializable{
 
         @SerializedName("CountryName")
         @Expose
@@ -1684,7 +1685,7 @@ public class ProfileBean {
 
     }
 
-    public class PersonPhone {
+    public class PersonPhone implements Serializable{
 
         @SerializedName("CanNotCall")
         @Expose
@@ -1766,7 +1767,7 @@ public class ProfileBean {
 
     }
 
-    public class PersonReligion {
+    public class PersonReligion implements Serializable{
 
         @SerializedName("CustomerId")
         @Expose
@@ -1804,7 +1805,7 @@ public class ProfileBean {
 
     }
 
-    public class PersonSexuality {
+    public class PersonSexuality implements Serializable{
 
         @SerializedName("CustomerId")
         @Expose

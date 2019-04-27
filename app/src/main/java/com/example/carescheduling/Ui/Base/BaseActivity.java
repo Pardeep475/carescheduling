@@ -17,6 +17,12 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected Dialog dialog;
     private boolean isFullScreen;
 
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        dialog = Utils.initProgressDialog(this);
+    }
+
     protected void showDialog() {
             if (!dialog.isShowing())
                 dialog.show();

@@ -38,7 +38,9 @@ public class EditProfileStart extends BaseFragment implements EditProfileStartCl
 
     @Override
     public void backButton() {
-
+        if (getActivity() != null) {
+            getActivity().onBackPressed();
+        }
     }
 
     @Override
@@ -48,22 +50,23 @@ public class EditProfileStart extends BaseFragment implements EditProfileStartCl
 
     @Override
     public void EditMyAddress() {
-        setFragment(ProfileAddress.newInstance());
+        setFragment(EditProfileAddress.newInstance());
     }
 
     @Override
     public void EditMyPicture() {
-
+        setFragment(ProfileImageList.newInstance());
     }
 
     @Override
-    public void EditMyUser() {
-
+    public void EditChangePassword() {
+setFragment(FragmentChangePassword.newInstance());
     }
 
     private void setFragment(Fragment fragment) {
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fm_edit_container, fragment).addToBackStack(null).commitAllowingStateLoss();
+        if (getActivity() != null)
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fm_edit_container, fragment).addToBackStack(null).commitAllowingStateLoss();
     }
 
 }

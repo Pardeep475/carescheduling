@@ -5,5 +5,5 @@ public interface EditProfileStartClick {
     void EditMyProfileInfo();
     void EditMyAddress();
     void EditMyPicture();
-    void EditMyUser();
+    void EditChangePassword();
 }

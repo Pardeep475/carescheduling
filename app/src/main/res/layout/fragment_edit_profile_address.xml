@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+<variable
+    name="editAddressClick"
+    type="com.example.carescheduling.Ui.Profile.presenter.EditProfileAddressClick"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".Ui.Profile.View.EditProfileAddress">
+
+        <RelativeLayout
+            android:id="@+id/rl_tool"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:background="@color/colorPrimary">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/user_profile"
+                android:paddingStart="@dimen/ten_dp"
+                android:paddingEnd="@dimen/ten_dp"
+                android:onClick="@{(v)-> editAddressClick.BackButtonClick()}"
+                android:tint="@color/white"
+                app:srcCompat="@drawable/ic_left_back" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="@string/edit_my_address"
+                android:textColor="@color/white"
+                android:textSize="@dimen/forteen_sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/ten_dp"
+                android:contentDescription="@string/user_profile"
+                android:tint="@color/white"
+                android:visibility="invisible"
+                app:srcCompat="@drawable/ic_tick" />
+
+        </RelativeLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/twenty_dp"
+                android:paddingEnd="@dimen/twenty_dp"
+                android:paddingTop="@dimen/ten_dp"
+                android:paddingBottom="@dimen/ten_dp"
+                android:layout_marginTop="@dimen/twenty_dp"
+                android:orientation="vertical">
+
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/private_address" />
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/work_address" />
+
+                </RadioGroup>
+
+                <LinearLayout
+                    android:id="@+id/ll_edit_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/ten_dp"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="@dimen/ten_dp"
+                    android:paddingStart="@dimen/ten_dp"
+                    android:onClick="@{(v)-> editAddressClick.EditAddressClick()}"
+                    android:paddingTop="@dimen/ten_dp"
+                    android:paddingEnd="@dimen/ten_dp"
+                    android:paddingBottom="@dimen/ten_dp">
+
+                    <ImageView
+                        android:layout_width="@dimen/twenty_dp"
+                        android:layout_height="@dimen/twenty_dp"
+                        android:contentDescription="@string/user_profile"
+                        android:tint="@color/blue"
+                        app:srcCompat="@drawable/ic_edit" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/ten_dp"
+                        android:gravity="start"
+                        android:text="@string/edit_my_address_underline"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/blue" />
+                </LinearLayout>
+
+
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/private_landline" />
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/work_phone" />
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/mobile_phone" />
+
+                </RadioGroup>
+
+                <LinearLayout
+                    android:id="@+id/ll_edit_phone_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/ten_dp"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="@dimen/ten_dp"
+                    android:paddingStart="@dimen/ten_dp"
+                    android:paddingTop="@dimen/ten_dp"
+                    android:paddingEnd="@dimen/ten_dp"
+                    android:onClick="@{(v)-> editAddressClick.EditPhoneNumberClick()}"
+                    android:paddingBottom="@dimen/ten_dp">
+
+                    <ImageView
+                        android:layout_width="@dimen/twenty_dp"
+                        android:layout_height="@dimen/twenty_dp"
+                        android:contentDescription="@string/user_profile"
+                        android:tint="@color/blue"
+                        app:srcCompat="@drawable/ic_edit" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/ten_dp"
+                        android:gravity="start"
+                        android:text="@string/edit_my_phone_number_underline"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/blue" />
+                </LinearLayout>
+
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/private_email" />
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/work_email" />
+
+                </RadioGroup>
+
+                <LinearLayout
+                    android:id="@+id/ll_edit_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/ten_dp"
+                    android:orientation="horizontal"
+                    android:paddingStart="@dimen/ten_dp"
+                    android:paddingTop="@dimen/ten_dp"
+                    android:onClick="@{(v)-> editAddressClick.EditEmailClick()}"
+                    android:paddingEnd="@dimen/ten_dp"
+                    android:layout_marginBottom="@dimen/ten_dp"
+                    android:paddingBottom="@dimen/ten_dp">
+
+                    <ImageView
+                        android:layout_width="@dimen/twenty_dp"
+                        android:layout_height="@dimen/twenty_dp"
+                        android:contentDescription="@string/user_profile"
+                        android:tint="@color/blue"
+                        app:srcCompat="@drawable/ic_edit" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/ten_dp"
+                        android:gravity="start"
+                        android:text="@string/edit_my_email_underline"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/blue" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+</layout>

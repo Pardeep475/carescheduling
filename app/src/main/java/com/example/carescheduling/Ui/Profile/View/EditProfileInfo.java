@@ -13,9 +13,10 @@ import android.view.ViewGroup;
 
 import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseFragment;
+import com.example.carescheduling.Ui.Profile.presenter.EditEmailClick;
 import com.example.carescheduling.databinding.FragmentEditProfileInfoBinding;
 
-public class EditProfileInfo extends BaseFragment {
+public class EditProfileInfo extends BaseFragment implements EditEmailClick {
 
     private FragmentEditProfileInfoBinding fragmentEditProfileInfoBinding;
 
@@ -40,6 +41,17 @@ public class EditProfileInfo extends BaseFragment {
     }
 
     private void setUpView(View view) {
+        fragmentEditProfileInfoBinding.setEditEmailClick(this);
     }
 
+    @Override
+    public void BackButtonClick() {
+        if (getActivity()!=null)
+            getActivity().onBackPressed();
+    }
+
+    @Override
+    public void DoneClick() {
+
+    }
 }

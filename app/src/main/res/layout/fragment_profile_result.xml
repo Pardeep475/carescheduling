@@ -10,6 +10,9 @@
         <variable
             name="clickhandler"
             type="com.example.carescheduling.Ui.Dashboard.presenter.ProfileClickHandler" />
+        <variable
+            name="profileEditBean"
+            type="com.example.carescheduling.Ui.Dashboard.beans.ProfileResultBean"/>
     </data>
 
     <LinearLayout
@@ -64,6 +67,7 @@
                     android:id="@+id/txt_user_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@{profileEditBean.userName}"
                     android:layout_marginStart="@dimen/ten_dp"
                     android:layout_toEndOf="@+id/img_user_profile" />
 
@@ -73,6 +77,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/txt_user_name"
                     android:layout_marginStart="@dimen/ten_dp"
+                    android:text="@{profileEditBean.address}"
                     android:layout_marginTop="@dimen/five_dp"
                     android:layout_toEndOf="@+id/img_user_profile" />
 
@@ -82,6 +87,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/txt_address_one"
                     android:layout_marginStart="@dimen/ten_dp"
+                    android:visibility="gone"
                     android:layout_marginTop="@dimen/five_dp"
                     android:layout_toEndOf="@+id/img_user_profile" />
 
@@ -92,6 +98,7 @@
                     android:layout_below="@+id/txt_address_two"
                     android:layout_marginStart="@dimen/ten_dp"
                     android:layout_marginTop="@dimen/five_dp"
+                    android:visibility="gone"
                     android:layout_toEndOf="@+id/img_user_profile" />
 
                 <LinearLayout
@@ -116,6 +123,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.3"
+                        android:text="@{profileEditBean.telephone}"
                         android:gravity="start"
                         android:textAlignment="textStart" />
                 </LinearLayout>
@@ -143,6 +151,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1.3"
                         android:gravity="start"
+                        android:text="@{profileEditBean.mobile}"
                         android:textAlignment="textStart" />
                 </LinearLayout>
 
@@ -168,6 +177,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.3"
+                        android:text="@{profileEditBean.email}"
                         android:gravity="start"
                         android:textAlignment="textStart" />
                 </LinearLayout>
