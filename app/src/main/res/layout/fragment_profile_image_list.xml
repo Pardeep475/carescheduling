@@ -12,6 +12,9 @@
         <variable
             name="profileImageList"
             type="com.example.carescheduling.Ui.Profile.presenter.ProfileImageListClick" />
+        <variable
+            name="imageUrl"
+            type="String"/>
     </data>
 
     <LinearLayout
@@ -48,7 +51,6 @@
                 android:textSize="@dimen/forteen_sp" />
 
             <ImageView
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -62,17 +64,17 @@
 
         </RelativeLayout>
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/twenty_dp"
-            android:layout_marginTop="@dimen/twenty_dp"
-            android:layout_marginEnd="@dimen/twenty_dp"
-            android:background="@color/colorPrimary"
+
+        <ImageView
+            android:layout_width="@dimen/one_fifty_dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/fifty_dp"
+            android:layout_marginBottom="@dimen/twenty_dp"
+            app:srcCompat="@drawable/user_placeholder"
+            app:setImage="@{imageUrl}"
+            android:layout_height="@dimen/one_fifty_dp"
             android:onClick="@{(v)->profileImageList.ProfileClick()}"
-            android:text="@string/get_from_media"
-            android:textAllCaps="false"
-            android:textColor="@color/white" />
+            android:contentDescription="@string/user_image" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcv_images"

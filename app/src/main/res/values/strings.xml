@@ -91,4 +91,6 @@
     <string name="password_question_answer">Password question answer:</string>
     <string name="get_from_media">Picture from media</string>
     <string name="no_data_available">No data found</string>
+    <string name="take_picture_from_gallery">Take picture from gallery</string>
+    <string name="take_picture_from_camera">Take picture from camera</string>
 </resources>

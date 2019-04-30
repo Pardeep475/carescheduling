@@ -12,4 +12,6 @@ public class Constants {
     public static String CUSTOMER_ID = "CustomerId";
     public static String BRANCH_ID = "BranchId";
     public static String IS_USER_LOGIN = "is_user_login";
+    public static final int REQUEST_CAMERA = 1111;
+    public static final int SELECT_FILE = 1112;
 }

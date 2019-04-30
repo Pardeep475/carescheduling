@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+
+    android:background="@android:color/transparent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+
+        android:id="@+id/profile_dialog_gallery"
+        android:paddingTop="@dimen/twenty_dp"
+        android:paddingBottom="@dimen/twenty_dp"
+        android:text="@string/take_picture_from_gallery"
+        android:layout_width="match_parent"
+        android:background="@drawable/profile_dialog_background"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/profile_dialog_camera"
+        android:paddingTop="@dimen/twenty_dp"
+        android:paddingBottom="@dimen/twenty_dp"
+        android:background="@drawable/profile_dialog_background"
+        android:text="@string/take_picture_from_camera"
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/five_dp"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/profile_dialog_cancel"
+        android:paddingTop="@dimen/twenty_dp"
+        android:paddingBottom="@dimen/twenty_dp"
+        android:text="@string/cancel"
+        android:layout_marginTop="@dimen/twenty_five_dp"
+        android:layout_width="match_parent"
+        android:background="@drawable/profile_dialog_background"
+        android:layout_height="wrap_content" />
+</LinearLayout>
