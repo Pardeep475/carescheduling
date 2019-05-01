@@ -128,7 +128,7 @@ public class LoginFSecond extends BaseFragment implements View.OnClickListener {
                             @Override
                             public void onChanged(JsonElement jsonElement) {
                                 hideDialog();
-                                sessionManager.setBranchId(branchId);
+                                sessionManager.setBranchId(branchList.get(appCompatSpinner.getSelectedItemPosition()).getBranchId());
                                 sessionManager.setPersonId(personId);
                                 sessionManager.setCustomerId(branchList.get(appCompatSpinner.getSelectedItemPosition()).getCustomerId());
                                 sessionManager.setUserLogin(true);

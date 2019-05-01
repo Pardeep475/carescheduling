@@ -53,7 +53,7 @@ public class ProfileResult extends BaseFragment implements ProfileClickHandler, 
         sessionManager = getSessionManager();
         profileResultViewModel = ViewModelProviders.of(this).get(ProfileResultViewModel.class);
         showDialog();
-        profileResultViewModel.getClientData("59011D91-0C6F-43F3-ABC7-016E707A23A6", "5F98AF4F-25DC-4AC8-B867-C5072C100000", "5F98AF4F-25DC-4AC8-B867-C5072C101011")
+        profileResultViewModel.getClientData(sessionManager.getPersonId(), sessionManager.getCustomerId(), sessionManager.getBranchId())
                 .observe(this, new Observer<ProfileBean>() {
                     @Override
                     public void onChanged(ProfileBean profileBean) {

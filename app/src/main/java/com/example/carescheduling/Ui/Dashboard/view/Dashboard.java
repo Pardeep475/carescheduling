@@ -8,6 +8,14 @@ import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseActivity;
 import com.example.carescheduling.Ui.Dashboard.ViewModel.DashboardViewModel;
 import com.example.carescheduling.Ui.Dashboard.beans.EditMyProfile;
+import com.example.carescheduling.data.Local.AppDataBase;
+import com.example.carescheduling.data.Local.DatabaseInitializer;
+import com.example.carescheduling.data.Local.DatabaseTable.Ethnicity;
+import com.example.carescheduling.data.Local.DatabaseTable.Gender;
+import com.example.carescheduling.data.Local.DatabaseTable.MaritialStatus;
+import com.example.carescheduling.data.Local.DatabaseTable.PersonLanguage;
+import com.example.carescheduling.data.Local.DatabaseTable.Prefix;
+import com.example.carescheduling.data.Local.DatabaseTable.Religion;
 import com.example.carescheduling.data.Local.SessionManager;
 import com.example.carescheduling.databinding.ActivityDashboardBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -19,6 +27,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.view.MenuItem;
+
+import java.util.List;
 
 public class Dashboard extends BaseActivity {
 
@@ -55,19 +65,101 @@ public class Dashboard extends BaseActivity {
         activityDashboardBinding.navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         setFragment(SettingF.newInstance());
         LiveData<EditMyProfile> editMyProfileLiveData = dashboardViewModel.getEditMyProfileData(sessionManager.getCustomerId());
-        showDialog();
-        editMyProfileLiveData.observe(this, new Observer<EditMyProfile>() {
-            @Override
-            public void onChanged(EditMyProfile editMyProfile) {
-                hideDialog();
-                EditMyProfile myProfile = editMyProfile;
-            }
-        });
+
+        DatabaseInitializer.populateAsync(AppDataBase.getAppDatabase(this));
+
+//        showDialog();
+//        editMyProfileLiveData.observe(this, new Observer<EditMyProfile>() {
+//            @Override
+//            public void onChanged(EditMyProfile editMyProfile) {
+//                hideDialog();
+//                EditMyProfile myProfile = editMyProfile;
+//                parseData(myProfile);
+//            }
+//        });
     }
+
 
     private void setFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fl_dashboard_main_container, fragment).commitAllowingStateLoss();
+    }
+
+    private void parseData(EditMyProfile myProfile) {
+        if (myProfile != null && myProfile.getData() != null && myProfile.getData().getCustomer() != null) {
+//            gender data
+            if (myProfile.getData().getCustomer().getCustomerGender() != null && myProfile.getData().getCustomer().getCustomerGender().size() > 0){
+                GenderData(myProfile.getData().getCustomer().getCustomerGender());
+            }
+//            prefix
+            if (myProfile.getData().getCustomer().getCustomerPrefix() != null && myProfile.getData().getCustomer().getCustomerPrefix().size() > 0){
+                PrefixData(myProfile.getData().getCustomer().getCustomerPrefix());
+            }
+//            language
+            if (myProfile.getData().getCustomer().getCustomerLanguage() != null && myProfile.getData().getCustomer().getCustomerLanguage().size() > 0){
+               LanguageData(myProfile.getData().getCustomer().getCustomerLanguage());
+            }
+            //            Marital Status
+            if (myProfile.getData().getCustomer().getCustomerMaritalStatusType() != null && myProfile.getData().getCustomer().getCustomerMaritalStatusType().size() > 0){
+                MaritalStatusData(myProfile.getData().getCustomer().getCustomerMaritalStatusType());
+            }
+            //            Ethnicity
+            if (myProfile.getData().getCustomer().getCustomerEthnicityType() != null && myProfile.getData().getCustomer().getCustomerEthnicityType().size() > 0){
+                EthnicityData(myProfile.getData().getCustomer().getCustomerEthnicityType());
+            }
+            //            Religion
+            if (myProfile.getData().getCustomer().getCustomerReligionType() != null && myProfile.getData().getCustomer().getCustomerReligionType().size() > 0){
+                ReligionData(myProfile.getData().getCustomer().getCustomerReligionType());
+            }
+            //            Nationality
+            if (myProfile.getData().getCustomer().getCustomerReligionType() != null && myProfile.getData().getCustomer().getCustomerReligionType().size() > 0){
+                ReligionData(myProfile.getData().getCustomer().getCustomerReligionType());
+            }
+        }
+    }
+
+    private void ReligionData(List<EditMyProfile.CustomerReligionType> customerReligionType) {
+        for (int i = 0; i < customerReligionType.size(); i++) {
+            Religion religion = new Religion();
+            religion.setReligionName(customerReligionType.get(i).getReligionTypeName());
+        }
+    }
+
+    private void EthnicityData(List<EditMyProfile.CustomerEthnicityType> customerEthnicityType) {
+        for (int i = 0; i < customerEthnicityType.size(); i++) {
+            Ethnicity ethnicity = new Ethnicity();
+            ethnicity.setEthnicityName(customerEthnicityType.get(i).getEthnicityTypeName());
+        }
+    }
+
+    private void MaritalStatusData(List<EditMyProfile.CustomerMaritalStatusType> customerMaritalStatusType) {
+        for (int i = 0; i < customerMaritalStatusType.size(); i++) {
+            MaritialStatus maritialStatus = new MaritialStatus();
+            maritialStatus.setMaritialStatusName(customerMaritalStatusType.get(i).getMaritalStatusTypeName());
+
+        }
+    }
+
+    private void LanguageData(List<EditMyProfile.CustomerLanguage> customerLanguage) {
+        for (int i = 0; i < customerLanguage.size(); i++) {
+            PersonLanguage personLanguage = new PersonLanguage();
+            personLanguage.setLanguageName(customerLanguage.get(i).getLanguageName());
+        }
+    }
+
+    private void PrefixData(List<EditMyProfile.CustomerPrefix> customerPrefix) {
+        for (int i = 0; i < customerPrefix.size(); i++) {
+            Prefix prefix = new Prefix();
+            prefix.setPrefixName(customerPrefix.get(i).getPrefixTypeName());
+        }
+    }
+
+    private void GenderData(List<EditMyProfile.CustomerGender> customerGender) {
+        for (int i = 0; i < customerGender.size(); i++) {
+            Gender gender = new Gender();
+            gender.setGenderID(customerGender.get(i).getCustomerId());
+            gender.setGenderName(customerGender.get(i).getGenderTypeName());
+        }
     }
 
 }
