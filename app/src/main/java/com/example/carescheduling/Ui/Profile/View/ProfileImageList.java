@@ -16,6 +16,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -37,6 +38,8 @@ import android.widget.Button;
 
 import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseFragment;
+import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
+import com.example.carescheduling.Ui.Dashboard.beans.ProfileResultBean;
 import com.example.carescheduling.Ui.Profile.Adapter.ProfileImageListAdapter;
 import com.example.carescheduling.Ui.Profile.ViewModel.ProfileImageListViewModel;
 import com.example.carescheduling.Ui.Profile.presenter.EditEmailClick;
@@ -52,6 +55,7 @@ import com.karumi.dexter.listener.PermissionRequestErrorListener;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
 import java.io.ByteArrayOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,15 +65,22 @@ public class ProfileImageList extends BaseFragment implements EditEmailClick, Pr
     private String path = null;
     private boolean buildVer;
     private ProfileImageListViewModel profileImageListViewModel;
+    private ProfileBean profileResultBean;
 
-    public static ProfileImageList newInstance() {
-        return new ProfileImageList();
+    public static ProfileImageList newInstance(ProfileBean profileResultBean) {
+        ProfileImageList profileImageList = new ProfileImageList();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Constants.PROFILE_DATA, (Serializable) profileResultBean);
+        profileImageList.setArguments(bundle);
+        return profileImageList;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        if (getArguments() != null) {
+            profileResultBean = (ProfileBean) getArguments().getSerializable(Constants.PROFILE_DATA);
+        }
     }
 
     @Override

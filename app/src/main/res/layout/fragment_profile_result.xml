@@ -5,6 +5,9 @@
 
     <data>
         <variable
+            name="profileResultBean"
+            type="com.example.carescheduling.Ui.Dashboard.beans.ProfileBean"/>
+        <variable
             name="editClickHandler"
             type="com.example.carescheduling.Ui.Dashboard.presenter.EditProfileClickHandler"/>
         <variable
@@ -61,6 +64,7 @@
                     android:layout_width="@dimen/one_fifty_dp"
                     android:layout_height="@dimen/one_fifty_dp"
                     android:src="@drawable/user_placeholder"
+                    app:setImageBitmap="@{profileEditBean.imgUrl}"
                     android:contentDescription="@string/user_profile" />
 
                 <TextView
@@ -115,7 +119,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_weight=".7"
                         android:gravity="start"
-                        android:text="@string/telephone"
+                        android:text="@{profileEditBean.telephone}"
                         android:textAlignment="textStart" />
 
                     <TextView
@@ -123,43 +127,18 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.3"
-                        android:text="@{profileEditBean.telephone}"
-                        android:gravity="start"
-                        android:textAlignment="textStart" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/ll_mobile"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/ll_telephone"
-                    android:layout_marginTop="@dimen/twenty_dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight=".7"
-                        android:gravity="start"
-                        android:text="@string/mobile"
-                        android:textAlignment="textStart" />
-
-                    <TextView
-                        android:id="@+id/txt_mobile"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1.3"
-                        android:gravity="start"
                         android:text="@{profileEditBean.mobile}"
+                        android:gravity="start"
                         android:textAlignment="textStart" />
                 </LinearLayout>
+
+
 
                 <LinearLayout
                     android:id="@+id/ll_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/ll_mobile"
+                    android:layout_below="@+id/ll_telephone"
                     android:layout_marginTop="@dimen/twenty_dp"
                     android:orientation="horizontal">
 
@@ -190,7 +169,7 @@
                     android:layout_below="@+id/ll_email"
                     android:paddingTop="@dimen/ten_dp"
                     android:paddingBottom="@dimen/ten_dp"
-                    android:onClick="@{(v)->editClickHandler.EditBtnClick()}"
+                    android:onClick="@{(v)->editClickHandler.EditBtnClick(profileResultBean)}"
                     android:layout_marginTop="@dimen/thirty_dp"
                     android:orientation="horizontal">
 

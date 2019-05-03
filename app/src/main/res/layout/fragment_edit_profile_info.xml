@@ -232,7 +232,7 @@
                         android:textAlignment="center" />
 
                     <Spinner
-                        android:id="@+id/edt_gender"
+                        android:id="@+id/spinner_gender"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.3"
@@ -259,7 +259,7 @@
                         android:textAlignment="center" />
 
                     <Spinner
-                        android:id="@+id/edt_prefix"
+                        android:id="@+id/spinner_prefix"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.3"
@@ -286,7 +286,7 @@
                         android:textAlignment="center" />
 
                     <Spinner
-                        android:id="@+id/edt_language"
+                        android:id="@+id/spinner_language"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.3"
@@ -313,7 +313,7 @@
                         android:textAlignment="center" />
 
                     <Spinner
-                        android:id="@+id/edt_maritial_status"
+                        android:id="@+id/spinner_marital_status"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.3"
@@ -340,7 +340,7 @@
                         android:textAlignment="center" />
 
                     <Spinner
-                        android:id="@+id/edt_ethnicity"
+                        android:id="@+id/spinner_ethnicity"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.3"

@@ -7,8 +7,13 @@ import android.view.ViewGroup;
 
 import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseFragment;
+import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
+import com.example.carescheduling.Ui.Dashboard.beans.ProfileResultBean;
 import com.example.carescheduling.Ui.Profile.presenter.EditProfileStartClick;
+import com.example.carescheduling.Utils.Constants;
 import com.example.carescheduling.databinding.EditProfileStartBinding;
+
+import java.io.Serializable;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,10 +22,22 @@ import androidx.fragment.app.Fragment;
 
 public class EditProfileStart extends BaseFragment implements EditProfileStartClick {
     private EditProfileStartBinding editProfileStartBinding;
+    private ProfileBean profileResultBean;
 
+    public static EditProfileStart newInstance(ProfileBean profileResultBean) {
+        EditProfileStart editProfileStart = new EditProfileStart();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Constants.PROFILE_DATA, (Serializable) profileResultBean);
+        editProfileStart.setArguments(bundle);
+        return editProfileStart;
+    }
 
-    public static EditProfileStart newInstance() {
-        return new EditProfileStart();
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            profileResultBean = (ProfileBean) getArguments().getSerializable(Constants.PROFILE_DATA);
+        }
     }
 
     @Nullable
@@ -44,23 +61,23 @@ public class EditProfileStart extends BaseFragment implements EditProfileStartCl
     }
 
     @Override
-    public void EditMyProfileInfo() {
-        setFragment(EditProfileInfo.newInstance());
+    public void EditMyProfileInfo(ProfileBean profileResultBean) {
+        setFragment(EditProfileInfo.newInstance(profileResultBean));
     }
 
     @Override
-    public void EditMyAddress() {
-        setFragment(EditProfileAddress.newInstance());
+    public void EditMyAddress(ProfileBean profileResultBean) {
+        setFragment(EditProfileAddress.newInstance(profileResultBean));
     }
 
     @Override
-    public void EditMyPicture() {
-        setFragment(ProfileImageList.newInstance());
+    public void EditMyPicture(ProfileBean profileResultBean) {
+        setFragment(ProfileImageList.newInstance(profileResultBean));
     }
 
     @Override
-    public void EditChangePassword() {
-setFragment(FragmentChangePassword.newInstance());
+    public void EditChangePassword(ProfileBean profileResultBean) {
+        setFragment(FragmentChangePassword.newInstance(profileResultBean));
     }
 
     private void setFragment(Fragment fragment) {

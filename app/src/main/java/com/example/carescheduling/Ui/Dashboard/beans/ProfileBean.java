@@ -65,7 +65,7 @@ public class ProfileBean implements Serializable {
     }
 
 
-    public class Address implements Serializable{
+    public class Address implements Serializable {
 
         @SerializedName("AddressId")
         @Expose
@@ -268,7 +268,7 @@ public class ProfileBean implements Serializable {
 
     }
 
-    public class Address_ implements Serializable{
+    public class Address_ implements Serializable {
 
         @SerializedName("AddressId")
         @Expose
@@ -471,7 +471,7 @@ public class ProfileBean implements Serializable {
 
     }
 
-    public class Country implements Serializable{
+    public class Country implements Serializable {
 
         @SerializedName("ContinentName")
         @Expose
@@ -564,7 +564,7 @@ public class ProfileBean implements Serializable {
 
     }
 
-    public class CountryPostCode implements Serializable{
+    public class CountryPostCode implements Serializable {
 
         @SerializedName("Address")
         @Expose
@@ -780,7 +780,7 @@ public class ProfileBean implements Serializable {
         private Object personContacts;
         @SerializedName("PersonImage")
         @Expose
-        private Object personImage;
+        private List<PersonImage> personImage;
 
         public String getBirthDate() {
             return birthDate;
@@ -894,17 +894,219 @@ public class ProfileBean implements Serializable {
             this.personContacts = personContacts;
         }
 
-        public Object getPersonImage() {
+        public List<PersonImage> getPersonImage() {
             return personImage;
         }
 
-        public void setPersonImage(Object personImage) {
+        public void setPersonImage(List<PersonImage> personImage) {
             this.personImage = personImage;
         }
 
     }
 
-    public class Person implements Serializable{
+    public class PersonImage implements Serializable {
+        @SerializedName("CustomerId")
+        @Expose
+        private String customerId;
+        @SerializedName("ImageAddedDate")
+        @Expose
+        private String ImageAddedDate;
+        @SerializedName("ImageAltText")
+        @Expose
+        private String ImageAltText;
+        @SerializedName("ImageFile")
+        @Expose
+        private String ImageFile;
+        @SerializedName("ImageFileName")
+        @Expose
+        private String ImageFileName;
+        @SerializedName("ImageFileTypeName")
+        @Expose
+        private String ImageFileTypeName;
+        @SerializedName("ImageFileUrl")
+        @Expose
+        private String ImageFileUrl;
+        @SerializedName("ImageHexString")
+        @Expose
+        private String ImageHexString;
+        @SerializedName("ImageId")
+        @Expose
+        private String ImageId;
+        @SerializedName("ImageLongAltText")
+        @Expose
+        private String ImageLongAltText;
+        @SerializedName("ImageSizeName")
+        @Expose
+        private String ImageSizeName;
+        @SerializedName("ImageSizes")
+        @Expose
+        private String ImageSizes;
+        @SerializedName("ImageUpdatedDate")
+        @Expose
+        private String ImageUpdatedDate;
+        @SerializedName("IsDefault")
+        @Expose
+        private boolean IsDefault;
+        @SerializedName("MaxColourDepth")
+        @Expose
+        private int MaxColourDepth;
+        @SerializedName("XPixel")
+        @Expose
+        private int XPixel;
+        @SerializedName("YPixel")
+        @Expose
+        private int YPixel;
+        @SerializedName("Orientation")
+        @Expose
+        private String Orientation;
+
+
+        public String getCustomerId() {
+            return customerId;
+        }
+
+        public void setCustomerId(String customerId) {
+            this.customerId = customerId;
+        }
+
+        public String getImageAddedDate() {
+            return ImageAddedDate;
+        }
+
+        public void setImageAddedDate(String imageAddedDate) {
+            ImageAddedDate = imageAddedDate;
+        }
+
+        public String getImageAltText() {
+            return ImageAltText;
+        }
+
+        public void setImageAltText(String imageAltText) {
+            ImageAltText = imageAltText;
+        }
+
+        public String getImageFile() {
+            return ImageFile;
+        }
+
+        public void setImageFile(String imageFile) {
+            ImageFile = imageFile;
+        }
+
+        public String getImageFileName() {
+            return ImageFileName;
+        }
+
+        public void setImageFileName(String imageFileName) {
+            ImageFileName = imageFileName;
+        }
+
+        public String getImageFileTypeName() {
+            return ImageFileTypeName;
+        }
+
+        public void setImageFileTypeName(String imageFileTypeName) {
+            ImageFileTypeName = imageFileTypeName;
+        }
+
+        public String getImageFileUrl() {
+            return ImageFileUrl;
+        }
+
+        public void setImageFileUrl(String imageFileUrl) {
+            ImageFileUrl = imageFileUrl;
+        }
+
+        public String getImageHexString() {
+            return ImageHexString;
+        }
+
+        public void setImageHexString(String imageHexString) {
+            ImageHexString = imageHexString;
+        }
+
+        public String getImageId() {
+            return ImageId;
+        }
+
+        public void setImageId(String imageId) {
+            ImageId = imageId;
+        }
+
+        public String getImageLongAltText() {
+            return ImageLongAltText;
+        }
+
+        public void setImageLongAltText(String imageLongAltText) {
+            ImageLongAltText = imageLongAltText;
+        }
+
+        public String getImageSizeName() {
+            return ImageSizeName;
+        }
+
+        public void setImageSizeName(String imageSizeName) {
+            ImageSizeName = imageSizeName;
+        }
+
+        public String getImageSizes() {
+            return ImageSizes;
+        }
+
+        public void setImageSizes(String imageSizes) {
+            ImageSizes = imageSizes;
+        }
+
+        public String getImageUpdatedDate() {
+            return ImageUpdatedDate;
+        }
+
+        public void setImageUpdatedDate(String imageUpdatedDate) {
+            ImageUpdatedDate = imageUpdatedDate;
+        }
+
+        public boolean isDefault() {
+            return IsDefault;
+        }
+
+        public void setDefault(boolean aDefault) {
+            IsDefault = aDefault;
+        }
+
+        public int getMaxColourDepth() {
+            return MaxColourDepth;
+        }
+
+        public void setMaxColourDepth(int maxColourDepth) {
+            MaxColourDepth = maxColourDepth;
+        }
+
+        public int getXPixel() {
+            return XPixel;
+        }
+
+        public void setXPixel(int XPixel) {
+            this.XPixel = XPixel;
+        }
+
+        public int getYPixel() {
+            return YPixel;
+        }
+
+        public void setYPixel(int YPixel) {
+            this.YPixel = YPixel;
+        }
+
+        public String getOrientation() {
+            return Orientation;
+        }
+
+        public void setOrientation(String orientation) {
+            Orientation = orientation;
+        }
+    }
+
+    public class Person implements Serializable {
 
         @SerializedName("BirthDate")
         @Expose
@@ -920,7 +1122,7 @@ public class ProfileBean implements Serializable {
         private String genderTypeName;
         @SerializedName("MaidenName")
         @Expose
-        private Object maidenName;
+        private String maidenName;
         @SerializedName("MiddleName")
         @Expose
         private Object middleName;
@@ -950,7 +1152,7 @@ public class ProfileBean implements Serializable {
         private String personId;
         @SerializedName("PersonImage")
         @Expose
-        private List<Object> personImage = null;
+        private List<PersonImage_> personImage = null;
         @SerializedName("PersonIsBlacklisted")
         @Expose
         private Boolean personIsBlacklisted;
@@ -1020,11 +1222,11 @@ public class ProfileBean implements Serializable {
             this.genderTypeName = genderTypeName;
         }
 
-        public Object getMaidenName() {
+        public String getMaidenName() {
             return maidenName;
         }
 
-        public void setMaidenName(Object maidenName) {
+        public void setMaidenName(String maidenName) {
             this.maidenName = maidenName;
         }
 
@@ -1100,11 +1302,11 @@ public class ProfileBean implements Serializable {
             this.personId = personId;
         }
 
-        public List<Object> getPersonImage() {
+        public List<PersonImage_> getPersonImage() {
             return personImage;
         }
 
-        public void setPersonImage(List<Object> personImage) {
+        public void setPersonImage(List<PersonImage_> personImage) {
             this.personImage = personImage;
         }
 
@@ -1206,7 +1408,43 @@ public class ProfileBean implements Serializable {
 
     }
 
-    public class PersonAddress implements Serializable{
+    public class PersonImage_ implements Serializable{
+        @SerializedName("ImageId")
+        @Expose
+        private String ImageId;
+        @SerializedName("PersonId")
+        @Expose
+        private String PersonId;
+        @SerializedName("IsDefault")
+        @Expose
+        private boolean IsDefault;
+
+        public String getImageId() {
+            return ImageId;
+        }
+
+        public void setImageId(String imageId) {
+            ImageId = imageId;
+        }
+
+        public String getPersonId() {
+            return PersonId;
+        }
+
+        public void setPersonId(String personId) {
+            PersonId = personId;
+        }
+
+        public boolean isDefault() {
+            return IsDefault;
+        }
+
+        public void setDefault(boolean aDefault) {
+            IsDefault = aDefault;
+        }
+    }
+
+    public class PersonAddress implements Serializable {
 
         @SerializedName("AddressId")
         @Expose
@@ -1266,7 +1504,7 @@ public class ProfileBean implements Serializable {
 
     }
 
-    public class PersonAddress_ implements Serializable{
+    public class PersonAddress_ implements Serializable {
 
         @SerializedName("Address")
         @Expose
@@ -1315,7 +1553,7 @@ public class ProfileBean implements Serializable {
 
     }
 
-    public class PersonDisability implements Serializable{
+    public class PersonDisability implements Serializable {
 
         @SerializedName("CustomerId")
         @Expose
@@ -1353,7 +1591,7 @@ public class ProfileBean implements Serializable {
 
     }
 
-    public class PersonDynamicProperty implements Serializable{
+    public class PersonDynamicProperty implements Serializable {
 
         @SerializedName("CustomerId")
         @Expose
@@ -1402,7 +1640,7 @@ public class ProfileBean implements Serializable {
 
     }
 
-    public class PersonEmail implements Serializable{
+    public class PersonEmail implements Serializable {
 
         @SerializedName("CustomerId")
         @Expose
@@ -1462,7 +1700,7 @@ public class ProfileBean implements Serializable {
 
     }
 
-    public class PersonEthnicity implements Serializable{
+    public class PersonEthnicity implements Serializable {
 
         @SerializedName("CustomerId")
         @Expose
@@ -1500,7 +1738,7 @@ public class ProfileBean implements Serializable {
 
     }
 
-    public class PersonLanguage implements Serializable{
+    public class PersonLanguage implements Serializable {
 
         @SerializedName("CustomerId")
         @Expose
@@ -1549,7 +1787,7 @@ public class ProfileBean implements Serializable {
 
     }
 
-    public class PersonLanguageCode implements Serializable{
+    public class PersonLanguageCode implements Serializable {
 
         @SerializedName("CountryName")
         @Expose
@@ -1609,7 +1847,7 @@ public class ProfileBean implements Serializable {
 
     }
 
-    public class PersonMaritalstatus implements Serializable{
+    public class PersonMaritalstatus implements Serializable {
 
         @SerializedName("CustomerId")
         @Expose
@@ -1647,7 +1885,7 @@ public class ProfileBean implements Serializable {
 
     }
 
-    public class PersonNationality implements Serializable{
+    public class PersonNationality implements Serializable {
 
         @SerializedName("CountryName")
         @Expose
@@ -1685,7 +1923,7 @@ public class ProfileBean implements Serializable {
 
     }
 
-    public class PersonPhone implements Serializable{
+    public class PersonPhone implements Serializable {
 
         @SerializedName("CanNotCall")
         @Expose
@@ -1767,7 +2005,7 @@ public class ProfileBean implements Serializable {
 
     }
 
-    public class PersonReligion implements Serializable{
+    public class PersonReligion implements Serializable {
 
         @SerializedName("CustomerId")
         @Expose
@@ -1805,7 +2043,7 @@ public class ProfileBean implements Serializable {
 
     }
 
-    public class PersonSexuality implements Serializable{
+    public class PersonSexuality implements Serializable {
 
         @SerializedName("CustomerId")
         @Expose

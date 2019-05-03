@@ -8,6 +8,7 @@ public class Constants {
             .compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
     public static String BASE_URL = "http://mobile.rota.services/CssMobileRestfulService.svc/";
 
+    public static String PROFILE_DATA = "profile_data";
     public static String PERSON_ID = "PersonId";
     public static String CUSTOMER_ID = "CustomerId";
     public static String BRANCH_ID = "BranchId";

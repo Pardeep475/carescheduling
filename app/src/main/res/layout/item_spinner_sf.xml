@@ -10,10 +10,9 @@
         android:layout_width="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/ic_left_back"
         android:padding="10dp"
         />
-
+<!-- app:srcCompat="@drawable/ic_left_back"-->
     <TextView
         android:id="@+id/title"
         android:layout_width="match_parent"

@@ -1,13 +1,16 @@
 package com.example.carescheduling.Ui.Dashboard.beans;
 
-public class ProfileResultBean {
-    private String imgUrl, userName, address, telephone, email, mobile;
+import android.graphics.Bitmap;
 
-    public String getImgUrl() {
+public class ProfileResultBean {
+    private String userName, address, telephone, email, mobile;
+    private Bitmap imgUrl;
+
+    public Bitmap getImgUrl() {
         return imgUrl;
     }
 
-    public void setImgUrl(String imgUrl) {
+    public void setImgUrl(Bitmap imgUrl) {
         this.imgUrl = imgUrl;
     }
 

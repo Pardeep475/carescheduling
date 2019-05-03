@@ -19,8 +19,11 @@ import com.example.carescheduling.Ui.Dashboard.beans.ProfileResultBean;
 import com.example.carescheduling.Ui.Dashboard.presenter.EditProfileClickHandler;
 import com.example.carescheduling.Ui.Dashboard.presenter.ProfileClickHandler;
 import com.example.carescheduling.Ui.Profile.View.EditProfile;
+import com.example.carescheduling.Utils.Constants;
 import com.example.carescheduling.data.Local.SessionManager;
 import com.example.carescheduling.databinding.FragmentProfileResultBinding;
+
+import java.io.Serializable;
 
 public class ProfileResult extends BaseFragment implements ProfileClickHandler, EditProfileClickHandler {
 
@@ -58,6 +61,7 @@ public class ProfileResult extends BaseFragment implements ProfileClickHandler, 
                     @Override
                     public void onChanged(ProfileBean profileBean) {
                         hideDialog();
+                        fragmentProfileResultBinding.setProfileResultBean(profileBean);
                         setDataProfile(profileBean);
                     }
                 });
@@ -78,8 +82,10 @@ public class ProfileResult extends BaseFragment implements ProfileClickHandler, 
     }
 
     @Override
-    public void EditBtnClick() {
-        startActivity(new Intent(getActivity(), EditProfile.class));
+    public void EditBtnClick(ProfileBean profileResultBean) {
+        Intent intent = new Intent(getActivity(), EditProfile.class);
+        intent.putExtra(Constants.PROFILE_DATA,(Serializable) profileResultBean);
+        startActivity(intent);
     }
 
     @Override

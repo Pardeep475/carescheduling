@@ -7,18 +7,22 @@ import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseFragment;
+import com.example.carescheduling.Ui.Dashboard.Adapter.HomeScreenAdapter;
+import com.example.carescheduling.Ui.Dashboard.presenter.HomeScreenOnClick;
 import com.example.carescheduling.Ui.Dashboard.presenter.ProfileClickHandler;
 import com.example.carescheduling.Ui.LoginActivity.View.LoginActivity;
 import com.example.carescheduling.databinding.FragmentHomeBinding;
 
-public class HomeF extends BaseFragment implements ProfileClickHandler {
+public class HomeF extends BaseFragment implements ProfileClickHandler, HomeScreenOnClick {
     private FragmentHomeBinding fragmentHomeBinding;
 
     // TODO: Rename and change types and number of parameters
@@ -45,6 +49,11 @@ public class HomeF extends BaseFragment implements ProfileClickHandler {
 
     private void setUpView(View view) {
         sessionManager = getSessionManager();
+        String[] some_array = getResources().getStringArray(R.array.home_array);
+        HomeScreenAdapter homeScreenAdapter =new HomeScreenAdapter(getActivity(),this,some_array);
+        fragmentHomeBinding.rcvHome.setLayoutManager(new LinearLayoutManager(getActivity()));
+        fragmentHomeBinding.rcvHome.setAdapter(homeScreenAdapter);
+
         fragmentHomeBinding.setClickhandler(this);
     }
     @Override
@@ -54,5 +63,10 @@ public class HomeF extends BaseFragment implements ProfileClickHandler {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         getActivity().finish();
+    }
+
+    @Override
+    public void OnClickHomeScreen(int pos) {
+        Toast.makeText(getActivity(), ""+pos, Toast.LENGTH_SHORT).show();
     }
 }

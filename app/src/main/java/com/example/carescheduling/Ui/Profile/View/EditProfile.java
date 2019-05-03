@@ -7,6 +7,10 @@ import androidx.fragment.app.Fragment;
 import android.os.Bundle;
 
 import com.example.carescheduling.R;
+import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
+import com.example.carescheduling.Ui.Dashboard.beans.ProfileResultBean;
+import com.example.carescheduling.Utils.Constants;
+import com.example.carescheduling.Utils.Utils;
 import com.example.carescheduling.databinding.ActivityEditProfileBinding;
 
 public class EditProfile extends AppCompatActivity {
@@ -16,7 +20,10 @@ public class EditProfile extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         editProfileBinding = DataBindingUtil.setContentView(this, R.layout.activity_edit_profile);
-        setFragment(EditProfileStart.newInstance());
+        if (getIntent() != null) {
+            ProfileBean profileResultBean = (ProfileBean) getIntent().getSerializableExtra(Constants.PROFILE_DATA);
+            setFragment(EditProfileStart.newInstance(profileResultBean));
+        }
     }
 
     private void setFragment(Fragment fragment) {

@@ -93,4 +93,13 @@
     <string name="no_data_available">No data found</string>
     <string name="take_picture_from_gallery">Take picture from gallery</string>
     <string name="take_picture_from_camera">Take picture from camera</string>
+
+    <string-array name="home_array">
+        <item>My Next Visit</item>
+        <item>Directions</item>
+        <item>Todays Visits</item>
+        <item>Visit Archive</item>
+        <item>My Time</item>
+        <item>Hours and Exspenses</item>
+    </string-array>
 </resources>

@@ -21,7 +21,7 @@ public interface ProfileDao {
     @Query("SELECT * FROM person_language")
     List<PersonLanguage> getAllLanguages();
 
-    //   Get All  Ethnicity
+    //   Get All  RoomDatabaseModel
     @Query("SELECT * FROM Ethnicity")
     List<Ethnicity> getAllEthnicity();
 
@@ -51,7 +51,7 @@ public interface ProfileDao {
 //    get languages count
     @Query("SELECT COUNT(*) from person_language")
     int countLanguages();
-    //    get Ethnicity count
+    //    get RoomDatabaseModel count
     @Query("SELECT COUNT(*) from Ethnicity")
     int countEthnicity();
     //    get Gender count
@@ -73,7 +73,7 @@ public interface ProfileDao {
 //    insert all Languages
     @Insert
     void insertAllLanguage(PersonLanguage... personLanguages);
-    //    insert all Ethnicity
+    //    insert all RoomDatabaseModel
     @Insert
     void insertAllEthnicity(Ethnicity... personLanguages);
     //    insert all Gender
@@ -99,7 +99,7 @@ public interface ProfileDao {
 // delete all language
     @Query("DELETE  FROM person_language")
     public void deleteAll();
-    // delete all Ethnicity
+    // delete all RoomDatabaseModel
     @Query("DELETE  FROM Ethnicity")
     public void deleteAllEthnicity();
     // delete all Gender

@@ -9,20 +9,19 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "gender")
 public class Gender {
 
-    @PrimaryKey(autoGenerate = false)
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "gender_id")
     @NonNull
-    private String genderID;
+    private int genderID;
     @ColumnInfo(name = "gender_name")
     @NonNull
     private String genderName;
 
-    @NonNull
-    public String getGenderID() {
+    public int getGenderID() {
         return genderID;
     }
 
-    public void setGenderID(@NonNull String genderID) {
+    public void setGenderID(int genderID) {
         this.genderID = genderID;
     }
 

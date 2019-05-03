@@ -28,6 +28,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import android.view.MenuItem;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Dashboard extends BaseActivity {
@@ -66,17 +67,15 @@ public class Dashboard extends BaseActivity {
         setFragment(SettingF.newInstance());
         LiveData<EditMyProfile> editMyProfileLiveData = dashboardViewModel.getEditMyProfileData(sessionManager.getCustomerId());
 
-        DatabaseInitializer.populateAsync(AppDataBase.getAppDatabase(this));
-
-//        showDialog();
-//        editMyProfileLiveData.observe(this, new Observer<EditMyProfile>() {
-//            @Override
-//            public void onChanged(EditMyProfile editMyProfile) {
-//                hideDialog();
-//                EditMyProfile myProfile = editMyProfile;
-//                parseData(myProfile);
-//            }
-//        });
+        showDialog();
+        editMyProfileLiveData.observe(this, new Observer<EditMyProfile>() {
+            @Override
+            public void onChanged(EditMyProfile editMyProfile) {
+                hideDialog();
+                EditMyProfile myProfile = editMyProfile;
+                parseData(myProfile);
+            }
+        });
     }
 
 
@@ -103,18 +102,18 @@ public class Dashboard extends BaseActivity {
             if (myProfile.getData().getCustomer().getCustomerMaritalStatusType() != null && myProfile.getData().getCustomer().getCustomerMaritalStatusType().size() > 0){
                 MaritalStatusData(myProfile.getData().getCustomer().getCustomerMaritalStatusType());
             }
-            //            Ethnicity
+            //            RoomDatabaseModel
             if (myProfile.getData().getCustomer().getCustomerEthnicityType() != null && myProfile.getData().getCustomer().getCustomerEthnicityType().size() > 0){
                 EthnicityData(myProfile.getData().getCustomer().getCustomerEthnicityType());
             }
-            //            Religion
-            if (myProfile.getData().getCustomer().getCustomerReligionType() != null && myProfile.getData().getCustomer().getCustomerReligionType().size() > 0){
-                ReligionData(myProfile.getData().getCustomer().getCustomerReligionType());
-            }
-            //            Nationality
-            if (myProfile.getData().getCustomer().getCustomerReligionType() != null && myProfile.getData().getCustomer().getCustomerReligionType().size() > 0){
-                ReligionData(myProfile.getData().getCustomer().getCustomerReligionType());
-            }
+//            //            Religion
+//            if (myProfile.getData().getCustomer().getCustomerReligionType() != null && myProfile.getData().getCustomer().getCustomerReligionType().size() > 0){
+//                ReligionData(myProfile.getData().getCustomer().getCustomerReligionType());
+//            }
+//            //            Nationality
+//            if (myProfile.getData().getCustomer().getCustomerReligionType() != null && myProfile.getData().getCustomer().getCustomerReligionType().size() > 0){
+//                ReligionData(myProfile.getData().getCustomer().getCustomerReligionType());
+//            }
         }
     }
 
@@ -126,40 +125,54 @@ public class Dashboard extends BaseActivity {
     }
 
     private void EthnicityData(List<EditMyProfile.CustomerEthnicityType> customerEthnicityType) {
+        List<Ethnicity> ethnicityList = new ArrayList<>();
         for (int i = 0; i < customerEthnicityType.size(); i++) {
             Ethnicity ethnicity = new Ethnicity();
             ethnicity.setEthnicityName(customerEthnicityType.get(i).getEthnicityTypeName());
+            ethnicityList.add(ethnicity);
         }
+        DatabaseInitializer.populateAsyncEthnicity(AppDataBase.getAppDatabase(this),ethnicityList);
     }
 
     private void MaritalStatusData(List<EditMyProfile.CustomerMaritalStatusType> customerMaritalStatusType) {
+        List<MaritialStatus> maritialStatusList = new ArrayList<>();
         for (int i = 0; i < customerMaritalStatusType.size(); i++) {
             MaritialStatus maritialStatus = new MaritialStatus();
             maritialStatus.setMaritialStatusName(customerMaritalStatusType.get(i).getMaritalStatusTypeName());
-
+            maritialStatusList.add(maritialStatus);
         }
+        DatabaseInitializer.populateAsyncMaritialStatus(AppDataBase.getAppDatabase(this),maritialStatusList);
     }
 
     private void LanguageData(List<EditMyProfile.CustomerLanguage> customerLanguage) {
+        List<PersonLanguage> personLanguageList = new ArrayList<>();
         for (int i = 0; i < customerLanguage.size(); i++) {
             PersonLanguage personLanguage = new PersonLanguage();
             personLanguage.setLanguageName(customerLanguage.get(i).getLanguageName());
+            personLanguageList.add(personLanguage);
         }
+
+        DatabaseInitializer.populateAsyncLanguage(AppDataBase.getAppDatabase(this),personLanguageList);
     }
 
     private void PrefixData(List<EditMyProfile.CustomerPrefix> customerPrefix) {
+        List<Prefix> personPrefix = new ArrayList<>();
         for (int i = 0; i < customerPrefix.size(); i++) {
             Prefix prefix = new Prefix();
             prefix.setPrefixName(customerPrefix.get(i).getPrefixTypeName());
+            personPrefix.add(prefix);
         }
+        DatabaseInitializer.populateAsyncPrefix(AppDataBase.getAppDatabase(this),personPrefix);
     }
 
     private void GenderData(List<EditMyProfile.CustomerGender> customerGender) {
+        List<Gender> genderList = new ArrayList<>();
         for (int i = 0; i < customerGender.size(); i++) {
             Gender gender = new Gender();
-            gender.setGenderID(customerGender.get(i).getCustomerId());
             gender.setGenderName(customerGender.get(i).getGenderTypeName());
+            genderList.add(gender);
         }
+        DatabaseInitializer.populateAsyncGender(AppDataBase.getAppDatabase(this),genderList);
     }
 
 }

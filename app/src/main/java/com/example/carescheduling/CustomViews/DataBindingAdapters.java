@@ -1,5 +1,6 @@
 package com.example.carescheduling.CustomViews;
 
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.widget.ImageView;
 
@@ -18,5 +19,11 @@ public class DataBindingAdapters {
         requestOptions.error(R.drawable.user_placeholder);
         Glide.with(view.getContext()).setDefaultRequestOptions(requestOptions).load(imageUri).into(view);
     }
-
+    @BindingAdapter("setImage")
+    public static void setImageBitmap(ImageView view, Bitmap imageUri) {
+        RequestOptions requestOptions = new RequestOptions();
+        requestOptions.placeholder(R.drawable.user_placeholder);
+        requestOptions.error(R.drawable.user_placeholder);
+        Glide.with(view.getContext()).setDefaultRequestOptions(requestOptions).load(imageUri).into(view);
+    }
 }
