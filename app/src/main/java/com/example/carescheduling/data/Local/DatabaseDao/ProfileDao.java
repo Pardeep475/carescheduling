@@ -1,5 +1,7 @@
 package com.example.carescheduling.data.Local.DatabaseDao;
 
+import com.example.carescheduling.data.Local.DatabaseTable.CountryCode;
+import com.example.carescheduling.data.Local.DatabaseTable.DisabilityType;
 import com.example.carescheduling.data.Local.DatabaseTable.Ethnicity;
 import com.example.carescheduling.data.Local.DatabaseTable.Gender;
 import com.example.carescheduling.data.Local.DatabaseTable.MaritialStatus;
@@ -7,6 +9,7 @@ import com.example.carescheduling.data.Local.DatabaseTable.Nationality;
 import com.example.carescheduling.data.Local.DatabaseTable.PersonLanguage;
 import com.example.carescheduling.data.Local.DatabaseTable.Prefix;
 import com.example.carescheduling.data.Local.DatabaseTable.Religion;
+import com.example.carescheduling.data.Local.DatabaseTable.SexualityType;
 
 import java.util.List;
 
@@ -45,6 +48,18 @@ public interface ProfileDao {
     @Query("SELECT * FROM Religion")
     List<Religion> getAllReligion();
 
+    //   Get All  DisabilityType
+    @Query("SELECT * FROM DisabilityType")
+    List<DisabilityType> getAllDisabilityType();
+
+    //   Get All  SexualityType
+    @Query("SELECT * FROM SexualityType")
+    List<SexualityType> getAllSexualityType();
+
+    //   Get All  CountryCode
+    @Query("SELECT * FROM CountryCode")
+    List<CountryCode> getAllCountryCode();
+
 //    @Query("SELECT * FROM user where first_name LIKE  :firstName AND last_name LIKE :lastName")
 //    User findByName(String firstName, String lastName);
 
@@ -69,6 +84,15 @@ public interface ProfileDao {
     //    get Religion count
     @Query("SELECT COUNT(*) from Religion")
     int countReligion();
+// get all DisabilityType
+    @Query("SELECT COUNT(*) from DisabilityType")
+    int countDisabilityType();
+    // get all DisabilityType
+    @Query("SELECT COUNT(*) from SexualityType")
+    int countSexualityType();
+    // get all CountryCode
+    @Query("SELECT COUNT(*) from CountryCode")
+    int countCountryCode();
 
 //    insert all Languages
     @Insert
@@ -91,7 +115,15 @@ public interface ProfileDao {
     //    insert all Religion
     @Insert
     void insertAllReligion(Religion... personLanguages);
-
+// insert all DisabilityType
+    @Insert
+    void insertAllDisabilityType(DisabilityType... personLanguages);
+    // insert all SexualityType
+    @Insert
+    void insertAllSexualityType(SexualityType... personLanguages);
+    // insert all CountryCode
+    @Insert
+    void insertAllCountryCode(CountryCode... personLanguages);
 
     @Delete
     void delete(PersonLanguage user);
@@ -117,5 +149,13 @@ public interface ProfileDao {
     // delete all Religion
     @Query("DELETE  FROM Religion")
     public void deleteAllReligion();
-
+    // delete all DisabilityType
+    @Query("DELETE  FROM DisabilityType")
+    public void deleteAllDisabilityType();
+    // delete all SexualityType
+    @Query("DELETE  FROM SexualityType")
+    public void deleteAllSexualityType();
+    // delete all CountryCode
+    @Query("DELETE  FROM CountryCode")
+    public void deleteAllCountryCode();
 }

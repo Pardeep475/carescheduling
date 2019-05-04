@@ -9,6 +9,7 @@ public class Constants {
     public static String BASE_URL = "http://mobile.rota.services/CssMobileRestfulService.svc/";
 
     public static String PROFILE_DATA = "profile_data";
+    public static String STRING_VALUE = "string_value";
     public static String PERSON_ID = "PersonId";
     public static String CUSTOMER_ID = "CustomerId";
     public static String BRANCH_ID = "BranchId";

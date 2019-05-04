@@ -6,6 +6,8 @@ import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,20 +15,35 @@ import android.view.ViewGroup;
 
 import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseFragment;
+import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
+import com.example.carescheduling.Ui.Profile.ViewModel.EditEmailViewModel;
+import com.example.carescheduling.Ui.Profile.bean.EditEmailBean;
 import com.example.carescheduling.Ui.Profile.presenter.EditEmailClick;
+import com.example.carescheduling.Utils.Constants;
 import com.example.carescheduling.databinding.FragmentEditEmailBinding;
 
 public class EditEmail extends BaseFragment implements EditEmailClick {
     private FragmentEditEmailBinding editEmailBinding;
+    private String stringValue;
+    private ProfileBean profileBean;
+    private EditEmailViewModel editEmailViewModel;
 
-    public static EditEmail newInstance() {
-        return new EditEmail();
+    public static EditEmail newInstance(String value, ProfileBean profileBean) {
+        EditEmail editEmail = new EditEmail();
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants.STRING_VALUE, value);
+        bundle.putSerializable(Constants.PROFILE_DATA, profileBean);
+        editEmail.setArguments(bundle);
+        return editEmail;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        if (getArguments() != null) {
+            stringValue = getArguments().getString(Constants.STRING_VALUE);
+            profileBean = (ProfileBean) getArguments().getSerializable(Constants.PROFILE_DATA);
+        }
     }
 
     @Override
@@ -40,7 +57,18 @@ public class EditEmail extends BaseFragment implements EditEmailClick {
     }
 
     private void setUpView(View view) {
+        editEmailViewModel = ViewModelProviders.of(this).get(EditEmailViewModel.class);
+        setEditEmailData();
         editEmailBinding.setEditEmailClick(this);
+    }
+
+    private void setEditEmailData() {
+        editEmailViewModel.getEditEmailBean(stringValue, profileBean).observe(this, new Observer<EditEmailBean>() {
+            @Override
+            public void onChanged(EditEmailBean editEmailBean) {
+                editEmailBinding.setEditEmailBean(editEmailBean);
+            }
+        });
     }
 
     @Override

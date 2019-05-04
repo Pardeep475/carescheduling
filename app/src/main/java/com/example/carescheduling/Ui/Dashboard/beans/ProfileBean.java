@@ -1125,7 +1125,7 @@ public class ProfileBean implements Serializable {
         private String maidenName;
         @SerializedName("MiddleName")
         @Expose
-        private Object middleName;
+        private String middleName;
         @SerializedName("PersonAddedDate")
         @Expose
         private String personAddedDate;
@@ -1230,11 +1230,11 @@ public class ProfileBean implements Serializable {
             this.maidenName = maidenName;
         }
 
-        public Object getMiddleName() {
+        public String getMiddleName() {
             return middleName;
         }
 
-        public void setMiddleName(Object middleName) {
+        public void setMiddleName(String middleName) {
             this.middleName = middleName;
         }
 

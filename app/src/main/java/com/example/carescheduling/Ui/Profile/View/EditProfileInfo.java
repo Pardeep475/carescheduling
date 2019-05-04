@@ -23,14 +23,18 @@ import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
 import com.example.carescheduling.Ui.Dashboard.beans.ProfileResultBean;
 import com.example.carescheduling.Ui.Profile.Adapter.CustomAdapter;
 import com.example.carescheduling.Ui.Profile.ViewModel.EditProfileInfoViewModel;
+import com.example.carescheduling.Ui.Profile.bean.EditProfileInfoBean;
 import com.example.carescheduling.Ui.Profile.presenter.EditEmailClick;
 import com.example.carescheduling.Ui.Profile.presenter.EditProfileInfoClick;
 import com.example.carescheduling.Utils.Constants;
+import com.example.carescheduling.data.Local.DatabaseTable.DisabilityType;
 import com.example.carescheduling.data.Local.DatabaseTable.Ethnicity;
 import com.example.carescheduling.data.Local.DatabaseTable.Gender;
 import com.example.carescheduling.data.Local.DatabaseTable.MaritialStatus;
 import com.example.carescheduling.data.Local.DatabaseTable.PersonLanguage;
 import com.example.carescheduling.data.Local.DatabaseTable.Prefix;
+import com.example.carescheduling.data.Local.DatabaseTable.Religion;
+import com.example.carescheduling.data.Local.DatabaseTable.SexualityType;
 import com.example.carescheduling.databinding.FragmentEditProfileInfoBinding;
 
 import java.io.Serializable;
@@ -80,12 +84,75 @@ public class EditProfileInfo extends BaseFragment implements EditEmailClick, Edi
         setGenderData();
         setPrefixData();
         setMaritalData();
-
+        setDisabilityType();
+        setReligion();
+        setSexualityType();
+        setProfileInfoBeanData(profileResultBean);
         fragmentEditProfileInfoBinding.setEditEmailClick(this);
         fragmentEditProfileInfoBinding.setEditProfileInfoClick(this);
 
     }
 
+
+
+    private void setProfileInfoBeanData(ProfileBean profileResultBean) {
+        editProfileInfoViewModel.getProfileEditBean(profileResultBean).observe(this, new Observer<EditProfileInfoBean>() {
+            @Override
+            public void onChanged(EditProfileInfoBean editProfileInfoBean) {
+                fragmentEditProfileInfoBinding.setProfileInfoBean(editProfileInfoBean);
+            }
+        });
+    }
+    private void setSexualityType() {
+        editProfileInfoViewModel.getSexualityType().observe(this, new Observer<List<SexualityType>>() {
+            @Override
+            public void onChanged(List<SexualityType> sexualityTypes) {
+                ArrayList<String> arrayList = new ArrayList<>();
+                if (sexualityTypes != null && sexualityTypes.size() > 0) {
+                    for (int i = 0; i < sexualityTypes.size(); i++) {
+                        arrayList.add(sexualityTypes.get(i).getSexualityName());
+                    }
+                    CustomAdapter adapter = new CustomAdapter(getActivity(),
+                            R.layout.item_spinner_sf, R.id.title, arrayList);
+                    fragmentEditProfileInfoBinding.spinnerSexuality.setAdapter(adapter);
+                }
+            }
+        });
+    }
+
+    private void setReligion() {
+        editProfileInfoViewModel.getReligion().observe(this, new Observer<List<Religion>>() {
+            @Override
+            public void onChanged(List<Religion> religions) {
+                ArrayList<String> arrayList = new ArrayList<>();
+                if (religions != null && religions.size() > 0) {
+                    for (int i = 0; i < religions.size(); i++) {
+                        arrayList.add(religions.get(i).getReligionName());
+                    }
+                    CustomAdapter adapter = new CustomAdapter(getActivity(),
+                            R.layout.item_spinner_sf, R.id.title, arrayList);
+                    fragmentEditProfileInfoBinding.spinnerReligion.setAdapter(adapter);
+                }
+            }
+        });
+    }
+
+    private void setDisabilityType() {
+        editProfileInfoViewModel.getDisabilityType().observe(this, new Observer<List<DisabilityType>>() {
+            @Override
+            public void onChanged(List<DisabilityType> disabilityTypes) {
+                ArrayList<String> arrayList = new ArrayList<>();
+                if (disabilityTypes != null && disabilityTypes.size() > 0) {
+                    for (int i = 0; i < disabilityTypes.size(); i++) {
+                        arrayList.add(disabilityTypes.get(i).getDisabilityName());
+                    }
+                    CustomAdapter adapter = new CustomAdapter(getActivity(),
+                            R.layout.item_spinner_sf, R.id.title, arrayList);
+                    fragmentEditProfileInfoBinding.spinnerDisability.setAdapter(adapter);
+                }
+            }
+        });
+    }
     private void setLanguageData() {
         editProfileInfoViewModel.getPersonLanguage().observe(this, new Observer<List<PersonLanguage>>() {
             @Override

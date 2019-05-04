@@ -3,6 +3,8 @@ package com.example.carescheduling.data.Local;
 import android.content.Context;
 
 import com.example.carescheduling.data.Local.DatabaseDao.ProfileDao;
+import com.example.carescheduling.data.Local.DatabaseTable.CountryCode;
+import com.example.carescheduling.data.Local.DatabaseTable.DisabilityType;
 import com.example.carescheduling.data.Local.DatabaseTable.Ethnicity;
 import com.example.carescheduling.data.Local.DatabaseTable.Gender;
 import com.example.carescheduling.data.Local.DatabaseTable.MaritialStatus;
@@ -10,13 +12,15 @@ import com.example.carescheduling.data.Local.DatabaseTable.Nationality;
 import com.example.carescheduling.data.Local.DatabaseTable.PersonLanguage;
 import com.example.carescheduling.data.Local.DatabaseTable.Prefix;
 import com.example.carescheduling.data.Local.DatabaseTable.Religion;
+import com.example.carescheduling.data.Local.DatabaseTable.SexualityType;
 
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 @Database(entities = {PersonLanguage.class, Ethnicity.class, Gender.class, MaritialStatus.class
-, Nationality.class, Prefix.class, Religion.class}, version = 1, exportSchema = false)
+        , Nationality.class, Prefix.class, Religion.class, DisabilityType.class, SexualityType.class
+        , CountryCode.class}, version = 2, exportSchema = false)
 public abstract class AppDataBase extends RoomDatabase {
 
     private static AppDataBase INSTANCE;

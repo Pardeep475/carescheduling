@@ -4,9 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-<variable
-    name="editAddressClick"
-    type="com.example.carescheduling.Ui.Profile.presenter.EditProfileAddressClick"/>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="editProfileAddressBean"
+            type="com.example.carescheduling.Ui.Profile.bean.EditProfileAddressBean" />
+
+        <variable
+            name="editAddressClick"
+            type="com.example.carescheduling.Ui.Profile.presenter.EditProfileAddressClick" />
     </data>
 
     <LinearLayout
@@ -27,9 +34,9 @@
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:contentDescription="@string/user_profile"
+                android:onClick="@{(v)-> editAddressClick.BackButtonClick()}"
                 android:paddingStart="@dimen/ten_dp"
                 android:paddingEnd="@dimen/ten_dp"
-                android:onClick="@{(v)-> editAddressClick.BackButtonClick()}"
                 android:tint="@color/white"
                 app:srcCompat="@drawable/ic_left_back" />
 
@@ -62,41 +69,32 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingStart="@dimen/twenty_dp"
-                android:paddingEnd="@dimen/twenty_dp"
-                android:paddingTop="@dimen/ten_dp"
-                android:paddingBottom="@dimen/ten_dp"
                 android:layout_marginTop="@dimen/twenty_dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingStart="@dimen/twenty_dp"
+                android:paddingTop="@dimen/ten_dp"
+                android:paddingEnd="@dimen/twenty_dp"
+                android:paddingBottom="@dimen/ten_dp">
 
                 <RadioGroup
+                    android:id="@+id/rb_address"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content" />
 
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/private_address" />
-
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/work_address" />
-
-                </RadioGroup>
 
                 <LinearLayout
                     android:id="@+id/ll_edit_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/ten_dp"
-                    android:orientation="horizontal"
                     android:layout_marginBottom="@dimen/ten_dp"
-                    android:paddingStart="@dimen/ten_dp"
                     android:onClick="@{(v)-> editAddressClick.EditAddressClick()}"
+                    android:orientation="horizontal"
+                    android:paddingStart="@dimen/ten_dp"
                     android:paddingTop="@dimen/ten_dp"
                     android:paddingEnd="@dimen/ten_dp"
-                    android:paddingBottom="@dimen/ten_dp">
+                    android:paddingBottom="@dimen/ten_dp"
+                    android:visibility="@{editProfileAddressBean.getAddressArray().size() > 0 ? View.VISIBLE :View.GONE}">
 
                     <ImageView
                         android:layout_width="@dimen/twenty_dp"
@@ -118,38 +116,24 @@
 
 
                 <RadioGroup
+                    android:id="@+id/rb_phone"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content" />
 
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/private_landline" />
-
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/work_phone" />
-
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/mobile_phone" />
-
-                </RadioGroup>
 
                 <LinearLayout
                     android:id="@+id/ll_edit_phone_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/ten_dp"
-                    android:orientation="horizontal"
                     android:layout_marginBottom="@dimen/ten_dp"
+                    android:onClick="@{(v)-> editAddressClick.EditPhoneNumberClick()}"
+                    android:orientation="horizontal"
                     android:paddingStart="@dimen/ten_dp"
                     android:paddingTop="@dimen/ten_dp"
                     android:paddingEnd="@dimen/ten_dp"
-                    android:onClick="@{(v)-> editAddressClick.EditPhoneNumberClick()}"
-                    android:paddingBottom="@dimen/ten_dp">
+                    android:paddingBottom="@dimen/ten_dp"
+                    android:visibility="@{editProfileAddressBean.getPhoneArray().size() > 0 ? View.VISIBLE :View.GONE}">
 
                     <ImageView
                         android:layout_width="@dimen/twenty_dp"
@@ -170,33 +154,24 @@
                 </LinearLayout>
 
                 <RadioGroup
+                    android:id="@+id/rb_email"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content" />
 
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/private_email" />
-
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/work_email" />
-
-                </RadioGroup>
 
                 <LinearLayout
                     android:id="@+id/ll_edit_email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/ten_dp"
+                    android:layout_marginBottom="@dimen/ten_dp"
+                    android:onClick="@{(v)-> editAddressClick.EditEmailClick()}"
                     android:orientation="horizontal"
                     android:paddingStart="@dimen/ten_dp"
                     android:paddingTop="@dimen/ten_dp"
-                    android:onClick="@{(v)-> editAddressClick.EditEmailClick()}"
                     android:paddingEnd="@dimen/ten_dp"
-                    android:layout_marginBottom="@dimen/ten_dp"
-                    android:paddingBottom="@dimen/ten_dp">
+                    android:paddingBottom="@dimen/ten_dp"
+                    android:visibility="@{editProfileAddressBean.getEmailArray().size() > 0 ? View.VISIBLE :View.GONE}">
 
                     <ImageView
                         android:layout_width="@dimen/twenty_dp"

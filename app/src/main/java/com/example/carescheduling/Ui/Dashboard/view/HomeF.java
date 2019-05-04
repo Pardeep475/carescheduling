@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseFragment;
 import com.example.carescheduling.Ui.Dashboard.Adapter.HomeScreenAdapter;
+import com.example.carescheduling.Ui.Dashboard.beans.HomeScreenBean;
 import com.example.carescheduling.Ui.Dashboard.presenter.HomeScreenOnClick;
 import com.example.carescheduling.Ui.Dashboard.presenter.ProfileClickHandler;
 import com.example.carescheduling.Ui.LoginActivity.View.LoginActivity;
@@ -24,6 +25,7 @@ import com.example.carescheduling.databinding.FragmentHomeBinding;
 
 public class HomeF extends BaseFragment implements ProfileClickHandler, HomeScreenOnClick {
     private FragmentHomeBinding fragmentHomeBinding;
+    private HomeScreenBean homeScreenBean;
 
     // TODO: Rename and change types and number of parameters
     public static HomeF newInstance() {
@@ -48,25 +50,30 @@ public class HomeF extends BaseFragment implements ProfileClickHandler, HomeScre
     }
 
     private void setUpView(View view) {
+        homeScreenBean = new HomeScreenBean();
+        homeScreenBean.setName("pardeep");
+        homeScreenBean.setPassword("12345");
         sessionManager = getSessionManager();
         String[] some_array = getResources().getStringArray(R.array.home_array);
-        HomeScreenAdapter homeScreenAdapter =new HomeScreenAdapter(getActivity(),this,some_array);
+        HomeScreenAdapter homeScreenAdapter = new HomeScreenAdapter(getActivity(), this, some_array);
         fragmentHomeBinding.rcvHome.setLayoutManager(new LinearLayoutManager(getActivity()));
         fragmentHomeBinding.rcvHome.setAdapter(homeScreenAdapter);
 
         fragmentHomeBinding.setClickhandler(this);
     }
+
     @Override
     public void logout() {
         sessionManager.cleanAllData();
         Intent intent = new Intent(getActivity(), LoginActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         getActivity().finish();
     }
 
     @Override
     public void OnClickHomeScreen(int pos) {
-        Toast.makeText(getActivity(), ""+pos, Toast.LENGTH_SHORT).show();
+        homeScreenBean.setName(homeScreenBean.getName() + " " + pos);
+        Toast.makeText(getActivity(), homeScreenBean.getPassword()+"    " + homeScreenBean.getName(), Toast.LENGTH_SHORT).show();
     }
 }

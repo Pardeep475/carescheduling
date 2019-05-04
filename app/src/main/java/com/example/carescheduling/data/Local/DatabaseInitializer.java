@@ -4,11 +4,16 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 
+import com.example.carescheduling.data.Local.DatabaseTable.CountryCode;
+import com.example.carescheduling.data.Local.DatabaseTable.DisabilityType;
 import com.example.carescheduling.data.Local.DatabaseTable.Ethnicity;
 import com.example.carescheduling.data.Local.DatabaseTable.Gender;
 import com.example.carescheduling.data.Local.DatabaseTable.MaritialStatus;
+import com.example.carescheduling.data.Local.DatabaseTable.Nationality;
 import com.example.carescheduling.data.Local.DatabaseTable.PersonLanguage;
 import com.example.carescheduling.data.Local.DatabaseTable.Prefix;
+import com.example.carescheduling.data.Local.DatabaseTable.Religion;
+import com.example.carescheduling.data.Local.DatabaseTable.SexualityType;
 
 import java.util.List;
 
@@ -25,6 +30,11 @@ public class DatabaseInitializer {
     private static MutableLiveData<List<Gender>> genderLiveData = new MutableLiveData<>();
     private static MutableLiveData<List<MaritialStatus>> maritalStatusLiveData = new MutableLiveData<>();
     private static MutableLiveData<List<Prefix>> prefixLiveData = new MutableLiveData<>();
+    private static MutableLiveData<List<DisabilityType>> disabilityTypeLiveData = new MutableLiveData<>();
+    private static MutableLiveData<List<SexualityType>> sexualityTypeLiveData = new MutableLiveData<>();
+    private static MutableLiveData<List<CountryCode>> countryCodeLiveData = new MutableLiveData<>();
+    private static MutableLiveData<List<Religion>> religionLiveData = new MutableLiveData<>();
+    private static MutableLiveData<List<Nationality>> nationalityLiveData = new MutableLiveData<>();
 
     // language
     public static void populateAsyncLanguage(@NonNull final AppDataBase db, List<PersonLanguage> list) {
@@ -58,6 +68,37 @@ public class DatabaseInitializer {
     public static void populateAsyncPrefix(@NonNull final AppDataBase db, List<Prefix> list) {
 
         PopulateDbAsyncPrefix task = new PopulateDbAsyncPrefix(db, list);
+        task.execute();
+    }
+
+    // disability type
+    public static void populateAsyncDisabilityType(@NonNull final AppDataBase db, List<DisabilityType> list) {
+
+        PopulateDbAsyncDisabilityType task = new PopulateDbAsyncDisabilityType(db, list);
+        task.execute();
+    }
+
+    //    SexualityType
+    public static void populateAsyncSexualityType(@NonNull final AppDataBase db, List<SexualityType> list) {
+        PopulateDbAsyncSexualityType task = new PopulateDbAsyncSexualityType(db, list);
+        task.execute();
+    }
+
+    //    CountryCode
+    public static void populateAsyncCountryCode(@NonNull final AppDataBase db, List<CountryCode> list) {
+        PopulateDbAsyncCountryCode task = new PopulateDbAsyncCountryCode(db, list);
+        task.execute();
+    }
+
+    //    Religion
+    public static void populateAsyncReligion(@NonNull final AppDataBase db, List<Religion> list) {
+        PopulateDbAsyncReligion task = new PopulateDbAsyncReligion(db, list);
+        task.execute();
+    }
+
+    //    Nationality
+    public static void populateAsyncNationality(@NonNull final AppDataBase db, List<Nationality> list) {
+        PopulateDbAsyncNationality task = new PopulateDbAsyncNationality(db, list);
         task.execute();
     }
 
@@ -117,7 +158,7 @@ public class DatabaseInitializer {
     private static void populateWithEthnicityData(AppDataBase db, List<Ethnicity> list) {
         List<Ethnicity> userList = db.profileDao().getAllEthnicity();
         if (userList.size() > 0)
-            db.profileDao().deleteAll();
+            db.profileDao().deleteAllEthnicity();
         for (Ethnicity user : list) {
             addUserEthnicity(db, user);
         }
@@ -151,7 +192,7 @@ public class DatabaseInitializer {
     private static void populateWithGenderData(AppDataBase db, List<Gender> list) {
         List<Gender> userList = db.profileDao().getAllGender();
         if (userList.size() > 0)
-            db.profileDao().deleteAll();
+            db.profileDao().deleteAllGender();
         for (Gender user : list) {
             addUserGender(db, user);
         }
@@ -185,7 +226,7 @@ public class DatabaseInitializer {
     private static void populateWithMaritialStatusData(AppDataBase db, List<MaritialStatus> list) {
         List<MaritialStatus> userList = db.profileDao().getAllMaritialStatus();
         if (userList.size() > 0)
-            db.profileDao().deleteAll();
+            db.profileDao().deleteAllMaritialStatus();
         for (MaritialStatus user : list) {
             addUserMaritialStatus(db, user);
         }
@@ -219,7 +260,7 @@ public class DatabaseInitializer {
     private static void populateWithPrefixData(AppDataBase db, List<Prefix> list) {
         List<Prefix> userList = db.profileDao().getAllPrefix();
         if (userList.size() > 0)
-            db.profileDao().deleteAll();
+            db.profileDao().deleteAllPrefix();
         for (Prefix user : list) {
             addUserPrefix(db, user);
         }
@@ -231,6 +272,175 @@ public class DatabaseInitializer {
         db.profileDao().insertAllPrefix(user);
     }
 
+    //    PopulateDbAsyncDisabilityType
+    private static class PopulateDbAsyncDisabilityType extends AsyncTask<Void, Void, Void> {
+
+        private final AppDataBase mDb;
+        private List<DisabilityType> list;
+
+        PopulateDbAsyncDisabilityType(AppDataBase db, List<DisabilityType> list) {
+            mDb = db;
+            this.list = list;
+        }
+
+        @Override
+        protected Void doInBackground(final Void... params) {
+            populateWithDisabilityTypeData(mDb, list);
+            return null;
+        }
+
+    }
+
+    private static void populateWithDisabilityTypeData(AppDataBase db, List<DisabilityType> list) {
+        List<DisabilityType> userList = db.profileDao().getAllDisabilityType();
+        if (userList.size() > 0)
+            db.profileDao().deleteAllDisabilityType();
+        for (DisabilityType user : list) {
+            addUserDisabilityType(db, user);
+        }
+        Log.d(DatabaseInitializer.TAG, "Rows Count: " + userList.size());
+//        Toast.makeText(this, "Rows Count: " + userList.size(), Toast.LENGTH_SHORT).show();
+    }
+
+    private static void addUserDisabilityType(final AppDataBase db, DisabilityType user) {
+        db.profileDao().insertAllDisabilityType(user);
+    }
+
+    //    SexualityType
+    private static class PopulateDbAsyncSexualityType extends AsyncTask<Void, Void, Void> {
+
+        private final AppDataBase mDb;
+        private List<SexualityType> list;
+
+        PopulateDbAsyncSexualityType(AppDataBase db, List<SexualityType> list) {
+            mDb = db;
+            this.list = list;
+        }
+
+        @Override
+        protected Void doInBackground(final Void... params) {
+            populateWithSexualityTypeData(mDb, list);
+            return null;
+        }
+
+    }
+
+    private static void populateWithSexualityTypeData(AppDataBase db, List<SexualityType> list) {
+        List<SexualityType> userList = db.profileDao().getAllSexualityType();
+        if (userList.size() > 0)
+            db.profileDao().deleteAllSexualityType();
+        for (SexualityType user : list) {
+            addUserSexualityType(db, user);
+        }
+        Log.d(DatabaseInitializer.TAG, "Rows Count: " + userList.size());
+//        Toast.makeText(this, "Rows Count: " + userList.size(), Toast.LENGTH_SHORT).show();
+    }
+
+    private static void addUserSexualityType(final AppDataBase db, SexualityType user) {
+        db.profileDao().insertAllSexualityType(user);
+    }
+
+    //    CountryCode
+    private static class PopulateDbAsyncCountryCode extends AsyncTask<Void, Void, Void> {
+
+        private final AppDataBase mDb;
+        private List<CountryCode> list;
+
+        PopulateDbAsyncCountryCode(AppDataBase db, List<CountryCode> list) {
+            mDb = db;
+            this.list = list;
+        }
+
+        @Override
+        protected Void doInBackground(final Void... params) {
+            populateWithCountryCodeData(mDb, list);
+            return null;
+        }
+
+    }
+
+    private static void populateWithCountryCodeData(AppDataBase db, List<CountryCode> list) {
+        List<CountryCode> userList = db.profileDao().getAllCountryCode();
+        if (userList.size() > 0)
+            db.profileDao().deleteAllCountryCode();
+        for (CountryCode user : list) {
+            addUserCountryCode(db, user);
+        }
+        Log.d(DatabaseInitializer.TAG, "Rows Count: " + userList.size());
+//        Toast.makeText(this, "Rows Count: " + userList.size(), Toast.LENGTH_SHORT).show();
+    }
+
+    private static void addUserCountryCode(final AppDataBase db, CountryCode user) {
+        db.profileDao().insertAllCountryCode(user);
+    }
+
+    //    Religion
+    private static class PopulateDbAsyncReligion extends AsyncTask<Void, Void, Void> {
+
+        private final AppDataBase mDb;
+        private List<Religion> list;
+
+        PopulateDbAsyncReligion(AppDataBase db, List<Religion> list) {
+            mDb = db;
+            this.list = list;
+        }
+
+        @Override
+        protected Void doInBackground(final Void... params) {
+            populateWithReligionData(mDb, list);
+            return null;
+        }
+
+    }
+
+    private static void populateWithReligionData(AppDataBase db, List<Religion> list) {
+        List<Religion> userList = db.profileDao().getAllReligion();
+        if (userList.size() > 0)
+            db.profileDao().deleteAllReligion();
+        for (Religion user : list) {
+            addUserReligion(db, user);
+        }
+        Log.d(DatabaseInitializer.TAG, "Rows Count: " + userList.size());
+//        Toast.makeText(this, "Rows Count: " + userList.size(), Toast.LENGTH_SHORT).show();
+    }
+
+    private static void addUserReligion(final AppDataBase db, Religion user) {
+        db.profileDao().insertAllReligion(user);
+    }
+
+    //    Nationality
+    private static class PopulateDbAsyncNationality extends AsyncTask<Void, Void, Void> {
+
+        private final AppDataBase mDb;
+        private List<Nationality> list;
+
+        PopulateDbAsyncNationality(AppDataBase db, List<Nationality> list) {
+            mDb = db;
+            this.list = list;
+        }
+
+        @Override
+        protected Void doInBackground(final Void... params) {
+            populateWithNationalityData(mDb, list);
+            return null;
+        }
+
+    }
+
+    private static void populateWithNationalityData(AppDataBase db, List<Nationality> list) {
+        List<Nationality> userList = db.profileDao().getAllNationality();
+        if (userList.size() > 0)
+            db.profileDao().deleteAllNationality();
+        for (Nationality user : list) {
+            addUserNationality(db, user);
+        }
+        Log.d(DatabaseInitializer.TAG, "Rows Count: " + userList.size());
+//        Toast.makeText(this, "Rows Count: " + userList.size(), Toast.LENGTH_SHORT).show();
+    }
+
+    private static void addUserNationality(final AppDataBase db, Nationality user) {
+        db.profileDao().insertAllNationality(user);
+    }
 
     // get Languages
     public static MutableLiveData<List<PersonLanguage>> loadLanguages(final AppDataBase db) {
@@ -309,7 +519,93 @@ public class DatabaseInitializer {
                 prefixLiveData.setValue(notes);
             }
         }.execute();
-        
+
         return prefixLiveData;
     }
+
+    // get DisabilityType
+    public static MutableLiveData<List<DisabilityType>> loadDisabilityType(final AppDataBase db) {
+        new AsyncTask<Void, Void, List<DisabilityType>>() {
+            @Override
+            protected List<DisabilityType> doInBackground(Void... params) {
+                return db.profileDao().getAllDisabilityType();
+            }
+
+            @Override
+            protected void onPostExecute(List<DisabilityType> notes) {
+                disabilityTypeLiveData.setValue(notes);
+            }
+        }.execute();
+
+        return disabilityTypeLiveData;
+    }
+
+    //    get SexualityType
+    public static MutableLiveData<List<SexualityType>> loadSexualityType(final AppDataBase db) {
+        new AsyncTask<Void, Void, List<SexualityType>>() {
+            @Override
+            protected List<SexualityType> doInBackground(Void... params) {
+                return db.profileDao().getAllSexualityType();
+            }
+
+            @Override
+            protected void onPostExecute(List<SexualityType> notes) {
+                sexualityTypeLiveData.setValue(notes);
+            }
+        }.execute();
+
+        return sexualityTypeLiveData;
+    }
+
+    //    CountryCode
+    public static MutableLiveData<List<CountryCode>> loadCountryCode(final AppDataBase db) {
+        new AsyncTask<Void, Void, List<CountryCode>>() {
+            @Override
+            protected List<CountryCode> doInBackground(Void... params) {
+                return db.profileDao().getAllCountryCode();
+            }
+
+            @Override
+            protected void onPostExecute(List<CountryCode> notes) {
+                countryCodeLiveData.setValue(notes);
+            }
+        }.execute();
+
+        return countryCodeLiveData;
+    }
+
+    //    Religion
+    public static MutableLiveData<List<Religion>> loadReligion(final AppDataBase db) {
+        new AsyncTask<Void, Void, List<Religion>>() {
+            @Override
+            protected List<Religion> doInBackground(Void... params) {
+                return db.profileDao().getAllReligion();
+            }
+
+            @Override
+            protected void onPostExecute(List<Religion> notes) {
+                religionLiveData.setValue(notes);
+            }
+        }.execute();
+
+        return religionLiveData;
+    }
+
+    //    Nationality
+    public static MutableLiveData<List<Nationality>> loadNationality(final AppDataBase db) {
+        new AsyncTask<Void, Void, List<Nationality>>() {
+            @Override
+            protected List<Nationality> doInBackground(Void... params) {
+                return db.profileDao().getAllNationality();
+            }
+
+            @Override
+            protected void onPostExecute(List<Nationality> notes) {
+                nationalityLiveData.setValue(notes);
+            }
+        }.execute();
+
+        return nationalityLiveData;
+    }
+
 }

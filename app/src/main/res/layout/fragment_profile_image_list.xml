@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="profileResultBean"
+            type="com.example.carescheduling.Ui.Dashboard.beans.ProfileBean"/>
         <variable
             name="editEmailClick"
             type="com.example.carescheduling.Ui.Profile.presenter.EditEmailClick" />

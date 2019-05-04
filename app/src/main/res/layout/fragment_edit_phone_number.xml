@@ -5,6 +5,9 @@
 
     <data>
         <variable
+            name="editPhoneNumberBean"
+            type="com.example.carescheduling.Ui.Profile.bean.EditPhoneNumberBean"/>
+        <variable
             name="editEmailClick"
             type="com.example.carescheduling.Ui.Profile.presenter.EditEmailClick"/>
     </data>
@@ -72,6 +75,7 @@
             android:layout_marginEnd="@dimen/twenty_dp"
             android:background="@android:color/white"
             android:paddingStart="@dimen/ten_dp"
+            android:text="@{editPhoneNumberBean.getPhoneNumber()}"
             android:paddingTop="@dimen/ten_dp"
             android:paddingEnd="@dimen/ten_dp"
             android:paddingBottom="@dimen/ten_dp" />
@@ -97,6 +101,7 @@
                 android:layout_weight="1.3"
                 android:background="@android:color/white"
                 android:paddingStart="@dimen/ten_dp"
+                android:text="@{editPhoneNumberBean.getCountryCode()}"
                 android:paddingTop="@dimen/ten_dp"
                 android:paddingEnd="@dimen/ten_dp"
                 android:paddingBottom="@dimen/ten_dp" />

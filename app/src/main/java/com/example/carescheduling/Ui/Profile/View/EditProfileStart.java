@@ -50,6 +50,7 @@ public class EditProfileStart extends BaseFragment implements EditProfileStartCl
     }
 
     private void setUpView(View view) {
+        editProfileStartBinding.setProfileResultBean(profileResultBean);
         editProfileStartBinding.setEditProfileStartClick(this);
     }
 

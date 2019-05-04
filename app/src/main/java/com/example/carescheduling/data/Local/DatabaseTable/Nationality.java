@@ -7,20 +7,20 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "Nationality")
 public class Nationality {
-    @PrimaryKey(autoGenerate = false)
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "nationality_id")
     @NonNull
-    private String nationalityID;
+    private int nationalityID;
     @ColumnInfo(name = "nationality_name")
     @NonNull
     private String nationalityName;
 
     @NonNull
-    public String getNationalityID() {
+    public int getNationalityID() {
         return nationalityID;
     }
 
-    public void setNationalityID(@NonNull String nationalityID) {
+    public void setNationalityID(@NonNull int nationalityID) {
         this.nationalityID = nationalityID;
     }
 

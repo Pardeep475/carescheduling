@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:paddingStart="@dimen/twenty_dp"
+    android:paddingTop="@dimen/ten_dp"
+    android:paddingEnd="@dimen/twenty_dp"
+    android:paddingBottom="@dimen/ten_dp"
+    android:layout_height="wrap_content">
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/private_address" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/work_address" />
+
+    </RadioGroup>
+</RelativeLayout>

@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <variable
+            name="profileAddressBean"
+            type="com.example.carescheduling.Ui.Profile.bean.ProfileAddressBean" />
+
+        <variable
             name="editEmailClick"
-            type="com.example.carescheduling.Ui.Profile.presenter.EditEmailClick"/>
+            type="com.example.carescheduling.Ui.Profile.presenter.EditEmailClick" />
     </data>
 
     <RelativeLayout
@@ -19,17 +23,18 @@
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
             android:background="@color/colorPrimary">
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_left_back"
                 android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/user_profile"
+                android:onClick="@{(v)->editEmailClick.BackButtonClick()}"
                 android:paddingStart="@dimen/ten_dp"
                 android:paddingEnd="@dimen/ten_dp"
-                android:onClick="@{(v)->editEmailClick.BackButtonClick()}"
-                android:layout_centerVertical="true"
                 android:tint="@color/white"
-                android:contentDescription="@string/user_profile" />
+                app:srcCompat="@drawable/ic_left_back" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -44,14 +49,14 @@
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_tick"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:tint="@color/white"
-                android:onClick="@{(v)->editEmailClick.DoneClick()}"
-                android:visibility="visible"
                 android:layout_marginEnd="@dimen/ten_dp"
-                android:contentDescription="@string/user_profile" />
+                android:contentDescription="@string/user_profile"
+                android:onClick="@{(v)->editEmailClick.DoneClick()}"
+                android:tint="@color/white"
+                android:visibility="visible"
+                app:srcCompat="@drawable/ic_tick" />
 
         </RelativeLayout>
 
@@ -88,6 +93,7 @@
                         android:layout_weight="1.3"
                         android:background="@android:color/white"
                         android:paddingStart="@dimen/ten_dp"
+                        android:text="@{profileAddressBean.getPostCode()}"
                         android:paddingTop="@dimen/ten_dp"
                         android:paddingEnd="@dimen/ten_dp"
                         android:paddingBottom="@dimen/ten_dp" />
@@ -125,6 +131,7 @@
                         android:layout_weight="1.3"
                         android:background="@android:color/white"
                         android:paddingStart="@dimen/ten_dp"
+                        android:text="@{profileAddressBean.getHouseNumber()}"
                         android:paddingTop="@dimen/ten_dp"
                         android:paddingEnd="@dimen/ten_dp"
                         android:paddingBottom="@dimen/ten_dp" />
@@ -153,6 +160,7 @@
                         android:background="@android:color/white"
                         android:paddingStart="@dimen/ten_dp"
                         android:paddingTop="@dimen/ten_dp"
+                        android:text="@{profileAddressBean.getHouseName()}"
                         android:paddingEnd="@dimen/ten_dp"
                         android:paddingBottom="@dimen/ten_dp" />
                 </LinearLayout>
@@ -179,6 +187,7 @@
                         android:layout_weight="1.3"
                         android:background="@android:color/white"
                         android:paddingStart="@dimen/ten_dp"
+                        android:text="@{profileAddressBean.getStreetName()}"
                         android:paddingTop="@dimen/ten_dp"
                         android:paddingEnd="@dimen/ten_dp"
                         android:paddingBottom="@dimen/ten_dp" />
@@ -206,6 +215,7 @@
                         android:layout_weight="1.3"
                         android:background="@android:color/white"
                         android:paddingStart="@dimen/ten_dp"
+                        android:text="@{profileAddressBean.getTown()}"
                         android:paddingTop="@dimen/ten_dp"
                         android:paddingEnd="@dimen/ten_dp"
                         android:paddingBottom="@dimen/ten_dp" />
@@ -234,6 +244,7 @@
                         android:background="@android:color/white"
                         android:paddingStart="@dimen/ten_dp"
                         android:paddingTop="@dimen/ten_dp"
+                        android:text="@{profileAddressBean.getCity()}"
                         android:paddingEnd="@dimen/ten_dp"
                         android:paddingBottom="@dimen/ten_dp" />
                 </LinearLayout>
@@ -261,6 +272,7 @@
                         android:background="@android:color/white"
                         android:paddingStart="@dimen/ten_dp"
                         android:paddingTop="@dimen/ten_dp"
+                        android:text="@{profileAddressBean.getCountry()}"
                         android:paddingEnd="@dimen/ten_dp"
                         android:paddingBottom="@dimen/ten_dp" />
                 </LinearLayout>
@@ -270,6 +282,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/fiften_dp"
                     android:layout_marginEnd="@dimen/twenty_dp"
+                    android:visibility="gone"
                     android:orientation="horizontal">
 
                     <TextView

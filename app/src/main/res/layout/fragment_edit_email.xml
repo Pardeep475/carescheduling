@@ -6,6 +6,10 @@
     <data>
 
         <variable
+            name="editEmailBean"
+            type="com.example.carescheduling.Ui.Profile.bean.EditEmailBean" />
+
+        <variable
             name="editEmailClick"
             type="com.example.carescheduling.Ui.Profile.presenter.EditEmailClick" />
     </data>
@@ -77,7 +81,8 @@
             android:paddingStart="@dimen/ten_dp"
             android:paddingTop="@dimen/ten_dp"
             android:paddingEnd="@dimen/ten_dp"
-            android:paddingBottom="@dimen/ten_dp" />
+            android:paddingBottom="@dimen/ten_dp"
+            android:text="@{editEmailBean.getEmail()}" />
 
         <RadioButton
             android:layout_width="wrap_content"
