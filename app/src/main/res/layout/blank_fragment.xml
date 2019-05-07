@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".Ui.HomeScreen.View.BlankFragment">
+
+        <RelativeLayout
+            android:id="@+id/rl_tool"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:background="@color/colorPrimary">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/user_profile"
+                android:paddingStart="@dimen/ten_dp"
+                android:paddingEnd="@dimen/ten_dp"
+                android:tint="@color/white"
+                app:srcCompat="@drawable/ic_left_back" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="@string/my_next_visit"
+                android:textColor="@color/white"
+                android:textSize="@dimen/forteen_sp" />
+
+            <ImageView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/ten_dp"
+                android:contentDescription="@string/user_profile"
+                android:tint="@color/white"
+                android:visibility="gone"
+                app:srcCompat="@drawable/ic_tick" />
+
+        </RelativeLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/rl_tool">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/sixteen_dp"
+                android:layout_marginTop="@dimen/sixteen_dp"
+                android:layout_marginEnd="@dimen/sixteen_dp">
+
+                <TextView
+                    android:id="@+id/edt_visit_person_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Mr. John Smith"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/eighteen_sp" />
+
+                <TextView
+                    android:id="@+id/edt_visit_person_day"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/edt_visit_person_name"
+                    android:layout_marginTop="@dimen/five_dp"
+                    android:text="Wednesday 12.10.2016"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/forteen_sp" />
+
+                <TextView
+                    android:id="@+id/txt_visit_person_timing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/edt_visit_person_day"
+                    android:layout_marginTop="@dimen/five_dp"
+                    android:text="@string/time"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/forteen_sp" />
+
+                <TextView
+                    android:id="@+id/edt_visit_person_timing_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/edt_visit_person_day"
+                    android:layout_marginStart="@dimen/ten_dp"
+                    android:layout_marginTop="@dimen/five_dp"
+                    android:layout_toEndOf="@+id/txt_visit_person_timing"
+                    android:text="08:30 - 09:30"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/forteen_sp" />
+
+
+                <ImageView
+                    android:id="@+id/img_visit_person"
+                    android:layout_width="@dimen/hundrd_dp"
+                    android:layout_height="@dimen/hundrd_dp"
+                    android:layout_below="@+id/txt_visit_person_timing"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="@dimen/ten_dp"
+                    android:contentDescription="@string/user_profile"
+                    app:srcCompat="@drawable/user_placeholder" />
+
+                <TextView
+                    android:id="@+id/txt_running_late"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txt_visit_person_timing"
+                    android:layout_marginStart="@dimen/ten_dp"
+                    android:layout_marginTop="@dimen/five_dp"
+                    android:layout_toEndOf="@+id/img_visit_person"
+                    android:background="@color/red"
+                    android:padding="@dimen/ten_dp"
+                    android:text="@string/running_late"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/forteen_sp" />
+
+                <TextView
+                    android:id="@+id/txt_key"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txt_running_late"
+                    android:layout_marginStart="@dimen/ten_dp"
+                    android:layout_marginTop="@dimen/five_dp"
+                    android:layout_toEndOf="@+id/img_visit_person"
+                    android:background="@color/blue"
+                    android:padding="@dimen/ten_dp"
+                    android:text="@string/running_late"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/forteen_sp" />
+
+
+                <TextView
+                    android:id="@+id/txt_next_upcoming_visit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/img_visit_person"
+                    android:layout_marginTop="@dimen/twenty_dp"
+                    android:text="@string/your_next_upcomming_visit_up_to"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/eighteen_sp" />
+
+                <TextView
+                    android:id="@+id/txt_person_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txt_next_upcoming_visit"
+                    android:layout_marginTop="@dimen/five_dp"
+                    android:text="Mr John smith."
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/forteen_sp" />
+
+                <TextView
+                    android:id="@+id/txt_person_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txt_person_name"
+                    android:layout_marginTop="@dimen/twenty_dp"
+                    android:text="@string/address"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/eighteen_sp" />
+
+                <TextView
+                    android:id="@+id/txt_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txt_person_address"
+                    android:layout_marginTop="@dimen/five_dp"
+                    android:text="Mr John smith."
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/forteen_sp" />
+
+                <TextView
+                    android:id="@+id/txt_person_telephone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txt_address"
+                    android:layout_marginTop="@dimen/twenty_dp"
+                    android:text="@string/telephone"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/eighteen_sp" />
+
+                <TextView
+                    android:id="@+id/txt_telephone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txt_person_telephone"
+                    android:layout_marginTop="@dimen/five_dp"
+                    android:text="Mr John smith."
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/forteen_sp" />
+
+
+                <Button
+                    android:id="@+id/btn_more_client_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txt_telephone"
+                    android:layout_marginTop="@dimen/fifty_dp"
+                    android:background="@color/blue"
+                    android:text="@string/more_info_client"
+                    android:textColor="@color/white" />
+
+                <Button
+                    android:id="@+id/btn_today_client_task"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/btn_more_client_info"
+                    android:layout_marginTop="@dimen/five_dp"
+                    android:background="@color/blue"
+                    android:text="@string/todays_client_task"
+                    android:textColor="@color/white" />
+
+                <LinearLayout
+                    android:id="@+id/btns_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/btn_today_client_task"
+                    android:layout_marginTop="@dimen/five_dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btn_barcode"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/five_dp"
+                        android:layout_weight="1"
+                        android:background="@color/blue"
+                        android:text="@string/barcode"
+                        android:textColor="@color/white" />
+
+                    <Button
+                        android:id="@+id/btn_read_nfc"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/blue"
+                        android:text="@string/read_nfc"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btn_need_direction"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/btns_layout"
+                    android:layout_marginTop="@dimen/five_dp"
+                    android:background="@color/blue"
+                    android:text="@string/need_direction"
+                    android:textColor="@color/white" />
+
+
+            </RelativeLayout>
+
+        </ScrollView>
+
+
+    </RelativeLayout>
+</layout>

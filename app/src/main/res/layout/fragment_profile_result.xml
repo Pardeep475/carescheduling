@@ -63,7 +63,6 @@
                     android:id="@+id/img_user_profile"
                     android:layout_width="@dimen/one_fifty_dp"
                     android:layout_height="@dimen/one_fifty_dp"
-                    android:src="@drawable/user_placeholder"
                     app:setImageBitmap="@{profileEditBean.imgUrl}"
                     android:contentDescription="@string/user_profile" />
 

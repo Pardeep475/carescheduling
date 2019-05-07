@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.carescheduling.R;
+import com.example.carescheduling.Ui.Profile.bean.ProfileImageList;
 import com.example.carescheduling.databinding.ItemProfileImageListBinding;
 
 import java.util.ArrayList;
@@ -16,11 +17,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class ProfileImageListAdapter extends RecyclerView.Adapter<ProfileImageListAdapter.MyViewHolder> {
     private ItemProfileImageListBinding itemProfileImageListBinding;
-    private ArrayList<String> arrayList;
+    private ArrayList<ProfileImageList> arrayList;
     private Context context;
     private LayoutInflater inflater;
 
-    public ProfileImageListAdapter(ArrayList<String> arrayList, Context context) {
+    public ProfileImageListAdapter(ArrayList<ProfileImageList> arrayList, Context context) {
         this.arrayList = arrayList;
         this.context = context;
         this.inflater = LayoutInflater.from(context);

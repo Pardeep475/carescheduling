@@ -16,7 +16,7 @@
             type="com.example.carescheduling.Ui.Profile.presenter.ProfileImageListClick" />
         <variable
             name="imageUrl"
-            type="String"/>
+            type="android.graphics.Bitmap"/>
     </data>
 
     <LinearLayout

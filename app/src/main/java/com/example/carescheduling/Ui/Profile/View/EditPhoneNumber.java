@@ -16,11 +16,17 @@ import android.view.ViewGroup;
 import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseFragment;
 import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
+import com.example.carescheduling.Ui.Profile.Adapter.CustomAdapter;
 import com.example.carescheduling.Ui.Profile.ViewModel.EditPhoneNumberViewModel;
 import com.example.carescheduling.Ui.Profile.bean.EditPhoneNumberBean;
 import com.example.carescheduling.Ui.Profile.presenter.EditEmailClick;
 import com.example.carescheduling.Utils.Constants;
+import com.example.carescheduling.data.Local.DatabaseTable.CountryCode;
+import com.example.carescheduling.data.Local.DatabaseTable.Nationality;
 import com.example.carescheduling.databinding.FragmentEditPhoneNumberBinding;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EditPhoneNumber extends BaseFragment implements EditEmailClick {
     private FragmentEditPhoneNumberBinding editPhoneNumberBinding;
@@ -58,8 +64,26 @@ public class EditPhoneNumber extends BaseFragment implements EditEmailClick {
 
     private void setUpView(View view) {
         editPhoneNumberViewModel = ViewModelProviders.of(this).get(EditPhoneNumberViewModel.class);
+        setCodePrefix();
         setEditPhoneNumber();
         editPhoneNumberBinding.setEditEmailClick(this);
+    }
+
+    private void setCodePrefix() {
+        editPhoneNumberViewModel.getCountryCode().observe(this, new Observer<List<CountryCode>>() {
+            @Override
+            public void onChanged(List<CountryCode> countryCodes) {
+                ArrayList<String> arrayList = new ArrayList<>();
+                if (countryCodes != null && countryCodes.size() > 0) {
+                    for (int i = 0; i < countryCodes.size(); i++) {
+                        arrayList.add(countryCodes.get(i).getCountryName());
+                    }
+                    CustomAdapter adapter = new CustomAdapter(getActivity(),
+                            R.layout.item_spinner_sf, R.id.title, arrayList);
+                    editPhoneNumberBinding.spinnerCountryCode.setAdapter(adapter);
+                }
+            }
+        });
     }
 
     private void setEditPhoneNumber() {

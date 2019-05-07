@@ -31,10 +31,12 @@ import com.example.carescheduling.data.Local.DatabaseTable.DisabilityType;
 import com.example.carescheduling.data.Local.DatabaseTable.Ethnicity;
 import com.example.carescheduling.data.Local.DatabaseTable.Gender;
 import com.example.carescheduling.data.Local.DatabaseTable.MaritialStatus;
+import com.example.carescheduling.data.Local.DatabaseTable.Nationality;
 import com.example.carescheduling.data.Local.DatabaseTable.PersonLanguage;
 import com.example.carescheduling.data.Local.DatabaseTable.Prefix;
 import com.example.carescheduling.data.Local.DatabaseTable.Religion;
 import com.example.carescheduling.data.Local.DatabaseTable.SexualityType;
+import com.example.carescheduling.data.Local.SessionManager;
 import com.example.carescheduling.databinding.FragmentEditProfileInfoBinding;
 
 import java.io.Serializable;
@@ -50,6 +52,7 @@ public class EditProfileInfo extends BaseFragment implements EditEmailClick, Edi
     private Calendar calendar;
     private int year, month, day;
     private ProfileBean profileResultBean;
+    private SessionManager sessionManager;
 
     public static EditProfileInfo newInstance(ProfileBean profileResultBean) {
         EditProfileInfo editProfileInfo = new EditProfileInfo();
@@ -79,6 +82,7 @@ public class EditProfileInfo extends BaseFragment implements EditEmailClick, Edi
 
     private void setUpView(View view) {
         editProfileInfoViewModel = ViewModelProviders.of(this).get(EditProfileInfoViewModel.class);
+        sessionManager = getSessionManager();
         setLanguageData();
         setEthnicityData();
         setGenderData();
@@ -87,12 +91,12 @@ public class EditProfileInfo extends BaseFragment implements EditEmailClick, Edi
         setDisabilityType();
         setReligion();
         setSexualityType();
+        setNationalityData();
         setProfileInfoBeanData(profileResultBean);
         fragmentEditProfileInfoBinding.setEditEmailClick(this);
         fragmentEditProfileInfoBinding.setEditProfileInfoClick(this);
 
     }
-
 
 
     private void setProfileInfoBeanData(ProfileBean profileResultBean) {
@@ -103,6 +107,53 @@ public class EditProfileInfo extends BaseFragment implements EditEmailClick, Edi
             }
         });
     }
+
+    private void setDataRemote() {
+        showDialog();
+        ProfileBean profileBean = profileResultBean;
+        profileResultBean.getData().getPerson().setFirstName(fragmentEditProfileInfoBinding.edtFirstName.getText().toString());
+        profileResultBean.getData().getPerson().setSurName(fragmentEditProfileInfoBinding.edtSurname.getText().toString());
+        profileResultBean.getData().getPerson().setMiddleName(fragmentEditProfileInfoBinding.edtMiddleName.getText().toString());
+        profileResultBean.getData().getPerson().setMaidenName(fragmentEditProfileInfoBinding.edtMaidenName.getText().toString());
+        profileBean.getData().getPerson().getPersonNationality().get(0).setCountryName((String) fragmentEditProfileInfoBinding.spinnerNationality.getSelectedItem());
+        profileBean.getData().getPerson().setGenderTypeName((String) fragmentEditProfileInfoBinding.spinnerGender.getSelectedItem());
+        profileBean.getData().getPerson().setPrefixTypeName((String) fragmentEditProfileInfoBinding.spinnerPrefix.getSelectedItem());
+        profileBean.getData().getPerson().getPersonLanguage().get(0).setLanguageName((String) fragmentEditProfileInfoBinding.spinnerLanguage.getSelectedItem());
+        profileBean.getData().getPerson().getPersonMaritalStatus().get(0).setMaritalStatusName((String) fragmentEditProfileInfoBinding.spinnerMaritalStatus.getSelectedItem());
+        profileBean.getData().getPerson().getPersonEthnicity().get(0).setEthnicityTypeName((String) fragmentEditProfileInfoBinding.spinnerEthnicity.getSelectedItem());
+        profileBean.getData().getPerson().getPersonReligion().get(0).setReligionTypeName((String) fragmentEditProfileInfoBinding.spinnerReligion.getSelectedItem());
+        profileBean.getData().getPerson().getPersonSexuality().get(0).setSexualityTypeName((String) fragmentEditProfileInfoBinding.spinnerSexuality.getSelectedItem());
+        fragmentEditProfileInfoBinding.spinnerDisability.getSelectedItem();
+
+
+        editProfileInfoViewModel.getEditProfilePost(sessionManager.getCustomerId(), sessionManager.getPersonId(), profileBean.getData()).observe(this, new Observer<ProfileBean>() {
+            @Override
+            public void onChanged(ProfileBean profileBean) {
+                hideDialog();
+                if (profileBean != null)
+                    Toast.makeText(getActivity(), "Success", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
+    private void setNationalityData() {
+        editProfileInfoViewModel.getNationality().observe(this, new Observer<List<Nationality>>() {
+            @Override
+            public void onChanged(List<Nationality> nationalities) {
+                ArrayList<String> arrayList = new ArrayList<>();
+                if (nationalities != null && nationalities.size() > 0) {
+                    for (int i = 0; i < nationalities.size(); i++) {
+                        arrayList.add(nationalities.get(i).getNationalityName());
+                    }
+                    CustomAdapter adapter = new CustomAdapter(getActivity(),
+                            R.layout.item_spinner_sf, R.id.title, arrayList);
+                    fragmentEditProfileInfoBinding.spinnerNationality.setAdapter(adapter);
+                }
+            }
+        });
+    }
+
     private void setSexualityType() {
         editProfileInfoViewModel.getSexualityType().observe(this, new Observer<List<SexualityType>>() {
             @Override
@@ -153,6 +204,7 @@ public class EditProfileInfo extends BaseFragment implements EditEmailClick, Edi
             }
         });
     }
+
     private void setLanguageData() {
         editProfileInfoViewModel.getPersonLanguage().observe(this, new Observer<List<PersonLanguage>>() {
             @Override
@@ -251,7 +303,7 @@ public class EditProfileInfo extends BaseFragment implements EditEmailClick, Edi
 
     @Override
     public void DoneClick() {
-
+        setDataRemote();
     }
 
     @Override

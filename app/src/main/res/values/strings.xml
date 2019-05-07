@@ -93,6 +93,16 @@
     <string name="no_data_available">No data found</string>
     <string name="take_picture_from_gallery">Take picture from gallery</string>
     <string name="take_picture_from_camera">Take picture from camera</string>
+    <string name="my_next_visit">My Next Visit</string>
+    <string name="time">Time:</string>
+    <string name="running_late">Running late?</string>
+    <string name="your_next_upcomming_visit_up_to">Your next upcomming visit up to</string>
+    <string name="address">Address:</string>
+    <string name="more_info_client">More Info Client</string>
+    <string name="todays_client_task">Todays Client Task</string>
+    <string name="barcode">Barcode</string>
+    <string name="read_nfc">Read Nfc</string>
+    <string name="need_direction">Need Directions?</string>
 
     <string-array name="home_array">
         <item>My Next Visit</item>

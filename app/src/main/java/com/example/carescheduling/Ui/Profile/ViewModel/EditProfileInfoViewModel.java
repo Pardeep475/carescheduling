@@ -2,6 +2,7 @@ package com.example.carescheduling.Ui.Profile.ViewModel;
 
 import android.app.Application;
 import android.content.Context;
+import android.util.Log;
 
 import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
 import com.example.carescheduling.Ui.Profile.View.EditProfileInfo;
@@ -12,10 +13,13 @@ import com.example.carescheduling.data.Local.DatabaseTable.DisabilityType;
 import com.example.carescheduling.data.Local.DatabaseTable.Ethnicity;
 import com.example.carescheduling.data.Local.DatabaseTable.Gender;
 import com.example.carescheduling.data.Local.DatabaseTable.MaritialStatus;
+import com.example.carescheduling.data.Local.DatabaseTable.Nationality;
 import com.example.carescheduling.data.Local.DatabaseTable.PersonLanguage;
 import com.example.carescheduling.data.Local.DatabaseTable.Prefix;
 import com.example.carescheduling.data.Local.DatabaseTable.Religion;
 import com.example.carescheduling.data.Local.DatabaseTable.SexualityType;
+import com.example.carescheduling.data.Network.ApiClient;
+import com.example.carescheduling.data.Network.ApiService;
 
 import java.util.List;
 
@@ -23,15 +27,24 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+import retrofit2.Response;
 
 public class EditProfileInfoViewModel extends AndroidViewModel {
     private Context context;
-
+    private CompositeDisposable compositeDisposable;
+    private ApiService apiService;
 
     public EditProfileInfoViewModel(@NonNull Application application) {
         super(application);
         this.context = application;
-
+        apiService = ApiClient.getClient(application)
+                .create(ApiService.class);
+        compositeDisposable = new CompositeDisposable();
     }
 
     public MutableLiveData<String> datePicker(String date) {
@@ -70,6 +83,10 @@ public class EditProfileInfoViewModel extends AndroidViewModel {
 
     public LiveData<List<SexualityType>> getSexualityType() {
         return DatabaseInitializer.loadSexualityType(AppDataBase.getAppDatabase(context));
+    }
+
+    public LiveData<List<Nationality>> getNationality() {
+        return DatabaseInitializer.loadNationality(AppDataBase.getAppDatabase(context));
     }
 
     public LiveData<EditProfileInfoBean> getProfileEditBean(ProfileBean profileBean) {
@@ -166,7 +183,48 @@ public class EditProfileInfoViewModel extends AndroidViewModel {
         return editProfileInfoBeanMutableLiveData;
     }
 
+    public LiveData<ProfileBean> getEditProfilePost(String customerId, String personID, ProfileBean.Data profileBean) {
+        final MutableLiveData<ProfileBean> data = new MutableLiveData<>();
+
+        Disposable disposable = apiService.editMyProfilePost(profileBean)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Response<ProfileBean>>() {
+                    @Override
+                    public void accept(Response<ProfileBean> loginBeanRetroResponse) throws Exception {
+                        Log.e("LoginSuccess", "success");
+                        if (loginBeanRetroResponse.isSuccessful()) {
+                            data.setValue(loginBeanRetroResponse.body());
+                        } else {
+                            data.setValue(null);
+                        }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        Log.e("LoginSuccess", "error" + throwable.toString());
+                        data.setValue(null);
+                    }
+                });
+        compositeDisposable.add(disposable);
+        return data;
+    }
+
+
+    public String getDateFromLong(String data){
+        String date = null;
+
+
+        return date;
+    }
+
     private String checkIsNotNull(String value) {
         return value != null ? value : "";
+    }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        compositeDisposable.dispose();
     }
 }

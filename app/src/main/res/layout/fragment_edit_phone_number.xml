@@ -94,17 +94,15 @@
                 android:text="@string/country_code"
                 android:textAlignment="center" />
 
-            <EditText
-                android:id="@+id/edt_post_code"
+            <Spinner
+                android:id="@+id/spinner_country_code"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.3"
                 android:background="@android:color/white"
                 android:paddingStart="@dimen/ten_dp"
-                android:text="@{editPhoneNumberBean.getCountryCode()}"
-                android:paddingTop="@dimen/ten_dp"
-                android:paddingEnd="@dimen/ten_dp"
-                android:paddingBottom="@dimen/ten_dp" />
+                android:paddingEnd="@dimen/ten_dp" />
+
         </LinearLayout>
         <RadioButton
             android:layout_width="wrap_content"

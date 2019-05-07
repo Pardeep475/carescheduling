@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+<variable
+    name="profileImageList"
+    type="com.example.carescheduling.Ui.Profile.bean.ProfileImageList"/>
     </data>
 
     <RelativeLayout
@@ -16,6 +18,7 @@
             android:layout_width="@dimen/one_fifty_dp"
             android:layout_centerHorizontal="true"
             android:layout_height="@dimen/one_fifty_dp"
+            app:setImage="@{profileImageList.getImageBitMap()}"
             app:srcCompat="@drawable/user_placeholder"
             android:padding="10dp" />
 

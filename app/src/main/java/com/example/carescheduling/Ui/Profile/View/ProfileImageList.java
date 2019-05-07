@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -96,12 +97,28 @@ public class ProfileImageList extends BaseFragment implements EditEmailClick, Pr
     private void setUpView(View view) {
         buildVer = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
         profileImageListViewModel = ViewModelProviders.of(this).get(ProfileImageListViewModel.class);
+        setImageData();
         profileImageListBinding.rcvImages.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         ArrayList<String> strings = new ArrayList<>();
-        ProfileImageListAdapter profileImageListAdapter = new ProfileImageListAdapter(strings, getActivity());
-        profileImageListBinding.rcvImages.setAdapter(profileImageListAdapter);
+
         profileImageListBinding.setEditEmailClick(this);
         profileImageListBinding.setProfileImageList(this);
+    }
+
+    private void setImageData() {
+        profileImageListViewModel.getImagePath(profileResultBean).observe(this, new Observer<ArrayList<com.example.carescheduling.Ui.Profile.bean.ProfileImageList>>() {
+            @Override
+            public void onChanged(ArrayList<com.example.carescheduling.Ui.Profile.bean.ProfileImageList> profileImageLists) {
+                if (profileImageLists.size()>0){
+                    profileImageListBinding.setImageUrl(profileImageLists.get(0).getImageBitMap());
+                }
+                if (profileImageLists.size()>1) {
+                    profileImageLists.remove(0);
+                    ProfileImageListAdapter profileImageListAdapter = new ProfileImageListAdapter(profileImageLists, getActivity());
+                    profileImageListBinding.rcvImages.setAdapter(profileImageListAdapter);
+                }
+            }
+        });
     }
 
     @Override
@@ -196,12 +213,10 @@ public class ProfileImageList extends BaseFragment implements EditEmailClick, Pr
     }
 
     private void getImagePath(String path) {
-        profileImageListViewModel.getImagePath(path).observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                profileImageListBinding.setImageUrl(s);
-            }
-        });
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        Bitmap bitmap = BitmapFactory.decodeFile(path,bmOptions);
+        bitmap = Bitmap.createScaledBitmap(bitmap, 300, 300,true);
+        profileImageListBinding.setImageUrl(bitmap);
     }
 
     public Uri getImageUri(Context inContext, Bitmap inImage) {

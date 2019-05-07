@@ -20,7 +20,9 @@ import com.example.carescheduling.Ui.Dashboard.Adapter.HomeScreenAdapter;
 import com.example.carescheduling.Ui.Dashboard.beans.HomeScreenBean;
 import com.example.carescheduling.Ui.Dashboard.presenter.HomeScreenOnClick;
 import com.example.carescheduling.Ui.Dashboard.presenter.ProfileClickHandler;
+import com.example.carescheduling.Ui.HomeScreen.View.BlankFragment;
 import com.example.carescheduling.Ui.LoginActivity.View.LoginActivity;
+import com.example.carescheduling.Ui.Profile.View.EditProfile;
 import com.example.carescheduling.databinding.FragmentHomeBinding;
 
 public class HomeF extends BaseFragment implements ProfileClickHandler, HomeScreenOnClick {
@@ -73,7 +75,16 @@ public class HomeF extends BaseFragment implements ProfileClickHandler, HomeScre
 
     @Override
     public void OnClickHomeScreen(int pos) {
+        Intent intent = new Intent(getActivity(), EditProfile.class);
+        intent.putExtra("pos",pos);
+        startActivity(intent);
         homeScreenBean.setName(homeScreenBean.getName() + " " + pos);
-        Toast.makeText(getActivity(), homeScreenBean.getPassword()+"    " + homeScreenBean.getName(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), homeScreenBean.getPassword() + "    " + homeScreenBean.getName(), Toast.LENGTH_SHORT).show();
+    }
+
+    private void setFragment(Fragment fragment) {
+        if (getActivity() != null)
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fm_edit_container, fragment).addToBackStack(null).commitAllowingStateLoss();
     }
 }

@@ -15,6 +15,7 @@ import com.example.carescheduling.data.Local.DatabaseTable.DisabilityType;
 import com.example.carescheduling.data.Local.DatabaseTable.Ethnicity;
 import com.example.carescheduling.data.Local.DatabaseTable.Gender;
 import com.example.carescheduling.data.Local.DatabaseTable.MaritialStatus;
+import com.example.carescheduling.data.Local.DatabaseTable.Nationality;
 import com.example.carescheduling.data.Local.DatabaseTable.PersonLanguage;
 import com.example.carescheduling.data.Local.DatabaseTable.Prefix;
 import com.example.carescheduling.data.Local.DatabaseTable.Religion;
@@ -126,10 +127,10 @@ public class Dashboard extends BaseActivity {
             if (myProfile.getData().getCustomer().getCustomerReligionType() != null && myProfile.getData().getCustomer().getCustomerReligionType().size() > 0){
                 ReligionData(myProfile.getData().getCustomer().getCustomerReligionType());
             }
-//            //            Nationality
-//            if (myProfile.getData().getCustomer().getCustomerReligionType() != null && myProfile.getData().getCustomer().getCustomerReligionType().size() > 0){
-//                ReligionData(myProfile.getData().getCustomer().getCustomerReligionType());
-//            }
+            //            Nationality
+            if (myProfile.getData().getCustomer().getCustomerCountry() != null && myProfile.getData().getCustomer().getCustomerCountry().size() > 0){
+                NationalityData(myProfile.getData().getCustomer().getCustomerCountry());
+            }
         }
     }
 
@@ -173,14 +174,14 @@ public class Dashboard extends BaseActivity {
         DatabaseInitializer.populateAsyncReligion(AppDataBase.getAppDatabase(this), religions);
     }
 
-    private void NationalityData(List<EditMyProfile.CustomerReligionType> customerReligionType) {
-        List<Religion> religions = new ArrayList<>();
+    private void NationalityData(List<EditMyProfile.CustomerCountry> customerReligionType) {
+        List<Nationality> nationalities = new ArrayList<>();
         for (int i = 0; i < customerReligionType.size(); i++) {
-            Religion religion = new Religion();
-            religion.setReligionName(customerReligionType.get(i).getReligionTypeName());
-            religions.add(religion);
+            Nationality nationality = new Nationality();
+            nationality.setNationalityName(customerReligionType.get(i).getCountryName());
+            nationalities.add(nationality);
         }
-        DatabaseInitializer.populateAsyncReligion(AppDataBase.getAppDatabase(this), religions);
+        DatabaseInitializer.populateAsyncNationality(AppDataBase.getAppDatabase(this), nationalities);
     }
 
     private void EthnicityData(List<EditMyProfile.CustomerEthnicityType> customerEthnicityType) {

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
 import com.example.carescheduling.Ui.Dashboard.beans.ProfileResultBean;
+import com.example.carescheduling.Ui.HomeScreen.View.BlankFragment;
 import com.example.carescheduling.Utils.Constants;
 import com.example.carescheduling.Utils.Utils;
 import com.example.carescheduling.databinding.ActivityEditProfileBinding;
@@ -22,7 +23,11 @@ public class EditProfile extends AppCompatActivity {
         editProfileBinding = DataBindingUtil.setContentView(this, R.layout.activity_edit_profile);
         if (getIntent() != null) {
             ProfileBean profileResultBean = (ProfileBean) getIntent().getSerializableExtra(Constants.PROFILE_DATA);
-            setFragment(EditProfileStart.newInstance(profileResultBean));
+            if (profileResultBean != null) {
+                setFragment(EditProfileStart.newInstance(profileResultBean));
+            } else {
+                setFragment(BlankFragment.newInstance());
+            }
         }
     }
 

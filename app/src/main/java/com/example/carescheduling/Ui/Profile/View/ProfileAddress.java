@@ -16,14 +16,20 @@ import com.example.carescheduling.Ui.Base.BaseFragment;
 import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
 import com.example.carescheduling.Ui.Dashboard.presenter.ProfileClickHandler;
 import com.example.carescheduling.Ui.LoginActivity.View.LoginActivity;
+import com.example.carescheduling.Ui.Profile.Adapter.CustomAdapter;
 import com.example.carescheduling.Ui.Profile.ViewModel.ProfileAddressViewModel;
 import com.example.carescheduling.Ui.Profile.bean.ProfileAddressBean;
 import com.example.carescheduling.Ui.Profile.presenter.EditEmailClick;
+import com.example.carescheduling.Ui.Profile.presenter.ProfileAddressClick;
 import com.example.carescheduling.Utils.Constants;
+import com.example.carescheduling.data.Local.DatabaseTable.Nationality;
 import com.example.carescheduling.databinding.ProfileAddressBinding;
+
+import java.util.ArrayList;
+import java.util.List;
 //import com.example.carescheduling.databinding.FragmentProfileBinding;
 
-public class ProfileAddress extends BaseFragment implements EditEmailClick {
+public class ProfileAddress extends BaseFragment implements EditEmailClick, ProfileAddressClick {
     private ProfileAddressBinding profileAddressBinding;
     private ProfileAddressViewModel profileAddressViewModel;
     private String stringValue;
@@ -64,9 +70,26 @@ public class ProfileAddress extends BaseFragment implements EditEmailClick {
         profileAddressViewModel = ViewModelProviders.of(this).get(ProfileAddressViewModel.class);
         sessionManager = getSessionManager();
         setProfileAddressData();
-
+        setNationalityData();
         profileAddressBinding.setEditEmailClick(this);
-//        fragmentProfileBinding.setClickhandler(this);
+        profileAddressBinding.setProfileAddressClick(this);
+    }
+
+    private void setNationalityData() {
+        profileAddressViewModel.getNationality().observe(this, new Observer<List<Nationality>>() {
+            @Override
+            public void onChanged(List<Nationality> nationalities) {
+                ArrayList<String> arrayList = new ArrayList<>();
+                if (nationalities != null && nationalities.size() > 0) {
+                    for (int i = 0; i < nationalities.size(); i++) {
+                        arrayList.add(nationalities.get(i).getNationalityName());
+                    }
+                    CustomAdapter adapter = new CustomAdapter(getActivity(),
+                            R.layout.item_spinner_sf, R.id.title, arrayList);
+                    profileAddressBinding.spinnerNationality.setAdapter(adapter);
+                }
+            }
+        });
     }
 
     private void setProfileAddressData() {
@@ -87,5 +110,17 @@ public class ProfileAddress extends BaseFragment implements EditEmailClick {
     @Override
     public void DoneClick() {
 
+    }
+
+    @Override
+    public void fetchAddressFromPostalCode() {
+        showDialog();
+        profileAddressViewModel.getAddressByPostCode(stringValue, profileBean).observe(this, new Observer<ProfileAddressBean>() {
+            @Override
+            public void onChanged(ProfileAddressBean profileAddressBean) {
+                hideDialog();
+                profileAddressBinding.setProfileAddressBean(profileAddressBean);
+            }
+        });
     }
 }
