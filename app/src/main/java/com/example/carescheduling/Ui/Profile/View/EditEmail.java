@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProviders;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseFragment;
@@ -79,6 +80,25 @@ public class EditEmail extends BaseFragment implements EditEmailClick {
 
     @Override
     public void DoneClick() {
+        setDataRemote();
+    }
 
+    private void setDataRemote() {
+        showDialog();
+        for (int i = 0; i < profileBean.getData().getPerson().getPersonEmail().size(); i++) {
+            if (profileBean.getData().getPerson().getPersonEmail().get(i).getEmailTypeName().equalsIgnoreCase(stringValue)) {
+                profileBean.getData().getPerson().getPersonEmail().get(i).setEmailAddress(editEmailBinding.edtEmailAddress.getText().toString());
+                profileBean.getData().getPerson().getPersonEmail().get(i).setIsDefaultEmail(editEmailBinding.rbDefaultEmail.isChecked());
+            }
+
+        }
+        editEmailViewModel.getEditProfilePost(profileBean.getData()).observe(this, new Observer<ProfileBean>() {
+            @Override
+            public void onChanged(ProfileBean profileBean) {
+                hideDialog();
+                if (profileBean != null)
+                    Toast.makeText(getActivity(), "Success", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

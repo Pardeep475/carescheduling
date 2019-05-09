@@ -67,7 +67,7 @@
             android:text="@string/mobile_telephone_number" />
 
         <EditText
-            android:id="@+id/edt_email_address"
+            android:id="@+id/edt_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/twenty_dp"
@@ -109,6 +109,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/twenty_dp"
             android:layout_marginTop="@dimen/fifty_dp"
+            android:id="@+id/rb_default_number"
             android:layout_marginEnd="@dimen/twenty_dp"
             android:text="@string/set_as_my_default_phone" />
 

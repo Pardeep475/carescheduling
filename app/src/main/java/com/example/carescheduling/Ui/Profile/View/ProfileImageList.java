@@ -36,6 +36,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseFragment;
@@ -67,6 +68,7 @@ public class ProfileImageList extends BaseFragment implements EditEmailClick, Pr
     private boolean buildVer;
     private ProfileImageListViewModel profileImageListViewModel;
     private ProfileBean profileResultBean;
+    private Bitmap bitmap = null;
 
     public static ProfileImageList newInstance(ProfileBean profileResultBean) {
         ProfileImageList profileImageList = new ProfileImageList();
@@ -109,10 +111,10 @@ public class ProfileImageList extends BaseFragment implements EditEmailClick, Pr
         profileImageListViewModel.getImagePath(profileResultBean).observe(this, new Observer<ArrayList<com.example.carescheduling.Ui.Profile.bean.ProfileImageList>>() {
             @Override
             public void onChanged(ArrayList<com.example.carescheduling.Ui.Profile.bean.ProfileImageList> profileImageLists) {
-                if (profileImageLists.size()>0){
+                if (profileImageLists.size() > 0) {
                     profileImageListBinding.setImageUrl(profileImageLists.get(0).getImageBitMap());
                 }
-                if (profileImageLists.size()>1) {
+                if (profileImageLists.size() > 1) {
                     profileImageLists.remove(0);
                     ProfileImageListAdapter profileImageListAdapter = new ProfileImageListAdapter(profileImageLists, getActivity());
                     profileImageListBinding.rcvImages.setAdapter(profileImageListAdapter);
@@ -129,7 +131,26 @@ public class ProfileImageList extends BaseFragment implements EditEmailClick, Pr
 
     @Override
     public void DoneClick() {
+        setDataRemote();
+    }
 
+    private void setDataRemote() {
+        showDialog();
+        if (bitmap != null){
+            if (profileResultBean.getData().getPersonImage().size() > 0) {
+                profileResultBean.getData().getPersonImage().get(0).setImageHexString(profileImageListViewModel.ConvertBase64(bitmap));
+            }
+            profileImageListViewModel.getEditProfilePost(profileResultBean.getData()).observe(this, new Observer<ProfileBean>() {
+                @Override
+                public void onChanged(ProfileBean profileBean) {
+                    hideDialog();
+                    if (profileBean != null)
+                        Toast.makeText(getActivity(), "Success", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }else{
+            Toast.makeText(getActivity(), "Please select image", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -214,8 +235,8 @@ public class ProfileImageList extends BaseFragment implements EditEmailClick, Pr
 
     private void getImagePath(String path) {
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-        Bitmap bitmap = BitmapFactory.decodeFile(path,bmOptions);
-        bitmap = Bitmap.createScaledBitmap(bitmap, 300, 300,true);
+        bitmap = BitmapFactory.decodeFile(path, bmOptions);
+        bitmap = Bitmap.createScaledBitmap(bitmap, 300, 300, true);
         profileImageListBinding.setImageUrl(bitmap);
     }
 

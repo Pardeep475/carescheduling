@@ -99,14 +99,16 @@ public class EditProfileInfo extends BaseFragment implements EditEmailClick, Edi
     }
 
 
-    private void setProfileInfoBeanData(ProfileBean profileResultBean) {
+    private void setProfileInfoBeanData(final ProfileBean profileResultBean) {
         editProfileInfoViewModel.getProfileEditBean(profileResultBean).observe(this, new Observer<EditProfileInfoBean>() {
             @Override
             public void onChanged(EditProfileInfoBean editProfileInfoBean) {
                 fragmentEditProfileInfoBinding.setProfileInfoBean(editProfileInfoBean);
+
             }
         });
     }
+
 
     private void setDataRemote() {
         showDialog();
@@ -149,6 +151,14 @@ public class EditProfileInfo extends BaseFragment implements EditEmailClick, Edi
                     CustomAdapter adapter = new CustomAdapter(getActivity(),
                             R.layout.item_spinner_sf, R.id.title, arrayList);
                     fragmentEditProfileInfoBinding.spinnerNationality.setAdapter(adapter);
+                    if (profileResultBean != null && profileResultBean.getData() != null && profileResultBean.getData().getPerson() != null) {
+                        if (profileResultBean.getData().getPerson().getPersonNationality() != null) {
+                            if (profileResultBean.getData().getPerson().getPersonNationality().size()>0) {
+                                int pos = adapter.getPosition(profileResultBean.getData().getPerson().getPersonNationality().get(0).getCountryName());
+                                fragmentEditProfileInfoBinding.spinnerNationality.setSelection(pos);
+                            }
+                        }
+                    }
                 }
             }
         });
@@ -166,6 +176,14 @@ public class EditProfileInfo extends BaseFragment implements EditEmailClick, Edi
                     CustomAdapter adapter = new CustomAdapter(getActivity(),
                             R.layout.item_spinner_sf, R.id.title, arrayList);
                     fragmentEditProfileInfoBinding.spinnerSexuality.setAdapter(adapter);
+                    if (profileResultBean != null && profileResultBean.getData() != null && profileResultBean.getData().getPerson() != null) {
+                        if (profileResultBean.getData().getPerson().getPersonSexuality() != null) {
+                            if (profileResultBean.getData().getPerson().getPersonSexuality().size() > 0) {
+                                int pos = adapter.getPosition(profileResultBean.getData().getPerson().getPersonSexuality().get(0).getSexualityTypeName());
+                                fragmentEditProfileInfoBinding.spinnerSexuality.setSelection(pos);
+                            }
+                        }
+                    }
                 }
             }
         });
@@ -183,6 +201,14 @@ public class EditProfileInfo extends BaseFragment implements EditEmailClick, Edi
                     CustomAdapter adapter = new CustomAdapter(getActivity(),
                             R.layout.item_spinner_sf, R.id.title, arrayList);
                     fragmentEditProfileInfoBinding.spinnerReligion.setAdapter(adapter);
+                    if (profileResultBean != null && profileResultBean.getData() != null && profileResultBean.getData().getPerson() != null) {
+                        if (profileResultBean.getData().getPerson().getPersonReligion() != null) {
+                            if (profileResultBean.getData().getPerson().getPersonReligion().size() > 0) {
+                                int pos = adapter.getPosition(profileResultBean.getData().getPerson().getPersonReligion().get(0).getReligionTypeName());
+                                fragmentEditProfileInfoBinding.spinnerReligion.setSelection(pos);
+                            }
+                        }
+                    }
                 }
             }
         });
@@ -200,6 +226,14 @@ public class EditProfileInfo extends BaseFragment implements EditEmailClick, Edi
                     CustomAdapter adapter = new CustomAdapter(getActivity(),
                             R.layout.item_spinner_sf, R.id.title, arrayList);
                     fragmentEditProfileInfoBinding.spinnerDisability.setAdapter(adapter);
+                    if (profileResultBean != null && profileResultBean.getData() != null && profileResultBean.getData().getPerson() != null) {
+                        if (profileResultBean.getData().getPerson().getPersonDisability() != null) {
+                            if (profileResultBean.getData().getPerson().getPersonDisability().size()>0) {
+                                int pos = adapter.getPosition(profileResultBean.getData().getPerson().getPersonDisability().get(0).getDisabilityTypeName());
+                                fragmentEditProfileInfoBinding.spinnerDisability.setSelection(pos);
+                            }
+                        }
+                    }
                 }
             }
         });
@@ -217,6 +251,14 @@ public class EditProfileInfo extends BaseFragment implements EditEmailClick, Edi
                     CustomAdapter adapter = new CustomAdapter(getActivity(),
                             R.layout.item_spinner_sf, R.id.title, arrayList);
                     fragmentEditProfileInfoBinding.spinnerLanguage.setAdapter(adapter);
+                    if (profileResultBean != null && profileResultBean.getData() != null && profileResultBean.getData().getPerson() != null) {
+                        if (profileResultBean.getData().getPerson().getPersonLanguage() != null) {
+                            if (profileResultBean.getData().getPerson().getPersonLanguage().size() > 0) {
+                                int pos = adapter.getPosition(profileResultBean.getData().getPerson().getPersonLanguage().get(0).getLanguageName());
+                                fragmentEditProfileInfoBinding.spinnerLanguage.setSelection(pos);
+                            }
+                        }
+                    }
                 }
             }
         });
@@ -235,6 +277,12 @@ public class EditProfileInfo extends BaseFragment implements EditEmailClick, Edi
                     CustomAdapter adapter = new CustomAdapter(getActivity(),
                             R.layout.item_spinner_sf, R.id.title, arrayList);
                     fragmentEditProfileInfoBinding.spinnerPrefix.setAdapter(adapter);
+                    if (profileResultBean != null && profileResultBean.getData() != null && profileResultBean.getData().getPerson() != null) {
+                        if (profileResultBean.getData().getPerson().getPrefixTypeName() != null) {
+                            int pos = adapter.getPosition(profileResultBean.getData().getPerson().getPrefixTypeName());
+                            fragmentEditProfileInfoBinding.spinnerPrefix.setSelection(pos);
+                        }
+                    }
                 }
             }
 
@@ -253,6 +301,14 @@ public class EditProfileInfo extends BaseFragment implements EditEmailClick, Edi
                     CustomAdapter adapter = new CustomAdapter(getActivity(),
                             R.layout.item_spinner_sf, R.id.title, arrayList);
                     fragmentEditProfileInfoBinding.spinnerEthnicity.setAdapter(adapter);
+                    if (profileResultBean != null && profileResultBean.getData() != null && profileResultBean.getData().getPerson() != null) {
+                        if (profileResultBean.getData().getPerson().getPersonEthnicity() != null) {
+                            if (profileResultBean.getData().getPerson().getPersonEthnicity().size() > 0) {
+                                int pos = adapter.getPosition(profileResultBean.getData().getPerson().getPersonEthnicity().get(0).getEthnicityTypeName());
+                                fragmentEditProfileInfoBinding.spinnerEthnicity.setSelection(pos);
+                            }
+                        }
+                    }
                 }
             }
         });
@@ -270,6 +326,14 @@ public class EditProfileInfo extends BaseFragment implements EditEmailClick, Edi
                     CustomAdapter adapter = new CustomAdapter(getActivity(),
                             R.layout.item_spinner_sf, R.id.title, arrayList);
                     fragmentEditProfileInfoBinding.spinnerMaritalStatus.setAdapter(adapter);
+                    if (profileResultBean != null && profileResultBean.getData() != null && profileResultBean.getData().getPerson() != null) {
+                        if (profileResultBean.getData().getPerson().getPersonMaritalStatus() != null) {
+                            if (profileResultBean.getData().getPerson().getPersonMaritalStatus().size() > 0) {
+                                int pos = adapter.getPosition(profileResultBean.getData().getPerson().getPersonMaritalStatus().get(0).getMaritalStatusName());
+                                fragmentEditProfileInfoBinding.spinnerMaritalStatus.setSelection(pos);
+                            }
+                        }
+                    }
                 }
             }
 
@@ -288,6 +352,13 @@ public class EditProfileInfo extends BaseFragment implements EditEmailClick, Edi
                     CustomAdapter adapter = new CustomAdapter(getActivity(),
                             R.layout.item_spinner_sf, R.id.title, arrayList);
                     fragmentEditProfileInfoBinding.spinnerGender.setAdapter(adapter);
+                    if (profileResultBean != null && profileResultBean.getData() != null && profileResultBean.getData().getPerson() != null) {
+                        if (profileResultBean.getData().getPerson().getGenderTypeName() != null) {
+                            int pos = adapter.getPosition(profileResultBean.getData().getPerson().getGenderTypeName());
+                            fragmentEditProfileInfoBinding.spinnerGender.setSelection(pos);
+                        }
+                    }
+
                 }
             }
         });

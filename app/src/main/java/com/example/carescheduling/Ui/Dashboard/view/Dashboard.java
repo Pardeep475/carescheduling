@@ -69,17 +69,17 @@ public class Dashboard extends BaseActivity {
         dashboardViewModel = ViewModelProviders.of(this).get(DashboardViewModel.class);
         activityDashboardBinding.navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         setFragment(SettingF.newInstance());
-        LiveData<EditMyProfile> editMyProfileLiveData = dashboardViewModel.getEditMyProfileData(sessionManager.getCustomerId());
-
-        showDialog();
-        editMyProfileLiveData.observe(this, new Observer<EditMyProfile>() {
-            @Override
-            public void onChanged(EditMyProfile editMyProfile) {
-                hideDialog();
-                EditMyProfile myProfile = editMyProfile;
-                parseData(myProfile);
-            }
-        });
+//        LiveData<EditMyProfile> editMyProfileLiveData = dashboardViewModel.getEditMyProfileData(sessionManager.getCustomerId());
+//
+//        showDialog();
+//        editMyProfileLiveData.observe(this, new Observer<EditMyProfile>() {
+//            @Override
+//            public void onChanged(EditMyProfile editMyProfile) {
+//                hideDialog();
+//                EditMyProfile myProfile = editMyProfile;
+//                parseData(myProfile);
+//            }
+//        });
     }
 
 

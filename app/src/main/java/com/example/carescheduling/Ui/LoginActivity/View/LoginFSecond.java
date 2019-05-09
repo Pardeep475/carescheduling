@@ -132,10 +132,6 @@ public class LoginFSecond extends BaseFragment implements View.OnClickListener {
                                 sessionManager.setPersonId(personId);
                                 sessionManager.setCustomerId(branchList.get(appCompatSpinner.getSelectedItemPosition()).getCustomerId());
                                 sessionManager.setUserLogin(true);
-                                sessionManager.getBranchId();
-                                sessionManager.getCustomerId();
-                                sessionManager.getPersonId();
-                                sessionManager.IsUserLogin();
                                 goToDashboard();
                             }
                         });

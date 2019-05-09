@@ -6,19 +6,18 @@
     <data>
 
         <variable
-            name="editEmailBean"
-            type="com.example.carescheduling.Ui.Profile.bean.EditEmailBean" />
+            name="visitArchiveClick"
+            type="com.example.carescheduling.Ui.HomeScreen.presenter.VisitArchiveClick" />
 
         <variable
-            name="editEmailClick"
-            type="com.example.carescheduling.Ui.Profile.presenter.EditEmailClick" />
+            name="date"
+            type="String" />
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context=".Ui.Profile.View.EditEmail">
+        tools:context=".Ui.HomeScreen.View.VisitArchiveFragment">
 
         <RelativeLayout
             android:id="@+id/rl_tool"
@@ -32,7 +31,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:contentDescription="@string/user_profile"
-                android:onClick="@{(v)->editEmailClick.BackButtonClick()}"
+                android:onClick="@{(v)->visitArchiveClick.onBackPress()}"
                 android:paddingStart="@dimen/ten_dp"
                 android:paddingEnd="@dimen/ten_dp"
                 android:tint="@color/white"
@@ -43,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:text="@string/edit_email"
+                android:text="@string/directions"
                 android:textColor="@color/white"
                 android:textSize="@dimen/forteen_sp" />
 
@@ -55,43 +54,44 @@
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/ten_dp"
                 android:contentDescription="@string/user_profile"
-                android:onClick="@{(v)->editEmailClick.DoneClick()}"
                 android:tint="@color/white"
                 android:visibility="visible"
                 app:srcCompat="@drawable/ic_tick" />
 
         </RelativeLayout>
 
-
-        <TextView
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/fifty_dp"
-            android:padding="@dimen/ten_dp"
-            android:text="@string/private_email_address" />
+            android:layout_below="@+id/rl_tool"
+            android:layout_margin="@dimen/sixteen_dp">
 
-        <EditText
-            android:id="@+id/edt_email_address"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/twenty_dp"
-            android:layout_marginTop="@dimen/ten_dp"
-            android:layout_marginEnd="@dimen/twenty_dp"
-            android:background="@android:color/white"
-            android:paddingStart="@dimen/ten_dp"
-            android:paddingTop="@dimen/ten_dp"
-            android:paddingEnd="@dimen/ten_dp"
-            android:paddingBottom="@dimen/ten_dp"
-            android:text="@{editEmailBean.getEmail()}" />
+            <TextView
+                android:id="@+id/txt_select_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:paddingTop="@dimen/five_dp"
+                android:paddingBottom="@dimen/five_dp"
+                android:text="@string/please_select_date" />
 
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/twenty_dp"
-            android:layout_marginTop="@dimen/fifty_dp"
-            android:id="@+id/rb_default_email"
-            android:layout_marginEnd="@dimen/twenty_dp"
-            android:text="@string/set_as_my_default_email" />
+            <TextView
+                android:id="@+id/txt_date_of_birth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_select_date"
+                android:layout_marginTop="@dimen/ten_dp"
+                android:background="@android:color/white"
+                android:drawableTint="@color/grey"
+                android:onClick="@{(v)->visitArchiveClick.calenderOnClick()}"
+                android:paddingStart="@dimen/ten_dp"
+                android:paddingTop="@dimen/ten_dp"
+                android:paddingEnd="@dimen/ten_dp"
+                android:paddingBottom="@dimen/ten_dp"
+                android:text="@{date}"
+                app:drawableRightCompat="@drawable/ic_calendar" />
 
-    </LinearLayout>
+        </RelativeLayout>
+
+    </RelativeLayout>
 </layout>

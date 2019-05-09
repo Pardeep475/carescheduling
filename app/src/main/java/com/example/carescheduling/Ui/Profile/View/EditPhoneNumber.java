@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProviders;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseFragment;
@@ -103,6 +104,26 @@ public class EditPhoneNumber extends BaseFragment implements EditEmailClick {
 
     @Override
     public void DoneClick() {
+        setDataRemote();
+    }
 
+    private void setDataRemote() {
+        showDialog();
+        for (int i = 0; i < profileBean.getData().getPerson().getPersonPhone().size(); i++) {
+            if (profileBean.getData().getPerson().getPersonPhone().get(i).getPhoneTypeName().equalsIgnoreCase(stringValue)) {
+                profileBean.getData().getPerson().getPersonPhone().get(i).setCountryTelephonePrefix((String) editPhoneNumberBinding.spinnerCountryCode.getSelectedItem());
+                profileBean.getData().getPerson().getPersonPhone().get(i).setPhoneNumber(editPhoneNumberBinding.edtNumber.getText().toString());
+                profileBean.getData().getPerson().getPersonPhone().get(i).setIsDefaultPhone(editPhoneNumberBinding.rbDefaultNumber.isChecked());
+            }
+
+        }
+        editPhoneNumberViewModel.getEditProfilePost(profileBean.getData()).observe(this, new Observer<ProfileBean>() {
+            @Override
+            public void onChanged(ProfileBean profileBean) {
+                hideDialog();
+                if (profileBean != null)
+                    Toast.makeText(getActivity(), "Success", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

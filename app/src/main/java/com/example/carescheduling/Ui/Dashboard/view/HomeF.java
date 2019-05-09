@@ -75,11 +75,10 @@ public class HomeF extends BaseFragment implements ProfileClickHandler, HomeScre
 
     @Override
     public void OnClickHomeScreen(int pos) {
+        homeScreenBean.setName(homeScreenBean.getName() + " " + pos);
         Intent intent = new Intent(getActivity(), EditProfile.class);
         intent.putExtra("pos",pos);
         startActivity(intent);
-        homeScreenBean.setName(homeScreenBean.getName() + " " + pos);
-        Toast.makeText(getActivity(), homeScreenBean.getPassword() + "    " + homeScreenBean.getName(), Toast.LENGTH_SHORT).show();
     }
 
     private void setFragment(Fragment fragment) {

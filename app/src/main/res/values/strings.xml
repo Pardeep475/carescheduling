@@ -3,7 +3,7 @@
     <string name="email">yourname@gmail.com</string>
     <string name="password">password</string>
     <string name="log_on">Log On</string>
-    <string name="forgot_password">forgot_password</string>
+    <string name="forgot_password">forgot password?</string>
     <string name="remember_me">Remember me</string>
     <string name="log_on_offline">Log on offline</string>
     <string name="title_activity_dashboard">Dashboard</string>
@@ -103,6 +103,11 @@
     <string name="barcode">Barcode</string>
     <string name="read_nfc">Read Nfc</string>
     <string name="need_direction">Need Directions?</string>
+    <string name="directions">Directions</string>
+    <string name="hours_and_expenses">Hours And Exspenses</string>
+    <string name="todays_visit">Todays Visit</string>
+    <string name="my_time">My Time</string>
+    <string name="please_select_date">Please select date!</string>
 
     <string-array name="home_array">
         <item>My Next Visit</item>
@@ -111,5 +116,27 @@
         <item>Visit Archive</item>
         <item>My Time</item>
         <item>Hours and Exspenses</item>
+    </string-array>
+    <string-array name="directions_array">
+        <item>For My Next Visit</item>
+        <item>To Post Code</item>
+        <item>To Person</item>
+    </string-array>
+    <string-array name="todays_visit_array">
+        <item>My Next Visit</item>
+        <item>Directions</item>
+        <item>Todays Visits</item>
+    </string-array>
+    <string-array name="hours_and_exspenses_array">
+        <item>This Week</item>
+        <item>Last Week</item>
+        <item>My Payrolls</item>
+        <item>My Expenses</item>
+        <item>Register new Expenses</item>
+    </string-array>
+    <string-array name="my_time_array">
+        <item>This Rota</item>
+        <item>Last Availability</item>
+        <item>Holidays Request</item>
     </string-array>
 </resources>

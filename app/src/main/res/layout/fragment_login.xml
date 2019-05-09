@@ -16,11 +16,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
+        <ImageView
+            android:id="@+id/img_logo"
+            android:layout_width="@dimen/one_fifty_dp"
+            android:layout_height="@dimen/one_fifty_dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/fifty_dp"
+            android:src="@drawable/logo" />
+
+
         <EditText
             android:id="@+id/edt_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/img_logo"
+            android:layout_marginStart="@dimen/sixteen_dp"
             android:layout_marginTop="@dimen/fifty_dp"
+            android:layout_marginEnd="@dimen/sixteen_dp"
+            android:background="@drawable/corner_radius"
             android:hint="@string/email"
             android:text="@{loginBeanData.userEmail}" />
 
@@ -29,33 +43,50 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/edt_email"
+            android:layout_marginStart="@dimen/sixteen_dp"
             android:layout_marginTop="@dimen/ten_dp"
+            android:layout_marginEnd="@dimen/sixteen_dp"
+            android:background="@drawable/corner_radius"
             android:hint="@string/password"
             android:text="@{loginBeanData.userPassword}" />
 
-        <Button
+        <TextView
             android:id="@+id/btn_log_on"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/edt_password"
+            android:layout_marginStart="@dimen/fifty_dp"
             android:layout_marginTop="@dimen/fifty_dp"
+            android:layout_marginEnd="@dimen/sixteen_dp"
+            android:layout_toEndOf="@+id/cb_remember_me"
+            android:background="@drawable/btn_back"
             android:onClick="@{(v)-> loginPresenter.getUserData()}"
-            android:text="@string/log_on" />
+            android:text="@string/log_on"
+            android:textAlignment="center"
+            android:textColor="@color/white" />
 
-        <Button
+        <TextView
             android:id="@+id/btn_forgot_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/btn_log_on"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="@dimen/sixteen_dp"
+            android:layout_marginEnd="@dimen/sixteen_dp"
             android:layout_marginTop="@dimen/ten_dp"
-
-            android:text="@string/forgot_password" />
+            android:layout_marginBottom="@dimen/sixteen_dp"
+            android:paddingTop="@dimen/five_dp"
+            android:paddingBottom="@dimen/five_dp"
+            android:text="@string/forgot_password"
+            android:textAlignment="center"
+            android:textColor="@color/red" />
 
         <CheckBox
             android:id="@+id/cb_remember_me"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/btn_forgot_password"
+            android:layout_below="@+id/edt_password"
+            android:layout_marginStart="@dimen/sixteen_dp"
+            android:layout_marginTop="@dimen/fifty_dp"
             android:text="@string/remember_me" />
 
         <CheckBox
@@ -63,6 +94,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/cb_remember_me"
+            android:layout_marginStart="@dimen/sixteen_dp"
             android:text="@string/log_on_offline" />
     </RelativeLayout>
 </layout>

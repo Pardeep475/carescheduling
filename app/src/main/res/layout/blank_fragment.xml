@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="myNextVisitClick"
+            type="com.example.carescheduling.Ui.HomeScreen.presenter.MyNextVisitClick" />
     </data>
 
     <RelativeLayout
@@ -25,6 +27,7 @@
                 android:layout_centerVertical="true"
                 android:contentDescription="@string/user_profile"
                 android:paddingStart="@dimen/ten_dp"
+                android:onClick="@{(v)->myNextVisitClick.onBackPress()}"
                 android:paddingEnd="@dimen/ten_dp"
                 android:tint="@color/white"
                 app:srcCompat="@drawable/ic_left_back" />
@@ -200,7 +203,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/txt_person_telephone"
                     android:layout_marginTop="@dimen/five_dp"
-                    android:text="Mr John smith."
+                    android:text="01234567890"
                     android:textColor="@color/black"
                     android:textSize="@dimen/forteen_sp" />
 

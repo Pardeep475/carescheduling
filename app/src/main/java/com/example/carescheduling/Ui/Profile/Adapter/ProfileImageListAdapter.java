@@ -36,12 +36,12 @@ public class ProfileImageListAdapter extends RecyclerView.Adapter<ProfileImageLi
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-
+        itemProfileImageListBinding.setProfileImageList(arrayList.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return 4;
+        return arrayList.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {

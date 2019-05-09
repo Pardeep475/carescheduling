@@ -1,5 +1,6 @@
 package com.example.carescheduling.Ui.LoginActivity.View;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseFragment;
+import com.example.carescheduling.Ui.Dashboard.view.Dashboard;
 import com.example.carescheduling.Ui.LoginActivity.ViewModal.LoginViewModel;
 import com.example.carescheduling.Ui.LoginActivity.beans.LoginBeanData;
 import com.example.carescheduling.Ui.LoginActivity.beans.LoginBeanRetro;
@@ -60,7 +62,7 @@ public class LoginF extends BaseFragment implements LoginPresenter {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 //         Inflate the layout for this fragment
-        fragmentLoginBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_login,container,false);
+        fragmentLoginBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false);
         View view = fragmentLoginBinding.getRoot();
         setUpLayout(view);
         return view;
@@ -92,14 +94,31 @@ public class LoginF extends BaseFragment implements LoginPresenter {
             public void onChanged(LoginBeanRetro loginBeanRetro) {
                 hideDialog();
                 Log.e("LoginSuccess", "liveData");
-                goToLoginFSecond(userEmail,userPassword,loginBeanRetro.getData());
+                if (loginBeanRetro.getData().getBranchList().size() > 0) {
+                    goToLoginFSecond(userEmail, userPassword, loginBeanRetro.getData());
+                } else {
+                    setDashboard(loginBeanRetro.getData());
+                }
             }
         });
     }
 
+    private void setDashboard(LoginBeanRetro.Data dashboard) {
+//    sessionManager.setBranchId(dashboard.getBranchId());
+//    sessionManager.setPersonId(null);
+//    sessionManager.setCustomerId(branchList.get(appCompatSpinner.getSelectedItemPosition()).getCustomerId());
+        if (fragmentLoginBinding.cbRememberMe.isChecked())
+            sessionManager.setUserLogin(true);
+        else {
+            sessionManager.setUserLogin(false);
+        }
+        Intent intent = new Intent(getActivity(), Dashboard.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
 
-    private void goToLoginFSecond(String email,String userPassword, LoginBeanRetro.Data data){
+    private void goToLoginFSecond(String email, String userPassword, LoginBeanRetro.Data data) {
         getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.rl_main_login,LoginFSecond.newInstance(email,userPassword,data)).commitAllowingStateLoss();
+                .replace(R.id.rl_main_login, LoginFSecond.newInstance(email, userPassword, data)).commitAllowingStateLoss();
     }
 }
