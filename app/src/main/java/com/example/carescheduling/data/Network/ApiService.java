@@ -4,6 +4,7 @@ import com.example.carescheduling.Ui.Dashboard.beans.EditMyProfile;
 import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
 import com.example.carescheduling.Ui.LoginActivity.beans.LoginBeanRetro;
 import com.example.carescheduling.Ui.Profile.bean.AddressByPostCode;
+import com.example.carescheduling.Ui.Profile.bean.UserViewModel;
 import com.google.gson.JsonElement;
 
 import io.reactivex.Observable;
@@ -32,6 +33,18 @@ public interface ApiService {
     @GET("GetAddressByCountryNameAndPostCode/{countryName}/{postalCode}")
     Observable<Response<AddressByPostCode>> fetchAddressByPostalCode(@Path("countryName") String countryName, @Path("postalCode") String postalCode);
 
+    @GET("GetUser/{person_id}/{branch_id}")
+    Observable<Response<UserViewModel>> getUserInfo(@Path("person_id") String PersonId, @Path("branch_id") String BranchId);
+
+    @GET("CheckIfUsernameExist/{userName}/{branch_id}/{customerId}/{person_id}")
+    Observable<Response<JsonElement>> checkUserName(@Path("userName") String userName,
+                                                    @Path("customerId") String customerId,
+                                                    @Path("person_id") String PersonId,
+                                                    @Path("branch_id") String BranchId);
     @POST("EditMyProfile")
     Observable<Response<ProfileBean>> editMyProfilePost(@Body ProfileBean.Data profileBean);
+
+
+    @POST("EditUser")
+    Observable<Response<JsonElement>> editMyUser(@Body UserViewModel.Data profileBean);
 }

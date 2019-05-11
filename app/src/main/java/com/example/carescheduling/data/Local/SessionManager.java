@@ -49,4 +49,12 @@ public class SessionManager {
     public String getBranchId() {
         return sharedPreferences.getString(Constants.BRANCH_ID, null);
     }
+
+    public void setCurrentPassword(String currentPassword) {
+        sharedPreferenceEditor.putString(Constants.CURRENT_PASSWORD, currentPassword).commit();
+    }
+
+    public String getCurrentPassword() {
+        return sharedPreferences.getString(Constants.CURRENT_PASSWORD, null);
+    }
 }

@@ -10,6 +10,7 @@ import com.example.carescheduling.data.Local.DatabaseTable.Gender;
 import com.example.carescheduling.data.Local.DatabaseTable.MaritialStatus;
 import com.example.carescheduling.data.Local.DatabaseTable.Nationality;
 import com.example.carescheduling.data.Local.DatabaseTable.PersonLanguage;
+import com.example.carescheduling.data.Local.DatabaseTable.PhoneType;
 import com.example.carescheduling.data.Local.DatabaseTable.Prefix;
 import com.example.carescheduling.data.Local.DatabaseTable.Religion;
 import com.example.carescheduling.data.Local.DatabaseTable.SexualityType;
@@ -20,7 +21,7 @@ import androidx.room.RoomDatabase;
 
 @Database(entities = {PersonLanguage.class, Ethnicity.class, Gender.class, MaritialStatus.class
         , Nationality.class, Prefix.class, Religion.class, DisabilityType.class, SexualityType.class
-        , CountryCode.class}, version = 2, exportSchema = false)
+        , CountryCode.class, PhoneType.class}, version = 3, exportSchema = false)
 public abstract class AppDataBase extends RoomDatabase {
 
     private static AppDataBase INSTANCE;

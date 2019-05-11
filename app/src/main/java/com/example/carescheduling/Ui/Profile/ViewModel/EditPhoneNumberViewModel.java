@@ -10,6 +10,7 @@ import com.example.carescheduling.data.Local.AppDataBase;
 import com.example.carescheduling.data.Local.DatabaseInitializer;
 import com.example.carescheduling.data.Local.DatabaseTable.CountryCode;
 import com.example.carescheduling.data.Local.DatabaseTable.Nationality;
+import com.example.carescheduling.data.Local.DatabaseTable.PhoneType;
 import com.example.carescheduling.data.Network.ApiClient;
 import com.example.carescheduling.data.Network.ApiService;
 
@@ -85,6 +86,11 @@ public class EditPhoneNumberViewModel extends AndroidViewModel {
                 });
         compositeDisposable.add(disposable);
         return data;
+    }
+
+
+    public LiveData<List<PhoneType>> getPhoneType() {
+        return DatabaseInitializer.loadPhoneType(AppDataBase.getAppDatabase(context));
     }
 
     @Override

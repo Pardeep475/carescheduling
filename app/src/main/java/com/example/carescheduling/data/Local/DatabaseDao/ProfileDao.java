@@ -7,6 +7,7 @@ import com.example.carescheduling.data.Local.DatabaseTable.Gender;
 import com.example.carescheduling.data.Local.DatabaseTable.MaritialStatus;
 import com.example.carescheduling.data.Local.DatabaseTable.Nationality;
 import com.example.carescheduling.data.Local.DatabaseTable.PersonLanguage;
+import com.example.carescheduling.data.Local.DatabaseTable.PhoneType;
 import com.example.carescheduling.data.Local.DatabaseTable.Prefix;
 import com.example.carescheduling.data.Local.DatabaseTable.Religion;
 import com.example.carescheduling.data.Local.DatabaseTable.SexualityType;
@@ -60,6 +61,9 @@ public interface ProfileDao {
     @Query("SELECT * FROM CountryCode")
     List<CountryCode> getAllCountryCode();
 
+    //   Get All  phoneType
+    @Query("SELECT * FROM PhoneType")
+    List<PhoneType> getAllPhoneType();
 //    @Query("SELECT * FROM user where first_name LIKE  :firstName AND last_name LIKE :lastName")
 //    User findByName(String firstName, String lastName);
 
@@ -93,6 +97,10 @@ public interface ProfileDao {
     // get all CountryCode
     @Query("SELECT COUNT(*) from CountryCode")
     int countCountryCode();
+    // get all phone Type
+    @Query("SELECT COUNT(*) from PhoneType")
+    int countPhoneType();
+
 
 //    insert all Languages
     @Insert
@@ -124,6 +132,9 @@ public interface ProfileDao {
     // insert all CountryCode
     @Insert
     void insertAllCountryCode(CountryCode... personLanguages);
+    // insert all phone type
+    @Insert
+    void insertAllPhoneType(PhoneType... personLanguages);
 
     @Delete
     void delete(PersonLanguage user);
@@ -158,4 +169,8 @@ public interface ProfileDao {
     // delete all CountryCode
     @Query("DELETE  FROM CountryCode")
     public void deleteAllCountryCode();
+
+    // delete all phoneType
+    @Query("DELETE  FROM PhoneType")
+    public void deleteAllPhoneType();
 }

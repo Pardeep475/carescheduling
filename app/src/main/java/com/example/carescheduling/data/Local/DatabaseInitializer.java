@@ -11,6 +11,7 @@ import com.example.carescheduling.data.Local.DatabaseTable.Gender;
 import com.example.carescheduling.data.Local.DatabaseTable.MaritialStatus;
 import com.example.carescheduling.data.Local.DatabaseTable.Nationality;
 import com.example.carescheduling.data.Local.DatabaseTable.PersonLanguage;
+import com.example.carescheduling.data.Local.DatabaseTable.PhoneType;
 import com.example.carescheduling.data.Local.DatabaseTable.Prefix;
 import com.example.carescheduling.data.Local.DatabaseTable.Religion;
 import com.example.carescheduling.data.Local.DatabaseTable.SexualityType;
@@ -35,6 +36,7 @@ public class DatabaseInitializer {
     private static MutableLiveData<List<CountryCode>> countryCodeLiveData = new MutableLiveData<>();
     private static MutableLiveData<List<Religion>> religionLiveData = new MutableLiveData<>();
     private static MutableLiveData<List<Nationality>> nationalityLiveData = new MutableLiveData<>();
+    private static MutableLiveData<List<PhoneType>> phoneLiveData = new MutableLiveData<>();
 
     // language
     public static void populateAsyncLanguage(@NonNull final AppDataBase db, List<PersonLanguage> list) {
@@ -99,6 +101,12 @@ public class DatabaseInitializer {
     //    Nationality
     public static void populateAsyncNationality(@NonNull final AppDataBase db, List<Nationality> list) {
         PopulateDbAsyncNationality task = new PopulateDbAsyncNationality(db, list);
+        task.execute();
+    }
+
+    //    phone Type
+    public static void populateAsyncPhoneType(@NonNull final AppDataBase db, List<PhoneType> list) {
+        PopulateDbAsyncPhoneType task = new PopulateDbAsyncPhoneType(db, list);
         task.execute();
     }
 
@@ -442,6 +450,42 @@ public class DatabaseInitializer {
         db.profileDao().insertAllNationality(user);
     }
 
+
+    //    PhoneType
+    private static class PopulateDbAsyncPhoneType extends AsyncTask<Void, Void, Void> {
+
+        private final AppDataBase mDb;
+        private List<PhoneType> list;
+
+        PopulateDbAsyncPhoneType(AppDataBase db, List<PhoneType> list) {
+            mDb = db;
+            this.list = list;
+        }
+
+        @Override
+        protected Void doInBackground(final Void... params) {
+            populateWithPhoneTypeData(mDb, list);
+            return null;
+        }
+
+    }
+
+    private static void populateWithPhoneTypeData(AppDataBase db, List<PhoneType> list) {
+        List<PhoneType> userList = db.profileDao().getAllPhoneType();
+        if (userList.size() > 0)
+            db.profileDao().deleteAllNationality();
+        for (PhoneType user : list) {
+            addUserPhoneType(db, user);
+        }
+        Log.d(DatabaseInitializer.TAG, "Rows Count: " + userList.size());
+//        Toast.makeText(this, "Rows Count: " + userList.size(), Toast.LENGTH_SHORT).show();
+    }
+
+    private static void addUserPhoneType(final AppDataBase db, PhoneType user) {
+        db.profileDao().insertAllPhoneType(user);
+    }
+
+
     // get Languages
     public static MutableLiveData<List<PersonLanguage>> loadLanguages(final AppDataBase db) {
         new AsyncTask<Void, Void, List<PersonLanguage>>() {
@@ -608,4 +652,21 @@ public class DatabaseInitializer {
         return nationalityLiveData;
     }
 
+
+    //    Phone Type
+    public static MutableLiveData<List<PhoneType>> loadPhoneType(final AppDataBase db) {
+        new AsyncTask<Void, Void, List<PhoneType>>() {
+            @Override
+            protected List<PhoneType> doInBackground(Void... params) {
+                return db.profileDao().getAllPhoneType();
+            }
+
+            @Override
+            protected void onPostExecute(List<PhoneType> notes) {
+                phoneLiveData.setValue(notes);
+            }
+        }.execute();
+
+        return phoneLiveData;
+    }
 }

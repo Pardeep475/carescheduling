@@ -108,6 +108,8 @@
     <string name="todays_visit">Todays Visit</string>
     <string name="my_time">My Time</string>
     <string name="please_select_date">Please select date!</string>
+    <string name="phone_type">Phone Type</string>
+    <string name="do_not_call">Do Not Call</string>
 
     <string-array name="home_array">
         <item>My Next Visit</item>
