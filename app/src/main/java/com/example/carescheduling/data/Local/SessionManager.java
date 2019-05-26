@@ -57,4 +57,12 @@ public class SessionManager {
     public String getCurrentPassword() {
         return sharedPreferences.getString(Constants.CURRENT_PASSWORD, null);
     }
+
+    public void setClientId(String clientId) {
+        sharedPreferenceEditor.putString(Constants.CLIENT_ID, clientId).commit();
+    }
+
+    public String getClientId() {
+        return sharedPreferences.getString(Constants.CLIENT_ID, null);
+    }
 }

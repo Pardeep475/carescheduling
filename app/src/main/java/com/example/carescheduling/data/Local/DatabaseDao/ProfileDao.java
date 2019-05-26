@@ -1,7 +1,9 @@
 package com.example.carescheduling.data.Local.DatabaseDao;
 
+import com.example.carescheduling.data.Local.DatabaseTable.AddressType;
 import com.example.carescheduling.data.Local.DatabaseTable.CountryCode;
 import com.example.carescheduling.data.Local.DatabaseTable.DisabilityType;
+import com.example.carescheduling.data.Local.DatabaseTable.EmailType;
 import com.example.carescheduling.data.Local.DatabaseTable.Ethnicity;
 import com.example.carescheduling.data.Local.DatabaseTable.Gender;
 import com.example.carescheduling.data.Local.DatabaseTable.MaritialStatus;
@@ -64,6 +66,15 @@ public interface ProfileDao {
     //   Get All  phoneType
     @Query("SELECT * FROM PhoneType")
     List<PhoneType> getAllPhoneType();
+
+    //   Get All  address type
+    @Query("SELECT * FROM AddressType")
+    List<AddressType> getAllAddressType();
+
+    //   Get All  EmailType
+    @Query("SELECT * FROM EmailType")
+    List<EmailType> getAllEmailType();
+
 //    @Query("SELECT * FROM user where first_name LIKE  :firstName AND last_name LIKE :lastName")
 //    User findByName(String firstName, String lastName);
 
@@ -101,6 +112,14 @@ public interface ProfileDao {
     @Query("SELECT COUNT(*) from PhoneType")
     int countPhoneType();
 
+    // get all AddressType
+    @Query("SELECT COUNT(*) from AddressType")
+    int countAddressType();
+
+    // get all EmailType
+    @Query("SELECT COUNT(*) from EmailType")
+    int countEmailType();
+
 
 //    insert all Languages
     @Insert
@@ -135,6 +154,16 @@ public interface ProfileDao {
     // insert all phone type
     @Insert
     void insertAllPhoneType(PhoneType... personLanguages);
+
+    // insert all AddressType
+    @Insert
+    void insertAllAddressType(AddressType... personLanguages);
+
+    // insert all EmailType
+    @Insert
+    void insertAllEmailType(EmailType... personLanguages);
+
+
 
     @Delete
     void delete(PersonLanguage user);
@@ -173,4 +202,14 @@ public interface ProfileDao {
     // delete all phoneType
     @Query("DELETE  FROM PhoneType")
     public void deleteAllPhoneType();
+
+    // delete all AddressType
+    @Query("DELETE  FROM AddressType")
+    public void deleteAllAddressType();
+
+    // delete all EmailType
+    @Query("DELETE  FROM EmailType")
+    public void deleteAllEmailType();
+
+
 }

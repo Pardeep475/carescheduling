@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProviders;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseFragment;
@@ -18,6 +19,7 @@ import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
 import com.example.carescheduling.Ui.Dashboard.beans.ProfileResultBean;
 import com.example.carescheduling.Ui.Dashboard.presenter.EditProfileClickHandler;
 import com.example.carescheduling.Ui.Dashboard.presenter.ProfileClickHandler;
+import com.example.carescheduling.Ui.LoginActivity.View.LoginActivity;
 import com.example.carescheduling.Ui.Profile.View.EditProfile;
 import com.example.carescheduling.Utils.Constants;
 import com.example.carescheduling.data.Local.SessionManager;
@@ -55,41 +57,59 @@ public class ProfileResult extends BaseFragment implements ProfileClickHandler, 
     private void setUpView(View view) {
         sessionManager = getSessionManager();
         profileResultViewModel = ViewModelProviders.of(this).get(ProfileResultViewModel.class);
-        showDialog();
-        profileResultViewModel.getClientData(sessionManager.getPersonId(), sessionManager.getCustomerId(), sessionManager.getBranchId())
-                .observe(this, new Observer<ProfileBean>() {
-                    @Override
-                    public void onChanged(ProfileBean profileBean) {
-                        hideDialog();
-                        fragmentProfileResultBinding.setProfileResultBean(profileBean);
-                        setDataProfile(profileBean);
-                    }
-                });
-
+        fetchPersonDetails();
         fragmentProfileResultBinding.setClickhandler(this);
         fragmentProfileResultBinding.setEditClickHandler(this);
     }
 
+    private void fetchPersonDetails() {
+        try {
+            showDialog();
+            profileResultViewModel.getClientData(sessionManager.getPersonId(), sessionManager.getCustomerId(), sessionManager.getBranchId())
+                    .observe(this, new Observer<ProfileBean>() {
+                        @Override
+                        public void onChanged(ProfileBean profileBean) {
+                            hideDialog();
+                            fragmentProfileResultBinding.setProfileResultBean(profileBean);
+                            setDataProfile(profileBean);
+                        }
+                    });
+
+        } catch (Exception e) {
+            Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
     private void setDataProfile(ProfileBean profileBean) {
-        showDialog();
-        profileResultViewModel.getProfileData(profileBean).observe(this, new Observer<ProfileResultBean>() {
-            @Override
-            public void onChanged(ProfileResultBean profileResultBean) {
-                hideDialog();
-                fragmentProfileResultBinding.setProfileEditBean(profileResultBean);
-            }
-        });
+
+        try {
+            showDialog();
+            profileResultViewModel.getProfileData(profileBean).observe(this, new Observer<ProfileResultBean>() {
+                @Override
+                public void onChanged(ProfileResultBean profileResultBean) {
+                    hideDialog();
+                    fragmentProfileResultBinding.setProfileEditBean(profileResultBean);
+                }
+            });
+        } catch (Exception e) {
+            Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
     public void EditBtnClick(ProfileBean profileResultBean) {
         Intent intent = new Intent(getActivity(), EditProfile.class);
-        intent.putExtra(Constants.PROFILE_DATA,(Serializable) profileResultBean);
+        intent.putExtra(Constants.PROFILE_DATA, (Serializable) profileResultBean);
         startActivity(intent);
     }
 
     @Override
     public void logout() {
-
+        sessionManager.cleanAllData();
+        Intent intent = new Intent(getActivity(), LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        getActivity().finish();
     }
 }

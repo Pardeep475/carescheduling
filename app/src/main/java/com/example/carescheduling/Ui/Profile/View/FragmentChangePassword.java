@@ -34,7 +34,7 @@ public class FragmentChangePassword extends BaseFragment implements EditEmailCli
     private ProfileBean profileResultBean;
     private FragmentChangePasswordViewModel fragmentChangePasswordViewModel;
     private SessionManager sessionManager;
-    private UserViewModel userViewModel;
+    private UserViewModel userModel;
 
     public static FragmentChangePassword newInstance(ProfileBean profileResultBean) {
         FragmentChangePassword fragmentChangePassword = new FragmentChangePassword();
@@ -66,18 +66,20 @@ public class FragmentChangePassword extends BaseFragment implements EditEmailCli
         sessionManager = getSessionManager();
         fragmentChangePasswordViewModel = ViewModelProviders.of(this).get(FragmentChangePasswordViewModel.class);
         GetUserInfo();
-        CheckUserName();
         fragmentChangePasswordBinding.setEditEmailClick(this);
         fragmentChangePasswordBinding.setChangePasswordClick(this);
     }
 
-    private void CheckUserName() {
+    @Override
+    public void CheckUserName() {
         if (checkValidation()) {
+            showDialog();
             fragmentChangePasswordViewModel.checkUserName(fragmentChangePasswordBinding.edtUserName.getText().toString(),
                     sessionManager.getCustomerId(), sessionManager.getPersonId(), sessionManager.getBranchId()).observe(this
                     , new Observer<Boolean>() {
                         @Override
                         public void onChanged(Boolean aBoolean) {
+                            hideDialog();
                             if (aBoolean) {
                                 Toast.makeText(getActivity(), "User name saved successfully", Toast.LENGTH_SHORT).show();
                             } else {
@@ -86,7 +88,6 @@ public class FragmentChangePassword extends BaseFragment implements EditEmailCli
                         }
                     });
         }
-
     }
 
     private boolean checkValidation() {
@@ -94,10 +95,10 @@ public class FragmentChangePassword extends BaseFragment implements EditEmailCli
             if (TextUtils.isEmpty(fragmentChangePasswordBinding.edtUserName.getText())) {
                 Toast.makeText(getActivity(), "Please provide user name", Toast.LENGTH_SHORT).show();
                 return false;
-            } else if (userViewModel.getData() == null) {
+            } else if (userModel.getData() == null) {
                 Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
                 return false;
-            } else if (userViewModel.getData().getUserPersons().get(0).getUser().getUserName().equalsIgnoreCase(fragmentChangePasswordBinding.edtUserName.getText().toString())) {
+            } else if (userModel.getData().getUserPersons().get(0).getUser().getUserName().equalsIgnoreCase(fragmentChangePasswordBinding.edtUserName.getText().toString())) {
                 Toast.makeText(getActivity(), "This user name is already exist", Toast.LENGTH_SHORT).show();
                 return false;
             }
@@ -110,10 +111,13 @@ public class FragmentChangePassword extends BaseFragment implements EditEmailCli
     }
 
     private void GetUserInfo() {
+        showDialog();
         fragmentChangePasswordViewModel.getUserInfo(sessionManager.getPersonId(), sessionManager.getBranchId()).observe(this
                 , new Observer<UserViewModel>() {
                     @Override
                     public void onChanged(UserViewModel userViewModel) {
+                        userModel = userViewModel;
+                        hideDialog();
                         if (userViewModel.getData() != null && userViewModel.getData().getUserPersons() != null && userViewModel.getData().getUserPersons().size() > 0) {
                             FragmentChangePasswordBean fragmentChangePasswordBean = new FragmentChangePasswordBean();
                             String userName = userViewModel.getData().getUserPersons().get(0).getUser().getUserName();
@@ -122,6 +126,8 @@ public class FragmentChangePassword extends BaseFragment implements EditEmailCli
                             fragmentChangePasswordBean.setPasswordAns(passwordAns != null ? passwordAns : "");
                             fragmentChangePasswordBean.setUserName(userName != null ? userName : "");
                             fragmentChangePasswordBean.setPasswordQuestion(passwordQus != null ? passwordQus : "");
+
+                            fragmentChangePasswordBinding.setFragmentChangePasswordBean(fragmentChangePasswordBean);
                         }
                     }
                 });
@@ -135,12 +141,61 @@ public class FragmentChangePassword extends BaseFragment implements EditEmailCli
 
     @Override
     public void DoneClick() {
+        if (userModel != null && userModel.getData() != null && userModel.getData().getUserPersons().size() > 0
+                && userModel.getData().getUserPersons().get(0).getUser() != null) {
+//            if (checkValidationDone()) {
+                setDataRemotely();
+//            }
+        }
 
+    }
+
+
+    private boolean checkValidationDone() {
+        int counter = 0;
+        if (!userModel.getData().getUserPersons().get(0).getUser().getUserName().equalsIgnoreCase(fragmentChangePasswordBinding.edtUserName.getText().toString())) {
+            counter++;
+        }
+        if (userModel.getData().getUserPersons().get(0).getUser().getPasswordQuestion() != null
+                && !userModel.getData().getUserPersons().get(0).getUser().getPasswordQuestion().equalsIgnoreCase(fragmentChangePasswordBinding.edtUserName.getText().toString())) {
+            counter++;
+        }
+
+        if (userModel.getData().getUserPersons().get(0).getUser().getPasswordQuestionAnswer() != null
+                && !userModel.getData().getUserPersons().get(0).getUser().getPasswordQuestionAnswer().equalsIgnoreCase(fragmentChangePasswordBinding.edtUserName.getText().toString())) {
+            counter++;
+        }
+        if (TextUtils.isEmpty(fragmentChangePasswordBinding.txtQuestion.getText().toString())) {
+            Toast.makeText(getActivity(), "Enter your password question?", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (TextUtils.isEmpty(fragmentChangePasswordBinding.edtAns.getText().toString())) {
+            Toast.makeText(getActivity(), "Enter your password ans?", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return counter != 0 ? true : false;
+    }
+
+    private void setDataRemotely() {
+
+        if (userModel != null && userModel.getData() != null && userModel.getData().getUserPersons().size() > 0
+                && userModel.getData().getUserPersons().get(0).getUser() != null) {
+            showDialog();
+            userModel.getData().getUserPersons().get(0).getUser().setUserName(fragmentChangePasswordBinding.edtUserName.getText().toString());
+            userModel.getData().getUserPersons().get(0).getUser().setPasswordQuestion(fragmentChangePasswordBinding.txtQuestion.getText().toString());
+            userModel.getData().getUserPersons().get(0).getUser().setPasswordQuestionAnswer(fragmentChangePasswordBinding.edtAns.getText().toString());
+            fragmentChangePasswordViewModel.EditUserInfo(userModel.getData()).observe(this, new Observer<String>() {
+                @Override
+                public void onChanged(String s) {
+                    hideDialog();
+                    Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
     @Override
     public void ChangePasswordClick() {
-        setFragment(ChangePassword.newInstance());
+        setFragment(ChangePassword.newInstance(userModel));
     }
 
     private void setFragment(Fragment fragment) {

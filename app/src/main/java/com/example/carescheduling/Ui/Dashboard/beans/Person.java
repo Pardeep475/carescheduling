@@ -31,55 +31,55 @@ public class Person implements Serializable {
     private String personAddedDate;
     @SerializedName("PersonAddress")
     @Expose
-    private List<ProfileBean.PersonAddress> personAddress = null;
+    private List<PersonAddress> personAddress = null;
     @SerializedName("PersonBlacklistedDate")
     @Expose
     private Object personBlacklistedDate;
     @SerializedName("PersonDisability")
     @Expose
-    private List<ProfileBean.PersonDisability> personDisability = null;
+    private List<PersonDisability> personDisability = null;
     @SerializedName("PersonDynamicProperty")
     @Expose
-    private List<ProfileBean.PersonDynamicProperty> personDynamicProperty = null;
+    private List<PersonDynamicProperty> personDynamicProperty = null;
     @SerializedName("PersonEmail")
     @Expose
-    private List<ProfileBean.PersonEmail> personEmail = null;
+    private List<PersonEmail> personEmail = null;
     @SerializedName("PersonEthnicity")
     @Expose
-    private List<ProfileBean.PersonEthnicity> personEthnicity = null;
+    private List<PersonEthnicity> personEthnicity = null;
     @SerializedName("PersonId")
     @Expose
     private String personId;
     @SerializedName("PersonImage")
     @Expose
-    private List<ProfileBean.PersonImage_> personImage = null;
+    private List<PersonImage_> personImage = null;
     @SerializedName("PersonIsBlacklisted")
     @Expose
     private Boolean personIsBlacklisted;
     @SerializedName("PersonLanguage")
     @Expose
-    private List<ProfileBean.PersonLanguage> personLanguage = null;
+    private List<PersonLanguage> personLanguage = null;
     @SerializedName("PersonLanguageCode")
     @Expose
-    private List<ProfileBean.PersonLanguageCode> personLanguageCode = null;
+    private List<PersonLanguageCode> personLanguageCode = null;
     @SerializedName("PersonMaritalStatus")
     @Expose
-    private List<ProfileBean.PersonMaritalstatus> personMaritalStatus = null;
+    private List<PersonMaritalstatus> personMaritalStatus = null;
     @SerializedName("PersonMessage")
     @Expose
     private Object personMessage;
     @SerializedName("PersonNationality")
     @Expose
-    private List<ProfileBean.PersonNationality> personNationality = null;
+    private List<PersonNationality> personNationality = null;
     @SerializedName("PersonPhone")
     @Expose
     private List<PersonPhone> personPhone = null;
     @SerializedName("PersonReligion")
     @Expose
-    private List<ProfileBean.PersonReligion> personReligion = null;
+    private List<PersonReligion> personReligion = null;
     @SerializedName("PersonSexuality")
     @Expose
-    private List<ProfileBean.PersonSexuality> personSexuality = null;
+    private List<PersonSexuality> personSexuality = null;
     @SerializedName("PreferredName")
     @Expose
     private Object preferredName;
@@ -146,11 +146,11 @@ public class Person implements Serializable {
         this.personAddedDate = personAddedDate;
     }
 
-    public List<ProfileBean.PersonAddress> getPersonAddress() {
+    public List<PersonAddress> getPersonAddress() {
         return personAddress;
     }
 
-    public void setPersonAddress(List<ProfileBean.PersonAddress> personAddress) {
+    public void setPersonAddress(List<PersonAddress> personAddress) {
         this.personAddress = personAddress;
     }
 
@@ -162,35 +162,35 @@ public class Person implements Serializable {
         this.personBlacklistedDate = personBlacklistedDate;
     }
 
-    public List<ProfileBean.PersonDisability> getPersonDisability() {
+    public List<PersonDisability> getPersonDisability() {
         return personDisability;
     }
 
-    public void setPersonDisability(List<ProfileBean.PersonDisability> personDisability) {
+    public void setPersonDisability(List<PersonDisability> personDisability) {
         this.personDisability = personDisability;
     }
 
-    public List<ProfileBean.PersonDynamicProperty> getPersonDynamicProperty() {
+    public List<PersonDynamicProperty> getPersonDynamicProperty() {
         return personDynamicProperty;
     }
 
-    public void setPersonDynamicProperty(List<ProfileBean.PersonDynamicProperty> personDynamicProperty) {
+    public void setPersonDynamicProperty(List<PersonDynamicProperty> personDynamicProperty) {
         this.personDynamicProperty = personDynamicProperty;
     }
 
-    public List<ProfileBean.PersonEmail> getPersonEmail() {
+    public List<PersonEmail> getPersonEmail() {
         return personEmail;
     }
 
-    public void setPersonEmail(List<ProfileBean.PersonEmail> personEmail) {
+    public void setPersonEmail(List<PersonEmail> personEmail) {
         this.personEmail = personEmail;
     }
 
-    public List<ProfileBean.PersonEthnicity> getPersonEthnicity() {
+    public List<PersonEthnicity> getPersonEthnicity() {
         return personEthnicity;
     }
 
-    public void setPersonEthnicity(List<ProfileBean.PersonEthnicity> personEthnicity) {
+    public void setPersonEthnicity(List<PersonEthnicity> personEthnicity) {
         this.personEthnicity = personEthnicity;
     }
 
@@ -202,11 +202,11 @@ public class Person implements Serializable {
         this.personId = personId;
     }
 
-    public List<ProfileBean.PersonImage_> getPersonImage() {
+    public List<PersonImage_> getPersonImage() {
         return personImage;
     }
 
-    public void setPersonImage(List<ProfileBean.PersonImage_> personImage) {
+    public void setPersonImage(List<PersonImage_> personImage) {
         this.personImage = personImage;
     }
 
@@ -218,27 +218,27 @@ public class Person implements Serializable {
         this.personIsBlacklisted = personIsBlacklisted;
     }
 
-    public List<ProfileBean.PersonLanguage> getPersonLanguage() {
+    public List<PersonLanguage> getPersonLanguage() {
         return personLanguage;
     }
 
-    public void setPersonLanguage(List<ProfileBean.PersonLanguage> personLanguage) {
+    public void setPersonLanguage(List<PersonLanguage> personLanguage) {
         this.personLanguage = personLanguage;
     }
 
-    public List<ProfileBean.PersonLanguageCode> getPersonLanguageCode() {
+    public List<PersonLanguageCode> getPersonLanguageCode() {
         return personLanguageCode;
     }
 
-    public void setPersonLanguageCode(List<ProfileBean.PersonLanguageCode> personLanguageCode) {
+    public void setPersonLanguageCode(List<PersonLanguageCode> personLanguageCode) {
         this.personLanguageCode = personLanguageCode;
     }
 
-    public List<ProfileBean.PersonMaritalstatus> getPersonMaritalStatus() {
+    public List<PersonMaritalstatus> getPersonMaritalStatus() {
         return personMaritalStatus;
     }
 
-    public void setPersonMaritalStatus(List<ProfileBean.PersonMaritalstatus> personMaritalStatus) {
+    public void setPersonMaritalStatus(List<PersonMaritalstatus> personMaritalStatus) {
         this.personMaritalStatus = personMaritalStatus;
     }
 
@@ -250,11 +250,11 @@ public class Person implements Serializable {
         this.personMessage = personMessage;
     }
 
-    public List<ProfileBean.PersonNationality> getPersonNationality() {
+    public List<PersonNationality> getPersonNationality() {
         return personNationality;
     }
 
-    public void setPersonNationality(List<ProfileBean.PersonNationality> personNationality) {
+    public void setPersonNationality(List<PersonNationality> personNationality) {
         this.personNationality = personNationality;
     }
 
@@ -266,19 +266,19 @@ public class Person implements Serializable {
         this.personPhone = personPhone;
     }
 
-    public List<ProfileBean.PersonReligion> getPersonReligion() {
+    public List<PersonReligion> getPersonReligion() {
         return personReligion;
     }
 
-    public void setPersonReligion(List<ProfileBean.PersonReligion> personReligion) {
+    public void setPersonReligion(List<PersonReligion> personReligion) {
         this.personReligion = personReligion;
     }
 
-    public List<ProfileBean.PersonSexuality> getPersonSexuality() {
+    public List<PersonSexuality> getPersonSexuality() {
         return personSexuality;
     }
 
-    public void setPersonSexuality(List<ProfileBean.PersonSexuality> personSexuality) {
+    public void setPersonSexuality(List<PersonSexuality> personSexuality) {
         this.personSexuality = personSexuality;
     }
 

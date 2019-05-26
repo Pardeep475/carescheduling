@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseFragment;
@@ -85,6 +86,16 @@ public class LoginF extends BaseFragment implements LoginPresenter {
 
     @Override
     public void getUserData() {
+
+        try {
+            checkLogin();
+        }catch (Exception e){
+            Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    private void checkLogin() {
         final String userEmail = fragmentLoginBinding.edtEmail.getText().toString();
         final String userPassword = fragmentLoginBinding.edtPassword.getText().toString();
         showDialog();
@@ -94,11 +105,17 @@ public class LoginF extends BaseFragment implements LoginPresenter {
             public void onChanged(LoginBeanRetro loginBeanRetro) {
                 hideDialog();
                 Log.e("LoginSuccess", "liveData");
-                if (loginBeanRetro.getData().getBranchList().size() > 0) {
-                    goToLoginFSecond(userEmail, userPassword, loginBeanRetro.getData());
-                } else {
-                    setDashboard(loginBeanRetro.getData());
+                if (loginBeanRetro.isSuccess()){
+                    if (loginBeanRetro.getData().getBranchList().size() > 0) {
+                        getSessionManager().setCurrentPassword(fragmentLoginBinding.edtPassword.getText().toString());
+                        goToLoginFSecond(userEmail, userPassword, loginBeanRetro.getData());
+                    } else {
+                        setDashboard(loginBeanRetro.getData());
+                    }
+                }else{
+                    Toast.makeText(getActivity(), loginBeanRetro.getMessage(), Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
     }

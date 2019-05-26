@@ -20,6 +20,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.loader.content.CursorLoader;
@@ -44,6 +45,9 @@ import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
 import com.example.carescheduling.Ui.Dashboard.beans.ProfileResultBean;
 import com.example.carescheduling.Ui.Profile.Adapter.ProfileImageListAdapter;
 import com.example.carescheduling.Ui.Profile.ViewModel.ProfileImageListViewModel;
+import com.example.carescheduling.Ui.Profile.bean.DataList;
+import com.example.carescheduling.Ui.Profile.bean.Image;
+import com.example.carescheduling.Ui.Profile.bean.ProfileImageRetro;
 import com.example.carescheduling.Ui.Profile.presenter.EditEmailClick;
 import com.example.carescheduling.Ui.Profile.presenter.ProfileImageListClick;
 import com.example.carescheduling.Utils.Constants;
@@ -67,7 +71,7 @@ public class ProfileImageList extends BaseFragment implements EditEmailClick, Pr
     private String path = null;
     private boolean buildVer;
     private ProfileImageListViewModel profileImageListViewModel;
-    private ProfileBean profileResultBean;
+    private ProfileImageRetro profileResultBean;
     private Bitmap bitmap = null;
 
     public static ProfileImageList newInstance(ProfileBean profileResultBean) {
@@ -81,9 +85,6 @@ public class ProfileImageList extends BaseFragment implements EditEmailClick, Pr
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            profileResultBean = (ProfileBean) getArguments().getSerializable(Constants.PROFILE_DATA);
-        }
     }
 
     @Override
@@ -99,29 +100,57 @@ public class ProfileImageList extends BaseFragment implements EditEmailClick, Pr
     private void setUpView(View view) {
         buildVer = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
         profileImageListViewModel = ViewModelProviders.of(this).get(ProfileImageListViewModel.class);
-        setImageData();
+
         profileImageListBinding.rcvImages.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-        ArrayList<String> strings = new ArrayList<>();
+
+        FetchProfileListImages();
+
 
         profileImageListBinding.setEditEmailClick(this);
         profileImageListBinding.setProfileImageList(this);
     }
 
-    private void setImageData() {
-        profileImageListViewModel.getImagePath(profileResultBean).observe(this, new Observer<ArrayList<com.example.carescheduling.Ui.Profile.bean.ProfileImageList>>() {
-            @Override
-            public void onChanged(ArrayList<com.example.carescheduling.Ui.Profile.bean.ProfileImageList> profileImageLists) {
-                if (profileImageLists.size() > 0) {
-                    profileImageListBinding.setImageUrl(profileImageLists.get(0).getImageBitMap());
+    private void FetchProfileListImages() {
+        ///Small
+//        "D364C4C1-7A84-4313-94A8-12035EE631D3"
+//                , "5F98AF4F-25DC-4AC8-B867-C5072C101011"
+//                , "5F98AF4F-25DC-4AC8-B867-C5072C100000"
+
+//        getSessionManager().getPersonId()
+//                , getSessionManager().getCustomerId()
+//                , getSessionManager().getBranchId()
+
+        try {
+            showDialog();
+            profileImageListViewModel.getProfileImages("D364C4C1-7A84-4313-94A8-12035EE631D3"
+                    , "5F98AF4F-25DC-4AC8-B867-C5072C101011"
+                    , "5F98AF4F-25DC-4AC8-B867-C5072C100000").observe(this, new Observer<ProfileImageRetro>() {
+                @Override
+                public void onChanged(ProfileImageRetro profileImageRetro) {
+                    profileResultBean = profileImageRetro;
+                    hideDialog();
+                    profileImageListViewModel.getImagePath(profileImageRetro).observe(ProfileImageList.this, new Observer<ArrayList<com.example.carescheduling.Ui.Profile.bean.ProfileImageList>>() {
+                        @Override
+                        public void onChanged(ArrayList<com.example.carescheduling.Ui.Profile.bean.ProfileImageList> profileImageLists) {
+                            if (profileImageLists.size() > 0) {
+                                profileImageListBinding.setImageUrl(profileImageLists.get(0).getImageBitMap());
+                            }
+                            if (profileImageLists.size() > 1) {
+                                profileImageLists.remove(0);
+                                ProfileImageListAdapter profileImageListAdapter = new ProfileImageListAdapter(profileImageLists, getActivity());
+                                profileImageListBinding.rcvImages.setAdapter(profileImageListAdapter);
+                            }
+                        }
+                    });
                 }
-                if (profileImageLists.size() > 1) {
-                    profileImageLists.remove(0);
-                    ProfileImageListAdapter profileImageListAdapter = new ProfileImageListAdapter(profileImageLists, getActivity());
-                    profileImageListBinding.rcvImages.setAdapter(profileImageListAdapter);
-                }
-            }
-        });
+            });
+        } catch (Exception e) {
+            Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+        }
+
+
     }
+
 
     @Override
     public void BackButtonClick() {
@@ -129,29 +158,6 @@ public class ProfileImageList extends BaseFragment implements EditEmailClick, Pr
             getActivity().onBackPressed();
     }
 
-    @Override
-    public void DoneClick() {
-        setDataRemote();
-    }
-
-    private void setDataRemote() {
-        showDialog();
-        if (bitmap != null){
-            if (profileResultBean.getData().getPersonImage().size() > 0) {
-                profileResultBean.getData().getPersonImage().get(0).setImageHexString(profileImageListViewModel.ConvertBase64(bitmap));
-            }
-            profileImageListViewModel.getEditProfilePost(profileResultBean.getData()).observe(this, new Observer<ProfileBean>() {
-                @Override
-                public void onChanged(ProfileBean profileBean) {
-                    hideDialog();
-                    if (profileBean != null)
-                        Toast.makeText(getActivity(), "Success", Toast.LENGTH_SHORT).show();
-                }
-            });
-        }else{
-            Toast.makeText(getActivity(), "Please select image", Toast.LENGTH_SHORT).show();
-        }
-    }
 
     @Override
     public void ProfileClick() {
@@ -161,7 +167,7 @@ public class ProfileImageList extends BaseFragment implements EditEmailClick, Pr
             requestStoragePermission();
     }
 
-    public void customDialog() {
+    private void customDialog() {
         dialog = new Dialog(getActivity());//,android.R.style.Theme_Translucent_NoTitleBar
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.custom_dialog_profile);
@@ -383,5 +389,40 @@ public class ProfileImageList extends BaseFragment implements EditEmailClick, Pr
         startActivityForResult(intent, 101);
     }
 
+    @Override
+    public void DoneClick() {
+        try {
+            setDataRemote();
+        }catch(Exception e){
+            Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void setDataRemote() {
+        showDialog();
+        if (bitmap != null) {
+            profileImageListViewModel.getEditProfilePost(AddNewImage()).observe(this, new Observer<String>() {
+                @Override
+                public void onChanged(String s) {
+                    Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            Toast.makeText(getActivity(), "Please select image", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private List<DataList> AddNewImage() {
+
+        if (profileResultBean.getDataList() != null) {
+            Image image = new Image();
+            image.setImageHexString(profileImageListViewModel.ConvertBase64(bitmap));
+            DataList dataList = new DataList();
+            dataList.setImage(image);
+            profileResultBean.getDataList().add(dataList);
+        }
+
+        return profileResultBean.getDataList();
+    }
 
 }

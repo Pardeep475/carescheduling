@@ -1,14 +1,12 @@
-package com.example.carescheduling.Ui.LoginActivity.ViewModal;
+package com.example.carescheduling.Ui.Dashboard.ViewModel;
 
 import android.app.Application;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.carescheduling.Ui.LoginActivity.beans.LoginBeanRetro;
+import com.example.carescheduling.Ui.Dashboard.beans.ClientBookingListModel;
 import com.example.carescheduling.data.Network.ApiClient;
 import com.example.carescheduling.data.Network.ApiService;
-
-import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -21,11 +19,11 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
 
-public class LoginViewModel extends AndroidViewModel {
+public class HomeFViewModel extends AndroidViewModel {
     private CompositeDisposable compositeDisposable;
     private ApiService apiService;
 
-    public LoginViewModel(@NonNull Application application) {
+    public HomeFViewModel(@NonNull Application application) {
         super(application);
         apiService = ApiClient.getClient(application)
                 .create(ApiService.class);
@@ -33,15 +31,15 @@ public class LoginViewModel extends AndroidViewModel {
     }
 
 
-    public LiveData<LoginBeanRetro> getUserData(String userEmail, String userPassword) {
-        final MutableLiveData<LoginBeanRetro> data = new MutableLiveData<>();
+    public LiveData<ClientBookingListModel> getClientBookingList(String employeeId, String branchId, String customerId) {
+        final MutableLiveData<ClientBookingListModel> data = new MutableLiveData<>();
 
-        Disposable disposable = apiService.getUser(userEmail, userPassword)
+        Disposable disposable = apiService.GetNextVisitClientBookingList(employeeId, branchId, customerId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<Response<LoginBeanRetro>>() {
+                .subscribe(new Consumer<Response<ClientBookingListModel>>() {
                     @Override
-                    public void accept(Response<LoginBeanRetro> loginBeanRetroResponse) throws Exception {
+                    public void accept(Response<ClientBookingListModel> loginBeanRetroResponse) throws Exception {
                         Log.e("LoginSuccess", "success");
                         if (loginBeanRetroResponse.isSuccessful()) {
                             data.setValue(loginBeanRetroResponse.body());

@@ -4,8 +4,10 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 
+import com.example.carescheduling.data.Local.DatabaseTable.AddressType;
 import com.example.carescheduling.data.Local.DatabaseTable.CountryCode;
 import com.example.carescheduling.data.Local.DatabaseTable.DisabilityType;
+import com.example.carescheduling.data.Local.DatabaseTable.EmailType;
 import com.example.carescheduling.data.Local.DatabaseTable.Ethnicity;
 import com.example.carescheduling.data.Local.DatabaseTable.Gender;
 import com.example.carescheduling.data.Local.DatabaseTable.MaritialStatus;
@@ -37,6 +39,8 @@ public class DatabaseInitializer {
     private static MutableLiveData<List<Religion>> religionLiveData = new MutableLiveData<>();
     private static MutableLiveData<List<Nationality>> nationalityLiveData = new MutableLiveData<>();
     private static MutableLiveData<List<PhoneType>> phoneLiveData = new MutableLiveData<>();
+    private static MutableLiveData<List<AddressType>> addressTypeLiveData = new MutableLiveData<>();
+    private static MutableLiveData<List<EmailType>> emailTypeLiveData = new MutableLiveData<>();
 
     // language
     public static void populateAsyncLanguage(@NonNull final AppDataBase db, List<PersonLanguage> list) {
@@ -109,6 +113,19 @@ public class DatabaseInitializer {
         PopulateDbAsyncPhoneType task = new PopulateDbAsyncPhoneType(db, list);
         task.execute();
     }
+
+    //   AddressType
+    public static void populateAsyncAddressType(@NonNull final AppDataBase db, List<AddressType> list) {
+        PopulateDbAsyncAddressType task = new PopulateDbAsyncAddressType(db, list);
+        task.execute();
+    }
+
+    //   EmailType
+    public static void populateAsyncEmailType(@NonNull final AppDataBase db, List<EmailType> list) {
+        PopulateDbAsyncEmailType task = new PopulateDbAsyncEmailType(db, list);
+        task.execute();
+    }
+
 
     //language
     private static class PopulateDbAsyncLanguage extends AsyncTask<Void, Void, Void> {
@@ -473,7 +490,7 @@ public class DatabaseInitializer {
     private static void populateWithPhoneTypeData(AppDataBase db, List<PhoneType> list) {
         List<PhoneType> userList = db.profileDao().getAllPhoneType();
         if (userList.size() > 0)
-            db.profileDao().deleteAllNationality();
+            db.profileDao().deleteAllPhoneType();
         for (PhoneType user : list) {
             addUserPhoneType(db, user);
         }
@@ -483,6 +500,75 @@ public class DatabaseInitializer {
 
     private static void addUserPhoneType(final AppDataBase db, PhoneType user) {
         db.profileDao().insertAllPhoneType(user);
+    }
+
+
+    //    AddressType
+    private static class PopulateDbAsyncAddressType extends AsyncTask<Void, Void, Void> {
+
+        private final AppDataBase mDb;
+        private List<AddressType> list;
+
+        PopulateDbAsyncAddressType(AppDataBase db, List<AddressType> list) {
+            mDb = db;
+            this.list = list;
+        }
+
+        @Override
+        protected Void doInBackground(final Void... params) {
+            populateWithAddressTypeData(mDb, list);
+            return null;
+        }
+
+    }
+
+    private static void populateWithAddressTypeData(AppDataBase db, List<AddressType> list) {
+        List<AddressType> userList = db.profileDao().getAllAddressType();
+        if (userList.size() > 0)
+            db.profileDao().deleteAllAddressType();
+        for (AddressType user : list) {
+            addUserAddressType(db, user);
+        }
+        Log.d(DatabaseInitializer.TAG, "Rows Count: " + userList.size());
+//        Toast.makeText(this, "Rows Count: " + userList.size(), Toast.LENGTH_SHORT).show();
+    }
+
+    private static void addUserAddressType(final AppDataBase db, AddressType user) {
+        db.profileDao().insertAllAddressType(user);
+    }
+
+    //    EmailType
+    private static class PopulateDbAsyncEmailType extends AsyncTask<Void, Void, Void> {
+
+        private final AppDataBase mDb;
+        private List<EmailType> list;
+
+        PopulateDbAsyncEmailType(AppDataBase db, List<EmailType> list) {
+            mDb = db;
+            this.list = list;
+        }
+
+        @Override
+        protected Void doInBackground(final Void... params) {
+            populateWithEmailTypeData(mDb, list);
+            return null;
+        }
+
+    }
+
+    private static void populateWithEmailTypeData(AppDataBase db, List<EmailType> list) {
+        List<EmailType> userList = db.profileDao().getAllEmailType();
+        if (userList.size() > 0)
+            db.profileDao().deleteAllEmailType();
+        for (EmailType user : list) {
+            addUserEmailType(db, user);
+        }
+        Log.d(DatabaseInitializer.TAG, "Rows Count: " + userList.size());
+//        Toast.makeText(this, "Rows Count: " + userList.size(), Toast.LENGTH_SHORT).show();
+    }
+
+    private static void addUserEmailType(final AppDataBase db, EmailType user) {
+        db.profileDao().insertAllEmailType(user);
     }
 
 
@@ -668,5 +754,39 @@ public class DatabaseInitializer {
         }.execute();
 
         return phoneLiveData;
+    }
+
+    //    AddressType
+    public static MutableLiveData<List<AddressType>> loadAddressType(final AppDataBase db) {
+        new AsyncTask<Void, Void, List<AddressType>>() {
+            @Override
+            protected List<AddressType> doInBackground(Void... params) {
+                return db.profileDao().getAllAddressType();
+            }
+
+            @Override
+            protected void onPostExecute(List<AddressType> notes) {
+                addressTypeLiveData.setValue(notes);
+            }
+        }.execute();
+
+        return addressTypeLiveData;
+    }
+
+    //    EmailType
+    public static MutableLiveData<List<EmailType>> loadEmailType(final AppDataBase db) {
+        new AsyncTask<Void, Void, List<EmailType>>() {
+            @Override
+            protected List<EmailType> doInBackground(Void... params) {
+                return db.profileDao().getAllEmailType();
+            }
+
+            @Override
+            protected void onPostExecute(List<EmailType> notes) {
+                emailTypeLiveData.setValue(notes);
+            }
+        }.execute();
+
+        return emailTypeLiveData;
     }
 }

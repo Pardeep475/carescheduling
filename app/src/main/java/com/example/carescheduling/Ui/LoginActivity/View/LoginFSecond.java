@@ -37,7 +37,7 @@ public class LoginFSecond extends BaseFragment implements View.OnClickListener {
     // TODO: Rename and change types of parameters
     private String userEmail, userPassword;
     private ArrayList<LoginBeanRetro.BranchList> branchList;
-    private String personId,branchId;
+    private String personId, branchId;
     // TODO: data binding
 //    private FragmentLoginFsecondBinding loginFSecondBinding;
     // TODO: view modal
@@ -122,22 +122,30 @@ public class LoginFSecond extends BaseFragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_continue: {
-                showDialog();
-                loginViewModalSF.getClientData(userEmail, userPassword, branchList.get(appCompatSpinner.getSelectedItemPosition()).getBranchId())
-                        .observe(this, new Observer<JsonElement>() {
-                            @Override
-                            public void onChanged(JsonElement jsonElement) {
-                                hideDialog();
-                                sessionManager.setBranchId(branchList.get(appCompatSpinner.getSelectedItemPosition()).getBranchId());
-                                sessionManager.setPersonId(personId);
-                                sessionManager.setCustomerId(branchList.get(appCompatSpinner.getSelectedItemPosition()).getCustomerId());
-                                sessionManager.setUserLogin(true);
-                                goToDashboard();
-                            }
-                        });
-
+                try {
+                    checkLogin();
+                } catch (Exception e) {
+                    Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+                }
                 break;
             }
         }
+    }
+
+    private void checkLogin() {
+        showDialog();
+        loginViewModalSF.getClientData(userEmail, userPassword, branchList.get(appCompatSpinner.getSelectedItemPosition()).getBranchId())
+                .observe(this, new Observer<JsonElement>() {
+                    @Override
+                    public void onChanged(JsonElement jsonElement) {
+                        hideDialog();
+                        sessionManager.setBranchId(branchList.get(appCompatSpinner.getSelectedItemPosition()).getBranchId());
+                        sessionManager.setPersonId(personId);
+                        sessionManager.setCustomerId(branchList.get(appCompatSpinner.getSelectedItemPosition()).getCustomerId());
+                        sessionManager.setUserLogin(true);
+                        goToDashboard();
+                    }
+                });
+
     }
 }

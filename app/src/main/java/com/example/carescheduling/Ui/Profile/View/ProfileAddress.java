@@ -10,18 +10,24 @@ import androidx.lifecycle.ViewModelProviders;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Toast;
 
 import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseFragment;
+import com.example.carescheduling.Ui.Dashboard.beans.Address;
+import com.example.carescheduling.Ui.Dashboard.beans.CountryPostCode;
+import com.example.carescheduling.Ui.Dashboard.beans.PersonAddress;
+import com.example.carescheduling.Ui.Dashboard.beans.PersonAddress_;
 import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
-import com.example.carescheduling.Ui.Dashboard.presenter.ProfileClickHandler;
-import com.example.carescheduling.Ui.LoginActivity.View.LoginActivity;
 import com.example.carescheduling.Ui.Profile.Adapter.CustomAdapter;
 import com.example.carescheduling.Ui.Profile.ViewModel.ProfileAddressViewModel;
+import com.example.carescheduling.Ui.Profile.bean.AddressByPostCode;
 import com.example.carescheduling.Ui.Profile.bean.ProfileAddressBean;
 import com.example.carescheduling.Ui.Profile.presenter.EditEmailClick;
 import com.example.carescheduling.Ui.Profile.presenter.ProfileAddressClick;
 import com.example.carescheduling.Utils.Constants;
+import com.example.carescheduling.data.Local.DatabaseTable.AddressType;
 import com.example.carescheduling.data.Local.DatabaseTable.Nationality;
 import com.example.carescheduling.databinding.ProfileAddressBinding;
 
@@ -70,9 +76,34 @@ public class ProfileAddress extends BaseFragment implements EditEmailClick, Prof
         profileAddressViewModel = ViewModelProviders.of(this).get(ProfileAddressViewModel.class);
         sessionManager = getSessionManager();
         setProfileAddressData();
+        setAddressTypeData();
         setNationalityData();
         profileAddressBinding.setEditEmailClick(this);
         profileAddressBinding.setProfileAddressClick(this);
+    }
+
+
+    private void setAddressTypeData() {
+        profileAddressViewModel.getAddressType().observe(this, new Observer<List<AddressType>>() {
+            @Override
+            public void onChanged(List<AddressType> addressTypes) {
+                ArrayList<String> arrayList = new ArrayList<>();
+
+                if (addressTypes != null && addressTypes.size() > 0) {
+                    for (int i = 0; i < addressTypes.size(); i++) {
+                        arrayList.add(addressTypes.get(i).getAddressName());
+                    }
+                    CustomAdapter adapter = new CustomAdapter(getActivity(),
+                            R.layout.item_spinner_sf, R.id.title, arrayList);
+                    profileAddressBinding.spinnerAddressType.setAdapter(adapter);
+
+                    if (stringValue != null) {
+                        int pos = adapter.getPosition(stringValue);
+                        profileAddressBinding.spinnerAddressType.setSelection(pos);
+                    }
+                }
+            }
+        });
     }
 
     private void setNationalityData() {
@@ -80,6 +111,7 @@ public class ProfileAddress extends BaseFragment implements EditEmailClick, Prof
             @Override
             public void onChanged(List<Nationality> nationalities) {
                 ArrayList<String> arrayList = new ArrayList<>();
+
                 if (nationalities != null && nationalities.size() > 0) {
                     for (int i = 0; i < nationalities.size(); i++) {
                         arrayList.add(nationalities.get(i).getNationalityName());
@@ -87,6 +119,22 @@ public class ProfileAddress extends BaseFragment implements EditEmailClick, Prof
                     CustomAdapter adapter = new CustomAdapter(getActivity(),
                             R.layout.item_spinner_sf, R.id.title, arrayList);
                     profileAddressBinding.spinnerNationality.setAdapter(adapter);
+
+
+                    if (profileBean != null && profileBean.getData() != null && profileBean.getData().getPerson() != null) {
+                        if (profileBean.getData().getPersonAddresses().size() > 0) {
+                            for (int i = 0; i < profileBean.getData().getPersonAddresses().size(); i++) {
+                                if (profileBean.getData().getPersonAddresses().get(i).getAddressTypeName().equalsIgnoreCase(stringValue)) {
+                                    String str = profileBean.getData().getPersonAddresses().get(0).getAddress().getCountryName();
+                                    String cap = str.substring(0, 1).toUpperCase() + str.substring(1);
+                                    int pos = adapter.getPosition(cap);
+                                    profileAddressBinding.spinnerNationality.setSelection(pos);
+                                }
+                            }
+
+                        }
+                    }
+
                 }
             }
         });
@@ -108,19 +156,149 @@ public class ProfileAddress extends BaseFragment implements EditEmailClick, Prof
     }
 
     @Override
-    public void DoneClick() {
+    public void fetchAddressFromPostalCode() {
+        showDialog();
 
+        profileAddressViewModel.getAddressByPostCode(stringValue, profileBean, profileAddressBinding.edtPostCode.getText().toString()).observe(this, new Observer<AddressByPostCode>() {
+            @Override
+            public void onChanged(AddressByPostCode addressByPostCode) {
+                hideDialog();
+
+                profileAddressViewModel.FetchAddressSpinnerData(addressByPostCode).observe(ProfileAddress.this, new Observer<ArrayList<String>>() {
+                    @Override
+                    public void onChanged(ArrayList<String> arrayList) {
+                        CustomAdapter adapter = new CustomAdapter(getActivity(),
+                                R.layout.item_spinner_sf, R.id.title, arrayList);
+                        profileAddressBinding.spinnerAddress.setAdapter(adapter);
+
+
+                    }
+                });
+
+                profileAddressViewModel.FetchAddressSpinnerContent(addressByPostCode).observe(ProfileAddress.this, new Observer<ArrayList<ProfileAddressBean>>() {
+                    @Override
+                    public void onChanged(final ArrayList<ProfileAddressBean> profileAddressBeans) {
+                        profileAddressBinding.spinnerAddress.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            @Override
+                            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                                // your code here
+                                profileAddressBinding.setProfileAddressBean(profileAddressBeans.get(position));
+                                if (profileAddressBeans.get(position).getCountry() != null) {
+                                    CustomAdapter customAdapter = (CustomAdapter) profileAddressBinding.spinnerNationality.getAdapter();
+                                    String str = profileAddressBeans.get(position).getCountry();
+                                    String cap = str.substring(0, 1).toUpperCase() + str.substring(1);
+                                    int pos = customAdapter.getPosition(cap);
+                                    profileAddressBinding.spinnerNationality.setSelection(pos);
+                                }
+                            }
+
+                            @Override
+                            public void onNothingSelected(AdapterView<?> parentView) {
+                                // your code here
+                            }
+
+                        });
+
+                    }
+                });
+
+            }
+        });
     }
 
     @Override
-    public void fetchAddressFromPostalCode() {
+    public void DoneClick() {
+
+        try {
+            setDataRemote();
+        }catch (Exception e){
+            Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+
+    private void setDataRemote() {
         showDialog();
-        profileAddressViewModel.getAddressByPostCode(stringValue, profileBean).observe(this, new Observer<ProfileAddressBean>() {
+        setAddressData();
+
+    }
+
+    private void setAddressData() {
+
+        if (profileBean.getData() != null && profileBean.getData().getPerson() != null && profileBean.getData().getPerson().getPersonEmail() != null && stringValue != null) {
+            profileBean = updateAddress();
+        } else {
+            profileBean = addNewAddress();
+        }
+
+        profileAddressViewModel.getEditProfilePost(profileBean.getData()).observe(this, new Observer<ProfileBean>() {
             @Override
-            public void onChanged(ProfileAddressBean profileAddressBean) {
+            public void onChanged(ProfileBean profileBean) {
                 hideDialog();
-                profileAddressBinding.setProfileAddressBean(profileAddressBean);
+                if (profileBean != null){
+                    if (profileBean.getSuccess()){
+                        Toast.makeText(getActivity(),(String) profileBean.getResponseMessage(), Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(getActivity(), (String) profileBean.getResponseMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }else {
+                    Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
+                }
             }
         });
+
+    }
+
+    private ProfileBean updateAddress() {
+        int addressCounter = 0;
+        if (profileBean.getData().getPersonAddresses().size() > 0) {
+            for (int i = 0; i < profileBean.getData().getPersonAddresses().size(); i++) {
+                if (profileBean.getData().getPersonAddresses().get(i).getAddressTypeName().equalsIgnoreCase((String) profileAddressBinding.spinnerAddressType.getSelectedItem())) {
+                    profileBean.getData().getPersonAddresses().get(i).getAddress().setPostCodeName(profileAddressBinding.edtPostCode.getText().toString());
+                    profileBean.getData().getPersonAddresses().get(i).getAddress().setStreetName(profileAddressBinding.edtStreetName.getText().toString());
+                    profileBean.getData().getPersonAddresses().get(i).getAddress().setCountryName((String) profileAddressBinding.spinnerNationality.getSelectedItem());
+                    profileBean.getData().getPersonAddresses().get(i).getAddress().setBuildingName(profileAddressBinding.edtHouseName.getText().toString());
+                    profileBean.getData().getPersonAddresses().get(i).getAddress().setBuildingNumber(profileAddressBinding.edtHouseNumber.getText().toString());
+                    profileBean.getData().getPersonAddresses().get(i).getCountryPostCode().setPostTownName(profileAddressBinding.edtTown.getText().toString());
+                    addressCounter++;
+                    break;
+                }
+            }
+        }
+
+        if (addressCounter == 0) {
+            profileBean = addNewAddress();
+        }
+
+        return profileBean;
+    }
+
+    private ProfileBean addNewAddress() {
+
+        PersonAddress personAddress = new PersonAddress();
+        personAddress.setCustomerId(getSessionManager().getCustomerId());
+        personAddress.setPersonId(getSessionManager().getPersonId());
+        personAddress.setAddressTypeName((String) profileAddressBinding.spinnerAddressType.getSelectedItem());
+        personAddress.setIsDefaultAddress(false);
+        profileBean.getData().getPerson().getPersonAddress().add(personAddress);
+
+        PersonAddress_ personAddress_ = new PersonAddress_();
+        personAddress_.setAddressTypeName((String) profileAddressBinding.spinnerAddressType.getSelectedItem());
+        personAddress_.setIsDefaultAddress(false);
+        CountryPostCode countryPostCode = new CountryPostCode();
+        countryPostCode.setPostTownName(profileAddressBinding.edtTown.getText().toString());
+        personAddress_.setCountryPostCode(countryPostCode);
+        Address address = new Address();
+        address.setPostCodeName(profileAddressBinding.edtPostCode.getText().toString());
+        address.setStreetName(profileAddressBinding.edtStreetName.getText().toString());
+        address.setCountryName((String) profileAddressBinding.spinnerNationality.getSelectedItem());
+        address.setBuildingName(profileAddressBinding.edtHouseName.getText().toString());
+        address.setBuildingNumber(profileAddressBinding.edtTown.getText().toString());
+        personAddress_.setAddress(address);
+        profileBean.getData().getPersonAddresses().add(personAddress_);
+
+
+        return profileBean;
     }
 }

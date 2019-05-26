@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -13,6 +14,12 @@ import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseActivity;
 import com.example.carescheduling.Ui.Dashboard.view.Dashboard;
 import com.example.carescheduling.Ui.LoginActivity.View.LoginActivity;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SplashActivity extends BaseActivity {
     private Handler myHandler = new Handler();
@@ -23,6 +30,7 @@ public class SplashActivity extends BaseActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        formatDate();
         initialSetUp();
     }
 
@@ -51,5 +59,40 @@ public class SplashActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         myHandler.removeCallbacks(runnable);
+    }
+
+    public void formatDate() {
+//        /Date(1560663000000+0530)/
+        valueFromParanThics();
+//        SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy");
+//        try {
+//            Date d = sdf.parse("20130526160000");
+//            Log.e("DateValue", ""+d);
+//        } catch (ParseException ex) {
+//            Log.e("DateValue", ex.getLocalizedMessage());
+//        }
+    }
+
+    public void valueFromParanThics() {
+        String example = "/Date(1560663000000+0530)/";
+        Matcher m = Pattern.compile("\\(([^)]+)\\)").matcher(example);
+        while (m.find()) {
+            String dateValue = m.group(1);
+            String splitted[] = dateValue.split("\\+", 2); // will be matched 1 times.
+            long firstValue = Long.valueOf(splitted[0]);
+            long secondValue = Integer.valueOf(splitted[1]);
+            Log.e("DateValue", firstValue + "    " + secondValue);
+            SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy");
+            try {
+                long finalValue = firstValue + secondValue;
+                Date d = sdf.parse(String.valueOf(finalValue));
+                Log.e("DateValue", "" + d);
+            } catch (ParseException ex) {
+                Log.e("DateValue", ex.getLocalizedMessage());
+            }
+
+
+            System.out.println(m.group(1));
+        }
     }
 }

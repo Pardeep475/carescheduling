@@ -1,4 +1,4 @@
-package com.example.carescheduling.Ui.Profile.View;
+package com.example.carescheduling.Ui.Profile.bean;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

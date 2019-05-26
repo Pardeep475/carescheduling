@@ -1,14 +1,12 @@
-package com.example.carescheduling.Ui.LoginActivity.ViewModal;
+package com.example.carescheduling.Ui.Profile.ViewModel;
 
 import android.app.Application;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.example.carescheduling.Ui.LoginActivity.beans.LoginBeanRetro;
+import com.example.carescheduling.Ui.Profile.bean.UserViewModel;
 import com.example.carescheduling.data.Network.ApiClient;
 import com.example.carescheduling.data.Network.ApiService;
-
-import java.util.List;
+import com.google.gson.JsonElement;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -21,47 +19,43 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
 
-public class LoginViewModel extends AndroidViewModel {
-    private CompositeDisposable compositeDisposable;
+public class ChangePasswordViewModel extends AndroidViewModel {
     private ApiService apiService;
+    private CompositeDisposable compositeDisposable;
 
-    public LoginViewModel(@NonNull Application application) {
+    public ChangePasswordViewModel(@NonNull Application application) {
         super(application);
         apiService = ApiClient.getClient(application)
                 .create(ApiService.class);
         compositeDisposable = new CompositeDisposable();
     }
 
+    public LiveData<String> EditUserInfo(UserViewModel.Data userViewModel) {
+        final MutableLiveData<String> data = new MutableLiveData<>();
 
-    public LiveData<LoginBeanRetro> getUserData(String userEmail, String userPassword) {
-        final MutableLiveData<LoginBeanRetro> data = new MutableLiveData<>();
-
-        Disposable disposable = apiService.getUser(userEmail, userPassword)
+        Disposable disposable = apiService.EditMyUser(userViewModel)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<Response<LoginBeanRetro>>() {
+                .subscribe(new Consumer<Response<JsonElement>>() {
                     @Override
-                    public void accept(Response<LoginBeanRetro> loginBeanRetroResponse) throws Exception {
+                    public void accept(Response<JsonElement> loginBeanRetroResponse) throws Exception {
                         Log.e("LoginSuccess", "success");
                         if (loginBeanRetroResponse.isSuccessful()) {
-                            data.setValue(loginBeanRetroResponse.body());
+                            data.setValue("Your data saved successfully");
                         } else {
                             data.setValue(null);
-                            Toast.makeText(getApplication(), loginBeanRetroResponse.message(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         Log.e("LoginSuccess", "error" + throwable.toString());
-                        data.setValue(null);
-                        Toast.makeText(getApplication(), throwable.toString(), Toast.LENGTH_SHORT).show();
+                        data.setValue(throwable.toString());
                     }
                 });
         compositeDisposable.add(disposable);
         return data;
     }
-
     @Override
     protected void onCleared() {
         super.onCleared();

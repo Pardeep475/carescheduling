@@ -8,6 +8,8 @@ import android.util.Base64;
 import android.util.Log;
 
 import com.example.carescheduling.R;
+import com.example.carescheduling.Ui.Dashboard.beans.PersonAddress_;
+import com.example.carescheduling.Ui.Dashboard.beans.PersonImage;
 import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
 import com.example.carescheduling.Ui.Dashboard.beans.ProfileResultBean;
 import com.example.carescheduling.data.Network.ApiClient;
@@ -155,7 +157,7 @@ public class ProfileResultViewModel extends AndroidViewModel {
         return profileResultBeanMutableLiveData;
     }
 
-    private String PersonImage(List<ProfileBean.PersonImage> personImage, String imgId) {
+    private String PersonImage(List<PersonImage> personImage, String imgId) {
         String personImageBase = null;
         for (int i = 0; i < personImage.size(); i++) {
             if (personImage.get(i).getImageId().equalsIgnoreCase(imgId)) {
@@ -167,11 +169,11 @@ public class ProfileResultViewModel extends AndroidViewModel {
     }
 
 
-    private String PersonAddress(List<ProfileBean.PersonAddress_> personAddresses, int addressId) {
+    private String PersonAddress(List<PersonAddress_> personAddresses, int addressId) {
         String personAddress = "";
         if (personAddresses != null) {
             for (int i = 0; i < personAddresses.size(); i++) {
-                ProfileBean.PersonAddress_ profileAddressData = personAddresses.get(i);
+                PersonAddress_ profileAddressData = personAddresses.get(i);
                 if (profileAddressData.getAddress().getAddressId() == addressId) {
                     personAddress = checkIsNotNull(profileAddressData.getAddress().getOrganisationName()) + " " +
                             checkIsNotNull(profileAddressData.getAddress().getBuildingNumber()) + " " +

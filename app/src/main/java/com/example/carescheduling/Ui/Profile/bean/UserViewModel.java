@@ -3,13 +3,14 @@ package com.example.carescheduling.Ui.Profile.bean;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class UserViewModel {
+public class UserViewModel implements Serializable {
 
     @SerializedName("Data")
     @Expose
-    private Data data;
+    public Data data;
     @SerializedName("DataList")
     @Expose
     private Object dataList;
@@ -62,7 +63,7 @@ public class UserViewModel {
     public void setSuccess(Boolean success) {
         this.success = success;
     }
-    public class Address {
+    public class Address implements Serializable{
 
         @SerializedName("AddressId")
         @Expose
@@ -265,7 +266,7 @@ public class UserViewModel {
 
     }
 
-    public class Address_ {
+    public class Address_ implements Serializable{
 
         @SerializedName("AddressId")
         @Expose
@@ -468,7 +469,7 @@ public class UserViewModel {
 
     }
 
-    public class Country {
+    public class Country implements Serializable{
 
         @SerializedName("ContinentName")
         @Expose
@@ -561,7 +562,7 @@ public class UserViewModel {
 
     }
 
-    public class CountryPostCode {
+    public class CountryPostCode implements Serializable{
 
         @SerializedName("Address")
         @Expose
@@ -731,7 +732,7 @@ public class UserViewModel {
 
     }
 
-    public class Data {
+    public class Data implements Serializable{
 
         @SerializedName("BranchId")
         @Expose
@@ -824,7 +825,7 @@ public class UserViewModel {
 
     }
 
-    public class Person {
+    public class Person implements Serializable{
 
         @SerializedName("BirthDate")
         @Expose
@@ -1126,7 +1127,7 @@ public class UserViewModel {
 
     }
 
-    public class PersonAddress {
+    public class PersonAddress implements Serializable{
 
         @SerializedName("AddressId")
         @Expose
@@ -1186,7 +1187,7 @@ public class UserViewModel {
 
     }
 
-    public class PersonAddress_ {
+    public class PersonAddress_ implements Serializable{
 
         @SerializedName("AddressId")
         @Expose
@@ -1246,7 +1247,7 @@ public class UserViewModel {
 
     }
 
-    public class PersonAddress__ {
+    public class PersonAddress__ implements Serializable{
 
         @SerializedName("Address")
         @Expose
@@ -1295,7 +1296,7 @@ public class UserViewModel {
 
     }
 
-    public class PersonDynamicProperty {
+    public class PersonDynamicProperty implements Serializable{
 
         @SerializedName("CustomerId")
         @Expose
@@ -1343,7 +1344,7 @@ public class UserViewModel {
         }
 
     }
-    public class PersonDynamicProperty_ {
+    public class PersonDynamicProperty_ implements Serializable{
 
         @SerializedName("CustomerId")
         @Expose
@@ -1392,7 +1393,7 @@ public class UserViewModel {
 
     }
 
-    public class PersonEmail {
+    public class PersonEmail implements Serializable{
 
         @SerializedName("CustomerId")
         @Expose
@@ -1452,7 +1453,7 @@ public class UserViewModel {
 
     }
 
-    public class PersonEmail_ {
+    public class PersonEmail_ implements Serializable{
 
         @SerializedName("CustomerId")
         @Expose
@@ -1512,7 +1513,7 @@ public class UserViewModel {
 
     }
 
-    public class PersonEthnicity {
+    public class PersonEthnicity implements Serializable{
 
         @SerializedName("CustomerId")
         @Expose
@@ -1550,7 +1551,7 @@ public class UserViewModel {
 
     }
 
-    public class PersonEthnicity_ {
+    public class PersonEthnicity_ implements Serializable{
 
         @SerializedName("CustomerId")
         @Expose
@@ -1588,7 +1589,7 @@ public class UserViewModel {
 
     }
 
-    public class PersonInfo {
+    public class PersonInfo implements Serializable{
 
         @SerializedName("BirthDate")
         @Expose
@@ -1758,7 +1759,7 @@ public class UserViewModel {
 
     }
 
-    public class PersonLanguage {
+    public class PersonLanguage implements Serializable{
 
         @SerializedName("CustomerId")
         @Expose
@@ -1807,7 +1808,7 @@ public class UserViewModel {
 
     }
 
-    public class PersonLanguageCode {
+    public class PersonLanguageCode implements Serializable{
 
         @SerializedName("CountryName")
         @Expose
@@ -1867,7 +1868,7 @@ public class UserViewModel {
 
     }
 
-    public class PersonLanguageCode_ {
+    public class PersonLanguageCode_ implements Serializable{
 
         @SerializedName("CountryName")
         @Expose
@@ -1926,7 +1927,7 @@ public class UserViewModel {
         }
 
     }
-    public class PersonLanguage_ {
+    public class PersonLanguage_ implements Serializable{
 
         @SerializedName("CustomerId")
         @Expose
@@ -1975,7 +1976,7 @@ public class UserViewModel {
 
     }
 
-    public class PersonMaritalstatus {
+    public class PersonMaritalstatus implements Serializable{
 
         @SerializedName("CustomerId")
         @Expose
@@ -2013,7 +2014,7 @@ public class UserViewModel {
 
     }
 
-    public class PersonMaritalstatus_ {
+    public class PersonMaritalstatus_ implements Serializable{
 
         @SerializedName("CustomerId")
         @Expose
@@ -2051,7 +2052,7 @@ public class UserViewModel {
 
     }
 
-    public class PersonNationality {
+    public class PersonNationality implements Serializable{
 
         @SerializedName("CountryName")
         @Expose
@@ -2089,7 +2090,7 @@ public class UserViewModel {
 
     }
 
-    public class PersonNationality_ {
+    public class PersonNationality_ implements Serializable{
 
         @SerializedName("CountryName")
         @Expose
@@ -2127,7 +2128,7 @@ public class UserViewModel {
 
     }
 
-    public class PersonPhone {
+    public class PersonPhone implements Serializable{
 
         @SerializedName("CanNotCall")
         @Expose
@@ -2209,7 +2210,7 @@ public class UserViewModel {
 
     }
 
-    public class PersonPhone_ {
+    public class PersonPhone_ implements Serializable{
 
         @SerializedName("CanNotCall")
         @Expose
@@ -2291,7 +2292,7 @@ public class UserViewModel {
 
     }
 
-    public class PersonSexuality {
+    public class PersonSexuality implements Serializable{
 
         @SerializedName("CustomerId")
         @Expose
@@ -2329,7 +2330,7 @@ public class UserViewModel {
 
     }
 
-    public class PersonSexuality_ {
+    public class PersonSexuality_ implements Serializable{
 
         @SerializedName("CustomerId")
         @Expose
@@ -2367,7 +2368,7 @@ public class UserViewModel {
 
     }
 
-    public class Person_ {
+    public class Person_ implements Serializable{
 
         @SerializedName("BirthDate")
         @Expose
@@ -2669,7 +2670,7 @@ public class UserViewModel {
 
     }
 
-    public class User {
+    public class User implements Serializable{
 
         @SerializedName("CreateDate")
         @Expose
@@ -2688,10 +2689,10 @@ public class UserViewModel {
         private String lastPasswordChangeDate;
         @SerializedName("PasswordQuestion")
         @Expose
-        private Object passwordQuestion;
+        private String passwordQuestion;
         @SerializedName("PasswordQuestionAnswer")
         @Expose
-        private Object passwordQuestionAnswer;
+        private String passwordQuestionAnswer;
         @SerializedName("PersonId")
         @Expose
         private String personId;
@@ -2748,19 +2749,19 @@ public class UserViewModel {
             this.lastPasswordChangeDate = lastPasswordChangeDate;
         }
 
-        public Object getPasswordQuestion() {
+        public String getPasswordQuestion() {
             return passwordQuestion;
         }
 
-        public void setPasswordQuestion(Object passwordQuestion) {
+        public void setPasswordQuestion(String passwordQuestion) {
             this.passwordQuestion = passwordQuestion;
         }
 
-        public Object getPasswordQuestionAnswer() {
+        public String getPasswordQuestionAnswer() {
             return passwordQuestionAnswer;
         }
 
-        public void setPasswordQuestionAnswer(Object passwordQuestionAnswer) {
+        public void setPasswordQuestionAnswer(String passwordQuestionAnswer) {
             this.passwordQuestionAnswer = passwordQuestionAnswer;
         }
 
@@ -2806,7 +2807,7 @@ public class UserViewModel {
 
     }
 
-    public class UserPerson {
+    public class UserPerson implements Serializable{
 
         @SerializedName("Person")
         @Expose

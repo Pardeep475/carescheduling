@@ -1,5 +1,6 @@
 package com.example.carescheduling.Ui.Dashboard.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -8,15 +9,20 @@ import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseActivity;
 import com.example.carescheduling.Ui.Dashboard.ViewModel.DashboardViewModel;
 import com.example.carescheduling.Ui.Dashboard.beans.EditMyProfile;
+import com.example.carescheduling.Ui.Profile.View.EditProfile;
+import com.example.carescheduling.Utils.Constants;
 import com.example.carescheduling.data.Local.AppDataBase;
 import com.example.carescheduling.data.Local.DatabaseInitializer;
+import com.example.carescheduling.data.Local.DatabaseTable.AddressType;
 import com.example.carescheduling.data.Local.DatabaseTable.CountryCode;
 import com.example.carescheduling.data.Local.DatabaseTable.DisabilityType;
+import com.example.carescheduling.data.Local.DatabaseTable.EmailType;
 import com.example.carescheduling.data.Local.DatabaseTable.Ethnicity;
 import com.example.carescheduling.data.Local.DatabaseTable.Gender;
 import com.example.carescheduling.data.Local.DatabaseTable.MaritialStatus;
 import com.example.carescheduling.data.Local.DatabaseTable.Nationality;
 import com.example.carescheduling.data.Local.DatabaseTable.PersonLanguage;
+import com.example.carescheduling.data.Local.DatabaseTable.PhoneType;
 import com.example.carescheduling.data.Local.DatabaseTable.Prefix;
 import com.example.carescheduling.data.Local.DatabaseTable.Religion;
 import com.example.carescheduling.data.Local.DatabaseTable.SexualityType;
@@ -31,7 +37,9 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,19 +77,26 @@ public class Dashboard extends BaseActivity {
         dashboardViewModel = ViewModelProviders.of(this).get(DashboardViewModel.class);
         activityDashboardBinding.navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         setFragment(SettingF.newInstance());
-//        LiveData<EditMyProfile> editMyProfileLiveData = dashboardViewModel.getEditMyProfileData(sessionManager.getCustomerId());
-//
-//        showDialog();
-//        editMyProfileLiveData.observe(this, new Observer<EditMyProfile>() {
-//            @Override
-//            public void onChanged(EditMyProfile editMyProfile) {
-//                hideDialog();
-//                EditMyProfile myProfile = editMyProfile;
-//                parseData(myProfile);
-//            }
-//        });
+        getDefaultData();
     }
 
+    private void getDefaultData() {
+        try {
+            LiveData<EditMyProfile> editMyProfileLiveData = dashboardViewModel.getEditMyProfileData(sessionManager.getCustomerId());
+
+            showDialog();
+            editMyProfileLiveData.observe(this, new Observer<EditMyProfile>() {
+                @Override
+                public void onChanged(EditMyProfile editMyProfile) {
+                    hideDialog();
+                    EditMyProfile myProfile = editMyProfile;
+                    parseData(myProfile);
+                }
+            });
+        } catch (Exception e) {
+            Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
+        }
+    }
 
     private void setFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction()
@@ -124,14 +139,58 @@ public class Dashboard extends BaseActivity {
             }
 
 //            Religion
-            if (myProfile.getData().getCustomer().getCustomerReligionType() != null && myProfile.getData().getCustomer().getCustomerReligionType().size() > 0){
+            if (myProfile.getData().getCustomer().getCustomerReligionType() != null && myProfile.getData().getCustomer().getCustomerReligionType().size() > 0) {
                 ReligionData(myProfile.getData().getCustomer().getCustomerReligionType());
             }
             //            Nationality
-            if (myProfile.getData().getCustomer().getCustomerCountry() != null && myProfile.getData().getCustomer().getCustomerCountry().size() > 0){
+            if (myProfile.getData().getCustomer().getCustomerCountry() != null && myProfile.getData().getCustomer().getCustomerCountry().size() > 0) {
                 NationalityData(myProfile.getData().getCustomer().getCustomerCountry());
             }
+
+            //            AddressType
+            if (myProfile.getData().getCustomer().getCustomerAddressType() != null && myProfile.getData().getCustomer().getCustomerAddressType().size() > 0) {
+                AddressTypeData(myProfile.getData().getCustomer().getCustomerAddressType());
+            }
+
+            //            Phone Data
+            if (myProfile.getData().getCustomer().getCustomerPhoneType() != null && myProfile.getData().getCustomer().getCustomerPhoneType().size() > 0) {
+                PhoneTypeData(myProfile.getData().getCustomer().getCustomerPhoneType());
+            }
+            //            Email Type
+            if (myProfile.getData().getCustomer().getCustomerEmailType() != null && myProfile.getData().getCustomer().getCustomerEmailType().size() > 0) {
+                EmailTypeData(myProfile.getData().getCustomer().getCustomerEmailType());
+            }
         }
+    }
+
+    private void PhoneTypeData(List<EditMyProfile.CustomerPhoneType> customerPhoneType) {
+        List<PhoneType> phoneTypes = new ArrayList<>();
+        for (int i = 0; i < customerPhoneType.size(); i++) {
+            PhoneType phoneType = new PhoneType();
+            phoneType.setPhoneName(customerPhoneType.get(i).getPhoneTypeName());
+            phoneTypes.add(phoneType);
+        }
+        DatabaseInitializer.populateAsyncPhoneType(AppDataBase.getAppDatabase(this), phoneTypes);
+    }
+
+    private void EmailTypeData(List<EditMyProfile.CustomerEmailType> customerEmailType) {
+        List<EmailType> emailTypes = new ArrayList<>();
+        for (int i = 0; i < customerEmailType.size(); i++) {
+            EmailType emailType = new EmailType();
+            emailType.setEmailName(customerEmailType.get(i).getEmailTypeName());
+            emailTypes.add(emailType);
+        }
+        DatabaseInitializer.populateAsyncEmailType(AppDataBase.getAppDatabase(this), emailTypes);
+    }
+
+    private void AddressTypeData(List<EditMyProfile.CustomerAddressType> customerAddressType) {
+        List<AddressType> addressTypes = new ArrayList<>();
+        for (int i = 0; i < customerAddressType.size(); i++) {
+            AddressType addressType = new AddressType();
+            addressType.setAddressName(customerAddressType.get(i).getAddressTypeName());
+            addressTypes.add(addressType);
+        }
+        DatabaseInitializer.populateAsyncAddressType(AppDataBase.getAppDatabase(this), addressTypes);
     }
 
     private void CustomerCountryCode(List<EditMyProfile.CustomerTelephoneCountryPrefix> customerTelephoneCountryPrefix) {

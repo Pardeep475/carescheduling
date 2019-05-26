@@ -110,6 +110,9 @@
     <string name="please_select_date">Please select date!</string>
     <string name="phone_type">Phone Type</string>
     <string name="do_not_call">Do Not Call</string>
+    <string name="check_user_name">Check User Name</string>
+    <string name="address_type">Address Type</string>
+    <string name="email_type">Email Type</string>
 
     <string-array name="home_array">
         <item>My Next Visit</item>

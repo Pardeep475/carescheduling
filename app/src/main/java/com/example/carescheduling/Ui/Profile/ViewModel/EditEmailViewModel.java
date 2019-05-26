@@ -7,8 +7,13 @@ import android.util.Log;
 import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
 import com.example.carescheduling.Ui.Profile.View.EditEmail;
 import com.example.carescheduling.Ui.Profile.bean.EditEmailBean;
+import com.example.carescheduling.data.Local.AppDataBase;
+import com.example.carescheduling.data.Local.DatabaseInitializer;
+import com.example.carescheduling.data.Local.DatabaseTable.EmailType;
 import com.example.carescheduling.data.Network.ApiClient;
 import com.example.carescheduling.data.Network.ApiService;
+
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -76,6 +81,11 @@ public class EditEmailViewModel extends AndroidViewModel {
         compositeDisposable.add(disposable);
         return data;
     }
+
+    public LiveData<List<EmailType>> getEmailType() {
+        return DatabaseInitializer.loadEmailType(AppDataBase.getAppDatabase(context));
+    }
+
 
     @Override
     protected void onCleared() {
