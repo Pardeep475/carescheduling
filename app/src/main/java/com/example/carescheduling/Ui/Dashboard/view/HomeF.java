@@ -27,6 +27,7 @@ import com.example.carescheduling.Ui.Dashboard.presenter.ProfileClickHandler;
 import com.example.carescheduling.Ui.HomeScreen.View.BlankFragment;
 import com.example.carescheduling.Ui.LoginActivity.View.LoginActivity;
 import com.example.carescheduling.Ui.Profile.View.EditProfile;
+import com.example.carescheduling.Utils.ConnectivityReceiver;
 import com.example.carescheduling.databinding.FragmentHomeBinding;
 
 public class HomeF extends BaseFragment implements ProfileClickHandler, HomeScreenOnClick {
@@ -62,7 +63,7 @@ public class HomeF extends BaseFragment implements ProfileClickHandler, HomeScre
         homeScreenBean.setPassword("12345");
 
         homeFViewModel = ViewModelProviders.of(this).get(HomeFViewModel.class);
-//        getClientBookingList();
+        getClientBookingList();
 
         sessionManager = getSessionManager();
         String[] some_array = getResources().getStringArray(R.array.home_array);
@@ -74,24 +75,30 @@ public class HomeF extends BaseFragment implements ProfileClickHandler, HomeScre
     }
 
     private void getClientBookingList() {
-        try {
-            showDialog();
-            homeFViewModel.getClientBookingList("15C7E260-5818-41AB-A3E7-F6C90F648A1D",
-                    "5F98AF4F-25DC-4AC8-B867-C5072C101011",
-                    "5F98AF4F-25DC-4AC8-B867-C5072C100000").observe(this, new Observer<ClientBookingListModel>() {
-                @Override
-                public void onChanged(ClientBookingListModel clientBookingListModel) {
+        if (getActivity() != null) {
+            if (ConnectivityReceiver.isNetworkAvailable(getActivity())) {
+                try {
+                    showDialog();
+                    homeFViewModel.getClientBookingList(getSessionManager().getPersonId(),
+                            getSessionManager().getBranchId(),
+                            getSessionManager().getCustomerId()).observe(this, new Observer<ClientBookingListModel>() {
+                        @Override
+                        public void onChanged(ClientBookingListModel clientBookingListModel) {
+                            hideDialog();
+                            if (clientBookingListModel != null && clientBookingListModel.getSuccess() && clientBookingListModel.getData() != null && clientBookingListModel.getData().getBookingClientInformation() != null) {
+                                getSessionManager().setClientId(clientBookingListModel.getData().getBookingClientInformation().getClientd());
+                            }
+                            if (clientBookingListModel != null)
+                                Toast.makeText(getActivity(), clientBookingListModel.getResponseMessage().toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } catch (Exception e) {
                     hideDialog();
-                    if (clientBookingListModel != null && clientBookingListModel.getSuccess() && clientBookingListModel.getData() != null && clientBookingListModel.getData().getBookingClientInformation() != null) {
-                        getSessionManager().setClientId(clientBookingListModel.getData().getBookingClientInformation().getClientd());
-                    }
-                    if (clientBookingListModel != null)
-                        Toast.makeText(getActivity(), clientBookingListModel.getResponseMessage().toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
                 }
-            });
-        } catch (Exception e) {
-            hideDialog();
-            Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -101,7 +108,8 @@ public class HomeF extends BaseFragment implements ProfileClickHandler, HomeScre
         Intent intent = new Intent(getActivity(), LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
-        getActivity().finish();
+        if (getActivity() != null)
+            getActivity().finish();
     }
 
     @Override

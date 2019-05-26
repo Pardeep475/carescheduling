@@ -23,6 +23,7 @@ import com.example.carescheduling.Ui.Profile.bean.FragmentChangePasswordBean;
 import com.example.carescheduling.Ui.Profile.bean.UserViewModel;
 import com.example.carescheduling.Ui.Profile.presenter.EditEmailClick;
 import com.example.carescheduling.Ui.Profile.presenter.FragmentChangePasswordClick;
+import com.example.carescheduling.Utils.ConnectivityReceiver;
 import com.example.carescheduling.Utils.Constants;
 import com.example.carescheduling.data.Local.SessionManager;
 import com.example.carescheduling.databinding.FragmentChangePasswordBinding;
@@ -65,13 +66,44 @@ public class FragmentChangePassword extends BaseFragment implements EditEmailCli
     private void setUpView(View view) {
         sessionManager = getSessionManager();
         fragmentChangePasswordViewModel = ViewModelProviders.of(this).get(FragmentChangePasswordViewModel.class);
-        GetUserInfo();
+        GetUserInfoValid();
+
         fragmentChangePasswordBinding.setEditEmailClick(this);
         fragmentChangePasswordBinding.setChangePasswordClick(this);
     }
 
+    private void GetUserInfoValid() {
+        if (getActivity() != null) {
+            try {
+                if (ConnectivityReceiver.isNetworkAvailable(getActivity())) {
+                    GetUserInfo();
+                } else {
+                    Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
+                }
+            } catch (Exception e) {
+                Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+                hideDialog();
+            }
+        }
+    }
+
     @Override
     public void CheckUserName() {
+        if (getActivity() != null) {
+            try {
+                if (ConnectivityReceiver.isNetworkAvailable(getActivity())) {
+                    checkIfUserNameValid();
+                } else {
+                    Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
+                }
+            } catch (Exception e) {
+                Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+                hideDialog();
+            }
+        }
+    }
+
+    private void checkIfUserNameValid() {
         if (checkValidation()) {
             showDialog();
             fragmentChangePasswordViewModel.checkUserName(fragmentChangePasswordBinding.edtUserName.getText().toString(),
@@ -143,9 +175,20 @@ public class FragmentChangePassword extends BaseFragment implements EditEmailCli
     public void DoneClick() {
         if (userModel != null && userModel.getData() != null && userModel.getData().getUserPersons().size() > 0
                 && userModel.getData().getUserPersons().get(0).getUser() != null) {
-//            if (checkValidationDone()) {
-                setDataRemotely();
+            if (getActivity() != null && ConnectivityReceiver.isNetworkAvailable(getActivity())) {
+                try {
+                    //            if (checkValidationDone()) {
+                    setDataRemotely();
 //            }
+                } catch (Exception e) {
+                    Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
+            }
+
+        }else{
+            Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
         }
 
     }

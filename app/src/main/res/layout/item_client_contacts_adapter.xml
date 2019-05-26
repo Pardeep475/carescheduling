@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/txt_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="@string/contacts"
+            android:textAlignment="center"
+            android:textSize="@dimen/twenty_sp" />
+
+        <TextView
+            android:id="@+id/txt_sub_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_title"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="@dimen/fiften_dp"
+            android:text="@string/next_of_kin"
+            android:textAlignment="center"
+            android:textSize="@dimen/forteen_sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txt_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_sub_title"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="@dimen/ten_dp"
+            android:text="@string/mr_john_simth"
+            android:textAlignment="center"
+            android:textSize="@dimen/sixteen_sp" />
+
+        <ImageView
+            android:id="@+id/img_user_profile"
+            android:layout_width="@dimen/eighty_dp"
+            android:layout_height="@dimen/eighty_dp"
+            android:layout_below="@+id/txt_title"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/twenty_dp"
+            android:contentDescription="@string/user_profile"
+            android:src="@drawable/user_placeholder" />
+
+        <RelativeLayout
+            android:id="@+id/rl_post_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_detail"
+            android:layout_marginTop="@dimen/ten_dp">
+
+            <TextView
+                android:id="@+id/txt_d_post_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/brigton"
+                android:textAlignment="center"
+                android:textSize="@dimen/sixteen_sp"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/txt_post_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/twenty_dp"
+                android:layout_toEndOf="@+id/txt_d_post_code"
+                android:text="BN 10TT"
+                android:textAlignment="center"
+                android:textSize="@dimen/sixteen_sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_telephone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rl_post_code"
+            android:layout_marginTop="@dimen/ten_dp">
+
+            <TextView
+                android:id="@+id/txt_d_telephone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/telephone"
+                android:textAlignment="center"
+                android:textSize="@dimen/sixteen_sp"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/txt_telephone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/twenty_dp"
+                android:layout_toEndOf="@+id/txt_d_telephone"
+                android:text="0123456789"
+                android:textAlignment="center"
+                android:textSize="@dimen/sixteen_sp" />
+
+            <TextView
+                android:id="@+id/txt_telephone_call"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/twenty_dp"
+                android:layout_marginEnd="@dimen/twenty_dp"
+                android:text="@string/call"
+                android:textAlignment="center"
+                android:textColor="@color/blue"
+                android:textSize="@dimen/sixteen_sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_mobile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rl_telephone"
+            android:layout_marginTop="@dimen/ten_dp">
+
+            <TextView
+                android:id="@+id/txt_d_mobile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/mobile"
+                android:textAlignment="center"
+                android:textSize="@dimen/sixteen_sp"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/txt_mobile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/fifty_dp"
+                android:layout_toEndOf="@+id/txt_d_mobile"
+                android:text="0123456789"
+                android:textAlignment="center"
+                android:textSize="@dimen/sixteen_sp" />
+
+            <TextView
+                android:id="@+id/txt_mobile_call"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/twenty_dp"
+                android:layout_marginEnd="@dimen/twenty_dp"
+                android:text="@string/call"
+                android:textAlignment="center"
+                android:textColor="@color/blue"
+                android:textSize="@dimen/sixteen_sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rl_mobile"
+            android:layout_marginTop="@dimen/ten_dp">
+
+            <TextView
+                android:id="@+id/txt_d_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/brigton"
+                android:textAlignment="center"
+                android:textSize="@dimen/sixteen_sp"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/txt_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/fifty_dp"
+                android:layout_toEndOf="@+id/txt_d_email"
+                android:text="tommy@gmail.com"
+                android:textAlignment="center"
+                android:textSize="@dimen/sixteen_sp" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/txt_send_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rl_email"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="@dimen/twenty_dp"
+            android:text="@string/send_email"
+            android:textAlignment="center"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/sixteen_sp" />
+
+    </RelativeLayout>
+</layout>

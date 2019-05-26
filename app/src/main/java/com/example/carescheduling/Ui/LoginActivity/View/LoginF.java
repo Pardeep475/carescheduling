@@ -17,6 +17,7 @@ import com.example.carescheduling.Ui.LoginActivity.ViewModal.LoginViewModel;
 import com.example.carescheduling.Ui.LoginActivity.beans.LoginBeanData;
 import com.example.carescheduling.Ui.LoginActivity.beans.LoginBeanRetro;
 import com.example.carescheduling.Ui.LoginActivity.presenter.LoginPresenter;
+import com.example.carescheduling.Utils.ConnectivityReceiver;
 import com.example.carescheduling.databinding.FragmentLoginBinding;
 
 import java.util.ArrayList;
@@ -86,13 +87,18 @@ public class LoginF extends BaseFragment implements LoginPresenter {
 
     @Override
     public void getUserData() {
-
-        try {
-            checkLogin();
-        }catch (Exception e){
-            Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+        if (getActivity() != null) {
+            try {
+                if (ConnectivityReceiver.isNetworkAvailable(getActivity())) {
+                    checkLogin();
+                } else {
+                    Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
+                }
+            } catch (Exception e) {
+                Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+                hideDialog();
+            }
         }
-
     }
 
     private void checkLogin() {
@@ -105,15 +111,16 @@ public class LoginF extends BaseFragment implements LoginPresenter {
             public void onChanged(LoginBeanRetro loginBeanRetro) {
                 hideDialog();
                 Log.e("LoginSuccess", "liveData");
-                if (loginBeanRetro.isSuccess()){
+                if (loginBeanRetro != null && loginBeanRetro.isSuccess()) {
                     if (loginBeanRetro.getData().getBranchList().size() > 0) {
                         getSessionManager().setCurrentPassword(fragmentLoginBinding.edtPassword.getText().toString());
                         goToLoginFSecond(userEmail, userPassword, loginBeanRetro.getData());
                     } else {
                         setDashboard(loginBeanRetro.getData());
                     }
-                }else{
-                    Toast.makeText(getActivity(), loginBeanRetro.getMessage(), Toast.LENGTH_SHORT).show();
+                } else {
+                    if (loginBeanRetro != null)
+                        Toast.makeText(getActivity(), loginBeanRetro.getMessage(), Toast.LENGTH_SHORT).show();
                 }
 
             }

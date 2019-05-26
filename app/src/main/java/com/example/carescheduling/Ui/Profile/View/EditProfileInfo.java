@@ -32,6 +32,7 @@ import com.example.carescheduling.Ui.Profile.ViewModel.EditProfileInfoViewModel;
 import com.example.carescheduling.Ui.Profile.bean.EditProfileInfoBean;
 import com.example.carescheduling.Ui.Profile.presenter.EditEmailClick;
 import com.example.carescheduling.Ui.Profile.presenter.EditProfileInfoClick;
+import com.example.carescheduling.Utils.ConnectivityReceiver;
 import com.example.carescheduling.Utils.Constants;
 import com.example.carescheduling.data.Local.DatabaseTable.DisabilityType;
 import com.example.carescheduling.data.Local.DatabaseTable.Ethnicity;
@@ -405,13 +406,18 @@ public class EditProfileInfo extends BaseFragment implements EditEmailClick, Edi
 
     @Override
     public void DoneClick() {
-        try {
-            setDataRemote();
-        } catch (Exception e) {
-            Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
-            hideDialog();
+        if (getActivity() != null) {
+            try {
+                if (ConnectivityReceiver.isNetworkAvailable(getActivity())) {
+                    setDataRemote();
+                } else {
+                    Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
+                }
+            } catch (Exception e) {
+                hideDialog();
+                Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+            }
         }
-
     }
 
     private void setDataRemote() {
@@ -427,7 +433,7 @@ public class EditProfileInfo extends BaseFragment implements EditEmailClick, Edi
                     } else {
                         Toast.makeText(getActivity(), (String) profileBean.getResponseMessage(), Toast.LENGTH_SHORT).show();
                     }
-                }else {
+                } else {
                     Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
                 }
 

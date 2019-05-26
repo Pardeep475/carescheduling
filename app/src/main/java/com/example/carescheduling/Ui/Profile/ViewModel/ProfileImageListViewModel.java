@@ -1,6 +1,7 @@
 package com.example.carescheduling.Ui.Profile.ViewModel;
 
 import android.app.Application;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
@@ -34,6 +35,7 @@ import retrofit2.Response;
 public class ProfileImageListViewModel extends AndroidViewModel {
     private CompositeDisposable compositeDisposable;
     private ApiService apiService;
+    private Context context;
 
     public ProfileImageListViewModel(@NonNull Application application) {
         super(application);
@@ -89,7 +91,7 @@ public class ProfileImageListViewModel extends AndroidViewModel {
     }
 
 
-    public LiveData<String> getEditProfilePost(List<DataList> profileImageRetro) {
+    public LiveData<String> getEditProfilePost(DataList profileImageRetro) {
         final MutableLiveData<String> mutableLiveData = new MutableLiveData<>();
         Disposable disposable = apiService.EditMyImages(profileImageRetro)
                 .subscribeOn(Schedulers.io())
@@ -102,13 +104,13 @@ public class ProfileImageListViewModel extends AndroidViewModel {
                             if (loginBeanRetroResponse.body() != null)
                                 mutableLiveData.setValue(loginBeanRetroResponse.body().getResponseMessage());
                         } else {
-                            mutableLiveData.setValue("Something went wrong");
+                            mutableLiveData.setValue(null);
                         }
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        Log.e("LoginSuccess", "error" + throwable.toString());
+
                         mutableLiveData.setValue(throwable.toString());
                     }
                 });

@@ -21,6 +21,7 @@ import com.example.carescheduling.Ui.Dashboard.presenter.EditProfileClickHandler
 import com.example.carescheduling.Ui.Dashboard.presenter.ProfileClickHandler;
 import com.example.carescheduling.Ui.LoginActivity.View.LoginActivity;
 import com.example.carescheduling.Ui.Profile.View.EditProfile;
+import com.example.carescheduling.Utils.ConnectivityReceiver;
 import com.example.carescheduling.Utils.Constants;
 import com.example.carescheduling.data.Local.SessionManager;
 import com.example.carescheduling.databinding.FragmentProfileResultBinding;
@@ -63,20 +64,29 @@ public class ProfileResult extends BaseFragment implements ProfileClickHandler, 
     }
 
     private void fetchPersonDetails() {
-        try {
-            showDialog();
-            profileResultViewModel.getClientData(sessionManager.getPersonId(), sessionManager.getCustomerId(), sessionManager.getBranchId())
-                    .observe(this, new Observer<ProfileBean>() {
-                        @Override
-                        public void onChanged(ProfileBean profileBean) {
-                            hideDialog();
-                            fragmentProfileResultBinding.setProfileResultBean(profileBean);
-                            setDataProfile(profileBean);
-                        }
-                    });
+        if (getActivity() != null) {
+            if (ConnectivityReceiver.isNetworkAvailable(getActivity())) {
+                try {
+                    showDialog();
+                    profileResultViewModel.getClientData(sessionManager.getPersonId(), sessionManager.getCustomerId(), sessionManager.getBranchId())
+                            .observe(this, new Observer<ProfileBean>() {
+                                @Override
+                                public void onChanged(ProfileBean profileBean) {
+                                    hideDialog();
+                                    if (profileBean != null) {
+                                        fragmentProfileResultBinding.setProfileResultBean(profileBean);
+                                        setDataProfile(profileBean);
+                                    }
+                                }
+                            });
 
-        } catch (Exception e) {
-            Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+                    hideDialog();
+                }
+            } else {
+                Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -110,6 +120,7 @@ public class ProfileResult extends BaseFragment implements ProfileClickHandler, 
         Intent intent = new Intent(getActivity(), LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
-        getActivity().finish();
+        if (getActivity() != null)
+            getActivity().finish();
     }
 }

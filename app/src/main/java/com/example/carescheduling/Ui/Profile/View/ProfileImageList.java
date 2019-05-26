@@ -50,6 +50,7 @@ import com.example.carescheduling.Ui.Profile.bean.Image;
 import com.example.carescheduling.Ui.Profile.bean.ProfileImageRetro;
 import com.example.carescheduling.Ui.Profile.presenter.EditEmailClick;
 import com.example.carescheduling.Ui.Profile.presenter.ProfileImageListClick;
+import com.example.carescheduling.Utils.ConnectivityReceiver;
 import com.example.carescheduling.Utils.Constants;
 import com.example.carescheduling.databinding.FragmentProfileImageListBinding;
 import com.karumi.dexter.Dexter;
@@ -103,7 +104,11 @@ public class ProfileImageList extends BaseFragment implements EditEmailClick, Pr
 
         profileImageListBinding.rcvImages.setLayoutManager(new GridLayoutManager(getActivity(), 2));
 
-        FetchProfileListImages();
+        if (getActivity() != null && ConnectivityReceiver.isNetworkAvailable(getActivity())) {
+            FetchProfileListImages();
+        } else {
+            Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
+        }
 
 
         profileImageListBinding.setEditEmailClick(this);
@@ -168,7 +173,7 @@ public class ProfileImageList extends BaseFragment implements EditEmailClick, Pr
     }
 
     private void customDialog() {
-        dialog = new Dialog(getActivity());//,android.R.style.Theme_Translucent_NoTitleBar
+        final Dialog dialog = new Dialog(getActivity());//,android.R.style.Theme_Translucent_NoTitleBar
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.custom_dialog_profile);
         Button profile_dialog_gallery = dialog.findViewById(R.id.profile_dialog_gallery);
@@ -393,26 +398,32 @@ public class ProfileImageList extends BaseFragment implements EditEmailClick, Pr
     public void DoneClick() {
         try {
             setDataRemote();
-        }catch(Exception e){
+        } catch (Exception e) {
             Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
         }
     }
 
     private void setDataRemote() {
-        showDialog();
-        if (bitmap != null) {
-            profileImageListViewModel.getEditProfilePost(AddNewImage()).observe(this, new Observer<String>() {
-                @Override
-                public void onChanged(String s) {
-                    Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
-                }
-            });
+        if (getActivity() != null && ConnectivityReceiver.isNetworkAvailable(getActivity())) {
+            if (bitmap != null) {
+                showDialog();
+                profileImageListViewModel.getEditProfilePost(AddNewImage()).observe(this, new Observer<String>() {
+                    @Override
+                    public void onChanged(String s) {
+                        hideDialog();
+                        Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } else {
+                hideDialog();
+                Toast.makeText(getActivity(), "Please select image", Toast.LENGTH_SHORT).show();
+            }
         } else {
-            Toast.makeText(getActivity(), "Please select image", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private List<DataList> AddNewImage() {
+    private DataList AddNewImage() {
 
         if (profileResultBean.getDataList() != null) {
             Image image = new Image();
@@ -422,7 +433,7 @@ public class ProfileImageList extends BaseFragment implements EditEmailClick, Pr
             profileResultBean.getDataList().add(dataList);
         }
 
-        return profileResultBean.getDataList();
+        return profileResultBean.getDataList().get(0);
     }
 
 }

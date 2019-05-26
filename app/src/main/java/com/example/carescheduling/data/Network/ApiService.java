@@ -3,6 +3,7 @@ package com.example.carescheduling.data.Network;
 import com.example.carescheduling.Ui.Dashboard.beans.ClientBookingListModel;
 import com.example.carescheduling.Ui.Dashboard.beans.EditMyProfile;
 import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
+import com.example.carescheduling.Ui.HomeScreen.beans.ClientCarePlan;
 import com.example.carescheduling.Ui.LoginActivity.beans.LoginBeanRetro;
 import com.example.carescheduling.Ui.Profile.bean.AddressByPostCode;
 import com.example.carescheduling.Ui.Profile.bean.DataList;
@@ -62,11 +63,18 @@ public interface ApiService {
 //    http://mobile.rota.services/CssMobileRestfulService.svc/EditProfileImages
 
     @POST("EditProfileImages")
-    Observable<Response<ProfileImageRetro>> EditMyImages(@Body List<DataList> profileImageRetro);
+    Observable<Response<ProfileImageRetro>> EditMyImages(@Body DataList profileImageRetro);
 
     //    "GetNextVisitClientBookingList/{employeeId}/{branchId}/{customerId}"
     @GET("GetNextVisitClientBookingList/{employeeId}/{branchId}/{customerId}")
     Observable<Response<ClientBookingListModel>> GetNextVisitClientBookingList(@Path("employeeId") String employeeId,
                                                                                @Path("branchId") String branchId,
                                                                                @Path("customerId") String customerId);
+
+    @GET("GetClientAndClientCarePlan/{customerId}/{branchId}/{clientId}")
+    Observable<Response<ClientCarePlan>> GetClientAndClientCarePlan(@Path("customerId") String customerId,
+                                                                    @Path("branchId") String branchId,
+                                                                    @Path("clientId") String clientId);
+
+
 }

@@ -10,6 +10,7 @@ import com.example.carescheduling.Ui.Base.BaseActivity;
 import com.example.carescheduling.Ui.Dashboard.ViewModel.DashboardViewModel;
 import com.example.carescheduling.Ui.Dashboard.beans.EditMyProfile;
 import com.example.carescheduling.Ui.Profile.View.EditProfile;
+import com.example.carescheduling.Utils.ConnectivityReceiver;
 import com.example.carescheduling.Utils.Constants;
 import com.example.carescheduling.data.Local.AppDataBase;
 import com.example.carescheduling.data.Local.DatabaseInitializer;
@@ -77,24 +78,30 @@ public class Dashboard extends BaseActivity {
         dashboardViewModel = ViewModelProviders.of(this).get(DashboardViewModel.class);
         activityDashboardBinding.navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         setFragment(SettingF.newInstance());
-        getDefaultData();
+
+//        getDefaultData();
     }
 
     private void getDefaultData() {
-        try {
-            LiveData<EditMyProfile> editMyProfileLiveData = dashboardViewModel.getEditMyProfileData(sessionManager.getCustomerId());
+        if (ConnectivityReceiver.isNetworkAvailable(this)) {
+            try {
+                LiveData<EditMyProfile> editMyProfileLiveData = dashboardViewModel.getEditMyProfileData(sessionManager.getCustomerId());
 
-            showDialog();
-            editMyProfileLiveData.observe(this, new Observer<EditMyProfile>() {
-                @Override
-                public void onChanged(EditMyProfile editMyProfile) {
-                    hideDialog();
-                    EditMyProfile myProfile = editMyProfile;
-                    parseData(myProfile);
-                }
-            });
-        } catch (Exception e) {
-            Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
+                showDialog();
+                editMyProfileLiveData.observe(this, new Observer<EditMyProfile>() {
+                    @Override
+                    public void onChanged(EditMyProfile editMyProfile) {
+                        hideDialog();
+                        EditMyProfile myProfile = editMyProfile;
+                        parseData(myProfile);
+                    }
+                });
+            } catch (Exception e) {
+                hideDialog();
+                Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(this, "please check your internet connection", Toast.LENGTH_SHORT).show();
         }
     }
 

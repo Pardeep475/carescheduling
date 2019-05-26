@@ -23,6 +23,7 @@ import com.example.carescheduling.Ui.LoginActivity.ViewModal.LoginViewModalSF;
 import com.example.carescheduling.Ui.LoginActivity.beans.LoginBeanRetro;
 import com.example.carescheduling.Ui.LoginActivity.presenter.LoginFSecondPresenter;
 //import com.example.carescheduling.databinding.FragmentLoginFsecondBinding;
+import com.example.carescheduling.Utils.ConnectivityReceiver;
 import com.google.gson.JsonElement;
 
 import java.util.ArrayList;
@@ -97,17 +98,6 @@ public class LoginFSecond extends BaseFragment implements View.OnClickListener {
         appCompatSpinner = view.findViewById(R.id.spinner_login_sf);
         appCompatSpinner.setAdapter(adapter);
         view.findViewById(R.id.btn_continue).setOnClickListener(this);
-        appCompatSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getActivity(), "" + branchList.get(position), Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
     }
 
 
@@ -122,10 +112,17 @@ public class LoginFSecond extends BaseFragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_continue: {
-                try {
-                    checkLogin();
-                } catch (Exception e) {
-                    Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+                if (getActivity() != null) {
+                    try {
+                        if (ConnectivityReceiver.isNetworkAvailable(getActivity())) {
+                            checkLogin();
+                        } else {
+                            Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (Exception e) {
+                        Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+                        hideDialog();
+                    }
                 }
                 break;
             }

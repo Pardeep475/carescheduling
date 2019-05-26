@@ -12,6 +12,7 @@ import com.example.carescheduling.Ui.Base.BaseFragment;
 import com.example.carescheduling.Ui.Profile.ViewModel.ChangePasswordViewModel;
 import com.example.carescheduling.Ui.Profile.bean.UserViewModel;
 import com.example.carescheduling.Ui.Profile.presenter.EditEmailClick;
+import com.example.carescheduling.Utils.ConnectivityReceiver;
 import com.example.carescheduling.Utils.Constants;
 import com.example.carescheduling.data.Local.SessionManager;
 import com.example.carescheduling.databinding.ChangePasswordBinding;
@@ -70,8 +71,19 @@ public class ChangePassword extends BaseFragment implements EditEmailClick {
 
     @Override
     public void DoneClick() {
-        if (checkValidation()) {
-            setDataRemote();
+        if (getActivity() != null) {
+            try {
+                if (ConnectivityReceiver.isNetworkAvailable(getActivity())) {
+                    if (checkValidation()) {
+                        setDataRemote();
+                    }
+                } else {
+                    Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
+                }
+            } catch (Exception e) {
+                Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+                hideDialog();
+            }
         }
     }
 

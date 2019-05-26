@@ -1,13 +1,16 @@
 package com.example.carescheduling.Ui.Profile.View;
 
 import android.os.Bundle;
+
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
 import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseFragment;
 import com.example.carescheduling.Ui.Dashboard.beans.PersonEmail;
@@ -16,6 +19,7 @@ import com.example.carescheduling.Ui.Profile.Adapter.CustomAdapter;
 import com.example.carescheduling.Ui.Profile.ViewModel.EditEmailViewModel;
 import com.example.carescheduling.Ui.Profile.bean.EditEmailBean;
 import com.example.carescheduling.Ui.Profile.presenter.EditEmailClick;
+import com.example.carescheduling.Utils.ConnectivityReceiver;
 import com.example.carescheduling.Utils.Constants;
 import com.example.carescheduling.data.Local.DatabaseTable.EmailType;
 import com.example.carescheduling.databinding.FragmentEditEmailBinding;
@@ -108,9 +112,17 @@ public class EditEmail extends BaseFragment implements EditEmailClick {
 
     @Override
     public void DoneClick() {
-        try{
-        setDataRemote();}catch (Exception e){
-            Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+        if (getActivity() != null) {
+            try {
+                if (ConnectivityReceiver.isNetworkAvailable(getActivity())) {
+                    setDataRemote();
+                } else {
+                    Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
+                }
+            } catch (Exception e) {
+                hideDialog();
+                Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -133,13 +145,13 @@ public class EditEmail extends BaseFragment implements EditEmailClick {
             @Override
             public void onChanged(ProfileBean profileBean) {
                 hideDialog();
-                if (profileBean != null){
-                    if (profileBean.getSuccess()){
-                        Toast.makeText(getActivity(),(String) profileBean.getResponseMessage(), Toast.LENGTH_SHORT).show();
-                    }else{
+                if (profileBean != null) {
+                    if (profileBean.getSuccess()) {
+                        Toast.makeText(getActivity(), (String) profileBean.getResponseMessage(), Toast.LENGTH_SHORT).show();
+                    } else {
                         Toast.makeText(getActivity(), (String) profileBean.getResponseMessage(), Toast.LENGTH_SHORT).show();
                     }
-                }else {
+                } else {
                     Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
                 }
             }
