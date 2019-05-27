@@ -124,6 +124,16 @@
     <string name="medication">Medication</string>
     <string name="contact_info">Contact Info</string>
 
+    <string name="task"><u>Task</u></string>
+    <string name="disabilities">Disabilities</string>
+    <string name="blindness">Blindness</string>
+    <string name="more_info"><u>More Info</u></string>
+    <string name="registerred">Registerred :</string>
+    <string name="matching">Matching</string>
+    <string name="matching_type">Matching Type</string>
+    <string name="notes">Note</string>
+    <string name="wriiten_by">Wriiten By:</string>
+
     <string-array name="home_array">
         <item>My Next Visit</item>
         <item>Directions</item>

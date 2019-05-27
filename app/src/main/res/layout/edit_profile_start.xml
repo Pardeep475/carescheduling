@@ -70,7 +70,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/twenty_dp"
-                    android:background="@color/dark_blue"
+                    android:layout_marginStart="@dimen/ten_dp"
+                    android:layout_marginEnd="@dimen/ten_dp"
+                    android:background="@drawable/start_profile_views_bg"
                     android:onClick="@{(v)-> editProfileStartClick.EditMyProfileInfo(profileResultBean)}"
                     android:paddingTop="@dimen/ten_dp"
                     android:paddingBottom="@dimen/ten_dp">
@@ -105,7 +107,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/ten_dp"
-                    android:background="@color/dark_blue"
+                    android:layout_marginEnd="@dimen/ten_dp"
+                    android:layout_marginStart="@dimen/ten_dp"
+                    android:background="@drawable/start_profile_views_bg"
                     android:onClick="@{(v)-> editProfileStartClick.EditMyAddress(profileResultBean)}"
                     android:paddingTop="@dimen/ten_dp"
                     android:paddingBottom="@dimen/ten_dp">
@@ -140,7 +144,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/ten_dp"
-                    android:background="@color/dark_blue"
+                    android:layout_marginStart="@dimen/ten_dp"
+                    android:layout_marginEnd="@dimen/ten_dp"
+                    android:background="@drawable/start_profile_views_bg"
                     android:onClick="@{(v)-> editProfileStartClick.EditMyPicture(profileResultBean)}"
                     android:paddingTop="@dimen/ten_dp"
                     android:paddingBottom="@dimen/ten_dp">
@@ -175,7 +181,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/fifty_dp"
-                    android:background="@color/dark_blue"
+                    android:layout_marginEnd="@dimen/ten_dp"
+                    android:layout_marginStart="@dimen/ten_dp"
+                    android:background="@drawable/start_profile_views_bg"
                     android:onClick="@{(v)-> editProfileStartClick.EditChangePassword(profileResultBean)}"
                     android:paddingTop="@dimen/ten_dp"
                     android:paddingBottom="@dimen/ten_dp">

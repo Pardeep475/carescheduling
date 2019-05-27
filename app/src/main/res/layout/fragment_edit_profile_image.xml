@@ -69,17 +69,17 @@
 
         <Button
             android:layout_width="match_parent"
-            android:background="@color/colorPrimary"
             android:layout_marginTop="@dimen/fifty_dp"
             android:textColor="@color/white"
             android:textAllCaps="false"
+            android:background="@drawable/radius_dark_blue_bg"
             android:layout_marginStart="@dimen/twenty_dp"
             android:layout_marginEnd="@dimen/twenty_dp"
             android:text="@string/new_picture_using_camera"
             android:layout_height="wrap_content" />
         <Button
             android:layout_width="match_parent"
-            android:background="@color/colorPrimary"
+            android:background="@drawable/radius_dark_blue_bg"
             android:layout_marginTop="@dimen/ten_dp"
             android:layout_marginStart="@dimen/twenty_dp"
             android:layout_marginEnd="@dimen/twenty_dp"

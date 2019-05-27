@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/twenty_dp"
+    android:background="@drawable/start_profile_views_bg"
+    android:textColor="@color/white"
+    android:text="summary"
+    android:textAllCaps="true"
+    android:drawableEnd="@drawable/ic_right_arrow"
+    android:drawableTint="@color/white"
+    android:textSize="@dimen/sixteen_sp"
+    xmlns:android="http://schemas.android.com/apk/res/android" />
+

@@ -34,7 +34,6 @@
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/ten_dp"
                 android:contentDescription="@string/user_profile"
-                android:onClick="@{(v)->clickhandler.logout()}"
                 android:tint="@color/white"
                 app:srcCompat="@drawable/ic_logout" />
 

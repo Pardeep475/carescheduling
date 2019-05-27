@@ -25,14 +25,6 @@
     android:orientation="vertical"
     tools:context=".Ui.LoginActivity.View.LoginFSecond">
 
-    <ImageView
-        android:id="@+id/img_logo"
-        android:layout_width="@dimen/one_fifty_dp"
-        android:layout_height="@dimen/one_fifty_dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="@dimen/fifty_dp"
-        android:src="@drawable/logo" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -76,11 +68,13 @@
 
     <TextView
         android:id="@+id/btn_continue"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/sixteen_dp"
         android:layout_marginTop="@dimen/fifty_dp"
         android:layout_marginEnd="@dimen/sixteen_dp"
+        android:layout_gravity="right"
+        android:padding="@dimen/ten_dp"
         android:background="@drawable/btn_back"
         android:text="@string/_continue"
         android:textAlignment="center"

@@ -1,0 +1,71 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/rl_tool"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@color/colorPrimary">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingStart="@dimen/ten_dp"
+            android:text="@string/notes"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sixteen_sp" />
+
+        <ImageView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/ten_dp"
+            android:contentDescription="@string/user_profile"
+            android:tint="@color/white"
+            android:visibility="visible"
+            app:srcCompat="@drawable/ic_tick" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_writtenBy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/wriiten_by"
+        android:textSize="@dimen/sixteen_sp"
+        android:textColor="@color/black"
+        android:layout_below="@+id/rl_tool"
+        android:paddingStart="@dimen/twenty_dp"
+        android:paddingTop="@dimen/twenty_dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="21/05/19"
+        android:textSize="@dimen/forteen_sp"
+        android:textColor="@color/black"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/rl_tool"
+        android:paddingStart="@dimen/twenty_dp"
+        android:paddingTop="@dimen/twenty_dp"
+        android:paddingEnd="@dimen/twenty_dp"/>
+
+    <TextView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Karen "
+        android:textSize="@dimen/forteen_sp"
+        android:textColor="@color/black"
+        android:layout_below="@+id/tv_writtenBy"
+        android:paddingStart="@dimen/twenty_dp"
+        android:paddingEnd="@dimen/twenty_dp"/>
+
+
+
+</RelativeLayout>
