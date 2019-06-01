@@ -1,59 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="backPressedClick"
+            type="com.example.carescheduling.Ui.HomeScreen.presenter.BackPressedClick"/>
+
+    </data>
 
     <RelativeLayout
-        android:id="@+id/rl_tool"
         android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        android:background="@color/colorPrimary">
+        android:layout_height="match_parent"
+        android:background="@color/white">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:contentDescription="@string/user_profile"
-            android:paddingStart="@dimen/ten_dp"
-            android:paddingEnd="@dimen/ten_dp"
-            android:tint="@color/white"
-            app:srcCompat="@drawable/ic_left_back" />
+        <RelativeLayout
+            android:id="@+id/rl_tool"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:background="@color/colorPrimary">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:onClick="@{(v)->backPressedClick.onBackPress()}"
+                android:contentDescription="@string/user_profile"
+                android:paddingStart="@dimen/ten_dp"
+                android:paddingEnd="@dimen/ten_dp"
+                android:tint="@color/white"
+                app:srcCompat="@drawable/ic_left_back" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="Mr.John Smith"
+                android:textColor="@color/white"
+                android:textSize="@dimen/forteen_sp" />
+
+        </RelativeLayout>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/disabilities"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="Mr.John Smith"
-            android:textColor="@color/white"
-            android:textSize="@dimen/forteen_sp" />
+            android:layout_below="@+id/rl_tool"
+            android:text="@string/disabilities"
+            android:textSize="20sp"
+            android:textColor="@color/colorPrimary"
+            android:padding="@dimen/twenty_dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/disabilitiesRecyclerview"
+            android:layout_below="@+id/disabilities"
+            android:layout_width="match_parent"
+            android:paddingStart="@dimen/twenty_dp"
+            android:paddingEnd="@dimen/twenty_dp"
+            android:paddingBottom="@dimen/twenty_dp"
+            android:layout_height="match_parent">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
 
     </RelativeLayout>
-    <TextView
-        android:id="@+id/disabilities"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rl_tool"
-        android:text="@string/disabilities"
-        android:textSize="20sp"
-        android:textColor="@color/colorPrimary"
-        android:padding="@dimen/twenty_dp"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/disabilitiesRecyclerview"
-        android:layout_below="@+id/disabilities"
-        android:layout_width="match_parent"
-        android:paddingStart="@dimen/twenty_dp"
-        android:paddingEnd="@dimen/twenty_dp"
-        android:paddingBottom="@dimen/twenty_dp"
-        android:layout_height="match_parent">
-
-    </androidx.recyclerview.widget.RecyclerView>
-
-
-
-</RelativeLayout>
+</layout>

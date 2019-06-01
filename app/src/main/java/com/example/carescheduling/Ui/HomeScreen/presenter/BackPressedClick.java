@@ -1,6 +1,5 @@
 package com.example.carescheduling.Ui.HomeScreen.presenter;
 
-public interface MyNextVisitClick {
+public interface BackPressedClick {
     void onBackPress();
-    void moreClientInfoClick();
 }

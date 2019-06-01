@@ -25,6 +25,7 @@ import com.example.carescheduling.Ui.Dashboard.beans.HomeScreenBean;
 import com.example.carescheduling.Ui.Dashboard.presenter.HomeScreenOnClick;
 import com.example.carescheduling.Ui.Dashboard.presenter.ProfileClickHandler;
 import com.example.carescheduling.Ui.HomeScreen.View.BlankFragment;
+import com.example.carescheduling.Ui.HomeScreen.beans.ClientCarePlan;
 import com.example.carescheduling.Ui.LoginActivity.View.LoginActivity;
 import com.example.carescheduling.Ui.Profile.View.EditProfile;
 import com.example.carescheduling.Utils.ConnectivityReceiver;
@@ -63,7 +64,7 @@ public class HomeF extends BaseFragment implements ProfileClickHandler, HomeScre
         homeScreenBean.setPassword("12345");
 
         homeFViewModel = ViewModelProviders.of(this).get(HomeFViewModel.class);
-        getClientBookingList();
+//        getClientBookingList();
 
         sessionManager = getSessionManager();
         String[] some_array = getResources().getStringArray(R.array.home_array);
@@ -72,6 +73,18 @@ public class HomeF extends BaseFragment implements ProfileClickHandler, HomeScre
         fragmentHomeBinding.rcvHome.setAdapter(homeScreenAdapter);
 
         fragmentHomeBinding.setClickhandler(this);
+    }
+
+    private void GetClientPlan(){
+//5F98AF4F-25DC-4AC8-B867-C5072C100000/5F98AF4F-25DC-4AC8-B867-C5072C101011/A529B2CC-515E-4501-AE48-1E3FE9B384D6
+        homeFViewModel.GetClientAndClientCarePlan("5F98AF4F-25DC-4AC8-B867-C5072C100000"
+                ,"5F98AF4F-25DC-4AC8-B867-C5072C101011"
+                ,"A529B2CC-515E-4501-AE48-1E3FE9B384D6").observe(this, new Observer<ClientCarePlan>() {
+            @Override
+            public void onChanged(ClientCarePlan clientCarePlan) {
+
+            }
+        });
     }
 
     private void getClientBookingList() {
@@ -125,4 +138,6 @@ public class HomeF extends BaseFragment implements ProfileClickHandler, HomeScre
             getActivity().getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fm_edit_container, fragment).addToBackStack(null).commitAllowingStateLoss();
     }
+
+
 }

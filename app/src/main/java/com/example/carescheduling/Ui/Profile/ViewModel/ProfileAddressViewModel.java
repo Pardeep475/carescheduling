@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
 import com.example.carescheduling.Ui.Profile.bean.AddressByPostCode;
+import com.example.carescheduling.Ui.Profile.bean.AddressData;
 import com.example.carescheduling.Ui.Profile.bean.ProfileAddressBean;
 import com.example.carescheduling.data.Local.AppDataBase;
 import com.example.carescheduling.data.Local.DatabaseInitializer;
@@ -115,11 +116,15 @@ public class ProfileAddressViewModel extends AndroidViewModel {
     }
 
 
-    public LiveData<ArrayList<String>> FetchAddressSpinnerData(AddressByPostCode addressByPostCode) {
-        MutableLiveData<ArrayList<String>> stringMutableLiveData = new MutableLiveData<>();
-        ArrayList<String> stringArrayList = new ArrayList<>();
+    public LiveData<ArrayList<AddressData>> FetchAddressSpinnerData(AddressByPostCode addressByPostCode) {
+        MutableLiveData<ArrayList<AddressData>> stringMutableLiveData = new MutableLiveData<>();
+        ArrayList<AddressData> stringArrayList = new ArrayList<>();
         for (int i = 0; i < addressByPostCode.getData().getCountryPostCode().getAddress().size(); i++) {
-            stringArrayList.add(addressByPostCode.getData().getCountryPostCode().getAddress().get(0).getStreetName());
+            AddressData addressData = new AddressData();
+            addressData.setAddressType(addressByPostCode.getData().getCountryPostCode().getAddress().get(0).getStreetName());
+            addressData.setAddressId(addressByPostCode.getData().getCountryPostCode().getAddress().get(0).getAddressId());
+
+            stringArrayList.add(addressData);
         }
         stringMutableLiveData.setValue(stringArrayList);
         return stringMutableLiveData;

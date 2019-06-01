@@ -215,6 +215,7 @@
                     android:layout_below="@+id/txt_telephone"
                     android:layout_marginTop="@dimen/fifty_dp"
                     android:background="@color/blue"
+                    android:onClick="@{(v)->myNextVisitClick.moreClientInfoClick()}"
                     android:text="@string/more_info_client"
                     android:textColor="@color/white" />
 

@@ -46,4 +46,14 @@ public class BlankFragment extends Fragment implements MyNextVisitClick {
         if (getActivity() != null)
             getActivity().onBackPressed();
     }
+
+    @Override
+    public void moreClientInfoClick() {
+        setFragment(ClientInfoHomeFragment.newInstance());
+    }
+    private void setFragment(Fragment fragment) {
+        if (getActivity()!=null)
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fm_edit_container, fragment).addToBackStack(null).commitAllowingStateLoss();
+    }
 }

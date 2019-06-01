@@ -5,6 +5,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.carescheduling.Ui.Dashboard.beans.ClientBookingListModel;
+import com.example.carescheduling.Ui.HomeScreen.beans.ClientCarePlan;
 import com.example.carescheduling.data.Network.ApiClient;
 import com.example.carescheduling.data.Network.ApiService;
 
@@ -59,6 +60,37 @@ public class HomeFViewModel extends AndroidViewModel {
         compositeDisposable.add(disposable);
         return data;
     }
+
+
+    public LiveData<ClientCarePlan> GetClientAndClientCarePlan(String customerId, String branchId, String clientId) {
+        final MutableLiveData<ClientCarePlan> data = new MutableLiveData<>();
+
+        Disposable disposable = apiService.GetClientAndClientCarePlan(customerId, branchId, clientId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Response<ClientCarePlan>>() {
+                    @Override
+                    public void accept(Response<ClientCarePlan> loginBeanRetroResponse) throws Exception {
+                        Log.e("LoginSuccess", "success");
+                        if (loginBeanRetroResponse.isSuccessful()) {
+                            data.setValue(loginBeanRetroResponse.body());
+                        } else {
+                            data.setValue(null);
+                            Toast.makeText(getApplication(), loginBeanRetroResponse.message(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        Log.e("LoginSuccess", "error" + throwable.toString());
+                        data.setValue(null);
+                        Toast.makeText(getApplication(), throwable.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+        compositeDisposable.add(disposable);
+        return data;
+    }
+
 
     @Override
     protected void onCleared() {

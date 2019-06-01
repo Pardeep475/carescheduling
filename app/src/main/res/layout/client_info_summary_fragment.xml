@@ -4,15 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="backPressedClick"
-            type="com.example.carescheduling.Ui.HomeScreen.presenter.BackPressedClick"/>
+            type="com.example.carescheduling.Ui.HomeScreen.presenter.BackPressedClick" />
+
     </data>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".Ui.HomeScreen.View.ClientInfoDocuments">
+        android:orientation="vertical">
 
         <RelativeLayout
             android:id="@+id/rl_tool"
@@ -37,12 +39,11 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:text="@string/Documents"
+                android:text="@string/summary"
                 android:textColor="@color/white"
                 android:textSize="@dimen/forteen_sp" />
 
             <ImageView
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -56,23 +57,38 @@
         </RelativeLayout>
 
         <TextView
-            android:id="@+id/txt_document"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/rl_tool"
             android:layout_gravity="center_vertical"
             android:layout_marginTop="@dimen/ten_dp"
-            android:text="@string/Documents"
+            android:text="@string/first_name"
             android:textAlignment="center"
-            android:textSize="@dimen/twenty_five_dp"
+            android:textSize="@dimen/twenty_five_sp"
             android:textStyle="bold" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcv_client_info_documents"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/txt_document"
-            android:layout_marginTop="@dimen/ten_dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/five_dp"
+            android:text="full \naddress \nthree lines"
+            android:textColor="@color/black"
+            android:textSize="@dimen/forteen_sp" />
 
-    </RelativeLayout>
+
+        <ImageView
+            android:layout_width="@dimen/hundrd_dp"
+            android:layout_height="@dimen/hundrd_dp"
+            android:layout_marginTop="@dimen/ten_dp"
+            android:contentDescription="@string/user_profile"
+            app:srcCompat="@drawable/user_placeholder" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/twenty_dp"
+            android:text="full address three lines"
+            android:textColor="@color/black"
+            android:textSize="@dimen/forteen_sp" />
+
+    </LinearLayout>
 </layout>

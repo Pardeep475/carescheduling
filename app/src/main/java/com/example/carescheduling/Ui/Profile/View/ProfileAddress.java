@@ -23,7 +23,9 @@ import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
 import com.example.carescheduling.Ui.Profile.Adapter.CustomAdapter;
 import com.example.carescheduling.Ui.Profile.ViewModel.ProfileAddressViewModel;
 import com.example.carescheduling.Ui.Profile.bean.AddressByPostCode;
+import com.example.carescheduling.Ui.Profile.bean.AddressData;
 import com.example.carescheduling.Ui.Profile.bean.ProfileAddressBean;
+import com.example.carescheduling.Ui.Profile.bean.UserViewModel;
 import com.example.carescheduling.Ui.Profile.presenter.EditEmailClick;
 import com.example.carescheduling.Ui.Profile.presenter.ProfileAddressClick;
 import com.example.carescheduling.Utils.Constants;
@@ -40,6 +42,7 @@ public class ProfileAddress extends BaseFragment implements EditEmailClick, Prof
     private ProfileAddressViewModel profileAddressViewModel;
     private String stringValue;
     private ProfileBean profileBean;
+    private List<AddressData> addressTypesList = new ArrayList<>();
 
     // TODO: Rename and change types and number of parameters
     public static ProfileAddress newInstance(String value, ProfileBean profileBean) {
@@ -88,7 +91,6 @@ public class ProfileAddress extends BaseFragment implements EditEmailClick, Prof
             @Override
             public void onChanged(List<AddressType> addressTypes) {
                 ArrayList<String> arrayList = new ArrayList<>();
-
                 if (addressTypes != null && addressTypes.size() > 0) {
                     for (int i = 0; i < addressTypes.size(); i++) {
                         arrayList.add(addressTypes.get(i).getAddressName());
@@ -164,13 +166,17 @@ public class ProfileAddress extends BaseFragment implements EditEmailClick, Prof
             public void onChanged(AddressByPostCode addressByPostCode) {
                 hideDialog();
 
-                profileAddressViewModel.FetchAddressSpinnerData(addressByPostCode).observe(ProfileAddress.this, new Observer<ArrayList<String>>() {
+                profileAddressViewModel.FetchAddressSpinnerData(addressByPostCode).observe(ProfileAddress.this, new Observer<ArrayList<AddressData>>() {
                     @Override
-                    public void onChanged(ArrayList<String> arrayList) {
+                    public void onChanged(ArrayList<AddressData> addressData) {
+                        addressTypesList = addressData;
+                        ArrayList<String> arrayList1 = new ArrayList<>();
+                        for (int i = 0; i < addressData.size(); i++) {
+                            arrayList1.add(addressData.get(i).getAddressType());
+                        }
                         CustomAdapter adapter = new CustomAdapter(getActivity(),
-                                R.layout.item_spinner_sf, R.id.title, arrayList);
+                                R.layout.item_spinner_sf, R.id.title, arrayList1);
                         profileAddressBinding.spinnerAddress.setAdapter(adapter);
-
 
                     }
                 });
@@ -211,7 +217,8 @@ public class ProfileAddress extends BaseFragment implements EditEmailClick, Prof
 
         try {
             setDataRemote();
-        }catch (Exception e){
+        } catch (Exception e) {
+            hideDialog();
             Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
         }
 
@@ -226,7 +233,7 @@ public class ProfileAddress extends BaseFragment implements EditEmailClick, Prof
 
     private void setAddressData() {
 
-        if (profileBean.getData() != null && profileBean.getData().getPerson() != null && profileBean.getData().getPerson().getPersonEmail() != null && stringValue != null) {
+        if (profileBean.getData() != null && profileBean.getData().getPerson() != null && profileBean.getData().getPerson().getPersonAddress() != null && stringValue != null) {
             profileBean = updateAddress();
         } else {
             profileBean = addNewAddress();
@@ -236,13 +243,13 @@ public class ProfileAddress extends BaseFragment implements EditEmailClick, Prof
             @Override
             public void onChanged(ProfileBean profileBean) {
                 hideDialog();
-                if (profileBean != null){
-                    if (profileBean.getSuccess()){
-                        Toast.makeText(getActivity(),(String) profileBean.getResponseMessage(), Toast.LENGTH_SHORT).show();
-                    }else{
+                if (profileBean != null) {
+                    if (profileBean.getSuccess()) {
+                        Toast.makeText(getActivity(), (String) profileBean.getResponseMessage(), Toast.LENGTH_SHORT).show();
+                    } else {
                         Toast.makeText(getActivity(), (String) profileBean.getResponseMessage(), Toast.LENGTH_SHORT).show();
                     }
-                }else {
+                } else {
                     Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -252,20 +259,22 @@ public class ProfileAddress extends BaseFragment implements EditEmailClick, Prof
 
     private ProfileBean updateAddress() {
         int addressCounter = 0;
-        if (profileBean.getData().getPersonAddresses().size() > 0) {
-            for (int i = 0; i < profileBean.getData().getPersonAddresses().size(); i++) {
-                if (profileBean.getData().getPersonAddresses().get(i).getAddressTypeName().equalsIgnoreCase((String) profileAddressBinding.spinnerAddressType.getSelectedItem())) {
-                    profileBean.getData().getPersonAddresses().get(i).getAddress().setPostCodeName(profileAddressBinding.edtPostCode.getText().toString());
-                    profileBean.getData().getPersonAddresses().get(i).getAddress().setStreetName(profileAddressBinding.edtStreetName.getText().toString());
-                    profileBean.getData().getPersonAddresses().get(i).getAddress().setCountryName((String) profileAddressBinding.spinnerNationality.getSelectedItem());
-                    profileBean.getData().getPersonAddresses().get(i).getAddress().setBuildingName(profileAddressBinding.edtHouseName.getText().toString());
-                    profileBean.getData().getPersonAddresses().get(i).getAddress().setBuildingNumber(profileAddressBinding.edtHouseNumber.getText().toString());
-                    profileBean.getData().getPersonAddresses().get(i).getCountryPostCode().setPostTownName(profileAddressBinding.edtTown.getText().toString());
+
+            for (int i = 0; i < profileBean.getData().getPerson().getPersonAddress().size(); i++) {
+                if (profileBean.getData().getPerson().getPersonAddress().get(i).getAddressTypeName().equalsIgnoreCase((String) profileAddressBinding.spinnerAddressType.getSelectedItem())) {
+                    profileBean.getData().getPerson().getPersonAddress().get(i).setAddressTypeName((String) profileAddressBinding.spinnerAddressType.getSelectedItem());
+                    profileBean.getData().getPerson().getPersonAddress().get(i).setIsDefaultAddress(true);
+                    profileBean.getData().getPerson().getPersonAddress().get(i).setPersonId(getSessionManager().getPersonId());
+                    profileBean.getData().getPerson().getPersonAddress().get(i).setCustomerId(getSessionManager().getCustomerId());
+                    if (addressTypesList.size()>0)
+                    profileBean.getData().getPerson().getPersonAddress().get(i).setAddressId(addressTypesList.get(profileAddressBinding.spinnerAddress.getSelectedItemPosition()).getAddressId());
+                    else
+                        profileBean.getData().getPerson().getPersonAddress().get(i).setAddressId(profileBean.getData().getPerson().getPersonAddress().get(i).getAddressId());
                     addressCounter++;
                     break;
                 }
             }
-        }
+
 
         if (addressCounter == 0) {
             profileBean = addNewAddress();
@@ -275,30 +284,15 @@ public class ProfileAddress extends BaseFragment implements EditEmailClick, Prof
     }
 
     private ProfileBean addNewAddress() {
-
-        PersonAddress personAddress = new PersonAddress();
-        personAddress.setCustomerId(getSessionManager().getCustomerId());
-        personAddress.setPersonId(getSessionManager().getPersonId());
-        personAddress.setAddressTypeName((String) profileAddressBinding.spinnerAddressType.getSelectedItem());
-        personAddress.setIsDefaultAddress(false);
-        profileBean.getData().getPerson().getPersonAddress().add(personAddress);
-
-        PersonAddress_ personAddress_ = new PersonAddress_();
-        personAddress_.setAddressTypeName((String) profileAddressBinding.spinnerAddressType.getSelectedItem());
-        personAddress_.setIsDefaultAddress(false);
-        CountryPostCode countryPostCode = new CountryPostCode();
-        countryPostCode.setPostTownName(profileAddressBinding.edtTown.getText().toString());
-        personAddress_.setCountryPostCode(countryPostCode);
-        Address address = new Address();
-        address.setPostCodeName(profileAddressBinding.edtPostCode.getText().toString());
-        address.setStreetName(profileAddressBinding.edtStreetName.getText().toString());
-        address.setCountryName((String) profileAddressBinding.spinnerNationality.getSelectedItem());
-        address.setBuildingName(profileAddressBinding.edtHouseName.getText().toString());
-        address.setBuildingNumber(profileAddressBinding.edtTown.getText().toString());
-        personAddress_.setAddress(address);
-        profileBean.getData().getPersonAddresses().add(personAddress_);
-
-
+        if (profileBean.getData().getPerson().getPersonAddress().size() > 0) {
+            PersonAddress personAddress = new PersonAddress();
+            personAddress.setAddressTypeName((String) profileAddressBinding.spinnerAddressType.getSelectedItem());
+            personAddress.setIsDefaultAddress(true);
+            personAddress.setPersonId(getSessionManager().getPersonId());
+            personAddress.setCustomerId(getSessionManager().getCustomerId());
+            personAddress.setAddressId(addressTypesList.get(profileAddressBinding.spinnerAddress.getSelectedItemPosition()).getAddressId());
+            profileBean.getData().getPerson().getPersonAddress().add(personAddress);
+        }
         return profileBean;
     }
 }

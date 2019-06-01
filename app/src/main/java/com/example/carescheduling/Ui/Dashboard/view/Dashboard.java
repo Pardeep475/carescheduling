@@ -92,8 +92,9 @@ public class Dashboard extends BaseActivity {
                     @Override
                     public void onChanged(EditMyProfile editMyProfile) {
                         hideDialog();
-                        EditMyProfile myProfile = editMyProfile;
-                        parseData(myProfile);
+                        if (editMyProfile != null) {
+                            parseData(editMyProfile);
+                        }
                     }
                 });
             } catch (Exception e) {

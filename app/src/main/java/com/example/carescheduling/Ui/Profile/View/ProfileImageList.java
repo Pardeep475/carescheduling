@@ -41,6 +41,7 @@ import android.widget.Toast;
 
 import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseFragment;
+import com.example.carescheduling.Ui.Dashboard.beans.PersonImage;
 import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
 import com.example.carescheduling.Ui.Dashboard.beans.ProfileResultBean;
 import com.example.carescheduling.Ui.Profile.Adapter.ProfileImageListAdapter;
@@ -73,6 +74,7 @@ public class ProfileImageList extends BaseFragment implements EditEmailClick, Pr
     private boolean buildVer;
     private ProfileImageListViewModel profileImageListViewModel;
     private ProfileImageRetro profileResultBean;
+    private ProfileBean profileBean;
     private Bitmap bitmap = null;
 
     public static ProfileImageList newInstance(ProfileBean profileResultBean) {
@@ -86,6 +88,9 @@ public class ProfileImageList extends BaseFragment implements EditEmailClick, Pr
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            profileBean = (ProfileBean) getArguments().getSerializable(Constants.PROFILE_DATA);
+        }
     }
 
     @Override
@@ -127,9 +132,9 @@ public class ProfileImageList extends BaseFragment implements EditEmailClick, Pr
 
         try {
             showDialog();
-            profileImageListViewModel.getProfileImages("D364C4C1-7A84-4313-94A8-12035EE631D3"
-                    , "5F98AF4F-25DC-4AC8-B867-C5072C101011"
-                    , "5F98AF4F-25DC-4AC8-B867-C5072C100000").observe(this, new Observer<ProfileImageRetro>() {
+            profileImageListViewModel.getProfileImages(getSessionManager().getPersonId()
+                , getSessionManager().getCustomerId(),
+                    getSessionManager().getBranchId()).observe(this, new Observer<ProfileImageRetro>() {
                 @Override
                 public void onChanged(ProfileImageRetro profileImageRetro) {
                     profileResultBean = profileImageRetro;
@@ -423,17 +428,41 @@ public class ProfileImageList extends BaseFragment implements EditEmailClick, Pr
         }
     }
 
-    private DataList AddNewImage() {
+    private ProfileBean.Data AddNewImage() {
 
-        if (profileResultBean.getDataList() != null) {
-            Image image = new Image();
-            image.setImageHexString(profileImageListViewModel.ConvertBase64(bitmap));
-            DataList dataList = new DataList();
-            dataList.setImage(image);
-            profileResultBean.getDataList().add(dataList);
+        if (profileBean != null && profileBean.getData() != null && profileBean.getData().getPersonImage()!= null){
+            PersonImage personImage = new PersonImage();
+            personImage.setCustomerId(getSessionManager().getCustomerId());
+            personImage.setImageAddedDate("/Date(1559193723680+0530)/");
+            personImage.setImageAltText("");
+            personImage.setImageFile("");
+            personImage.setImageFileName("download.jpg");
+            personImage.setImageFileTypeName("image/jpeg");
+            personImage.setImageFileUrl("");
+            personImage.setImageHexString(profileImageListViewModel.ConvertBase64(bitmap));
+            personImage.setImageId(null);
+            personImage.setImageLongAltText("");
+            personImage.setImageSizeName("Small");
+            personImage.setImageUpdatedDate("/Date(1559193723680+0530)/");
+            personImage.setOrientation("360");
+            personImage.setImageSizes("");
+            personImage.setDefault(true);
+            personImage.setMaxColourDepth(0);
+            personImage.setYPixel(200);
+            personImage.setXPixel(200);
+            profileBean.getData().getPersonImage().add(personImage);
+
         }
 
-        return profileResultBean.getDataList().get(0);
+//        if (profileResultBean.getDataList() != null) {
+//            Image image = new Image();
+//            image.setImageHexString(profileImageListViewModel.ConvertBase64(bitmap));
+//            DataList dataList = new DataList();
+//            dataList.setImage(image);
+//            profileResultBean.getDataList().add(dataList);
+//        }
+
+        return profileBean.getData();
     }
 
 }

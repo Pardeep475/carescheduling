@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/twenty_dp"
+        android:layout_marginStart="@dimen/ten_dp"
+        android:layout_marginEnd="@dimen/ten_dp"
+        android:background="@drawable/start_profile_views_bg"
+        android:paddingTop="@dimen/ten_dp"
+        android:paddingBottom="@dimen/ten_dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/sixteen_dp"
+            android:layout_marginRight="@dimen/sixteen_dp"
+            android:padding="@dimen/sixteen_dp"
+            android:text="@string/edit_my_profile_info"
+            android:textAllCaps="true"
+            android:textColor="@color/white" />
+
+        <ImageView
+            android:id="@+id/img_next_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/ten_dp"
+            android:contentDescription="@string/user_profile"
+            android:padding="@dimen/five_dp"
+            android:tint="@color/white"
+            app:srcCompat="@drawable/ic_right_arrow" />
+
+    </RelativeLayout>

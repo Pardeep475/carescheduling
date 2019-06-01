@@ -18,9 +18,10 @@ import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseFragment;
 import com.example.carescheduling.Ui.HomeScreen.ViewModel.ClientInfoDocumentsViewModel;
 import com.example.carescheduling.Ui.HomeScreen.adapter.ClientInfoDocumentsAdapter;
+import com.example.carescheduling.Ui.HomeScreen.presenter.BackPressedClick;
 import com.example.carescheduling.databinding.ClientInfoDocumentsFragmentBinding;
 
-public class ClientInfoDocuments extends BaseFragment {
+public class ClientInfoDocuments extends BaseFragment implements BackPressedClick {
 
     private ClientInfoDocumentsViewModel mViewModel;
     private ClientInfoDocumentsFragmentBinding clientInfoDocumentsFragmentBinding;
@@ -45,6 +46,7 @@ public class ClientInfoDocuments extends BaseFragment {
         setUpRecyclerView(view);
 
         mViewModel = ViewModelProviders.of(this).get(ClientInfoDocumentsViewModel.class);
+        clientInfoDocumentsFragmentBinding.setBackPressedClick(this);
     }
 
     private void setUpRecyclerView(View view) {
@@ -56,4 +58,9 @@ public class ClientInfoDocuments extends BaseFragment {
     }
 
 
+    @Override
+    public void onBackPress() {
+        if (getActivity() != null)
+            getActivity().onBackPressed();
+    }
 }

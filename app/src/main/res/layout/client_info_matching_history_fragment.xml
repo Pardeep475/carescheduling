@@ -4,7 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+            name="backPressedClick"
+            type="com.example.carescheduling.Ui.HomeScreen.presenter.BackPressedClick" />
     </data>
 
     <RelativeLayout
@@ -26,6 +28,7 @@
                 android:contentDescription="@string/user_profile"
                 android:paddingStart="@dimen/ten_dp"
                 android:paddingEnd="@dimen/ten_dp"
+                android:onClick="@{(v)->backPressedClick.onBackPress()}"
                 android:tint="@color/white"
                 app:srcCompat="@drawable/ic_left_back" />
 
@@ -41,18 +44,18 @@
         </RelativeLayout>
 
         <TextView
-            android:id="@+id/carePlan"
+            android:id="@+id/matching"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rl_tool"
-            android:text="Care Plan"
+            android:text="@string/matching"
             android:textSize="20sp"
             android:textColor="@color/colorPrimary"
             android:padding="@dimen/twenty_dp" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/carePlanRecyclerview"
-            android:layout_below="@+id/carePlan"
+            android:id="@+id/clientInfoMatchingRecyclerview"
+            android:layout_below="@+id/matching"
             android:layout_width="match_parent"
             android:paddingStart="@dimen/twenty_dp"
             android:paddingEnd="@dimen/twenty_dp"

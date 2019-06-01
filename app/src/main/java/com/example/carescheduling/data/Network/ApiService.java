@@ -3,7 +3,13 @@ package com.example.carescheduling.data.Network;
 import com.example.carescheduling.Ui.Dashboard.beans.ClientBookingListModel;
 import com.example.carescheduling.Ui.Dashboard.beans.EditMyProfile;
 import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
+import com.example.carescheduling.Ui.HomeScreen.beans.ClientCareContactsBean;
+import com.example.carescheduling.Ui.HomeScreen.beans.ClientCareDocumentBean;
+import com.example.carescheduling.Ui.HomeScreen.beans.ClientCareNoteBean;
+import com.example.carescheduling.Ui.HomeScreen.beans.ClientCarePersonalDetailsBean;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientCarePlan;
+import com.example.carescheduling.Ui.HomeScreen.beans.ClientCareSummaryBean;
+import com.example.carescheduling.Ui.HomeScreen.beans.ClientDisabilityBean;
 import com.example.carescheduling.Ui.LoginActivity.beans.LoginBeanRetro;
 import com.example.carescheduling.Ui.Profile.bean.AddressByPostCode;
 import com.example.carescheduling.Ui.Profile.bean.DataList;
@@ -63,7 +69,7 @@ public interface ApiService {
 //    http://mobile.rota.services/CssMobileRestfulService.svc/EditProfileImages
 
     @POST("EditProfileImages")
-    Observable<Response<ProfileImageRetro>> EditMyImages(@Body DataList profileImageRetro);
+    Observable<Response<ProfileImageRetro>> EditMyImages(@Body ProfileBean.Data profileImageRetro);
 
     //    "GetNextVisitClientBookingList/{employeeId}/{branchId}/{customerId}"
     @GET("GetNextVisitClientBookingList/{employeeId}/{branchId}/{customerId}")
@@ -75,6 +81,42 @@ public interface ApiService {
     Observable<Response<ClientCarePlan>> GetClientAndClientCarePlan(@Path("customerId") String customerId,
                                                                     @Path("branchId") String branchId,
                                                                     @Path("clientId") String clientId);
+
+
+    @GET("GetClientSummary/{customerId}/{branchId}/{clientId}")
+    Observable<Response<ClientCareSummaryBean>> GetClientSummary(@Path("customerId") String customerId,
+                                                                 @Path("branchId") String branchId,
+                                                                 @Path("clientId") String clientId);
+
+    @GET("GetClientPersonDetail/{customerId}/{branchId}/{clientId}")
+    Observable<Response<ClientCarePersonalDetailsBean>> GetClientPersonDetail(@Path("customerId") String customerId,
+                                                                              @Path("branchId") String branchId,
+                                                                              @Path("clientId") String clientId);
+
+    @GET("GetClientNotes/{customerId}/{branchId}/{clientId}")
+    Observable<Response<ClientCareNoteBean>> GetClientNotes(@Path("customerId") String customerId,
+                                                            @Path("branchId") String branchId,
+                                                            @Path("clientId") String clientId);
+
+    @GET("GetClientContacts/{customerId}/{branchId}/{clientId}")
+    Observable<Response<ClientCareContactsBean>> GetClientContacts(@Path("customerId") String customerId,
+                                                                   @Path("branchId") String branchId,
+                                                                   @Path("clientId") String clientId);
+
+    @GET("GetClientDocuments/{customerId}/{branchId}/{clientId}")
+    Observable<Response<ClientCareDocumentBean>> GetClientDocuments(@Path("customerId") String customerId,
+                                                                    @Path("branchId") String branchId,
+                                                                    @Path("clientId") String clientId);
+
+    @GET("GetClientDisabilities/{customerId}/{branchId}/{clientId}")
+    Observable<Response<ClientDisabilityBean>> GetClientDisabilities(@Path("customerId") String customerId,
+                                                                     @Path("branchId") String branchId,
+                                                                     @Path("clientId") String clientId);
+
+    @GET("GetClientCareplanSchedule/{customerId}/{branchId}/{clientId}")
+    Observable<Response<ClientCarePlan>> GetClientCarePlanSchedule(@Path("customerId") String customerId,
+                                                                   @Path("branchId") String branchId,
+                                                                   @Path("clientId") String clientId);
 
 
 }

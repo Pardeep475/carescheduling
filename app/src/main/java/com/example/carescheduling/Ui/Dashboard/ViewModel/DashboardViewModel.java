@@ -1,7 +1,9 @@
 package com.example.carescheduling.Ui.Dashboard.ViewModel;
 
 import android.app.Application;
+import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.carescheduling.Ui.Dashboard.beans.EditMyProfile;
 import com.example.carescheduling.Ui.LoginActivity.beans.LoginBeanRetro;
@@ -22,11 +24,16 @@ import retrofit2.Response;
 public class DashboardViewModel extends AndroidViewModel {
     private CompositeDisposable compositeDisposable;
     private ApiService apiService;
+    private Context context;
+
     public DashboardViewModel(@NonNull Application application) {
-        super(application);apiService = ApiClient.getClient(application)
+        super(application);
+        apiService = ApiClient.getClient(application)
                 .create(ApiService.class);
         compositeDisposable = new CompositeDisposable();
+        context = application;
     }
+
     public LiveData<EditMyProfile> getEditMyProfileData(String customerId) {
         final MutableLiveData<EditMyProfile> data = new MutableLiveData<>();
 
@@ -37,8 +44,13 @@ public class DashboardViewModel extends AndroidViewModel {
                     @Override
                     public void accept(Response<EditMyProfile> editMyProfileResponse) throws Exception {
                         Log.e("LoginSuccess", "success");
-                        if (editMyProfileResponse.isSuccessful()) {
-                            data.setValue(editMyProfileResponse.body());
+                        if (editMyProfileResponse.isSuccessful() && editMyProfileResponse.body() != null) {
+                            Toast.makeText(context, (String) editMyProfileResponse.body().getResponseMessage(), Toast.LENGTH_SHORT).show();
+                            if (editMyProfileResponse.body().getData() != null) {
+                                data.setValue(editMyProfileResponse.body());
+                            } else {
+                                data.setValue(null);
+                            }
                         } else {
                             data.setValue(null);
                         }

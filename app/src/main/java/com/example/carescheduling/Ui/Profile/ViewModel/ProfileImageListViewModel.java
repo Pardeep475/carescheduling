@@ -91,7 +91,7 @@ public class ProfileImageListViewModel extends AndroidViewModel {
     }
 
 
-    public LiveData<String> getEditProfilePost(DataList profileImageRetro) {
+    public LiveData<String> getEditProfilePost(ProfileBean.Data profileImageRetro) {
         final MutableLiveData<String> mutableLiveData = new MutableLiveData<>();
         Disposable disposable = apiService.EditMyImages(profileImageRetro)
                 .subscribeOn(Schedulers.io())
