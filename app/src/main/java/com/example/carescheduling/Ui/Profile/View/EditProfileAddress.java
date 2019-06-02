@@ -20,6 +20,8 @@ import android.widget.Toast;
 
 import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseFragment;
+import com.example.carescheduling.Ui.Common.Common;
+import com.example.carescheduling.Ui.Common.CommonBean;
 import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
 import com.example.carescheduling.Ui.Dashboard.beans.ProfileResultBean;
 import com.example.carescheduling.Ui.Profile.ViewModel.EditProfileAddressViewModel;
@@ -31,7 +33,7 @@ import com.example.carescheduling.databinding.FragmentEditProfileAddressBinding;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class EditProfileAddress extends BaseFragment implements EditProfileAddressClick {
+public class EditProfileAddress extends BaseFragment implements Common, EditProfileAddressClick {
 
     private FragmentEditProfileAddressBinding editProfileAddressBinding;
     private ProfileBean profileResultBean;
@@ -64,9 +66,21 @@ public class EditProfileAddress extends BaseFragment implements EditProfileAddre
     }
 
     private void setUpView(View view) {
+        setCommonData();
         editProfileAddressViewModel = ViewModelProviders.of(this).get(EditProfileAddressViewModel.class);
         setEditProfileData(view);
-        editProfileAddressBinding.setEditAddressClick(this);
+
+    }
+
+    private void setCommonData() {
+        CommonBean commonBean = new CommonBean();
+        commonBean.setLeftImageDrawable(R.drawable.ic_left_back);
+        commonBean.setLeftImageVisible(true);
+        commonBean.setRightImageDrawable(R.drawable.ic_tick);
+        commonBean.setRightImageVisible(false);
+        commonBean.setTitle("Change Address");
+        editProfileAddressBinding.setCommonData(commonBean);
+        editProfileAddressBinding.setCommonClick(this);
     }
 
     private void setEditProfileData(final View view) {
@@ -95,17 +109,12 @@ public class EditProfileAddress extends BaseFragment implements EditProfileAddre
 
     }
 
-    @Override
-    public void BackButtonClick() {
-        if (getActivity() != null)
-            getActivity().onBackPressed();
-    }
 
     @Override
     public void EditAddressClick() {
         String address = getRadioGroupText(editProfileAddressBinding.rbAddress);
         if (!address.isEmpty())
-        setFragment(ProfileAddress.newInstance(address, profileResultBean));
+            setFragment(ProfileAddress.newInstance(address, profileResultBean));
         else
             Toast.makeText(getActivity(), "Please select above address type", Toast.LENGTH_SHORT).show();
     }
@@ -114,7 +123,7 @@ public class EditProfileAddress extends BaseFragment implements EditProfileAddre
     public void EditPhoneNumberClick() {
         String phone = getRadioGroupText(editProfileAddressBinding.rbPhone);
         if (!phone.isEmpty())
-        setFragment(EditPhoneNumber.newInstance(phone, profileResultBean));
+            setFragment(EditPhoneNumber.newInstance(phone, profileResultBean));
         else
             Toast.makeText(getActivity(), "Please select above phone type", Toast.LENGTH_SHORT).show();
     }
@@ -123,7 +132,7 @@ public class EditProfileAddress extends BaseFragment implements EditProfileAddre
     public void EditEmailClick() {
         String email = getRadioGroupText(editProfileAddressBinding.rbEmail);
         if (!email.isEmpty())
-        setFragment(EditEmail.newInstance(email, profileResultBean));
+            setFragment(EditEmail.newInstance(email, profileResultBean));
         else
             Toast.makeText(getActivity(), "Please select above email type", Toast.LENGTH_SHORT).show();
     }
@@ -140,10 +149,21 @@ public class EditProfileAddress extends BaseFragment implements EditProfileAddre
         View radioButton = radioGroup.findViewById(radioButtonID);
         int idx = radioGroup.indexOfChild(radioButton);
         RadioButton r = (RadioButton) radioGroup.getChildAt(idx);
-        String txt ="";
+        String txt = "";
         if (r != null)
-             txt = r.getText().toString();
+            txt = r.getText().toString();
 
         return txt;
+    }
+
+    @Override
+    public void leftClick() {
+        if (getActivity() != null)
+            getActivity().onBackPressed();
+    }
+
+    @Override
+    public void rightClick() {
+
     }
 }

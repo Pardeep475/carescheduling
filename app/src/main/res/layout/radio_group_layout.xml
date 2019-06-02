@@ -13,10 +13,12 @@
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/rubik_light"
             android:text="@string/private_address" />
 
         <RadioButton
             android:layout_width="wrap_content"
+            android:fontFamily="@font/rubik_light"
             android:layout_height="wrap_content"
             android:text="@string/work_address" />
 

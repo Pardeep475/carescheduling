@@ -19,10 +19,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:fontFamily="@font/rubik_medium"
                 android:text="Paracetamol"
                 android:textAlignment="center"
-                android:textSize="@dimen/sixteen_sp"
-                android:textStyle="bold" />
+                android:textSize="@dimen/sixteen_sp" />
 
 
             <TextView
@@ -32,6 +32,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/twenty_dp"
                 android:layout_toEndOf="@+id/txt_d_medication_name"
+                android:fontFamily="@font/rubik_light"
                 android:text="500 mg"
                 android:textAlignment="center"
                 android:textSize="@dimen/sixteen_sp" />
@@ -45,6 +46,7 @@
             android:layout_below="@+id/rl_medication_name"
             android:layout_gravity="center_vertical"
             android:layout_marginTop="@dimen/ten_dp"
+            android:fontFamily="@font/rubik_light"
             android:text="One pill in the morning, One in the afternoon"
             android:textAlignment="center"
             android:textSize="@dimen/sixteen_sp" />
@@ -61,6 +63,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:fontFamily="@font/rubik_medium"
                 android:text="Paracetamol"
                 android:textAlignment="center"
                 android:textSize="@dimen/sixteen_sp"
@@ -74,6 +77,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/twenty_dp"
                 android:layout_toEndOf="@+id/txt_d_medication_time"
+                android:fontFamily="@font/rubik_light"
                 android:text="500 mg"
                 android:textAlignment="center"
                 android:textSize="@dimen/sixteen_sp" />
@@ -87,6 +91,7 @@
             android:layout_below="@+id/rl_medication_time"
             android:layout_gravity="center_vertical"
             android:layout_marginTop="@dimen/fiften_dp"
+            android:fontFamily="@font/rubik_medium"
             android:text="Dr Mr. Frank"
             android:textAlignment="center"
             android:textSize="@dimen/forteen_sp"
@@ -99,6 +104,7 @@
             android:layout_below="@+id/txt_doctor_name"
             android:layout_gravity="center_vertical"
             android:layout_marginTop="@dimen/ten_dp"
+            android:fontFamily="@font/rubik_medium"
             android:text="@string/contact_info"
             android:textAlignment="center"
             android:textColor="@color/blue"

@@ -4,7 +4,6 @@ import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
 import com.example.carescheduling.Ui.Dashboard.beans.ProfileResultBean;
 
 public interface EditProfileStartClick {
-    void backButton();
     void EditMyProfileInfo(ProfileBean profileResultBean);
     void EditMyAddress(ProfileBean profileResultBean);
     void EditMyPicture(ProfileBean profileResultBean);

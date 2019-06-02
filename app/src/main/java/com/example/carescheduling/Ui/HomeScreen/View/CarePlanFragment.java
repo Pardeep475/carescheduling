@@ -8,11 +8,14 @@ import android.widget.Toast;
 
 import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseFragment;
+import com.example.carescheduling.Ui.Common.Common;
+import com.example.carescheduling.Ui.Common.CommonBean;
 import com.example.carescheduling.Ui.HomeScreen.ViewModel.CarePlanViewModal;
 import com.example.carescheduling.Ui.HomeScreen.adapter.CarePlanAdapter;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientCarePlan;
 import com.example.carescheduling.Ui.HomeScreen.presenter.BackPressedClick;
 import com.example.carescheduling.Ui.HomeScreen.presenter.CarePlanAdapterClick;
+import com.example.carescheduling.Utils.ConnectivityReceiver;
 import com.example.carescheduling.databinding.ClientInfoCarePlanFragmentBinding;
 
 import java.util.ArrayList;
@@ -24,7 +27,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-public class CarePlanFragment extends BaseFragment implements BackPressedClick, CarePlanAdapterClick {
+public class CarePlanFragment extends BaseFragment implements Common, CarePlanAdapterClick {
     private ClientInfoCarePlanFragmentBinding clientInfoCarePlanFragmentBinding;
     private CarePlanViewModal carePlanViewModal;
 
@@ -43,16 +46,33 @@ public class CarePlanFragment extends BaseFragment implements BackPressedClick, 
     }
 
     private void setUpView(View view) {
+        setCommonData();
         carePlanViewModal = ViewModelProviders.of(this).get(CarePlanViewModal.class);
-        
+
         clientInfoCarePlanFragmentBinding.slDemo.startShimmerAnimation();
         try {
-            setUpRecyclerView(view);
+            if (ConnectivityReceiver.isNetworkAvailable(getActivity())) {
+                setUpRecyclerView(view);
+            }else {
+                setNoDataFound();
+                Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
+            }
         } catch (Exception e) {
             setNoDataFound();
             Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
         }
-        clientInfoCarePlanFragmentBinding.setBackPressedClick(this);
+
+    }
+
+    private void setCommonData() {
+        CommonBean commonBean = new CommonBean();
+        commonBean.setLeftImageDrawable(R.drawable.ic_left_back);
+        commonBean.setLeftImageVisible(true);
+        commonBean.setRightImageDrawable(R.drawable.ic_logout);
+        commonBean.setRightImageVisible(false);
+        commonBean.setTitle("Care Plan");
+        clientInfoCarePlanFragmentBinding.setCommonData(commonBean);
+        clientInfoCarePlanFragmentBinding.setCommonClick(this);
     }
 
     private void setUpRecyclerView(View view) {
@@ -63,20 +83,18 @@ public class CarePlanFragment extends BaseFragment implements BackPressedClick, 
                     "978E55D2-B7B9-49E0-A654-14B70EB1A344").observe(this, new Observer<ArrayList<ClientCarePlan.Datum>>() {
                 @Override
                 public void onChanged(ArrayList<ClientCarePlan.Datum> data) {
-                    if (data !=null) {
+                    if (data != null && data.size() > 0) {
                         clientInfoCarePlanFragmentBinding.carePlanRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
                         CarePlanAdapter carePlanAdapter = new CarePlanAdapter(getActivity(), CarePlanFragment.this, data);
                         clientInfoCarePlanFragmentBinding.carePlanRecyclerview.setAdapter(carePlanAdapter);
                         setDataOriginal();
-                    }else{
+                    } else {
                         setNoDataFound();
                     }
                 }
             });
         }
     }
-
-
 
 
     private void setNoDataFound() {
@@ -92,13 +110,9 @@ public class CarePlanFragment extends BaseFragment implements BackPressedClick, 
         clientInfoCarePlanFragmentBinding.carePlanRecyclerview.setVisibility(View.VISIBLE);
         clientInfoCarePlanFragmentBinding.rlNoDataFound.setVisibility(View.GONE);
     }
-    
-    
-    @Override
-    public void onBackPress() {
-    if (getActivity()!= null)
-        getActivity().onBackPressed();
-    }
+
+
+
 
     @Override
     public void mondayClick(int pos) {
@@ -132,6 +146,17 @@ public class CarePlanFragment extends BaseFragment implements BackPressedClick, 
 
     @Override
     public void sundayClick(int pos) {
+
+    }
+
+    @Override
+    public void leftClick() {
+        if (getActivity() != null)
+            getActivity().onBackPressed();
+    }
+
+    @Override
+    public void rightClick() {
 
     }
 }

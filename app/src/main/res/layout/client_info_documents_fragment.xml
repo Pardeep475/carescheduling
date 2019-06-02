@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <variable
-            name="backPressedClick"
-            type="com.example.carescheduling.Ui.HomeScreen.presenter.BackPressedClick" />
+            name="commonData"
+            type="com.example.carescheduling.Ui.Common.CommonBean" />
+
+        <variable
+            name="commonClick"
+            type="com.example.carescheduling.Ui.Common.Common" />
+
+
     </data>
 
     <RelativeLayout
@@ -15,46 +22,11 @@
         android:layout_height="match_parent"
         tools:context=".Ui.HomeScreen.View.ClientInfoDocuments">
 
-        <RelativeLayout
+        <include
             android:id="@+id/rl_tool"
-            android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
-            android:background="@color/colorPrimary">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:contentDescription="@string/user_profile"
-                android:onClick="@{(v)->backPressedClick.onBackPress()}"
-                android:paddingStart="@dimen/ten_dp"
-                android:paddingEnd="@dimen/ten_dp"
-                android:tint="@color/white"
-                app:srcCompat="@drawable/ic_left_back" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:text="@string/Documents"
-                android:textColor="@color/white"
-                android:textSize="@dimen/forteen_sp" />
-
-            <ImageView
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="@dimen/ten_dp"
-                android:contentDescription="@string/user_profile"
-                android:tint="@color/white"
-                android:visibility="gone"
-                app:srcCompat="@drawable/ic_tick" />
-
-        </RelativeLayout>
+            layout="@layout/toolbar_layout"
+            bind:commonClick="@{commonClick}"
+            bind:commonData="@{commonData}" />
 
         <!--<TextView
             android:id="@+id/txt_document"
@@ -85,8 +57,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/rl_tool"
-            android:visibility="gone"
-            android:layout_marginTop="@dimen/ten_dp" />
+            android:layout_marginTop="@dimen/ten_dp"
+            android:visibility="gone" />
 
         <include
             android:id="@+id/rl_no_data_found"

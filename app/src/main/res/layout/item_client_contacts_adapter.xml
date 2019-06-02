@@ -3,15 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="moreInfoClick"
             type="com.example.carescheduling.Ui.HomeScreen.presenter.MoreInfoClick" />
+
         <variable
             name="pos"
-            type="int"/>
+            type="int" />
+
         <variable
             name="clientContactsBean"
-            type="com.example.carescheduling.Ui.HomeScreen.beans.ClientContactsBean"/>
+            type="com.example.carescheduling.Ui.HomeScreen.beans.ClientContactsBean" />
 
     </data>
 
@@ -26,6 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:fontFamily="@font/rubik_medium"
             android:text="@string/contacts"
             android:textAlignment="center"
             android:textSize="@dimen/twenty_sp" />
@@ -37,6 +41,7 @@
             android:layout_below="@+id/txt_title"
             android:layout_gravity="center_vertical"
             android:layout_marginTop="@dimen/fiften_dp"
+            android:fontFamily="@font/rubik_light"
             android:text="@{clientContactsBean.type}"
             android:textAlignment="center"
             android:textSize="@dimen/forteen_sp"
@@ -49,6 +54,7 @@
             android:layout_below="@+id/txt_sub_title"
             android:layout_gravity="center_vertical"
             android:layout_marginTop="@dimen/ten_dp"
+            android:fontFamily="@font/rubik_light"
             android:text="@{clientContactsBean.address}"
             android:textAlignment="center"
             android:textSize="@dimen/sixteen_sp" />
@@ -75,10 +81,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:fontFamily="@font/rubik_medium"
                 android:text="@string/brigton"
                 android:textAlignment="center"
-                android:textSize="@dimen/sixteen_sp"
-                android:textStyle="bold" />
+                android:textSize="@dimen/sixteen_sp" />
 
 
             <TextView
@@ -88,6 +94,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/twenty_dp"
                 android:layout_toEndOf="@+id/txt_d_post_code"
+                android:fontFamily="@font/rubik_light"
                 android:text="@{clientContactsBean.postCode}"
                 android:textAlignment="center"
                 android:textSize="@dimen/sixteen_sp" />
@@ -106,10 +113,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:fontFamily="@font/rubik_medium"
                 android:text="@string/telephone"
                 android:textAlignment="center"
-                android:textSize="@dimen/sixteen_sp"
-                android:textStyle="bold" />
+                android:textSize="@dimen/sixteen_sp" />
 
 
             <TextView
@@ -119,6 +126,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/twenty_dp"
                 android:layout_toEndOf="@+id/txt_d_telephone"
+                android:fontFamily="@font/rubik_light"
                 android:text="@{clientContactsBean.telephone}"
                 android:textAlignment="center"
                 android:textSize="@dimen/sixteen_sp" />
@@ -131,11 +139,12 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/twenty_dp"
                 android:layout_marginEnd="@dimen/twenty_dp"
+                android:fontFamily="@font/rubik_medium"
                 android:text="@string/call"
-                android:visibility="invisible"
                 android:textAlignment="center"
                 android:textColor="@color/blue"
-                android:textSize="@dimen/sixteen_sp" />
+                android:textSize="@dimen/sixteen_sp"
+                android:visibility="invisible" />
 
         </RelativeLayout>
 
@@ -151,10 +160,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:fontFamily="@font/rubik_medium"
                 android:text="@string/mobile"
                 android:textAlignment="center"
-                android:textSize="@dimen/sixteen_sp"
-                android:textStyle="bold" />
+                android:textSize="@dimen/sixteen_sp" />
 
 
             <TextView
@@ -164,6 +173,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/fifty_dp"
                 android:layout_toEndOf="@+id/txt_d_mobile"
+                android:fontFamily="@font/rubik_light"
                 android:text="@{clientContactsBean.mobile}"
                 android:textAlignment="center"
                 android:textSize="@dimen/sixteen_sp" />
@@ -176,11 +186,12 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/twenty_dp"
                 android:layout_marginEnd="@dimen/twenty_dp"
+                android:fontFamily="@font/rubik_medium"
                 android:text="@string/call"
-                android:visibility="invisible"
                 android:textAlignment="center"
                 android:textColor="@color/blue"
-                android:textSize="@dimen/sixteen_sp" />
+                android:textSize="@dimen/sixteen_sp"
+                android:visibility="invisible" />
 
         </RelativeLayout>
 
@@ -196,10 +207,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:fontFamily="@font/rubik_medium"
                 android:text="@string/_email"
                 android:textAlignment="center"
-                android:textSize="@dimen/sixteen_sp"
-                android:textStyle="bold" />
+                android:textSize="@dimen/sixteen_sp" />
 
 
             <TextView
@@ -209,6 +220,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/fifty_dp"
                 android:layout_toEndOf="@+id/txt_d_email"
+                android:fontFamily="@font/rubik_light"
                 android:text="@{clientContactsBean.email}"
                 android:textAlignment="center"
                 android:textSize="@dimen/sixteen_sp" />
@@ -222,9 +234,10 @@
             android:layout_below="@+id/rl_email"
             android:layout_gravity="center_vertical"
             android:layout_marginTop="@dimen/twenty_dp"
+            android:fontFamily="@font/rubik_medium"
+            android:onClick="@{(v)->moreInfoClick.moreInfoClick(pos)}"
             android:text="@string/send_email"
             android:textAlignment="center"
-            android:onClick="@{(v)->moreInfoClick.moreInfoClick(pos)}"
             android:textColor="@color/blue"
             android:textSize="@dimen/sixteen_sp" />
 

@@ -15,6 +15,7 @@
             android:layout_centerVertical="true"
             android:paddingStart="@dimen/ten_dp"
             android:text="@string/notes"
+            android:fontFamily="@font/rubik_medium"
             android:textColor="@color/white"
             android:textSize="@dimen/sixteen_sp" />
 

@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseFragment;
+import com.example.carescheduling.Ui.Common.Common;
+import com.example.carescheduling.Ui.Common.CommonBean;
 import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
 import com.example.carescheduling.Ui.Dashboard.beans.ProfileResultBean;
 import com.example.carescheduling.Ui.Profile.ViewModel.FragmentChangePasswordViewModel;
@@ -30,7 +32,7 @@ import com.example.carescheduling.databinding.FragmentChangePasswordBinding;
 
 import java.io.Serializable;
 
-public class FragmentChangePassword extends BaseFragment implements EditEmailClick, FragmentChangePasswordClick {
+public class FragmentChangePassword extends BaseFragment implements Common, FragmentChangePasswordClick {
     private FragmentChangePasswordBinding fragmentChangePasswordBinding;
     private ProfileBean profileResultBean;
     private FragmentChangePasswordViewModel fragmentChangePasswordViewModel;
@@ -64,24 +66,36 @@ public class FragmentChangePassword extends BaseFragment implements EditEmailCli
     }
 
     private void setUpView(View view) {
+        setCommonData();
         sessionManager = getSessionManager();
         fragmentChangePasswordViewModel = ViewModelProviders.of(this).get(FragmentChangePasswordViewModel.class);
+        fragmentChangePasswordBinding.slDemo.startShimmerAnimation();
         GetUserInfoValid();
 
-        fragmentChangePasswordBinding.setEditEmailClick(this);
         fragmentChangePasswordBinding.setChangePasswordClick(this);
+    }
+
+    private void setCommonData() {
+        CommonBean commonBean = new CommonBean();
+        commonBean.setLeftImageDrawable(R.drawable.ic_left_back);
+        commonBean.setLeftImageVisible(true);
+        commonBean.setRightImageDrawable(R.drawable.ic_tick);
+        commonBean.setRightImageVisible(true);
+        commonBean.setTitle("Change Password");
+        fragmentChangePasswordBinding.setCommonData(commonBean);
+        fragmentChangePasswordBinding.setCommonClick(this);
     }
 
     private void GetUserInfoValid() {
         if (getActivity() != null) {
             try {
                 if (ConnectivityReceiver.isNetworkAvailable(getActivity())) {
-                    GetUserInfo();
+                        GetUserInfo();
                 } else {
                     Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
                 }
             } catch (Exception e) {
-                Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+                setNoDataFound();
                 hideDialog();
             }
         }
@@ -160,38 +174,30 @@ public class FragmentChangePassword extends BaseFragment implements EditEmailCli
                             fragmentChangePasswordBean.setPasswordQuestion(passwordQus != null ? passwordQus : "");
 
                             fragmentChangePasswordBinding.setFragmentChangePasswordBean(fragmentChangePasswordBean);
+                            setDataOriginal();
+                        } else {
+                            setNoDataFound();
                         }
                     }
                 });
     }
 
-    @Override
-    public void BackButtonClick() {
-        if (getActivity() != null)
-            getActivity().onBackPressed();
+
+    private void setNoDataFound() {
+        fragmentChangePasswordBinding.slDemo.stopShimmerAnimation();
+        fragmentChangePasswordBinding.slDemo.setVisibility(View.GONE);
+        fragmentChangePasswordBinding.llMainLayout.setVisibility(View.GONE);
+        fragmentChangePasswordBinding.rlNoDataFound.setVisibility(View.VISIBLE);
     }
 
-    @Override
-    public void DoneClick() {
-        if (userModel != null && userModel.getData() != null && userModel.getData().getUserPersons().size() > 0
-                && userModel.getData().getUserPersons().get(0).getUser() != null) {
-            if (getActivity() != null && ConnectivityReceiver.isNetworkAvailable(getActivity())) {
-                try {
-                    //            if (checkValidationDone()) {
-                    setDataRemotely();
-//            }
-                } catch (Exception e) {
-                    Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
-                }
-            } else {
-                Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
-            }
-
-        }else{
-            Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
-        }
-
+    private void setDataOriginal() {
+        fragmentChangePasswordBinding.slDemo.stopShimmerAnimation();
+        fragmentChangePasswordBinding.slDemo.setVisibility(View.GONE);
+        fragmentChangePasswordBinding.llMainLayout.setVisibility(View.VISIBLE);
+        fragmentChangePasswordBinding.rlNoDataFound.setVisibility(View.GONE);
     }
+
+
 
 
     private boolean checkValidationDone() {
@@ -245,5 +251,33 @@ public class FragmentChangePassword extends BaseFragment implements EditEmailCli
         if (getActivity() != null)
             getActivity().getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fm_edit_container, fragment).addToBackStack(null).commitAllowingStateLoss();
+    }
+
+    @Override
+    public void leftClick() {
+        if (getActivity() != null)
+            getActivity().onBackPressed();
+    }
+
+    @Override
+    public void rightClick() {
+        if (userModel != null && userModel.getData() != null && userModel.getData().getUserPersons().size() > 0
+                && userModel.getData().getUserPersons().get(0).getUser() != null) {
+            if (getActivity() != null && ConnectivityReceiver.isNetworkAvailable(getActivity())) {
+                try {
+                    //            if (checkValidationDone()) {
+                    setDataRemotely();
+//            }
+                } catch (Exception e) {
+                    Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
+            }
+
+        } else {
+            Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
+        }
+
     }
 }

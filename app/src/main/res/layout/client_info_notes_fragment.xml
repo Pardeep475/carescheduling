@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -10,8 +11,13 @@
             type="com.example.carescheduling.Ui.HomeScreen.beans.ClientNoteAdapterBean" />
 
         <variable
-            name="backPressedClick"
-            type="com.example.carescheduling.Ui.HomeScreen.presenter.BackPressedClick" />
+            name="commonData"
+            type="com.example.carescheduling.Ui.Common.CommonBean" />
+
+        <variable
+            name="commonClick"
+            type="com.example.carescheduling.Ui.Common.Common" />
+
 
     </data>
 
@@ -20,45 +26,11 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <RelativeLayout
+        <include
             android:id="@+id/rl_tool"
-            android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
-            android:background="@color/colorPrimary">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:contentDescription="@string/user_profile"
-                android:onClick="@{(v)->backPressedClick.onBackPress()}"
-                android:paddingStart="@dimen/ten_dp"
-                android:paddingEnd="@dimen/ten_dp"
-                android:tint="@color/white"
-                app:srcCompat="@drawable/ic_left_back" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:text="@string/client_notes"
-                android:textColor="@color/white"
-                android:textSize="@dimen/forteen_sp" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="@dimen/ten_dp"
-                android:contentDescription="@string/user_profile"
-                android:tint="@color/white"
-                android:visibility="gone"
-                app:srcCompat="@drawable/ic_tick" />
-
-        </RelativeLayout>
+            layout="@layout/toolbar_layout"
+            bind:commonClick="@{commonClick}"
+            bind:commonData="@{commonData}" />
 
         <io.supercharge.shimmerlayout.ShimmerLayout
             android:id="@+id/sl_demo"
@@ -90,12 +62,14 @@
                 android:layout_weight=".3"
                 android:text="@string/last_note"
                 android:textAlignment="textStart"
+                android:fontFamily="@font/rubik_medium"
                 android:textSize="@dimen/twenty_sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/rubik_light"
                 android:layout_weight=".6"
                 android:text="@{clientNoteAdapterBean.date}"
                 android:textAlignment="textStart"
@@ -108,6 +82,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/twenty_dp"
+            android:fontFamily="@font/rubik_light"
             android:text="@{clientNoteAdapterBean.description}"
             android:textColor="@color/black"
             android:textSize="@dimen/forteen_sp" />
@@ -118,6 +93,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/twenty_dp"
             android:text="@string/history"
+            android:fontFamily="@font/rubik_medium"
             android:textAlignment="textStart"
             android:textSize="@dimen/twenty_five_sp"
             android:textStyle="bold" />

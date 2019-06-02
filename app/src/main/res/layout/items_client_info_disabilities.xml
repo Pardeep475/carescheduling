@@ -24,6 +24,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/rubik_medium"
             android:text="@{clientDisabilityBean.disabilityTypeName}"
             android:textColor="@color/black"
             android:textSize="@dimen/eighteen_sp" />
@@ -37,6 +38,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/registerred"
+                android:fontFamily="@font/rubik_light"
                 android:textColor="@color/grey"
                 android:textSize="@dimen/sixteen_sp" />
 
@@ -44,6 +46,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingStart="@dimen/five_dp"
+                android:fontFamily="@font/rubik_light"
                 android:text="21/10/19"
                 android:textColor="@color/grey"
                 android:textSize="@dimen/forteen_sp" />
@@ -57,6 +60,7 @@
             android:layout_height="wrap_content"
             android:onClick="@{(v)->moreInfoClick.moreInfoClick(pos)}"
             android:text="@string/more_info"
+            android:fontFamily="@font/rubik_medium"
             android:textColor="@color/blue"
             android:textSize="@dimen/sixteen_sp" />
     </LinearLayout>

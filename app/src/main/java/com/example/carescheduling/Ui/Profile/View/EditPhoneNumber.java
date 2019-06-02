@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseFragment;
+import com.example.carescheduling.Ui.Common.Common;
+import com.example.carescheduling.Ui.Common.CommonBean;
 import com.example.carescheduling.Ui.Dashboard.beans.PersonPhone;
 import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
 import com.example.carescheduling.Ui.Profile.Adapter.CustomAdapter;
@@ -33,7 +35,7 @@ import com.example.carescheduling.databinding.FragmentEditPhoneNumberBinding;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EditPhoneNumber extends BaseFragment implements EditEmailClick {
+public class EditPhoneNumber extends BaseFragment implements Common {
     private FragmentEditPhoneNumberBinding editPhoneNumberBinding;
     private String stringValue;
     private ProfileBean profileBean;
@@ -69,12 +71,24 @@ public class EditPhoneNumber extends BaseFragment implements EditEmailClick {
     }
 
     private void setUpView(View view) {
+        setCommonData();
         sessionManager = getSessionManager();
         editPhoneNumberViewModel = ViewModelProviders.of(this).get(EditPhoneNumberViewModel.class);
         setCodePrefix();
         setPhoneType();
         setEditPhoneNumber();
-        editPhoneNumberBinding.setEditEmailClick(this);
+
+    }
+
+    private void setCommonData() {
+        CommonBean commonBean = new CommonBean();
+        commonBean.setLeftImageDrawable(R.drawable.ic_left_back);
+        commonBean.setLeftImageVisible(true);
+        commonBean.setRightImageDrawable(R.drawable.ic_tick);
+        commonBean.setRightImageVisible(true);
+        commonBean.setTitle("Change Password");
+        editPhoneNumberBinding.setCommonData(commonBean);
+        editPhoneNumberBinding.setCommonClick(this);
     }
 
     private void setCodePrefix() {
@@ -137,27 +151,6 @@ public class EditPhoneNumber extends BaseFragment implements EditEmailClick {
         });
     }
 
-    @Override
-    public void BackButtonClick() {
-        if (getActivity() != null)
-            getActivity().onBackPressed();
-    }
-
-    @Override
-    public void DoneClick() {
-        if (getActivity() != null) {
-            try {
-                if (ConnectivityReceiver.isNetworkAvailable(getActivity())) {
-                    setDataRemote();
-                } else {
-                    Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
-                }
-            } catch (Exception e) {
-                hideDialog();
-                Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
 
     private void setDataRemote() {
         showDialog();
@@ -226,5 +219,27 @@ public class EditPhoneNumber extends BaseFragment implements EditEmailClick {
         profileBean.getData().getPerson().getPersonPhone().add(personPhoneProfileBean);
 
         return profileBean;
+    }
+
+    @Override
+    public void leftClick() {
+        if (getActivity() != null)
+            getActivity().onBackPressed();
+    }
+
+    @Override
+    public void rightClick() {
+        if (getActivity() != null) {
+            try {
+                if (ConnectivityReceiver.isNetworkAvailable(getActivity())) {
+                    setDataRemote();
+                } else {
+                    Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
+                }
+            } catch (Exception e) {
+                hideDialog();
+                Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }

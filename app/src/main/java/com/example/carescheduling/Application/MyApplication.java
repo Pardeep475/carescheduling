@@ -3,6 +3,8 @@ package com.example.carescheduling.Application;
 import android.app.Application;
 import android.app.Dialog;
 
+import androidx.appcompat.app.AppCompatDelegate;
+
 
 public class MyApplication extends Application {
       private Dialog progressDialog;
@@ -11,7 +13,7 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         myApplication = null;
         if (myApplication == null)
             myApplication = this;
@@ -25,14 +27,5 @@ public class MyApplication extends Application {
             }
         return myApplication;
     }
-
-
-
-
-//    public void makeSnackBar(View view, String text) {
-//        Snackbar snackbar = null;
-//        if (snackbar == null)
-//            snackbar.make(view, text, Snackbar.LENGTH_LONG).show();
-//    }
 
 }

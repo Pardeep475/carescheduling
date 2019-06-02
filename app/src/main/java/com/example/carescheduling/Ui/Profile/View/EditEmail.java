@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseFragment;
+import com.example.carescheduling.Ui.Common.Common;
+import com.example.carescheduling.Ui.Common.CommonBean;
 import com.example.carescheduling.Ui.Dashboard.beans.PersonEmail;
 import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
 import com.example.carescheduling.Ui.Profile.Adapter.CustomAdapter;
@@ -27,7 +29,7 @@ import com.example.carescheduling.databinding.FragmentEditEmailBinding;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EditEmail extends BaseFragment implements EditEmailClick {
+public class EditEmail extends BaseFragment implements Common {
     private FragmentEditEmailBinding editEmailBinding;
     private String stringValue;
     private ProfileBean profileBean;
@@ -62,10 +64,21 @@ public class EditEmail extends BaseFragment implements EditEmailClick {
     }
 
     private void setUpView(View view) {
+        setCommonData();
         editEmailViewModel = ViewModelProviders.of(this).get(EditEmailViewModel.class);
         setEmailType();
         setEditEmailData();
-        editEmailBinding.setEditEmailClick(this);
+    }
+
+    private void setCommonData() {
+        CommonBean commonBean = new CommonBean();
+        commonBean.setLeftImageDrawable(R.drawable.ic_left_back);
+        commonBean.setLeftImageVisible(true);
+        commonBean.setRightImageDrawable(R.drawable.ic_tick);
+        commonBean.setRightImageVisible(true);
+        commonBean.setTitle("Change Email");
+        editEmailBinding.setCommonData(commonBean);
+        editEmailBinding.setCommonClick(this);
     }
 
     private void setEditEmailData() {
@@ -102,28 +115,6 @@ public class EditEmail extends BaseFragment implements EditEmailClick {
             }
         });
 
-    }
-
-    @Override
-    public void BackButtonClick() {
-        if (getActivity() != null)
-            getActivity().onBackPressed();
-    }
-
-    @Override
-    public void DoneClick() {
-        if (getActivity() != null) {
-            try {
-                if (ConnectivityReceiver.isNetworkAvailable(getActivity())) {
-                    setDataRemote();
-                } else {
-                    Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
-                }
-            } catch (Exception e) {
-                hideDialog();
-                Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
-            }
-        }
     }
 
 
@@ -193,4 +184,25 @@ public class EditEmail extends BaseFragment implements EditEmailClick {
     }
 
 
+    @Override
+    public void leftClick() {
+        if (getActivity() != null)
+            getActivity().onBackPressed();
+    }
+
+    @Override
+    public void rightClick() {
+        if (getActivity() != null) {
+            try {
+                if (ConnectivityReceiver.isNetworkAvailable(getActivity())) {
+                    setDataRemote();
+                } else {
+                    Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
+                }
+            } catch (Exception e) {
+                hideDialog();
+                Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
 }

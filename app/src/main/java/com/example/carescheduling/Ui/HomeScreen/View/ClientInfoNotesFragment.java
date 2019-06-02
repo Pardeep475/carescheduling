@@ -18,16 +18,19 @@ import android.widget.Toast;
 
 import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseFragment;
+import com.example.carescheduling.Ui.Common.Common;
+import com.example.carescheduling.Ui.Common.CommonBean;
 import com.example.carescheduling.Ui.HomeScreen.ViewModel.ClientInfoNotesViewModel;
 import com.example.carescheduling.Ui.HomeScreen.adapter.ClientNoteAdapter;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientCareNoteBean;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientNoteAdapterBean;
 import com.example.carescheduling.Ui.HomeScreen.presenter.BackPressedClick;
+import com.example.carescheduling.Utils.ConnectivityReceiver;
 import com.example.carescheduling.databinding.ClientInfoNotesFragmentBinding;
 
 import java.util.ArrayList;
 
-public class ClientInfoNotesFragment extends BaseFragment implements BackPressedClick {
+public class ClientInfoNotesFragment extends BaseFragment implements Common {
 
     private ClientInfoNotesViewModel mViewModel;
     private ClientInfoNotesFragmentBinding clientInfoNotesFragmentBinding;
@@ -48,17 +51,35 @@ public class ClientInfoNotesFragment extends BaseFragment implements BackPressed
     }
 
     private void setUpView(View view) {
+        setCommonData();
         mViewModel = ViewModelProviders.of(this).get(ClientInfoNotesViewModel.class);
 
         clientInfoNotesFragmentBinding.slDemo.startShimmerAnimation();
         try {
-            setUpData(view);
+            if (ConnectivityReceiver.isNetworkAvailable(getActivity())) {
+                setUpData(view);
+            }else {
+                setNoDataFound();
+                Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
+            }
+
         } catch (Exception e) {
             setNoDataFound();
             Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
         }
 
-        clientInfoNotesFragmentBinding.setBackPressedClick(this);
+
+    }
+
+    private void setCommonData() {
+        CommonBean commonBean = new CommonBean();
+        commonBean.setLeftImageDrawable(R.drawable.ic_left_back);
+        commonBean.setLeftImageVisible(true);
+        commonBean.setRightImageDrawable(R.drawable.ic_logout);
+        commonBean.setRightImageVisible(false);
+        commonBean.setTitle("Notes");
+        clientInfoNotesFragmentBinding.setCommonData(commonBean);
+        clientInfoNotesFragmentBinding.setCommonClick(this);
     }
 
     private void setUpData(View view) {
@@ -99,9 +120,13 @@ public class ClientInfoNotesFragment extends BaseFragment implements BackPressed
     }
 
     @Override
-    public void onBackPress() {
+    public void leftClick() {
         if (getActivity() != null)
             getActivity().onBackPressed();
     }
 
+    @Override
+    public void rightClick() {
+
+    }
 }

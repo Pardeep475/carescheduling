@@ -41,6 +41,8 @@ import android.widget.Toast;
 
 import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseFragment;
+import com.example.carescheduling.Ui.Common.Common;
+import com.example.carescheduling.Ui.Common.CommonBean;
 import com.example.carescheduling.Ui.Dashboard.beans.PersonImage;
 import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
 import com.example.carescheduling.Ui.Dashboard.beans.ProfileResultBean;
@@ -68,7 +70,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ProfileImageList extends BaseFragment implements EditEmailClick, ProfileImageListClick {
+public class ProfileImageList extends BaseFragment implements Common, ProfileImageListClick {
     private FragmentProfileImageListBinding profileImageListBinding;
     private String path = null;
     private boolean buildVer;
@@ -104,6 +106,7 @@ public class ProfileImageList extends BaseFragment implements EditEmailClick, Pr
     }
 
     private void setUpView(View view) {
+        setCommonData();
         buildVer = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
         profileImageListViewModel = ViewModelProviders.of(this).get(ProfileImageListViewModel.class);
 
@@ -116,8 +119,19 @@ public class ProfileImageList extends BaseFragment implements EditEmailClick, Pr
         }
 
 
-        profileImageListBinding.setEditEmailClick(this);
+
         profileImageListBinding.setProfileImageList(this);
+    }
+
+    private void setCommonData() {
+        CommonBean commonBean = new CommonBean();
+        commonBean.setLeftImageDrawable(R.drawable.ic_left_back);
+        commonBean.setLeftImageVisible(true);
+        commonBean.setRightImageDrawable(R.drawable.ic_tick);
+        commonBean.setRightImageVisible(true);
+        commonBean.setTitle("Profile Pics");
+        profileImageListBinding.setCommonData(commonBean);
+        profileImageListBinding.setCommonClick(this);
     }
 
     private void FetchProfileListImages() {
@@ -162,11 +176,6 @@ public class ProfileImageList extends BaseFragment implements EditEmailClick, Pr
     }
 
 
-    @Override
-    public void BackButtonClick() {
-        if (getActivity() != null)
-            getActivity().onBackPressed();
-    }
 
 
     @Override
@@ -399,14 +408,6 @@ public class ProfileImageList extends BaseFragment implements EditEmailClick, Pr
         startActivityForResult(intent, 101);
     }
 
-    @Override
-    public void DoneClick() {
-        try {
-            setDataRemote();
-        } catch (Exception e) {
-            Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
-        }
-    }
 
     private void setDataRemote() {
         if (getActivity() != null && ConnectivityReceiver.isNetworkAvailable(getActivity())) {
@@ -465,4 +466,18 @@ public class ProfileImageList extends BaseFragment implements EditEmailClick, Pr
         return profileBean.getData();
     }
 
+    @Override
+    public void leftClick() {
+        if (getActivity() != null)
+            getActivity().onBackPressed();
+    }
+
+    @Override
+    public void rightClick() {
+        try {
+            setDataRemote();
+        } catch (Exception e) {
+            Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+        }
+    }
 }

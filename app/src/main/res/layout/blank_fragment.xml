@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <variable
+            name="commonData"
+            type="com.example.carescheduling.Ui.Common.CommonBean" />
+
+        <variable
+            name="commonClick"
+            type="com.example.carescheduling.Ui.Common.Common" />
+
+
         <variable
             name="myNextVisitClick"
             type="com.example.carescheduling.Ui.HomeScreen.presenter.MyNextVisitClick" />
@@ -12,48 +23,15 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         tools:context=".Ui.HomeScreen.View.BlankFragment">
 
-        <RelativeLayout
+        <include
             android:id="@+id/rl_tool"
-            android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
-            android:background="@color/colorPrimary">
+            layout="@layout/toolbar_layout"
+            bind:commonClick="@{commonClick}"
+            bind:commonData="@{commonData}" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:contentDescription="@string/user_profile"
-                android:paddingStart="@dimen/ten_dp"
-                android:onClick="@{(v)->myNextVisitClick.onBackPress()}"
-                android:paddingEnd="@dimen/ten_dp"
-                android:tint="@color/white"
-                app:srcCompat="@drawable/ic_left_back" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:text="@string/my_next_visit"
-                android:textColor="@color/white"
-                android:textSize="@dimen/forteen_sp" />
-
-            <ImageView
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="@dimen/ten_dp"
-                android:contentDescription="@string/user_profile"
-                android:tint="@color/white"
-                android:visibility="gone"
-                app:srcCompat="@drawable/ic_tick" />
-
-        </RelativeLayout>
 
         <ScrollView
             android:layout_width="match_parent"
@@ -62,7 +40,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginStart="@dimen/sixteen_dp"
                 android:layout_marginTop="@dimen/sixteen_dp"
                 android:layout_marginEnd="@dimen/sixteen_dp">
@@ -71,6 +49,7 @@
                     android:id="@+id/edt_visit_person_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/rubik_medium"
                     android:text="Mr. John Smith"
                     android:textColor="@color/black"
                     android:textSize="@dimen/eighteen_sp" />
@@ -81,6 +60,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/edt_visit_person_name"
                     android:layout_marginTop="@dimen/five_dp"
+                    android:fontFamily="@font/rubik_light"
                     android:text="Wednesday 12.10.2016"
                     android:textColor="@color/red"
                     android:textSize="@dimen/forteen_sp" />
@@ -91,6 +71,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/edt_visit_person_day"
                     android:layout_marginTop="@dimen/five_dp"
+                    android:fontFamily="@font/rubik_light"
                     android:text="@string/time"
                     android:textColor="@color/black"
                     android:textSize="@dimen/forteen_sp" />
@@ -103,6 +84,7 @@
                     android:layout_marginStart="@dimen/ten_dp"
                     android:layout_marginTop="@dimen/five_dp"
                     android:layout_toEndOf="@+id/txt_visit_person_timing"
+                    android:fontFamily="@font/rubik_light"
                     android:text="08:30 - 09:30"
                     android:textColor="@color/black"
                     android:textSize="@dimen/forteen_sp" />
@@ -127,6 +109,7 @@
                     android:layout_marginTop="@dimen/five_dp"
                     android:layout_toEndOf="@+id/img_visit_person"
                     android:background="@color/red"
+                    android:fontFamily="@font/rubik_medium"
                     android:padding="@dimen/ten_dp"
                     android:text="@string/running_late"
                     android:textColor="@color/white"
@@ -141,6 +124,7 @@
                     android:layout_marginTop="@dimen/five_dp"
                     android:layout_toEndOf="@+id/img_visit_person"
                     android:background="@color/blue"
+                    android:fontFamily="@font/rubik_medium"
                     android:padding="@dimen/ten_dp"
                     android:text="@string/running_late"
                     android:textColor="@color/white"
@@ -153,6 +137,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/img_visit_person"
                     android:layout_marginTop="@dimen/twenty_dp"
+                    android:fontFamily="@font/rubik_medium"
                     android:text="@string/your_next_upcomming_visit_up_to"
                     android:textColor="@color/black"
                     android:textSize="@dimen/eighteen_sp" />
@@ -163,6 +148,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/txt_next_upcoming_visit"
                     android:layout_marginTop="@dimen/five_dp"
+                    android:fontFamily="@font/rubik_light"
                     android:text="Mr John smith."
                     android:textColor="@color/black"
                     android:textSize="@dimen/forteen_sp" />
@@ -173,6 +159,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/txt_person_name"
                     android:layout_marginTop="@dimen/twenty_dp"
+                    android:fontFamily="@font/rubik_medium"
                     android:text="@string/address"
                     android:textColor="@color/black"
                     android:textSize="@dimen/eighteen_sp" />
@@ -183,6 +170,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/txt_person_address"
                     android:layout_marginTop="@dimen/five_dp"
+                    android:fontFamily="@font/rubik_light"
                     android:text="Mr John smith."
                     android:textColor="@color/black"
                     android:textSize="@dimen/forteen_sp" />
@@ -193,6 +181,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/txt_address"
                     android:layout_marginTop="@dimen/twenty_dp"
+                    android:fontFamily="@font/rubik_medium"
                     android:text="@string/telephone"
                     android:textColor="@color/black"
                     android:textSize="@dimen/eighteen_sp" />
@@ -203,6 +192,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/txt_person_telephone"
                     android:layout_marginTop="@dimen/five_dp"
+                    android:fontFamily="@font/rubik_light"
                     android:text="01234567890"
                     android:textColor="@color/black"
                     android:textSize="@dimen/forteen_sp" />
@@ -215,6 +205,7 @@
                     android:layout_below="@+id/txt_telephone"
                     android:layout_marginTop="@dimen/fifty_dp"
                     android:background="@color/blue"
+                    android:fontFamily="@font/rubik_medium"
                     android:onClick="@{(v)->myNextVisitClick.moreClientInfoClick()}"
                     android:text="@string/more_info_client"
                     android:textColor="@color/white" />
@@ -226,6 +217,7 @@
                     android:layout_below="@+id/btn_more_client_info"
                     android:layout_marginTop="@dimen/five_dp"
                     android:background="@color/blue"
+                    android:fontFamily="@font/rubik_medium"
                     android:text="@string/todays_client_task"
                     android:textColor="@color/white" />
 
@@ -244,6 +236,7 @@
                         android:layout_marginEnd="@dimen/five_dp"
                         android:layout_weight="1"
                         android:background="@color/blue"
+                        android:fontFamily="@font/rubik_medium"
                         android:text="@string/barcode"
                         android:textColor="@color/white" />
 
@@ -253,6 +246,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@color/blue"
+                        android:fontFamily="@font/rubik_medium"
                         android:text="@string/read_nfc"
                         android:textColor="@color/white" />
                 </LinearLayout>
@@ -264,6 +258,7 @@
                     android:layout_below="@+id/btns_layout"
                     android:layout_marginTop="@dimen/five_dp"
                     android:background="@color/blue"
+                    android:fontFamily="@font/rubik_medium"
                     android:text="@string/need_direction"
                     android:textColor="@color/white" />
 

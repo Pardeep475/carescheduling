@@ -8,10 +8,13 @@ import android.widget.Toast;
 
 import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseFragment;
+import com.example.carescheduling.Ui.Common.Common;
+import com.example.carescheduling.Ui.Common.CommonBean;
 import com.example.carescheduling.Ui.HomeScreen.ViewModel.ClientDisabilitiesViewModel;
 import com.example.carescheduling.Ui.HomeScreen.adapter.ClientDisabilitiesAdapter;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientDisabilityBean;
 import com.example.carescheduling.Ui.HomeScreen.presenter.BackPressedClick;
+import com.example.carescheduling.Utils.ConnectivityReceiver;
 import com.example.carescheduling.databinding.ClientInfoDisabilitiesFragmentBinding;
 
 import java.util.ArrayList;
@@ -23,7 +26,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-public class ClientDisabilitiesFragment extends BaseFragment implements BackPressedClick {
+public class ClientDisabilitiesFragment extends BaseFragment implements Common {
     private ClientInfoDisabilitiesFragmentBinding clientInfoDisabilitiesFragmentBinding;
     private ClientDisabilitiesViewModel clientDisabilitiesViewModel;
 
@@ -42,17 +45,35 @@ public class ClientDisabilitiesFragment extends BaseFragment implements BackPres
     }
 
     private void setUpView(View view) {
+        setCommonData();
+
         clientDisabilitiesViewModel = ViewModelProviders.of(this).get(ClientDisabilitiesViewModel.class);
 
         clientInfoDisabilitiesFragmentBinding.slDemo.startShimmerAnimation();
         try {
-            setUpRecyclerView(view);
+            if (ConnectivityReceiver.isNetworkAvailable(getActivity())) {
+                setUpRecyclerView(view);
+            } else {
+                setNoDataFound();
+                Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
+            }
         } catch (Exception e) {
             setNoDataFound();
             Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
         }
 
-        clientInfoDisabilitiesFragmentBinding.setBackPressedClick(this);
+
+    }
+
+    private void setCommonData() {
+        CommonBean commonBean = new CommonBean();
+        commonBean.setLeftImageDrawable(R.drawable.ic_left_back);
+        commonBean.setLeftImageVisible(true);
+        commonBean.setRightImageDrawable(R.drawable.ic_logout);
+        commonBean.setRightImageVisible(false);
+        commonBean.setTitle("Disabilities");
+        clientInfoDisabilitiesFragmentBinding.setCommonData(commonBean);
+        clientInfoDisabilitiesFragmentBinding.setCommonClick(this);
     }
 
     private void setUpRecyclerView(View view) {
@@ -62,7 +83,7 @@ public class ClientDisabilitiesFragment extends BaseFragment implements BackPres
                 , new Observer<ArrayList<ClientDisabilityBean.Datum>>() {
                     @Override
                     public void onChanged(ArrayList<ClientDisabilityBean.Datum> data) {
-                        if (data != null) {
+                        if (data != null && data.size() > 0) {
                             clientInfoDisabilitiesFragmentBinding.disabilitiesRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
                             ClientDisabilitiesAdapter clientDisabilitiesAdapter = new ClientDisabilitiesAdapter(getActivity(), data);
                             clientInfoDisabilitiesFragmentBinding.disabilitiesRecyclerview.setAdapter(clientDisabilitiesAdapter);
@@ -91,8 +112,13 @@ public class ClientDisabilitiesFragment extends BaseFragment implements BackPres
 
 
     @Override
-    public void onBackPress() {
+    public void leftClick() {
         if (getActivity() != null)
             getActivity().onBackPressed();
+    }
+
+    @Override
+    public void rightClick() {
+
     }
 }

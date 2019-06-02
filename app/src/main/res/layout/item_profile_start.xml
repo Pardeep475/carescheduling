@@ -15,11 +15,12 @@
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
         android:text="@string/edit_my_profile_info"
+        android:fontFamily="@font/rubik_medium"
         android:textColor="@color/white"
         android:layout_marginLeft="@dimen/sixteen_dp"
         android:layout_marginRight="@dimen/sixteen_dp"
         android:padding="@dimen/sixteen_dp"
-        android:textAllCaps="true" />
+        />
 
     <ImageView
         android:id="@+id/img_next_arrow"

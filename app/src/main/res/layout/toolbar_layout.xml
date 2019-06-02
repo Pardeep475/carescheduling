@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="commonData"
+            type="com.example.carescheduling.Ui.Common.CommonBean" />
+
+        <variable
+            name="commonClick"
+            type="com.example.carescheduling.Ui.Common.Common" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/rl_tool"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@color/colorPrimary">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/user_profile"
+            android:onClick="@{(v) -> commonClick.leftClick()}"
+            android:paddingStart="@dimen/ten_dp"
+            android:paddingEnd="@dimen/ten_dp"
+            android:tint="@color/white"
+            android:visibility="@{commonData.leftImageVisible ? View.VISIBLE :View.GONE}"
+            app:setImageResource="@{commonData.getLeftImageDrawable()}" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/rubik_medium"
+            android:text="@{commonData.title}"
+            android:textColor="@color/white"
+            android:textSize="@dimen/eighteen_sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/user_profile"
+            android:onClick="@{(v) -> commonClick.rightClick()}"
+            android:paddingStart="@dimen/ten_dp"
+            android:paddingEnd="@dimen/ten_dp"
+            android:tint="@color/white"
+            android:visibility="@{commonData.rightImageVisible ? View.VISIBLE :View.GONE}"
+            app:setImageResource="@{commonData.getRightImageDrawable()}" />
+
+    </RelativeLayout>
+
+</layout>
+

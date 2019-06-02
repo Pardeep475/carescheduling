@@ -8,6 +8,8 @@ import android.widget.Toast;
 
 import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseFragment;
+import com.example.carescheduling.Ui.Common.Common;
+import com.example.carescheduling.Ui.Common.CommonBean;
 import com.example.carescheduling.Ui.Dashboard.Adapter.HomeScreenAdapter;
 import com.example.carescheduling.Ui.Dashboard.presenter.HomeScreenOnClick;
 import com.example.carescheduling.Ui.HomeScreen.ViewModel.ClientInfoHomeFragmentViewModel;
@@ -21,7 +23,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-public class ClientInfoHomeFragment extends BaseFragment implements HomeScreenOnClick, ClientInfoHomeClick {
+public class ClientInfoHomeFragment extends BaseFragment implements Common, HomeScreenOnClick {
 
     private ClientInfoHomeFragmentBinding clientInfoHomeFragmentBinding;
     private ClientInfoHomeFragmentViewModel clientInfoHomeFragmentViewModel;
@@ -29,6 +31,7 @@ public class ClientInfoHomeFragment extends BaseFragment implements HomeScreenOn
     public static ClientInfoHomeFragment newInstance() {
         return new ClientInfoHomeFragment();
     }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -39,11 +42,22 @@ public class ClientInfoHomeFragment extends BaseFragment implements HomeScreenOn
     }
 
     private void setUpView(View view) {
-
+        setCommonData();
         setUpRecyclerView(view);
 
         clientInfoHomeFragmentViewModel = ViewModelProviders.of(this).get(ClientInfoHomeFragmentViewModel.class);
-        clientInfoHomeFragmentBinding.setClientInfoHomeClick(this);
+
+    }
+
+    private void setCommonData() {
+        CommonBean commonBean = new CommonBean();
+        commonBean.setLeftImageDrawable(R.drawable.ic_left_back);
+        commonBean.setLeftImageVisible(true);
+        commonBean.setRightImageDrawable(R.drawable.ic_logout);
+        commonBean.setRightImageVisible(false);
+        commonBean.setTitle("Client Info");
+        clientInfoHomeFragmentBinding.setCommonData(commonBean);
+        clientInfoHomeFragmentBinding.setCommonClick(this);
     }
 
     private void setUpRecyclerView(View view) {
@@ -57,58 +71,65 @@ public class ClientInfoHomeFragment extends BaseFragment implements HomeScreenOn
 
     @Override
     public void OnClickHomeScreen(int pos) {
-        switch(pos){
-            case 0:{
+        switch (pos) {
+            case 0: {
                 setFragment(ClientInfoSummaryFragment.newInstance());
                 break;
             }
-            case 1:{
+            case 1: {
                 setFragment(ClientInfoPersonalDetails.newInstance());
                 break;
             }
-            case 2:{
+            case 2: {
                 setFragment(ClientInfoNotesFragment.newInstance());
                 break;
             }
-            case 3:{
+            case 3: {
                 setFragment(ClientContactsFragment.newInstance());
                 break;
             }
-            case 4:{
+            case 4: {
                 setFragment(ClientInfoDocuments.newInstance());
                 break;
             }
-            case 5:{
+            case 5: {
                 setFragment(ClientInfoMedical.newInstance());
                 break;
             }
-            case 6:{
+            case 6: {
 //                setFragment(ClientInfoMatchingHistoryFragment.newInstance());
                 setFragment(ClientDisabilitiesFragment.newInstance());
                 break;
             }
-            case 7:{
+            case 7: {
 //                setFragment(ClientDisabilitiesFragment.newInstance());
                 setFragment(CarePlanFragment.newInstance());
                 break;
             }
-            case 8:{
+            case 8: {
 //                setFragment(CarePlanFragment.newInstance());
                 break;
             }
 
         }
-        Toast.makeText(getActivity(), ""+pos, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "" + pos, Toast.LENGTH_SHORT).show();
+    }
+
+
+    private void setFragment(Fragment fragment) {
+        if (getActivity() != null)
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fm_edit_container, fragment).addToBackStack(null).commitAllowingStateLoss();
     }
 
     @Override
-    public void onBackPress() {
-        if (getActivity()!=null)
+    public void leftClick() {
+        if (getActivity() != null)
             getActivity().onBackPressed();
     }
-    private void setFragment(Fragment fragment) {
-        if (getActivity()!=null)
-            getActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fm_edit_container, fragment).addToBackStack(null).commitAllowingStateLoss();
+
+    @Override
+    public void rightClick() {
+
     }
 }

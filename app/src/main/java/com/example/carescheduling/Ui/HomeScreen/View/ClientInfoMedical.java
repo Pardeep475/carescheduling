@@ -16,12 +16,14 @@ import android.view.ViewGroup;
 
 import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseFragment;
+import com.example.carescheduling.Ui.Common.Common;
+import com.example.carescheduling.Ui.Common.CommonBean;
 import com.example.carescheduling.Ui.HomeScreen.ViewModel.ClientInfoMedicalViewModel;
 import com.example.carescheduling.Ui.HomeScreen.adapter.ClientInfoMedicationAdapter;
 import com.example.carescheduling.Ui.HomeScreen.presenter.BackPressedClick;
 import com.example.carescheduling.databinding.ClientInfoMedicalFragmentBinding;
 
-public class ClientInfoMedical extends BaseFragment implements BackPressedClick {
+public class ClientInfoMedical extends BaseFragment implements Common {
 
     private ClientInfoMedicalViewModel mViewModel;
     private ClientInfoMedicalFragmentBinding clientInfoDocumentsFragmentBinding;
@@ -42,11 +44,21 @@ public class ClientInfoMedical extends BaseFragment implements BackPressedClick 
     }
 
     private void setUpView(View view) {
-
+        setCommonData();
         setUpRecyclerView(view);
 
         mViewModel = ViewModelProviders.of(this).get(ClientInfoMedicalViewModel.class);
-        clientInfoDocumentsFragmentBinding.setBackPressedClick(this);
+    }
+
+    private void setCommonData() {
+        CommonBean commonBean = new CommonBean();
+        commonBean.setLeftImageDrawable(R.drawable.ic_left_back);
+        commonBean.setLeftImageVisible(true);
+        commonBean.setRightImageDrawable(R.drawable.ic_logout);
+        commonBean.setRightImageVisible(false);
+        commonBean.setTitle(getString(R.string.medication));
+        clientInfoDocumentsFragmentBinding.setCommonData(commonBean);
+        clientInfoDocumentsFragmentBinding.setCommonClick(this);
     }
 
     private void setUpRecyclerView(View view) {
@@ -57,9 +69,15 @@ public class ClientInfoMedical extends BaseFragment implements BackPressedClick 
         }
     }
 
+
     @Override
-    public void onBackPress() {
+    public void leftClick() {
         if (getActivity() != null)
             getActivity().onBackPressed();
+    }
+
+    @Override
+    public void rightClick() {
+
     }
 }

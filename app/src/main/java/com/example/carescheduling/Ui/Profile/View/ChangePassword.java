@@ -9,6 +9,8 @@ import android.widget.Toast;
 
 import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseFragment;
+import com.example.carescheduling.Ui.Common.Common;
+import com.example.carescheduling.Ui.Common.CommonBean;
 import com.example.carescheduling.Ui.Profile.ViewModel.ChangePasswordViewModel;
 import com.example.carescheduling.Ui.Profile.bean.UserViewModel;
 import com.example.carescheduling.Ui.Profile.presenter.EditEmailClick;
@@ -25,7 +27,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-public class ChangePassword extends BaseFragment implements EditEmailClick {
+public class ChangePassword extends BaseFragment implements Common {
     private ChangePasswordBinding changePasswordBinding;
     private SessionManager sessionManager;
     private UserViewModel userViewModel;
@@ -58,34 +60,23 @@ public class ChangePassword extends BaseFragment implements EditEmailClick {
     }
 
     private void setUpView(View view) {
+        setCommonData();
         sessionManager = getSessionManager();
         changePasswordViewModel = ViewModelProviders.of(this).get(ChangePasswordViewModel.class);
-        changePasswordBinding.setEditEmailClick(this);
+
     }
 
-    @Override
-    public void BackButtonClick() {
-        if (getActivity() != null)
-            getActivity().onBackPressed();
+    private void setCommonData() {
+        CommonBean commonBean = new CommonBean();
+        commonBean.setLeftImageDrawable(R.drawable.ic_left_back);
+        commonBean.setLeftImageVisible(true);
+        commonBean.setRightImageDrawable(R.drawable.ic_tick);
+        commonBean.setRightImageVisible(true);
+        commonBean.setTitle("Change Password");
+        changePasswordBinding.setCommonData(commonBean);
+        changePasswordBinding.setCommonClick(this);
     }
 
-    @Override
-    public void DoneClick() {
-        if (getActivity() != null) {
-            try {
-                if (ConnectivityReceiver.isNetworkAvailable(getActivity())) {
-                    if (checkValidation()) {
-                        setDataRemote();
-                    }
-                } else {
-                    Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
-                }
-            } catch (Exception e) {
-                Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
-                hideDialog();
-            }
-        }
-    }
 
     private void setDataRemote() {
         showDialog();
@@ -122,5 +113,29 @@ public class ChangePassword extends BaseFragment implements EditEmailClick {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public void leftClick() {
+        if (getActivity() != null)
+            getActivity().onBackPressed();
+    }
+
+    @Override
+    public void rightClick() {
+        if (getActivity() != null) {
+            try {
+                if (ConnectivityReceiver.isNetworkAvailable(getActivity())) {
+                    if (checkValidation()) {
+                        setDataRemote();
+                    }
+                } else {
+                    Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
+                }
+            } catch (Exception e) {
+                Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+                hideDialog();
+            }
+        }
     }
 }

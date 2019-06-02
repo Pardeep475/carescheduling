@@ -17,12 +17,15 @@ import android.widget.Toast;
 
 import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseFragment;
+import com.example.carescheduling.Ui.Common.Common;
+import com.example.carescheduling.Ui.Common.CommonBean;
 import com.example.carescheduling.Ui.HomeScreen.ViewModel.ClientInfoSummaryViewModel;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientCareSummaryBean;
 import com.example.carescheduling.Ui.HomeScreen.presenter.BackPressedClick;
+import com.example.carescheduling.Utils.ConnectivityReceiver;
 import com.example.carescheduling.databinding.ClientInfoSummaryFragmentBinding;
 
-public class ClientInfoSummaryFragment extends BaseFragment implements BackPressedClick {
+public class ClientInfoSummaryFragment extends BaseFragment implements Common {
 
     private ClientInfoSummaryViewModel mViewModel;
     private ClientInfoSummaryFragmentBinding clientInfoSummaryFragmentBinding;
@@ -41,16 +44,33 @@ public class ClientInfoSummaryFragment extends BaseFragment implements BackPress
     }
 
     private void setUpView(View view) {
+        setCommonData();
         clientInfoSummaryFragmentBinding.slDemo.startShimmerAnimation();
         mViewModel = ViewModelProviders.of(this).get(ClientInfoSummaryViewModel.class);
         try {
-            setUpData();
+            if (ConnectivityReceiver.isNetworkAvailable(getActivity())) {
+                setUpData();
+            }else {
+                setNoDataFound();
+                Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
+            }
         } catch (Exception e) {
             setNoDataFound();
             Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
         }
 
-        clientInfoSummaryFragmentBinding.setBackPressedClick(this);
+
+    }
+
+    private void setCommonData() {
+        CommonBean commonBean = new CommonBean();
+        commonBean.setLeftImageDrawable(R.drawable.ic_left_back);
+        commonBean.setLeftImageVisible(true);
+        commonBean.setRightImageDrawable(R.drawable.ic_logout);
+        commonBean.setRightImageVisible(false);
+        commonBean.setTitle("Summary");
+        clientInfoSummaryFragmentBinding.setCommonData(commonBean);
+        clientInfoSummaryFragmentBinding.setCommonClick(this);
     }
 
     private void setUpData() {
@@ -90,8 +110,13 @@ public class ClientInfoSummaryFragment extends BaseFragment implements BackPress
 
 
     @Override
-    public void onBackPress() {
+    public void leftClick() {
         if (getActivity() != null)
             getActivity().onBackPressed();
+    }
+
+    @Override
+    public void rightClick() {
+
     }
 }

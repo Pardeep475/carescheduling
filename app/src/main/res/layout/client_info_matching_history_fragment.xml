@@ -49,6 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/rl_tool"
             android:text="@string/matching"
+            android:fontFamily="@font/rubik_medium"
             android:textSize="20sp"
             android:textColor="@color/colorPrimary"
             android:padding="@dimen/twenty_dp" />

@@ -18,10 +18,12 @@ import android.widget.Toast;
 
 import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseFragment;
+import com.example.carescheduling.Ui.Common.Common;
+import com.example.carescheduling.Ui.Common.CommonBean;
 import com.example.carescheduling.Ui.Dashboard.Adapter.HomeScreenAdapter;
 import com.example.carescheduling.Ui.Dashboard.ViewModel.HomeFViewModel;
 import com.example.carescheduling.Ui.Dashboard.beans.ClientBookingListModel;
-import com.example.carescheduling.Ui.Dashboard.beans.HomeScreenBean;
+
 import com.example.carescheduling.Ui.Dashboard.presenter.HomeScreenOnClick;
 import com.example.carescheduling.Ui.Dashboard.presenter.ProfileClickHandler;
 import com.example.carescheduling.Ui.HomeScreen.View.BlankFragment;
@@ -31,9 +33,8 @@ import com.example.carescheduling.Ui.Profile.View.EditProfile;
 import com.example.carescheduling.Utils.ConnectivityReceiver;
 import com.example.carescheduling.databinding.FragmentHomeBinding;
 
-public class HomeF extends BaseFragment implements ProfileClickHandler, HomeScreenOnClick {
+public class HomeF extends BaseFragment implements Common, HomeScreenOnClick {
     private FragmentHomeBinding fragmentHomeBinding;
-    private HomeScreenBean homeScreenBean;
     private HomeFViewModel homeFViewModel;
 
     // TODO: Rename and change types and number of parameters
@@ -59,9 +60,7 @@ public class HomeF extends BaseFragment implements ProfileClickHandler, HomeScre
     }
 
     private void setUpView(View view) {
-        homeScreenBean = new HomeScreenBean();
-        homeScreenBean.setName("pardeep");
-        homeScreenBean.setPassword("12345");
+        setCommonData();
 
         homeFViewModel = ViewModelProviders.of(this).get(HomeFViewModel.class);
 //        getClientBookingList();
@@ -72,14 +71,26 @@ public class HomeF extends BaseFragment implements ProfileClickHandler, HomeScre
         fragmentHomeBinding.rcvHome.setLayoutManager(new LinearLayoutManager(getActivity()));
         fragmentHomeBinding.rcvHome.setAdapter(homeScreenAdapter);
 
-        fragmentHomeBinding.setClickhandler(this);
+
     }
 
-    private void GetClientPlan(){
+
+    private void setCommonData() {
+        CommonBean commonBean = new CommonBean();
+        commonBean.setLeftImageDrawable(R.drawable.ic_left_back);
+        commonBean.setLeftImageVisible(false);
+        commonBean.setRightImageDrawable(R.drawable.ic_logout);
+        commonBean.setRightImageVisible(true);
+        commonBean.setTitle("Home");
+        fragmentHomeBinding.setCommonData(commonBean);
+        fragmentHomeBinding.setCommonClick(this);
+    }
+
+    private void GetClientPlan() {
 //5F98AF4F-25DC-4AC8-B867-C5072C100000/5F98AF4F-25DC-4AC8-B867-C5072C101011/A529B2CC-515E-4501-AE48-1E3FE9B384D6
         homeFViewModel.GetClientAndClientCarePlan("5F98AF4F-25DC-4AC8-B867-C5072C100000"
-                ,"5F98AF4F-25DC-4AC8-B867-C5072C101011"
-                ,"A529B2CC-515E-4501-AE48-1E3FE9B384D6").observe(this, new Observer<ClientCarePlan>() {
+                , "5F98AF4F-25DC-4AC8-B867-C5072C101011"
+                , "A529B2CC-515E-4501-AE48-1E3FE9B384D6").observe(this, new Observer<ClientCarePlan>() {
             @Override
             public void onChanged(ClientCarePlan clientCarePlan) {
 
@@ -115,19 +126,10 @@ public class HomeF extends BaseFragment implements ProfileClickHandler, HomeScre
         }
     }
 
-    @Override
-    public void logout() {
-        sessionManager.cleanAllData();
-        Intent intent = new Intent(getActivity(), LoginActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        if (getActivity() != null)
-            getActivity().finish();
-    }
 
     @Override
     public void OnClickHomeScreen(int pos) {
-        homeScreenBean.setName(homeScreenBean.getName() + " " + pos);
+
         Intent intent = new Intent(getActivity(), EditProfile.class);
         intent.putExtra("pos", pos);
         startActivity(intent);
@@ -140,4 +142,18 @@ public class HomeF extends BaseFragment implements ProfileClickHandler, HomeScre
     }
 
 
+    @Override
+    public void leftClick() {
+
+    }
+
+    @Override
+    public void rightClick() {
+        sessionManager.cleanAllData();
+        Intent intent = new Intent(getActivity(), LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        if (getActivity() != null)
+            getActivity().finish();
+    }
 }

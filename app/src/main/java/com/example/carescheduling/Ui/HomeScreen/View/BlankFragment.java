@@ -14,11 +14,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.carescheduling.R;
+import com.example.carescheduling.Ui.Base.BaseFragment;
+import com.example.carescheduling.Ui.Common.Common;
+import com.example.carescheduling.Ui.Common.CommonBean;
 import com.example.carescheduling.Ui.HomeScreen.ViewModel.BlankViewModel;
 import com.example.carescheduling.Ui.HomeScreen.presenter.MyNextVisitClick;
 import com.example.carescheduling.databinding.BlankFragmentBinding;
 
-public class BlankFragment extends Fragment implements MyNextVisitClick {
+public class BlankFragment extends BaseFragment implements Common, MyNextVisitClick {
 
     private BlankViewModel mViewModel;
     private BlankFragmentBinding blankFragmentBinding;
@@ -37,23 +40,42 @@ public class BlankFragment extends Fragment implements MyNextVisitClick {
     }
 
     private void setUpView(View view) {
+        setCommonData();
         mViewModel = ViewModelProviders.of(this).get(BlankViewModel.class);
         blankFragmentBinding.setMyNextVisitClick(this);
     }
 
-    @Override
-    public void onBackPress() {
-        if (getActivity() != null)
-            getActivity().onBackPressed();
+    private void setCommonData() {
+        CommonBean commonBean = new CommonBean();
+        commonBean.setLeftImageDrawable(R.drawable.ic_left_back);
+        commonBean.setLeftImageVisible(true);
+        commonBean.setRightImageDrawable(R.drawable.ic_logout);
+        commonBean.setRightImageVisible(false);
+        commonBean.setTitle("Client Profile");
+        blankFragmentBinding.setCommonData(commonBean);
+        blankFragmentBinding.setCommonClick(this);
     }
+
 
     @Override
     public void moreClientInfoClick() {
         setFragment(ClientInfoHomeFragment.newInstance());
     }
+
     private void setFragment(Fragment fragment) {
-        if (getActivity()!=null)
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fm_edit_container, fragment).addToBackStack(null).commitAllowingStateLoss();
+        if (getActivity() != null)
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fm_edit_container, fragment).addToBackStack(null).commitAllowingStateLoss();
+    }
+
+    @Override
+    public void leftClick() {
+        if (getActivity() != null)
+            getActivity().onBackPressed();
+    }
+
+    @Override
+    public void rightClick() {
+
     }
 }

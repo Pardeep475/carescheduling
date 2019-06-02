@@ -1,11 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="profileResultBean"
-            type="com.example.carescheduling.Ui.Dashboard.beans.ProfileBean"/>
+            type="com.example.carescheduling.Ui.Dashboard.beans.ProfileBean" />
+
+        <variable
+            name="commonData"
+            type="com.example.carescheduling.Ui.Common.CommonBean" />
+
+        <variable
+            name="commonClick"
+            type="com.example.carescheduling.Ui.Common.Common" />
+
         <variable
             name="editProfileStartClick"
             type="com.example.carescheduling.Ui.Profile.presenter.EditProfileStartClick" />
@@ -16,46 +27,12 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <RelativeLayout
+        <include
             android:id="@+id/rl_tool"
-            android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
-            android:background="@color/colorPrimary">
+            layout="@layout/toolbar_layout"
+            bind:commonClick="@{commonClick}"
+            bind:commonData="@{commonData}" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:contentDescription="@string/user_profile"
-                android:onClick="@{(v)-> editProfileStartClick.backButton()}"
-                android:paddingStart="@dimen/ten_dp"
-                android:paddingEnd="@dimen/ten_dp"
-                android:tint="@color/white"
-                app:srcCompat="@drawable/ic_left_back" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:text="@string/profile"
-                android:textColor="@color/white"
-                android:textSize="@dimen/forteen_sp" />
-
-            <ImageView
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="@dimen/ten_dp"
-                android:contentDescription="@string/user_profile"
-                android:tint="@color/white"
-                android:visibility="invisible"
-                app:srcCompat="@drawable/ic_tick" />
-
-        </RelativeLayout>
 
         <ScrollView
             android:layout_width="match_parent"
@@ -69,8 +46,8 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/twenty_dp"
                     android:layout_marginStart="@dimen/ten_dp"
+                    android:layout_marginTop="@dimen/twenty_dp"
                     android:layout_marginEnd="@dimen/ten_dp"
                     android:background="@drawable/start_profile_views_bg"
                     android:onClick="@{(v)-> editProfileStartClick.EditMyProfileInfo(profileResultBean)}"
@@ -84,9 +61,10 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/sixteen_dp"
                         android:layout_marginRight="@dimen/sixteen_dp"
+                        android:fontFamily="@font/rubik_medium"
                         android:padding="@dimen/sixteen_dp"
                         android:text="@string/edit_my_profile_info"
-                        android:textAllCaps="true"
+
                         android:textColor="@color/white" />
 
                     <ImageView
@@ -106,9 +84,9 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/ten_dp"
                     android:layout_marginTop="@dimen/ten_dp"
                     android:layout_marginEnd="@dimen/ten_dp"
-                    android:layout_marginStart="@dimen/ten_dp"
                     android:background="@drawable/start_profile_views_bg"
                     android:onClick="@{(v)-> editProfileStartClick.EditMyAddress(profileResultBean)}"
                     android:paddingTop="@dimen/ten_dp"
@@ -121,9 +99,10 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/sixteen_dp"
                         android:layout_marginRight="@dimen/sixteen_dp"
+                        android:fontFamily="@font/rubik_medium"
                         android:padding="@dimen/sixteen_dp"
                         android:text="@string/edit_my_address"
-                        android:textAllCaps="true"
+
                         android:textColor="@color/white" />
 
                     <ImageView
@@ -143,8 +122,8 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/ten_dp"
                     android:layout_marginStart="@dimen/ten_dp"
+                    android:layout_marginTop="@dimen/ten_dp"
                     android:layout_marginEnd="@dimen/ten_dp"
                     android:background="@drawable/start_profile_views_bg"
                     android:onClick="@{(v)-> editProfileStartClick.EditMyPicture(profileResultBean)}"
@@ -158,9 +137,10 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/sixteen_dp"
                         android:layout_marginRight="@dimen/sixteen_dp"
+                        android:fontFamily="@font/rubik_medium"
                         android:padding="@dimen/sixteen_dp"
                         android:text="@string/edit_my_picture"
-                        android:textAllCaps="true"
+
                         android:textColor="@color/white" />
 
                     <ImageView
@@ -180,9 +160,9 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/ten_dp"
                     android:layout_marginTop="@dimen/fifty_dp"
                     android:layout_marginEnd="@dimen/ten_dp"
-                    android:layout_marginStart="@dimen/ten_dp"
                     android:background="@drawable/start_profile_views_bg"
                     android:onClick="@{(v)-> editProfileStartClick.EditChangePassword(profileResultBean)}"
                     android:paddingTop="@dimen/ten_dp"
@@ -195,9 +175,10 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/sixteen_dp"
                         android:layout_marginRight="@dimen/sixteen_dp"
+                        android:fontFamily="@font/rubik_medium"
                         android:padding="@dimen/sixteen_dp"
                         android:text="@string/change_password"
-                        android:textAllCaps="true"
+
                         android:textColor="@color/white" />
 
                     <ImageView
@@ -217,6 +198,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/rubik_medium"
                     android:padding="@dimen/sixteen_dp"
                     android:text="@string/add_new_info"
                     android:textColor="@color/black"

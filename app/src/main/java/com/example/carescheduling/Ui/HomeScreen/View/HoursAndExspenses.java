@@ -15,6 +15,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.carescheduling.R;
+import com.example.carescheduling.Ui.Base.BaseFragment;
+import com.example.carescheduling.Ui.Common.Common;
+import com.example.carescheduling.Ui.Common.CommonBean;
 import com.example.carescheduling.Ui.Dashboard.Adapter.HomeScreenAdapter;
 import com.example.carescheduling.Ui.Dashboard.presenter.HomeScreenOnClick;
 import com.example.carescheduling.Ui.HomeScreen.ViewModel.DirectionsViewModel;
@@ -22,7 +25,7 @@ import com.example.carescheduling.Ui.HomeScreen.ViewModel.HoursAndExspensesViewM
 import com.example.carescheduling.Ui.HomeScreen.presenter.HoursAndExpensesCLick;
 import com.example.carescheduling.databinding.HoursAndExspensesFragmentBinding;
 
-public class HoursAndExspenses extends Fragment implements HomeScreenOnClick, HoursAndExpensesCLick {
+public class HoursAndExspenses extends BaseFragment implements Common, HomeScreenOnClick {
 
     private HoursAndExspensesViewModel mViewModel;
     private HoursAndExspensesFragmentBinding hoursAndExspensesFragmentBinding;
@@ -42,15 +45,26 @@ public class HoursAndExspenses extends Fragment implements HomeScreenOnClick, Ho
     }
 
     private void setUpView(View view) {
+        setCommonData();
         mViewModel = ViewModelProviders.of(this).get(HoursAndExspensesViewModel.class);
 
         String[] some_array = getResources().getStringArray(R.array.hours_and_exspenses_array);
         HomeScreenAdapter homeScreenAdapter = new HomeScreenAdapter(getActivity(), this, some_array);
         hoursAndExspensesFragmentBinding.rcvDirection.setLayoutManager(new LinearLayoutManager(getActivity()));
         hoursAndExspensesFragmentBinding.rcvDirection.setAdapter(homeScreenAdapter);
-        hoursAndExspensesFragmentBinding.setHoursAndExpensesCLick(this);
+
     }
 
+    private void setCommonData() {
+        CommonBean commonBean = new CommonBean();
+        commonBean.setLeftImageDrawable(R.drawable.ic_left_back);
+        commonBean.setLeftImageVisible(true);
+        commonBean.setRightImageDrawable(R.drawable.ic_logout);
+        commonBean.setRightImageVisible(false);
+        commonBean.setTitle("Hours and Expenses");
+        hoursAndExspensesFragmentBinding.setCommonData(commonBean);
+        hoursAndExspensesFragmentBinding.setCommonClick(this);
+    }
 
     @Override
     public void OnClickHomeScreen(int pos) {
@@ -58,8 +72,13 @@ public class HoursAndExspenses extends Fragment implements HomeScreenOnClick, Ho
     }
 
     @Override
-    public void onBackPress() {
+    public void leftClick() {
         if (getActivity() != null)
             getActivity().onBackPressed();
+    }
+
+    @Override
+    public void rightClick() {
+
     }
 }

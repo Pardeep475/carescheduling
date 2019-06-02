@@ -20,19 +20,22 @@ import android.widget.Toast;
 
 import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseFragment;
+import com.example.carescheduling.Ui.Common.Common;
+import com.example.carescheduling.Ui.Common.CommonBean;
 import com.example.carescheduling.Ui.HomeScreen.ViewModel.VisitArchiveViewModel;
 import com.example.carescheduling.Ui.HomeScreen.presenter.VisitArchiveClick;
 import com.example.carescheduling.databinding.VisitArchiveFragmentBinding;
 
 import java.util.Calendar;
 
-public class VisitArchiveFragment extends BaseFragment implements VisitArchiveClick {
+public class VisitArchiveFragment extends BaseFragment implements Common, VisitArchiveClick {
 
     private VisitArchiveViewModel mViewModel;
     private VisitArchiveFragmentBinding visitArchiveFragmentBinding;
     private DatePicker datePicker;
     private Calendar calendar;
     private int year, month, day;
+
     public static VisitArchiveFragment newInstance() {
         return new VisitArchiveFragment();
     }
@@ -47,20 +50,20 @@ public class VisitArchiveFragment extends BaseFragment implements VisitArchiveCl
     }
 
     private void setUpView(View view) {
+        setCommonData();
         mViewModel = ViewModelProviders.of(this).get(VisitArchiveViewModel.class);
         visitArchiveFragmentBinding.setVisitArchiveClick(this);
     }
 
-
-    @Override
-    public void onBackPress() {
-        if (getActivity() != null)
-            getActivity().onBackPressed();
-    }
-
-    @Override
-    public void DoneClick() {
-
+    private void setCommonData() {
+        CommonBean commonBean = new CommonBean();
+        commonBean.setLeftImageDrawable(R.drawable.ic_left_back);
+        commonBean.setLeftImageVisible(true);
+        commonBean.setRightImageDrawable(R.drawable.ic_logout);
+        commonBean.setRightImageVisible(true);
+        commonBean.setTitle("Visits");
+        visitArchiveFragmentBinding.setCommonData(commonBean);
+        visitArchiveFragmentBinding.setCommonClick(this);
     }
 
     @Override
@@ -72,6 +75,7 @@ public class VisitArchiveFragment extends BaseFragment implements VisitArchiveCl
         day = calendar.get(Calendar.DAY_OF_MONTH);
         onCreateDialog(999).show();
     }
+
     protected Dialog onCreateDialog(int id) {
         // TODO Auto-generated method stub
         if (id == 999) {
@@ -106,4 +110,14 @@ public class VisitArchiveFragment extends BaseFragment implements VisitArchiveCl
 //                .append(month).append("/").append(year));
     }
 
+    @Override
+    public void leftClick() {
+        if (getActivity() != null)
+            getActivity().onBackPressed();
+    }
+
+    @Override
+    public void rightClick() {
+
+    }
 }

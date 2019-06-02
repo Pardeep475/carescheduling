@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-<variable
-    name="editProfileInfoBean"
-    type="com.example.carescheduling.Ui.Profile.bean.EditProfileInfoBean"/>
+
         <variable
-            name="backPressedClick"
-            type="com.example.carescheduling.Ui.HomeScreen.presenter.BackPressedClick" />
+            name="editProfileInfoBean"
+            type="com.example.carescheduling.Ui.Profile.bean.EditProfileInfoBean" />
+
+        <variable
+            name="commonData"
+            type="com.example.carescheduling.Ui.Common.CommonBean" />
+
+        <variable
+            name="commonClick"
+            type="com.example.carescheduling.Ui.Common.Common" />
 
     </data>
 
@@ -19,46 +26,11 @@
         android:background="@color/white"
         android:orientation="vertical">
 
-        <RelativeLayout
+        <include
             android:id="@+id/rl_tool"
-            android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
-            android:background="@color/colorPrimary">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:contentDescription="@string/user_profile"
-                android:onClick="@{(v)->backPressedClick.onBackPress()}"
-                android:paddingStart="@dimen/ten_dp"
-                android:paddingEnd="@dimen/ten_dp"
-                android:tint="@color/white"
-                app:srcCompat="@drawable/ic_left_back" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:text="@string/personal_details"
-                android:textColor="@color/white"
-                android:textSize="@dimen/forteen_sp" />
-
-            <ImageView
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="@dimen/ten_dp"
-                android:contentDescription="@string/user_profile"
-                android:tint="@color/white"
-                android:visibility="gone"
-                app:srcCompat="@drawable/ic_tick" />
-
-        </RelativeLayout>
+            layout="@layout/toolbar_layout"
+            bind:commonClick="@{commonClick}"
+            bind:commonData="@{commonData}" />
 
         <!--<TextView
             android:layout_width="wrap_content"
@@ -83,331 +55,359 @@
         </io.supercharge.shimmerlayout.ShimmerLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:orientation="vertical"
             android:id="@+id/ll_main_layout"
-            android:layout_height="match_parent">
-
-        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/twenty_dp"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-
-            <TextView
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight=".3"
-                android:text="@string/first_name" />
+                android:layout_marginTop="@dimen/twenty_dp"
+                android:orientation="horizontal">
 
-            <TextView
 
-                android:layout_width="0dp"
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".3"
+                    android:fontFamily="@font/rubik_medium"
+                    android:text="@string/first_name" />
+
+                <TextView
+
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/twenty_dp"
+                    android:layout_weight=".7"
+                    android:fontFamily="@font/rubik_light"
+                    android:text="@{editProfileInfoBean.firstName}" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/twenty_dp"
-                android:layout_weight=".7"
-                android:text="@{editProfileInfoBean.firstName}" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/five_dp"
-            android:orientation="horizontal">
+                android:layout_marginTop="@dimen/five_dp"
+                android:orientation="horizontal">
 
 
-            <TextView
-                android:layout_width="0dp"
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".3"
+                    android:fontFamily="@font/rubik_medium"
+                    android:text="@string/middle_name" />
+
+                <TextView
+
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/twenty_dp"
+                    android:layout_weight=".7"
+                    android:fontFamily="@font/rubik_light"
+                    android:text="@{editProfileInfoBean.middleName}" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight=".3"
-                android:text="@string/middle_name" />
+                android:layout_marginTop="@dimen/five_dp"
+                android:orientation="horizontal">
 
-            <TextView
 
-                android:layout_width="0dp"
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".3"
+                    android:fontFamily="@font/rubik_medium"
+                    android:text="@string/surname" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/twenty_dp"
+                    android:layout_weight=".7"
+                    android:fontFamily="@font/rubik_light"
+                    android:text="@{editProfileInfoBean.surName}" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/twenty_dp"
-                android:layout_weight=".7"
-                android:text="@{editProfileInfoBean.middleName}" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/five_dp"
-            android:orientation="horizontal">
+                android:layout_marginTop="@dimen/five_dp"
+                android:orientation="horizontal">
 
 
-            <TextView
-                android:layout_width="0dp"
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".3"
+                    android:fontFamily="@font/rubik_medium"
+                    android:text="@string/maiden_name" />
+
+                <TextView
+
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/twenty_dp"
+                    android:layout_weight=".7"
+                    android:fontFamily="@font/rubik_light"
+                    android:text="@{editProfileInfoBean.maidenName}" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight=".3"
-                android:text="@string/surname" />
+                android:layout_marginTop="@dimen/five_dp"
+                android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="0dp"
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".3"
+                    android:fontFamily="@font/rubik_medium"
+                    android:text="@string/date_of_birth" />
+
+                <TextView
+
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/twenty_dp"
+                    android:fontFamily="@font/rubik_light"
+                    android:layout_weight=".7"
+                    android:text="@{editProfileInfoBean.dateOfBirth}" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/twenty_dp"
-                android:layout_weight=".7"
-                android:text="@{editProfileInfoBean.surName}" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/five_dp"
-            android:orientation="horizontal">
+                android:layout_marginTop="@dimen/five_dp"
+                android:orientation="horizontal">
 
 
-            <TextView
-                android:layout_width="0dp"
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".3"
+                    android:fontFamily="@font/rubik_medium"
+                    android:text="@string/gender" />
+
+                <TextView
+
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/twenty_dp"
+                    android:layout_weight=".7"
+                    android:fontFamily="@font/rubik_light"
+                    android:text="@{editProfileInfoBean.gender}" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight=".3"
-                android:text="@string/maiden_name" />
+                android:layout_marginTop="@dimen/five_dp"
+                android:orientation="horizontal">
 
-            <TextView
 
-                android:layout_width="0dp"
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".3"
+                    android:fontFamily="@font/rubik_medium"
+                    android:text="@string/prefix" />
+
+                <TextView
+
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/twenty_dp"
+                    android:layout_weight=".7"
+                    android:fontFamily="@font/rubik_light"
+                    android:text="@{editProfileInfoBean.prefix}" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/twenty_dp"
-                android:layout_weight=".7"
-                android:text="@{editProfileInfoBean.maidenName}" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/five_dp"
-            android:orientation="horizontal">
+                android:layout_marginTop="@dimen/five_dp"
+                android:orientation="horizontal">
 
 
-            <TextView
-                android:layout_width="0dp"
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".3"
+                    android:fontFamily="@font/rubik_medium"
+                    android:text="@string/language" />
+
+                <TextView
+
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/twenty_dp"
+                    android:layout_weight=".7"
+                    android:fontFamily="@font/rubik_light"
+                    android:text="@{editProfileInfoBean.language}" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight=".3"
-                android:text="@string/date_of_birth" />
+                android:layout_marginTop="@dimen/five_dp"
+                android:orientation="horizontal">
 
-            <TextView
 
-                android:layout_width="0dp"
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".3"
+                    android:fontFamily="@font/rubik_medium"
+                    android:text="@string/maritial_status" />
+
+                <TextView
+
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/twenty_dp"
+                    android:layout_weight=".7"
+                    android:fontFamily="@font/rubik_light"
+                    android:text="@{editProfileInfoBean.maritalStatus}" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/twenty_dp"
-                android:layout_weight=".7"
-                android:text="@{editProfileInfoBean.dateOfBirth}" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/five_dp"
-            android:orientation="horizontal">
+                android:layout_marginTop="@dimen/five_dp"
+                android:orientation="horizontal">
 
 
-            <TextView
-                android:layout_width="0dp"
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".3"
+                    android:fontFamily="@font/rubik_medium"
+                    android:text="@string/ethnicity" />
+
+                <TextView
+
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/twenty_dp"
+                    android:layout_weight=".7"
+                    android:fontFamily="@font/rubik_light"
+                    android:text="@{editProfileInfoBean.ethnicity}" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight=".3"
-                android:text="@string/gender" />
+                android:layout_marginTop="@dimen/five_dp"
+                android:orientation="horizontal">
 
-            <TextView
 
-                android:layout_width="0dp"
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".3"
+                    android:fontFamily="@font/rubik_medium"
+                    android:text="@string/disabilty" />
+
+                <TextView
+
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/twenty_dp"
+                    android:layout_weight=".7"
+                    android:fontFamily="@font/rubik_light"
+                    android:text="Yes" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/twenty_dp"
-                android:layout_weight=".7"
-                android:text="@{editProfileInfoBean.gender}" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/five_dp"
-            android:orientation="horizontal">
+                android:layout_marginTop="@dimen/five_dp"
+                android:orientation="horizontal">
 
 
-            <TextView
-                android:layout_width="0dp"
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".3"
+                    android:fontFamily="@font/rubik_medium"
+                    android:text="@string/religion" />
+
+                <TextView
+
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/twenty_dp"
+                    android:layout_weight=".7"
+                    android:fontFamily="@font/rubik_light"
+                    android:text="@{editProfileInfoBean.religion}" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight=".3"
-                android:text="@string/prefix" />
+                android:layout_marginTop="@dimen/five_dp"
+                android:orientation="horizontal">
 
-            <TextView
 
-                android:layout_width="0dp"
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".3"
+                    android:fontFamily="@font/rubik_medium"
+                    android:text="@string/sexuality" />
+
+                <TextView
+
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/twenty_dp"
+                    android:layout_weight=".7"
+                    android:fontFamily="@font/rubik_light"
+                    android:text="@{editProfileInfoBean.sexuality}" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/twenty_dp"
-                android:layout_weight=".7"
-                android:text="@{editProfileInfoBean.prefix}" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/five_dp"
-            android:orientation="horizontal">
+                android:layout_marginTop="@dimen/five_dp"
+                android:orientation="horizontal">
 
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight=".3"
-                android:text="@string/language" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".3"
+                    android:fontFamily="@font/rubik_medium"
+                    android:text="@string/nationality" />
 
-            <TextView
+                <TextView
 
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/twenty_dp"
-                android:layout_weight=".7"
-                android:text="@{editProfileInfoBean.language}" />
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/twenty_dp"
+                    android:layout_weight=".7"
+                    android:fontFamily="@font/rubik_light"
+                    android:text="@{editProfileInfoBean.nationality}" />
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/five_dp"
-            android:orientation="horizontal">
-
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight=".3"
-                android:text="@string/maritial_status" />
-
-            <TextView
-
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/twenty_dp"
-                android:layout_weight=".7"
-                android:text="@{editProfileInfoBean.maritalStatus}" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/five_dp"
-            android:orientation="horizontal">
-
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight=".3"
-                android:text="@string/ethnicity" />
-
-            <TextView
-
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/twenty_dp"
-                android:layout_weight=".7"
-                android:text="@{editProfileInfoBean.ethnicity}" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/five_dp"
-            android:orientation="horizontal">
-
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight=".3"
-                android:text="@string/disabilty" />
-
-            <TextView
-
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/twenty_dp"
-                android:layout_weight=".7"
-                android:text="Yes" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/five_dp"
-            android:orientation="horizontal">
-
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight=".3"
-                android:text="@string/religion" />
-
-            <TextView
-
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/twenty_dp"
-                android:layout_weight=".7"
-                android:text="@{editProfileInfoBean.religion}" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/five_dp"
-            android:orientation="horizontal">
-
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight=".3"
-                android:text="@string/sexuality" />
-
-            <TextView
-
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/twenty_dp"
-                android:layout_weight=".7"
-                android:text="@{editProfileInfoBean.sexuality}" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/five_dp"
-            android:orientation="horizontal">
-
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight=".3"
-                android:text="@string/nationality" />
-
-            <TextView
-
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/twenty_dp"
-                android:layout_weight=".7"
-                android:text="@{editProfileInfoBean.nationality}" />
-
-        </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
 
         <include

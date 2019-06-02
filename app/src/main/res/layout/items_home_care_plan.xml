@@ -7,9 +7,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Week 1:"
+        android:fontFamily="@font/rubik_medium"
         android:textSize="@dimen/sixteen_sp"
         android:textColor="@color/colorPrimary"
         android:paddingStart="@dimen/twenty_dp"/>
+
     <include layout="@layout/home_care_plan_subitems"/>
 
 </LinearLayout>

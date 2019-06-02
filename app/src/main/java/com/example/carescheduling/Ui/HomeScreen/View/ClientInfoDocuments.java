@@ -17,15 +17,18 @@ import android.widget.Toast;
 
 import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseFragment;
+import com.example.carescheduling.Ui.Common.Common;
+import com.example.carescheduling.Ui.Common.CommonBean;
 import com.example.carescheduling.Ui.HomeScreen.ViewModel.ClientInfoDocumentsViewModel;
 import com.example.carescheduling.Ui.HomeScreen.adapter.ClientInfoDocumentsAdapter;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientNoteAdapterBean;
 import com.example.carescheduling.Ui.HomeScreen.presenter.BackPressedClick;
+import com.example.carescheduling.Utils.ConnectivityReceiver;
 import com.example.carescheduling.databinding.ClientInfoDocumentsFragmentBinding;
 
 import java.util.ArrayList;
 
-public class ClientInfoDocuments extends BaseFragment implements BackPressedClick {
+public class ClientInfoDocuments extends BaseFragment implements Common {
 
     private ClientInfoDocumentsViewModel mViewModel;
     private ClientInfoDocumentsFragmentBinding clientInfoDocumentsFragmentBinding;
@@ -46,17 +49,34 @@ public class ClientInfoDocuments extends BaseFragment implements BackPressedClic
     }
 
     private void setUpView(View view) {
+        setCommonData();
         mViewModel = ViewModelProviders.of(this).get(ClientInfoDocumentsViewModel.class);
 
         clientInfoDocumentsFragmentBinding.slDemo.startShimmerAnimation();
         try {
-            setUpRecyclerView(view);
+            if (ConnectivityReceiver.isNetworkAvailable(getActivity())) {
+                setUpRecyclerView(view);
+            } else {
+                setNoDataFound();
+                Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
+            }
         } catch (Exception e) {
             setNoDataFound();
             Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
         }
 
-        clientInfoDocumentsFragmentBinding.setBackPressedClick(this);
+
+    }
+
+    private void setCommonData() {
+        CommonBean commonBean = new CommonBean();
+        commonBean.setLeftImageDrawable(R.drawable.ic_left_back);
+        commonBean.setLeftImageVisible(true);
+        commonBean.setRightImageDrawable(R.drawable.ic_logout);
+        commonBean.setRightImageVisible(false);
+        commonBean.setTitle("Documents");
+        clientInfoDocumentsFragmentBinding.setCommonData(commonBean);
+        clientInfoDocumentsFragmentBinding.setCommonClick(this);
     }
 
     private void setUpRecyclerView(View view) {
@@ -65,7 +85,7 @@ public class ClientInfoDocuments extends BaseFragment implements BackPressedClic
                 "5F98AF4F-25DC-4AC8-B867-C5072C101011").observe(this, new Observer<ArrayList<ClientNoteAdapterBean>>() {
             @Override
             public void onChanged(ArrayList<ClientNoteAdapterBean> clientNoteAdapterBeans) {
-                if (clientNoteAdapterBeans != null && clientNoteAdapterBeans.size()>0) {
+                if (clientNoteAdapterBeans != null && clientNoteAdapterBeans.size() > 0) {
                     clientInfoDocumentsFragmentBinding.rcvClientInfoDocuments.setLayoutManager(new LinearLayoutManager(getActivity()));
                     ClientInfoDocumentsAdapter clientInfoDocumentsAdapter = new ClientInfoDocumentsAdapter(getActivity(), clientNoteAdapterBeans);
                     clientInfoDocumentsFragmentBinding.rcvClientInfoDocuments.setAdapter(clientInfoDocumentsAdapter);
@@ -93,9 +113,15 @@ public class ClientInfoDocuments extends BaseFragment implements BackPressedClic
         clientInfoDocumentsFragmentBinding.rlNoDataFound.setVisibility(View.GONE);
     }
 
+
     @Override
-    public void onBackPress() {
+    public void leftClick() {
         if (getActivity() != null)
             getActivity().onBackPressed();
+    }
+
+    @Override
+    public void rightClick() {
+
     }
 }

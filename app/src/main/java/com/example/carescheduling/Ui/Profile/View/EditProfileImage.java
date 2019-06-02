@@ -13,11 +13,13 @@ import android.view.ViewGroup;
 
 import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseFragment;
+import com.example.carescheduling.Ui.Common.Common;
+import com.example.carescheduling.Ui.Common.CommonBean;
 import com.example.carescheduling.Ui.Profile.presenter.EditEmailClick;
 import com.example.carescheduling.databinding.FragmentEditProfileImageBinding;
 
 
-public class EditProfileImage extends BaseFragment implements EditEmailClick {
+public class EditProfileImage extends BaseFragment implements Common {
     private FragmentEditProfileImageBinding editProfileImageBinding;
 
     public static EditProfileImage newInstance() {
@@ -42,17 +44,29 @@ public class EditProfileImage extends BaseFragment implements EditEmailClick {
     }
 
     private void setUpView(View view) {
-        editProfileImageBinding.setEditEmailClick(this);
+        setCommonData();
+
+    }
+
+    private void setCommonData() {
+        CommonBean commonBean = new CommonBean();
+        commonBean.setLeftImageDrawable(R.drawable.ic_left_back);
+        commonBean.setLeftImageVisible(true);
+        commonBean.setRightImageDrawable(R.drawable.ic_tick);
+        commonBean.setRightImageVisible(true);
+        commonBean.setTitle("Change Image");
+        editProfileImageBinding.setCommonData(commonBean);
+        editProfileImageBinding.setCommonClick(this);
     }
 
     @Override
-    public void BackButtonClick() {
+    public void leftClick() {
         if (getActivity() != null)
             getActivity().onBackPressed();
     }
 
     @Override
-    public void DoneClick() {
+    public void rightClick() {
 
     }
 }

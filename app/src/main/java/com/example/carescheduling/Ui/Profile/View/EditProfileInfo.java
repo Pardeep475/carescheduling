@@ -19,6 +19,8 @@ import android.widget.Toast;
 
 import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseFragment;
+import com.example.carescheduling.Ui.Common.Common;
+import com.example.carescheduling.Ui.Common.CommonBean;
 import com.example.carescheduling.Ui.Dashboard.beans.PersonDisability;
 import com.example.carescheduling.Ui.Dashboard.beans.PersonEthnicity;
 import com.example.carescheduling.Ui.Dashboard.beans.PersonMaritalstatus;
@@ -51,7 +53,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class EditProfileInfo extends BaseFragment implements EditEmailClick, EditProfileInfoClick {
+public class EditProfileInfo extends BaseFragment implements Common, EditProfileInfoClick {
 
     private FragmentEditProfileInfoBinding fragmentEditProfileInfoBinding;
     private EditProfileInfoViewModel editProfileInfoViewModel;
@@ -88,6 +90,7 @@ public class EditProfileInfo extends BaseFragment implements EditEmailClick, Edi
     }
 
     private void setUpView(View view) {
+        setCommonData();
         editProfileInfoViewModel = ViewModelProviders.of(this).get(EditProfileInfoViewModel.class);
         sessionManager = getSessionManager();
         setLanguageData();
@@ -100,11 +103,21 @@ public class EditProfileInfo extends BaseFragment implements EditEmailClick, Edi
         setSexualityType();
         setNationalityData();
         setProfileInfoBeanData(profileResultBean);
-        fragmentEditProfileInfoBinding.setEditEmailClick(this);
+
         fragmentEditProfileInfoBinding.setEditProfileInfoClick(this);
 
     }
 
+    private void setCommonData() {
+        CommonBean commonBean = new CommonBean();
+        commonBean.setLeftImageDrawable(R.drawable.ic_left_back);
+        commonBean.setLeftImageVisible(true);
+        commonBean.setRightImageDrawable(R.drawable.ic_tick);
+        commonBean.setRightImageVisible(true);
+        commonBean.setTitle("User Info");
+        fragmentEditProfileInfoBinding.setCommonData(commonBean);
+        fragmentEditProfileInfoBinding.setCommonClick(this);
+    }
 
     private void setProfileInfoBeanData(final ProfileBean profileResultBean) {
         editProfileInfoViewModel.getProfileEditBean(profileResultBean).observe(this, new Observer<EditProfileInfoBean>() {
@@ -343,11 +356,6 @@ public class EditProfileInfo extends BaseFragment implements EditEmailClick, Edi
 
     }
 
-    @Override
-    public void BackButtonClick() {
-        if (getActivity() != null)
-            getActivity().onBackPressed();
-    }
 
 
     @Override
@@ -404,21 +412,7 @@ public class EditProfileInfo extends BaseFragment implements EditEmailClick, Edi
     }
 
 
-    @Override
-    public void DoneClick() {
-        if (getActivity() != null) {
-            try {
-                if (ConnectivityReceiver.isNetworkAvailable(getActivity())) {
-                    setDataRemote();
-                } else {
-                    Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
-                }
-            } catch (Exception e) {
-                hideDialog();
-                Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
+
 
     private void setDataRemote() {
         showDialog();
@@ -526,4 +520,25 @@ public class EditProfileInfo extends BaseFragment implements EditEmailClick, Edi
         return profileResultBean;
     }
 
+    @Override
+    public void leftClick() {
+        if (getActivity() != null)
+            getActivity().onBackPressed();
+    }
+
+    @Override
+    public void rightClick() {
+        if (getActivity() != null) {
+            try {
+                if (ConnectivityReceiver.isNetworkAvailable(getActivity())) {
+                    setDataRemote();
+                } else {
+                    Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
+                }
+            } catch (Exception e) {
+                hideDialog();
+                Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
 }

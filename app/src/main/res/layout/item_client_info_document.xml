@@ -25,6 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:text="@{clientNoteAdapterBean.title}"
+            android:fontFamily="@font/rubik_light"
             android:textAlignment="center"
             android:textSize="@dimen/sixteen_sp"
             android:textStyle="bold" />
@@ -37,6 +38,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginStart="@dimen/fifty_dp"
             android:layout_toEndOf="@+id/txt_document"
+            android:fontFamily="@font/rubik_light"
             android:text="@{clientNoteAdapterBean.shortDescription}"
             android:textAlignment="center"
             android:textSize="@dimen/sixteen_sp" />
@@ -49,6 +51,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginStart="@dimen/twenty_dp"
             android:layout_marginEnd="@dimen/twenty_dp"
+            android:fontFamily="@font/rubik_medium"
             android:text="@string/open"
             android:onClick="@{(v)->moreInfoClick.moreInfoClick(pos)}"
             android:textAlignment="center"

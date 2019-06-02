@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseFragment;
+import com.example.carescheduling.Ui.Common.Common;
+import com.example.carescheduling.Ui.Common.CommonBean;
 import com.example.carescheduling.Ui.Dashboard.beans.Address;
 import com.example.carescheduling.Ui.Dashboard.beans.CountryPostCode;
 import com.example.carescheduling.Ui.Dashboard.beans.PersonAddress;
@@ -37,7 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 //import com.example.carescheduling.databinding.FragmentProfileBinding;
 
-public class ProfileAddress extends BaseFragment implements EditEmailClick, ProfileAddressClick {
+public class ProfileAddress extends BaseFragment implements Common, ProfileAddressClick {
     private ProfileAddressBinding profileAddressBinding;
     private ProfileAddressViewModel profileAddressViewModel;
     private String stringValue;
@@ -76,15 +78,26 @@ public class ProfileAddress extends BaseFragment implements EditEmailClick, Prof
     }
 
     private void setUpView(View view) {
+        setCommonData();
         profileAddressViewModel = ViewModelProviders.of(this).get(ProfileAddressViewModel.class);
         sessionManager = getSessionManager();
         setProfileAddressData();
         setAddressTypeData();
         setNationalityData();
-        profileAddressBinding.setEditEmailClick(this);
+
         profileAddressBinding.setProfileAddressClick(this);
     }
 
+    private void setCommonData() {
+        CommonBean commonBean = new CommonBean();
+        commonBean.setLeftImageDrawable(R.drawable.ic_left_back);
+        commonBean.setLeftImageVisible(true);
+        commonBean.setRightImageDrawable(R.drawable.ic_tick);
+        commonBean.setRightImageVisible(true);
+        commonBean.setTitle("Address");
+        profileAddressBinding.setCommonData(commonBean);
+        profileAddressBinding.setCommonClick(this);
+    }
 
     private void setAddressTypeData() {
         profileAddressViewModel.getAddressType().observe(this, new Observer<List<AddressType>>() {
@@ -151,11 +164,6 @@ public class ProfileAddress extends BaseFragment implements EditEmailClick, Prof
         });
     }
 
-    @Override
-    public void BackButtonClick() {
-        if (getActivity() != null)
-            getActivity().onBackPressed();
-    }
 
     @Override
     public void fetchAddressFromPostalCode() {
@@ -212,18 +220,6 @@ public class ProfileAddress extends BaseFragment implements EditEmailClick, Prof
         });
     }
 
-    @Override
-    public void DoneClick() {
-
-        try {
-            setDataRemote();
-        } catch (Exception e) {
-            hideDialog();
-            Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
-        }
-
-    }
-
 
     private void setDataRemote() {
         showDialog();
@@ -260,20 +256,20 @@ public class ProfileAddress extends BaseFragment implements EditEmailClick, Prof
     private ProfileBean updateAddress() {
         int addressCounter = 0;
 
-            for (int i = 0; i < profileBean.getData().getPerson().getPersonAddress().size(); i++) {
-                if (profileBean.getData().getPerson().getPersonAddress().get(i).getAddressTypeName().equalsIgnoreCase((String) profileAddressBinding.spinnerAddressType.getSelectedItem())) {
-                    profileBean.getData().getPerson().getPersonAddress().get(i).setAddressTypeName((String) profileAddressBinding.spinnerAddressType.getSelectedItem());
-                    profileBean.getData().getPerson().getPersonAddress().get(i).setIsDefaultAddress(true);
-                    profileBean.getData().getPerson().getPersonAddress().get(i).setPersonId(getSessionManager().getPersonId());
-                    profileBean.getData().getPerson().getPersonAddress().get(i).setCustomerId(getSessionManager().getCustomerId());
-                    if (addressTypesList.size()>0)
+        for (int i = 0; i < profileBean.getData().getPerson().getPersonAddress().size(); i++) {
+            if (profileBean.getData().getPerson().getPersonAddress().get(i).getAddressTypeName().equalsIgnoreCase((String) profileAddressBinding.spinnerAddressType.getSelectedItem())) {
+                profileBean.getData().getPerson().getPersonAddress().get(i).setAddressTypeName((String) profileAddressBinding.spinnerAddressType.getSelectedItem());
+                profileBean.getData().getPerson().getPersonAddress().get(i).setIsDefaultAddress(true);
+                profileBean.getData().getPerson().getPersonAddress().get(i).setPersonId(getSessionManager().getPersonId());
+                profileBean.getData().getPerson().getPersonAddress().get(i).setCustomerId(getSessionManager().getCustomerId());
+                if (addressTypesList.size() > 0)
                     profileBean.getData().getPerson().getPersonAddress().get(i).setAddressId(addressTypesList.get(profileAddressBinding.spinnerAddress.getSelectedItemPosition()).getAddressId());
-                    else
-                        profileBean.getData().getPerson().getPersonAddress().get(i).setAddressId(profileBean.getData().getPerson().getPersonAddress().get(i).getAddressId());
-                    addressCounter++;
-                    break;
-                }
+                else
+                    profileBean.getData().getPerson().getPersonAddress().get(i).setAddressId(profileBean.getData().getPerson().getPersonAddress().get(i).getAddressId());
+                addressCounter++;
+                break;
             }
+        }
 
 
         if (addressCounter == 0) {
@@ -294,5 +290,21 @@ public class ProfileAddress extends BaseFragment implements EditEmailClick, Prof
             profileBean.getData().getPerson().getPersonAddress().add(personAddress);
         }
         return profileBean;
+    }
+
+    @Override
+    public void leftClick() {
+        if (getActivity() != null)
+            getActivity().onBackPressed();
+    }
+
+    @Override
+    public void rightClick() {
+        try {
+            setDataRemote();
+        } catch (Exception e) {
+            hideDialog();
+            Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+        }
     }
 }

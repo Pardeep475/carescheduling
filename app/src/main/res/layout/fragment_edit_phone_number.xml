@@ -1,71 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="editPhoneNumberBean"
-            type="com.example.carescheduling.Ui.Profile.bean.EditPhoneNumberBean"/>
+            type="com.example.carescheduling.Ui.Profile.bean.EditPhoneNumberBean" />
+
         <variable
-            name="editEmailClick"
-            type="com.example.carescheduling.Ui.Profile.presenter.EditEmailClick"/>
+            name="commonData"
+            type="com.example.carescheduling.Ui.Common.CommonBean" />
+
+        <variable
+            name="commonClick"
+            type="com.example.carescheduling.Ui.Common.Common" />
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <RelativeLayout
+        <include
             android:id="@+id/rl_tool"
-            android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
-            android:background="@color/colorPrimary">
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_left_back"
-                android:layout_alignParentStart="true"
-                android:paddingStart="@dimen/ten_dp"
-                android:paddingEnd="@dimen/ten_dp"
-                android:layout_centerVertical="true"
-                android:onClick="@{(v)->editEmailClick.BackButtonClick()}"
-                android:tint="@color/white"
-                android:contentDescription="@string/user_profile" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:text="@string/edit_phone_number"
-                android:textColor="@color/white"
-                android:textSize="@dimen/forteen_sp" />
-
-            <ImageView
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_tick"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:tint="@color/white"
-                android:visibility="visible"
-                android:onClick="@{(v)->editEmailClick.DoneClick()}"
-                android:layout_marginEnd="@dimen/ten_dp"
-                android:contentDescription="@string/user_profile" />
-
-        </RelativeLayout>
+            layout="@layout/toolbar_layout"
+            bind:commonClick="@{commonClick}"
+            bind:commonData="@{commonData}" />
 
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/fifty_dp"
-            android:padding="@dimen/ten_dp"
             android:layout_marginStart="@dimen/twenty_dp"
+            android:layout_marginTop="@dimen/fifty_dp"
             android:layout_marginEnd="@dimen/twenty_dp"
+            android:fontFamily="@font/rubik_medium"
+            android:padding="@dimen/ten_dp"
             android:text="@string/mobile_telephone_number" />
 
         <EditText
@@ -76,11 +49,13 @@
             android:layout_marginTop="@dimen/ten_dp"
             android:layout_marginEnd="@dimen/twenty_dp"
             android:background="@android:color/white"
+            android:fontFamily="@font/rubik_light"
             android:paddingStart="@dimen/ten_dp"
-            android:text="@{editPhoneNumberBean.getPhoneNumber()}"
             android:paddingTop="@dimen/ten_dp"
             android:paddingEnd="@dimen/ten_dp"
-            android:paddingBottom="@dimen/ten_dp" />
+            android:paddingBottom="@dimen/ten_dp"
+            android:text="@{editPhoneNumberBean.getPhoneNumber()}" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -93,6 +68,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight=".7"
+                android:fontFamily="@font/rubik_medium"
                 android:text="@string/country_code"
                 android:textAlignment="center" />
 
@@ -119,6 +95,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight=".7"
+                android:fontFamily="@font/rubik_medium"
                 android:text="@string/phone_type"
                 android:textAlignment="center" />
 
@@ -133,21 +110,23 @@
         </LinearLayout>
 
         <RadioButton
+            android:id="@+id/rb_default_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/twenty_dp"
             android:layout_marginTop="@dimen/fifty_dp"
-            android:id="@+id/rb_default_number"
             android:layout_marginEnd="@dimen/twenty_dp"
+            android:fontFamily="@font/rubik_medium"
             android:text="@string/set_as_my_default_phone" />
 
         <RadioButton
+            android:id="@+id/rb_do_not_call"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/twenty_dp"
             android:layout_marginTop="@dimen/ten_dp"
-            android:id="@+id/rb_do_not_call"
             android:layout_marginEnd="@dimen/twenty_dp"
+            android:fontFamily="@font/rubik_medium"
             android:text="@string/do_not_call" />
 
     </LinearLayout>

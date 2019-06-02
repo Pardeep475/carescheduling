@@ -37,6 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/five_dp"
+            android:fontFamily="@font/rubik_medium"
             android:text="@string/user_name" />
 
         <TextView
@@ -56,6 +57,7 @@
         android:layout_marginTop="@dimen/ten_dp"
         android:layout_marginEnd="@dimen/sixteen_dp"
         android:padding="@dimen/five_dp"
+        android:fontFamily="@font/rubik_light"
         android:text="@string/f_second_text" />
 
     <androidx.appcompat.widget.AppCompatSpinner
@@ -76,6 +78,7 @@
         android:layout_gravity="right"
         android:padding="@dimen/ten_dp"
         android:background="@drawable/btn_back"
+        android:fontFamily="@font/rubik_medium"
         android:text="@string/_continue"
         android:textAlignment="center"
         android:textColor="@color/white" />

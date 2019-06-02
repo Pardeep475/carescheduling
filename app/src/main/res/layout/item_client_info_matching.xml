@@ -5,6 +5,7 @@
     android:textSize="@dimen/sixteen_sp"
     android:text="@string/matching_type"
     android:paddingStart="@dimen/twenty_dp"
+    android:fontFamily="@font/rubik_medium"
     android:paddingEnd="@dimen/twenty_dp"
     android:textColor="@color/black">
 

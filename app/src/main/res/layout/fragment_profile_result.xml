@@ -1,21 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="profileResultBean"
-            type="com.example.carescheduling.Ui.Dashboard.beans.ProfileBean"/>
+            type="com.example.carescheduling.Ui.Dashboard.beans.ProfileBean" />
+
         <variable
             name="editClickHandler"
-            type="com.example.carescheduling.Ui.Dashboard.presenter.EditProfileClickHandler"/>
+            type="com.example.carescheduling.Ui.Dashboard.presenter.EditProfileClickHandler" />
+
         <variable
-            name="clickhandler"
-            type="com.example.carescheduling.Ui.Dashboard.presenter.ProfileClickHandler" />
+            name="commonData"
+            type="com.example.carescheduling.Ui.Common.CommonBean" />
+
+        <variable
+            name="commonClick"
+            type="com.example.carescheduling.Ui.Common.Common" />
+
         <variable
             name="profileEditBean"
-            type="com.example.carescheduling.Ui.Dashboard.beans.ProfileResultBean"/>
+            type="com.example.carescheduling.Ui.Dashboard.beans.ProfileResultBean" />
     </data>
 
     <LinearLayout
@@ -23,36 +32,27 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <RelativeLayout
-            android:id="@+id/rl_tool"
+        <include
+            layout="@layout/toolbar_layout"
+            bind:commonClick="@{commonClick}"
+            bind:commonData="@{commonData}" />
+
+        <io.supercharge.shimmerlayout.ShimmerLayout
+            android:id="@+id/sl_demo"
             android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
-            android:background="@color/colorPrimary">
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:visibility="visible">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:text="@string/profile"
-                android:textColor="@color/white"
-                android:textSize="@dimen/forteen_sp" />
-            <ImageView
-                android:onClick="@{(v)->clickhandler.logout()}"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_logout"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:tint="@color/white"
-                android:layout_marginEnd="@dimen/ten_dp"
-                android:contentDescription="@string/user_profile" />
+            <include layout="@layout/item_shimmer_layout" />
 
-        </RelativeLayout>
+        </io.supercharge.shimmerlayout.ShimmerLayout>
 
         <ScrollView
+            android:id="@+id/sv_profile_result"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:visibility="gone">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -63,16 +63,17 @@
                     android:id="@+id/img_user_profile"
                     android:layout_width="@dimen/one_fifty_dp"
                     android:layout_height="@dimen/one_fifty_dp"
-                    app:setImageBitmap="@{profileEditBean.imgUrl}"
-                    android:contentDescription="@string/user_profile" />
+                    android:contentDescription="@string/user_profile"
+                    app:setImageBitmap="@{profileEditBean.imgUrl}" />
 
                 <TextView
                     android:id="@+id/txt_user_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{profileEditBean.userName}"
                     android:layout_marginStart="@dimen/ten_dp"
-                    android:layout_toEndOf="@+id/img_user_profile" />
+                    android:fontFamily="@font/rubik_light"
+                    android:layout_toEndOf="@+id/img_user_profile"
+                    android:text="@{profileEditBean.userName}" />
 
                 <TextView
                     android:id="@+id/txt_address_one"
@@ -80,9 +81,10 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/txt_user_name"
                     android:layout_marginStart="@dimen/ten_dp"
-                    android:text="@{profileEditBean.address}"
                     android:layout_marginTop="@dimen/five_dp"
-                    android:layout_toEndOf="@+id/img_user_profile" />
+                    android:fontFamily="@font/rubik_light"
+                    android:layout_toEndOf="@+id/img_user_profile"
+                    android:text="@{profileEditBean.address}" />
 
                 <TextView
                     android:id="@+id/txt_address_two"
@@ -90,24 +92,27 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/txt_address_one"
                     android:layout_marginStart="@dimen/ten_dp"
-                    android:visibility="gone"
+                    android:fontFamily="@font/rubik_light"
                     android:layout_marginTop="@dimen/five_dp"
-                    android:layout_toEndOf="@+id/img_user_profile" />
+                    android:layout_toEndOf="@+id/img_user_profile"
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/txt_address_three"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/rubik_light"
                     android:layout_below="@+id/txt_address_two"
                     android:layout_marginStart="@dimen/ten_dp"
                     android:layout_marginTop="@dimen/five_dp"
-                    android:visibility="gone"
-                    android:layout_toEndOf="@+id/img_user_profile" />
+                    android:layout_toEndOf="@+id/img_user_profile"
+                    android:visibility="gone" />
 
                 <LinearLayout
                     android:id="@+id/ll_telephone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+
                     android:layout_below="@+id/img_user_profile"
                     android:layout_marginTop="@dimen/twenty_dp"
                     android:orientation="horizontal">
@@ -118,6 +123,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_weight=".7"
                         android:gravity="start"
+                        android:fontFamily="@font/rubik_medium"
                         android:text="@{profileEditBean.telephone}"
                         android:textAlignment="textStart" />
 
@@ -126,11 +132,11 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.3"
-                        android:text="@{profileEditBean.mobile}"
+                        android:fontFamily="@font/rubik_light"
                         android:gravity="start"
+                        android:text="@{profileEditBean.mobile}"
                         android:textAlignment="textStart" />
                 </LinearLayout>
-
 
 
                 <LinearLayout
@@ -147,6 +153,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_weight=".7"
                         android:gravity="start"
+                        android:fontFamily="@font/rubik_medium"
                         android:text="@string/_email"
                         android:textAlignment="textStart" />
 
@@ -155,30 +162,31 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.3"
-                        android:text="@{profileEditBean.email}"
                         android:gravity="start"
+                        android:fontFamily="@font/rubik_light"
+                        android:text="@{profileEditBean.email}"
                         android:textAlignment="textStart" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/ll_edit_profile"
                     android:layout_width="wrap_content"
-                    android:paddingEnd="@dimen/ten_dp"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/ll_email"
-                    android:paddingTop="@dimen/ten_dp"
-                    android:paddingBottom="@dimen/ten_dp"
-                    android:onClick="@{(v)->editClickHandler.EditBtnClick(profileResultBean)}"
                     android:layout_marginTop="@dimen/thirty_dp"
-                    android:orientation="horizontal">
+                    android:onClick="@{(v)->editClickHandler.EditBtnClick(profileResultBean)}"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/ten_dp"
+                    android:paddingEnd="@dimen/ten_dp"
+                    android:paddingBottom="@dimen/ten_dp">
 
                     <ImageView
                         android:id="@+id/img_user_edit"
                         android:layout_width="@dimen/twenty_dp"
                         android:layout_height="@dimen/twenty_dp"
-                        app:srcCompat="@drawable/ic_edit"
+                        android:contentDescription="@string/user_profile"
                         android:tint="@color/blue"
-                        android:contentDescription="@string/user_profile" />
+                        app:srcCompat="@drawable/ic_edit" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -186,13 +194,22 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="@dimen/ten_dp"
                         android:gravity="start"
-                        android:textColor="@color/blue"
+                        android:fontFamily="@font/rubik_medium"
                         android:text="@string/edit_profile"
-                        android:textAlignment="textStart" />
+                        android:textAlignment="textStart"
+                        android:textColor="@color/blue" />
                 </LinearLayout>
 
             </RelativeLayout>
         </ScrollView>
+
+        <include
+            android:id="@+id/rl_no_data_found"
+            layout="@layout/no_data_found"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+
     </LinearLayout>
 
 </layout>

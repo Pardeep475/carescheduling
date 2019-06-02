@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 
 import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseFragment;
+import com.example.carescheduling.Ui.Common.Common;
+import com.example.carescheduling.Ui.Common.CommonBean;
 import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
 import com.example.carescheduling.Ui.Dashboard.beans.ProfileResultBean;
 import com.example.carescheduling.Ui.Profile.presenter.EditProfileStartClick;
@@ -20,7 +22,7 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
-public class EditProfileStart extends BaseFragment implements EditProfileStartClick {
+public class EditProfileStart extends BaseFragment implements Common, EditProfileStartClick {
     private EditProfileStartBinding editProfileStartBinding;
     private ProfileBean profileResultBean;
 
@@ -54,12 +56,17 @@ public class EditProfileStart extends BaseFragment implements EditProfileStartCl
         editProfileStartBinding.setEditProfileStartClick(this);
     }
 
-    @Override
-    public void backButton() {
-        if (getActivity() != null) {
-            getActivity().onBackPressed();
-        }
+    private void setCommonData() {
+        CommonBean commonBean = new CommonBean();
+        commonBean.setLeftImageDrawable(R.drawable.ic_left_back);
+        commonBean.setLeftImageVisible(true);
+        commonBean.setRightImageDrawable(R.drawable.ic_tick);
+        commonBean.setRightImageVisible(false);
+        commonBean.setTitle("Profile");
+        editProfileStartBinding.setCommonData(commonBean);
+        editProfileStartBinding.setCommonClick(this);
     }
+
 
     @Override
     public void EditMyProfileInfo(ProfileBean profileResultBean) {
@@ -87,4 +94,15 @@ public class EditProfileStart extends BaseFragment implements EditProfileStartCl
                     .replace(R.id.fm_edit_container, fragment).addToBackStack(null).commitAllowingStateLoss();
     }
 
+    @Override
+    public void leftClick() {
+        if (getActivity() != null) {
+            getActivity().onBackPressed();
+        }
+    }
+
+    @Override
+    public void rightClick() {
+
+    }
 }

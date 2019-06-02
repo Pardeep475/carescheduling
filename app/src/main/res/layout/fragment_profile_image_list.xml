@@ -1,22 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="profileResultBean"
-            type="com.example.carescheduling.Ui.Dashboard.beans.ProfileBean"/>
+            type="com.example.carescheduling.Ui.Dashboard.beans.ProfileBean" />
+
         <variable
-            name="editEmailClick"
-            type="com.example.carescheduling.Ui.Profile.presenter.EditEmailClick" />
+            name="commonData"
+            type="com.example.carescheduling.Ui.Common.CommonBean" />
+
+        <variable
+            name="commonClick"
+            type="com.example.carescheduling.Ui.Common.Common" />
 
         <variable
             name="profileImageList"
             type="com.example.carescheduling.Ui.Profile.presenter.ProfileImageListClick" />
+
         <variable
             name="imageUrl"
-            type="android.graphics.Bitmap"/>
+            type="android.graphics.Bitmap" />
     </data>
 
     <LinearLayout
@@ -25,58 +33,23 @@
         android:orientation="vertical"
         tools:context=".Ui.Profile.View.ProfileImageList">
 
-        <RelativeLayout
+        <include
             android:id="@+id/rl_tool"
-            android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
-            android:background="@color/colorPrimary">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:contentDescription="@string/user_profile"
-                android:onClick="@{(v)->editEmailClick.BackButtonClick()}"
-                android:paddingStart="@dimen/ten_dp"
-                android:paddingEnd="@dimen/ten_dp"
-                android:tint="@color/white"
-                app:srcCompat="@drawable/ic_left_back" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:text="@string/profile_list"
-                android:textColor="@color/white"
-                android:textSize="@dimen/forteen_sp" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="@dimen/ten_dp"
-                android:contentDescription="@string/user_profile"
-                android:onClick="@{(v)->editEmailClick.DoneClick()}"
-                android:tint="@color/white"
-                android:visibility="visible"
-                app:srcCompat="@drawable/ic_tick" />
-
-        </RelativeLayout>
+            layout="@layout/toolbar_layout"
+            bind:commonClick="@{commonClick}"
+            bind:commonData="@{commonData}" />
 
 
         <ImageView
             android:layout_width="@dimen/one_fifty_dp"
+            android:layout_height="@dimen/one_fifty_dp"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/fifty_dp"
             android:layout_marginBottom="@dimen/twenty_dp"
-            app:srcCompat="@drawable/user_placeholder"
-            app:setImage="@{imageUrl}"
-            android:layout_height="@dimen/one_fifty_dp"
+            android:contentDescription="@string/user_image"
             android:onClick="@{(v)->profileImageList.ProfileClick()}"
-            android:contentDescription="@string/user_image" />
+            app:setImage="@{imageUrl}"
+            app:srcCompat="@drawable/user_placeholder" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcv_images"

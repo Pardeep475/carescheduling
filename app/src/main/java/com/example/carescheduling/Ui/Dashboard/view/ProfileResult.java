@@ -14,6 +14,8 @@ import android.widget.Toast;
 
 import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseFragment;
+import com.example.carescheduling.Ui.Common.Common;
+import com.example.carescheduling.Ui.Common.CommonBean;
 import com.example.carescheduling.Ui.Dashboard.ViewModel.ProfileResultViewModel;
 import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
 import com.example.carescheduling.Ui.Dashboard.beans.ProfileResultBean;
@@ -28,7 +30,7 @@ import com.example.carescheduling.databinding.FragmentProfileResultBinding;
 
 import java.io.Serializable;
 
-public class ProfileResult extends BaseFragment implements ProfileClickHandler, EditProfileClickHandler {
+public class ProfileResult extends BaseFragment implements Common, EditProfileClickHandler {
 
     private FragmentProfileResultBinding fragmentProfileResultBinding;
     private ProfileResultViewModel profileResultViewModel;
@@ -56,26 +58,45 @@ public class ProfileResult extends BaseFragment implements ProfileClickHandler, 
     }
 
     private void setUpView(View view) {
+        setCommonData();
         sessionManager = getSessionManager();
         profileResultViewModel = ViewModelProviders.of(this).get(ProfileResultViewModel.class);
-        fetchPersonDetails();
-        fragmentProfileResultBinding.setClickhandler(this);
+        fragmentProfileResultBinding.slDemo.startShimmerAnimation();
+        try {
+            fetchPersonDetails();
+        } catch (Exception e) {
+            setNoDataFound();
+            Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+        }
+
         fragmentProfileResultBinding.setEditClickHandler(this);
+    }
+
+    private void setCommonData() {
+        CommonBean commonBean = new CommonBean();
+        commonBean.setLeftImageDrawable(R.drawable.ic_left_back);
+        commonBean.setLeftImageVisible(false);
+        commonBean.setRightImageDrawable(R.drawable.ic_logout);
+        commonBean.setRightImageVisible(true);
+        commonBean.setTitle("Profile");
+        fragmentProfileResultBinding.setCommonData(commonBean);
+        fragmentProfileResultBinding.setCommonClick(this);
     }
 
     private void fetchPersonDetails() {
         if (getActivity() != null) {
             if (ConnectivityReceiver.isNetworkAvailable(getActivity())) {
                 try {
-                    showDialog();
                     profileResultViewModel.getClientData(sessionManager.getPersonId(), sessionManager.getCustomerId(), sessionManager.getBranchId())
                             .observe(this, new Observer<ProfileBean>() {
                                 @Override
                                 public void onChanged(ProfileBean profileBean) {
-                                    hideDialog();
                                     if (profileBean != null) {
                                         fragmentProfileResultBinding.setProfileResultBean(profileBean);
                                         setDataProfile(profileBean);
+                                        setDataOriginal();
+                                    } else {
+                                        setNoDataFound();
                                     }
                                 }
                             });
@@ -90,6 +111,19 @@ public class ProfileResult extends BaseFragment implements ProfileClickHandler, 
         }
     }
 
+    private void setNoDataFound() {
+        fragmentProfileResultBinding.slDemo.stopShimmerAnimation();
+        fragmentProfileResultBinding.slDemo.setVisibility(View.GONE);
+        fragmentProfileResultBinding.svProfileResult.setVisibility(View.GONE);
+        fragmentProfileResultBinding.rlNoDataFound.setVisibility(View.VISIBLE);
+    }
+
+    private void setDataOriginal() {
+        fragmentProfileResultBinding.slDemo.stopShimmerAnimation();
+        fragmentProfileResultBinding.slDemo.setVisibility(View.GONE);
+        fragmentProfileResultBinding.svProfileResult.setVisibility(View.VISIBLE);
+        fragmentProfileResultBinding.rlNoDataFound.setVisibility(View.GONE);
+    }
 
     private void setDataProfile(ProfileBean profileBean) {
 
@@ -114,8 +148,14 @@ public class ProfileResult extends BaseFragment implements ProfileClickHandler, 
         startActivity(intent);
     }
 
+
     @Override
-    public void logout() {
+    public void leftClick() {
+
+    }
+
+    @Override
+    public void rightClick() {
         sessionManager.cleanAllData();
         Intent intent = new Intent(getActivity(), LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
