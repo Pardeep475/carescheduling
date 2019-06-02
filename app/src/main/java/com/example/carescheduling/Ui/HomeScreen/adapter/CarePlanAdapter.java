@@ -5,7 +5,11 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.example.carescheduling.R;
+import com.example.carescheduling.Ui.HomeScreen.beans.ClientCarePlan;
+import com.example.carescheduling.Ui.HomeScreen.presenter.CarePlanAdapterClick;
 import com.example.carescheduling.databinding.HomeCarePlanSubitemsBinding;
+
+import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -14,9 +18,12 @@ import androidx.recyclerview.widget.RecyclerView;
 public class CarePlanAdapter extends RecyclerView.Adapter<CarePlanAdapter.MyViewHolder> {
     private Context context;
     private HomeCarePlanSubitemsBinding homeCarePlanSubitemsBinding;
-
-    public CarePlanAdapter(Context context) {
+    private ArrayList<ClientCarePlan.Datum> data;
+    private CarePlanAdapterClick carePlanAdapterClick;
+    public CarePlanAdapter(Context context, CarePlanAdapterClick carePlanAdapterClick, ArrayList<ClientCarePlan.Datum> data) {
         this.context = context;
+        this.carePlanAdapterClick = carePlanAdapterClick;
+        this.data = data;
     }
 
     @NonNull
@@ -33,7 +40,7 @@ public class CarePlanAdapter extends RecyclerView.Adapter<CarePlanAdapter.MyView
 
     @Override
     public int getItemCount() {
-        return 5;
+        return data.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {

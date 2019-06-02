@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+<variable
+    name="editProfileInfoBean"
+    type="com.example.carescheduling.Ui.Profile.bean.EditProfileInfoBean"/>
         <variable
             name="backPressedClick"
             type="com.example.carescheduling.Ui.HomeScreen.presenter.BackPressedClick" />
@@ -14,6 +16,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -57,8 +60,7 @@
 
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/txt_medication"
+        <!--<TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -66,7 +68,25 @@
             android:text="@string/personal_details"
             android:textAlignment="center"
             android:textSize="@dimen/twenty_five_sp"
-            android:textStyle="bold" />
+            android:textStyle="bold" />-->
+
+
+        <io.supercharge.shimmerlayout.ShimmerLayout
+            android:id="@+id/sl_demo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:visibility="visible">
+
+            <include layout="@layout/item_shimmer_layout" />
+
+        </io.supercharge.shimmerlayout.ShimmerLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:id="@+id/ll_main_layout"
+            android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -87,7 +107,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/twenty_dp"
                 android:layout_weight=".7"
-                android:text="@string/first_name" />
+                android:text="@{editProfileInfoBean.firstName}" />
 
         </LinearLayout>
 
@@ -110,7 +130,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/twenty_dp"
                 android:layout_weight=".7"
-                android:text="@string/first_name" />
+                android:text="@{editProfileInfoBean.middleName}" />
 
         </LinearLayout>
 
@@ -128,12 +148,11 @@
                 android:text="@string/surname" />
 
             <TextView
-
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/twenty_dp"
                 android:layout_weight=".7"
-                android:text="@string/first_name" />
+                android:text="@{editProfileInfoBean.surName}" />
 
         </LinearLayout>
 
@@ -156,7 +175,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/twenty_dp"
                 android:layout_weight=".7"
-                android:text="@string/first_name" />
+                android:text="@{editProfileInfoBean.maidenName}" />
 
         </LinearLayout>
 
@@ -179,7 +198,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/twenty_dp"
                 android:layout_weight=".7"
-                android:text="@string/first_name" />
+                android:text="@{editProfileInfoBean.dateOfBirth}" />
 
         </LinearLayout>
 
@@ -202,7 +221,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/twenty_dp"
                 android:layout_weight=".7"
-                android:text="@string/first_name" />
+                android:text="@{editProfileInfoBean.gender}" />
 
         </LinearLayout>
 
@@ -225,7 +244,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/twenty_dp"
                 android:layout_weight=".7"
-                android:text="@string/first_name" />
+                android:text="@{editProfileInfoBean.prefix}" />
 
         </LinearLayout>
 
@@ -248,7 +267,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/twenty_dp"
                 android:layout_weight=".7"
-                android:text="@string/first_name" />
+                android:text="@{editProfileInfoBean.language}" />
 
         </LinearLayout>
 
@@ -271,7 +290,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/twenty_dp"
                 android:layout_weight=".7"
-                android:text="@string/first_name" />
+                android:text="@{editProfileInfoBean.maritalStatus}" />
 
         </LinearLayout>
 
@@ -294,7 +313,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/twenty_dp"
                 android:layout_weight=".7"
-                android:text="@string/first_name" />
+                android:text="@{editProfileInfoBean.ethnicity}" />
 
         </LinearLayout>
 
@@ -317,7 +336,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/twenty_dp"
                 android:layout_weight=".7"
-                android:text="@string/first_name" />
+                android:text="Yes" />
 
         </LinearLayout>
 
@@ -340,7 +359,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/twenty_dp"
                 android:layout_weight=".7"
-                android:text="@string/first_name" />
+                android:text="@{editProfileInfoBean.religion}" />
 
         </LinearLayout>
 
@@ -363,7 +382,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/twenty_dp"
                 android:layout_weight=".7"
-                android:text="@string/first_name" />
+                android:text="@{editProfileInfoBean.sexuality}" />
 
         </LinearLayout>
 
@@ -386,9 +405,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/twenty_dp"
                 android:layout_weight=".7"
-                android:text="@string/nationality" />
+                android:text="@{editProfileInfoBean.nationality}" />
 
         </LinearLayout>
+        </LinearLayout>
+
+        <include
+            android:id="@+id/rl_no_data_found"
+            layout="@layout/no_data_found"
+            android:visibility="gone" />
 
     </LinearLayout>
 </layout>

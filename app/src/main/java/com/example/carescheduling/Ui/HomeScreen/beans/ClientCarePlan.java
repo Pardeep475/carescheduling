@@ -1,5 +1,6 @@
 package com.example.carescheduling.Ui.HomeScreen.beans;
 
+import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -8,7 +9,7 @@ public class ClientCarePlan {
 
     @SerializedName("Data")
     @Expose
-    private List<Datum> data = null;
+    public ArrayList<Datum> data = null;
     @SerializedName("DataList")
     @Expose
     private Object dataList;
@@ -22,11 +23,11 @@ public class ClientCarePlan {
     @Expose
     private Boolean success;
 
-    public List<Datum> getData() {
+    public ArrayList<Datum> getData() {
         return data;
     }
 
-    public void setData(List<Datum> data) {
+    public void setData(ArrayList<Datum> data) {
         this.data = data;
     }
 

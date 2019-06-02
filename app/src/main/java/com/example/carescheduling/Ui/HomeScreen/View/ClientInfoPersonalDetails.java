@@ -1,6 +1,7 @@
 package com.example.carescheduling.Ui.HomeScreen.View;
 
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
@@ -12,11 +13,13 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseFragment;
 import com.example.carescheduling.Ui.HomeScreen.ViewModel.ClientInfoPersonalDetailsViewModel;
 import com.example.carescheduling.Ui.HomeScreen.presenter.BackPressedClick;
+import com.example.carescheduling.Ui.Profile.bean.EditProfileInfoBean;
 import com.example.carescheduling.databinding.ClientInfoPersonalDetailsFragmentBinding;
 
 public class ClientInfoPersonalDetails extends BaseFragment implements BackPressedClick {
@@ -38,10 +41,48 @@ public class ClientInfoPersonalDetails extends BaseFragment implements BackPress
     }
 
     private void setUpView(View view) {
-        clientInfoPersonalDetailsFragmentBinding.setBackPressedClick(this);
-
         mViewModel = ViewModelProviders.of(this).get(ClientInfoPersonalDetailsViewModel.class);
+        clientInfoPersonalDetailsFragmentBinding.slDemo.startShimmerAnimation();
+        try {
+            setClientPersonalDetails();
+        } catch (Exception e) {
+            setNoDataFound();
+            Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+        }
+        clientInfoPersonalDetailsFragmentBinding.setBackPressedClick(this);
     }
+
+    private void setClientPersonalDetails() {
+        mViewModel.getProfileDetails("5F98AF4F-25DC-4AC8-B867-C5072C100000",
+                "5F98AF4F-25DC-4AC8-B867-C5072C101011",
+                "978E55D2-B7B9-49E0-A654-14B70EB1A344").observe(this, new Observer<EditProfileInfoBean>() {
+            @Override
+            public void onChanged(EditProfileInfoBean editProfileInfoBean) {
+                if (editProfileInfoBean != null) {
+                    clientInfoPersonalDetailsFragmentBinding.setEditProfileInfoBean(editProfileInfoBean);
+                    setDataOriginal();
+                } else {
+                    setNoDataFound();
+                }
+                clientInfoPersonalDetailsFragmentBinding.slDemo.stopShimmerAnimation();
+            }
+        });
+    }
+
+    private void setNoDataFound() {
+        clientInfoPersonalDetailsFragmentBinding.slDemo.stopShimmerAnimation();
+        clientInfoPersonalDetailsFragmentBinding.slDemo.setVisibility(View.GONE);
+        clientInfoPersonalDetailsFragmentBinding.llMainLayout.setVisibility(View.GONE);
+        clientInfoPersonalDetailsFragmentBinding.rlNoDataFound.setVisibility(View.VISIBLE);
+    }
+
+    private void setDataOriginal() {
+        clientInfoPersonalDetailsFragmentBinding.slDemo.stopShimmerAnimation();
+        clientInfoPersonalDetailsFragmentBinding.slDemo.setVisibility(View.GONE);
+        clientInfoPersonalDetailsFragmentBinding.llMainLayout.setVisibility(View.VISIBLE);
+        clientInfoPersonalDetailsFragmentBinding.rlNoDataFound.setVisibility(View.GONE);
+    }
+    
     
     @Override
     public void onBackPress() {

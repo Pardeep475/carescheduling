@@ -4,16 +4,22 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseFragment;
 import com.example.carescheduling.Ui.HomeScreen.ViewModel.ClientDisabilitiesViewModel;
+import com.example.carescheduling.Ui.HomeScreen.adapter.ClientDisabilitiesAdapter;
+import com.example.carescheduling.Ui.HomeScreen.beans.ClientDisabilityBean;
 import com.example.carescheduling.Ui.HomeScreen.presenter.BackPressedClick;
 import com.example.carescheduling.databinding.ClientInfoDisabilitiesFragmentBinding;
+
+import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -36,25 +42,57 @@ public class ClientDisabilitiesFragment extends BaseFragment implements BackPres
     }
 
     private void setUpView(View view) {
-
-        setUpRecyclerView(view);
-
         clientDisabilitiesViewModel = ViewModelProviders.of(this).get(ClientDisabilitiesViewModel.class);
+
+        clientInfoDisabilitiesFragmentBinding.slDemo.startShimmerAnimation();
+        try {
+            setUpRecyclerView(view);
+        } catch (Exception e) {
+            setNoDataFound();
+            Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+        }
+
         clientInfoDisabilitiesFragmentBinding.setBackPressedClick(this);
     }
 
     private void setUpRecyclerView(View view) {
-        if (getActivity() != null) {
-            clientInfoDisabilitiesFragmentBinding.disabilitiesRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
-//            CarePlanAdapter carePlanAdapter= new CarePlanAdapter(getActivity());
-//            clientInfoDisabilitiesFragmentBinding.carePlanRecyclerview.setAdapter(carePlanAdapter);
-        }
+        clientDisabilitiesViewModel.getDisabilities("5F98AF4F-25DC-4AC8-B867-C5072C100000",
+                "5F98AF4F-25DC-4AC8-B867-C5072C101011",
+                "978E55D2-B7B9-49E0-A654-14B70EB1A344").observe(this
+                , new Observer<ArrayList<ClientDisabilityBean.Datum>>() {
+                    @Override
+                    public void onChanged(ArrayList<ClientDisabilityBean.Datum> data) {
+                        if (data != null) {
+                            clientInfoDisabilitiesFragmentBinding.disabilitiesRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
+                            ClientDisabilitiesAdapter clientDisabilitiesAdapter = new ClientDisabilitiesAdapter(getActivity(), data);
+                            clientInfoDisabilitiesFragmentBinding.disabilitiesRecyclerview.setAdapter(clientDisabilitiesAdapter);
+                            setDataOriginal();
+                        } else {
+                            setNoDataFound();
+                        }
+                    }
+                });
+
+    }
+
+    private void setNoDataFound() {
+        clientInfoDisabilitiesFragmentBinding.slDemo.stopShimmerAnimation();
+        clientInfoDisabilitiesFragmentBinding.slDemo.setVisibility(View.GONE);
+        clientInfoDisabilitiesFragmentBinding.disabilitiesRecyclerview.setVisibility(View.GONE);
+        clientInfoDisabilitiesFragmentBinding.rlNoDataFound.setVisibility(View.VISIBLE);
+    }
+
+    private void setDataOriginal() {
+        clientInfoDisabilitiesFragmentBinding.slDemo.stopShimmerAnimation();
+        clientInfoDisabilitiesFragmentBinding.slDemo.setVisibility(View.GONE);
+        clientInfoDisabilitiesFragmentBinding.disabilitiesRecyclerview.setVisibility(View.VISIBLE);
+        clientInfoDisabilitiesFragmentBinding.rlNoDataFound.setVisibility(View.GONE);
     }
 
 
     @Override
     public void onBackPress() {
-        if (getActivity()!= null)
+        if (getActivity() != null)
             getActivity().onBackPressed();
     }
 }

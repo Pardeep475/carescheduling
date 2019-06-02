@@ -6,10 +6,11 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.carescheduling.R;
-import com.example.carescheduling.Ui.HomeScreen.beans.ClientCareDocumentBean;
+import com.example.carescheduling.Ui.HomeScreen.beans.ClientCareNoteBean;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientNoteAdapterBean;
 import com.example.carescheduling.Ui.HomeScreen.presenter.MoreInfoClick;
 import com.example.carescheduling.databinding.ItemClientInfoDocumentBinding;
+import com.example.carescheduling.databinding.ItemsClientInfoDisabilitiesBinding;
 
 import java.util.ArrayList;
 
@@ -17,19 +18,19 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class ClientInfoDocumentsAdapter extends RecyclerView.Adapter<ClientInfoDocumentsAdapter.MyViewHolder> implements MoreInfoClick {
+public class ClientNoteAdapter extends RecyclerView.Adapter<ClientNoteAdapter.MyViewHolder> implements MoreInfoClick {
     private Context context;
     private ItemClientInfoDocumentBinding itemClientInfoDocumentBinding;
     private ArrayList<ClientNoteAdapterBean> dataList;
 
-    public ClientInfoDocumentsAdapter(Context context,ArrayList<ClientNoteAdapterBean> dataList) {
+    public ClientNoteAdapter(Context context,ArrayList<ClientNoteAdapterBean> dataList) {
         this.context = context;
         this.dataList = dataList;
     }
 
     @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ClientNoteAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         itemClientInfoDocumentBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_client_info_document, parent, false);
         return new MyViewHolder(itemClientInfoDocumentBinding);
     }

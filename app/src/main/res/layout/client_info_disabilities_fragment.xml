@@ -44,7 +44,7 @@
 
         </RelativeLayout>
 
-        <TextView
+        <!--<TextView
             android:id="@+id/disabilities"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -52,18 +52,39 @@
             android:text="@string/disabilities"
             android:textSize="20sp"
             android:textColor="@color/colorPrimary"
-            android:padding="@dimen/twenty_dp" />
+            android:padding="@dimen/twenty_dp" />-->
+
+        <io.supercharge.shimmerlayout.ShimmerLayout
+            android:id="@+id/sl_demo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/rl_tool"
+            android:background="@color/white"
+            android:visibility="visible">
+
+            <include layout="@layout/item_shimmer_layout" />
+
+        </io.supercharge.shimmerlayout.ShimmerLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/disabilitiesRecyclerview"
-            android:layout_below="@+id/disabilities"
+            android:layout_below="@+id/rl_tool"
             android:layout_width="match_parent"
             android:paddingStart="@dimen/twenty_dp"
+            android:visibility="gone"
             android:paddingEnd="@dimen/twenty_dp"
             android:paddingBottom="@dimen/twenty_dp"
             android:layout_height="match_parent">
 
         </androidx.recyclerview.widget.RecyclerView>
+
+        <include
+            android:id="@+id/rl_no_data_found"
+            layout="@layout/no_data_found"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/rl_tool"
+            android:visibility="gone" />
 
 
     </RelativeLayout>

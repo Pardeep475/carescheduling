@@ -2,6 +2,15 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
+        <variable
+            name="moreInfoClick"
+            type="com.example.carescheduling.Ui.HomeScreen.presenter.MoreInfoClick" />
+        <variable
+            name="pos"
+            type="int"/>
+        <variable
+            name="clientNoteAdapterBean"
+            type="com.example.carescheduling.Ui.HomeScreen.beans.ClientNoteAdapterBean"/>
 
     </data>
 
@@ -15,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:text="document  one"
+            android:text="@{clientNoteAdapterBean.title}"
             android:textAlignment="center"
             android:textSize="@dimen/sixteen_sp"
             android:textStyle="bold" />
@@ -28,7 +37,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginStart="@dimen/fifty_dp"
             android:layout_toEndOf="@+id/txt_document"
-            android:text="21/012019"
+            android:text="@{clientNoteAdapterBean.shortDescription}"
             android:textAlignment="center"
             android:textSize="@dimen/sixteen_sp" />
 
@@ -41,6 +50,7 @@
             android:layout_marginStart="@dimen/twenty_dp"
             android:layout_marginEnd="@dimen/twenty_dp"
             android:text="@string/open"
+            android:onClick="@{(v)->moreInfoClick.moreInfoClick(pos)}"
             android:textAlignment="center"
             android:textColor="@color/blue"
             android:textSize="@dimen/sixteen_sp" />

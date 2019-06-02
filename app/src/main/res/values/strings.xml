@@ -137,6 +137,7 @@
     <string name="summary">Summary</string>
     <string name="last_note">Last Note</string>
     <string name="client_notes">Client Notes</string>
+    <string name="history">History</string>
 
     <string-array name="home_array">
         <item>My Next Visit</item>
@@ -176,7 +177,6 @@
     <item>Client Contacts</item>
     <item>Client Documents</item>
     <item>Medical History</item>
-    <item>Client Matching</item>
     <item>Disabilites</item>
     <item>Care plan schedule</item>
     </string-array>

@@ -4,20 +4,27 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.carescheduling.R;
+import com.example.carescheduling.Ui.HomeScreen.beans.ClientContactsBean;
+import com.example.carescheduling.Ui.HomeScreen.presenter.MoreInfoClick;
 import com.example.carescheduling.databinding.ItemClientContactsAdapterBinding;
+
+import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class ClientContactsAdapter extends RecyclerView.Adapter<ClientContactsAdapter.MyViewHolder> {
+public class ClientContactsAdapter extends RecyclerView.Adapter<ClientContactsAdapter.MyViewHolder> implements MoreInfoClick {
     private Context context;
     private ItemClientContactsAdapterBinding itemClientContactsAdapterBinding;
+    private ArrayList<ClientContactsBean> dataList;
 
-    public ClientContactsAdapter(Context context) {
+    public ClientContactsAdapter(Context context,ArrayList<ClientContactsBean> dataList) {
         this.context = context;
+        this.dataList = dataList;
     }
 
     @NonNull
@@ -29,12 +36,19 @@ public class ClientContactsAdapter extends RecyclerView.Adapter<ClientContactsAd
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-
+        itemClientContactsAdapterBinding.setMoreInfoClick(this);
+        itemClientContactsAdapterBinding.setClientContactsBean(dataList.get(position));
+        itemClientContactsAdapterBinding.setMoreInfoClick(this);
     }
 
     @Override
     public int getItemCount() {
-        return 5;
+        return dataList.size();
+    }
+
+    @Override
+    public void moreInfoClick(int pos) {
+        Toast.makeText(context, pos, Toast.LENGTH_SHORT).show();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {

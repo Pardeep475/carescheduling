@@ -1,4 +1,58 @@
 package com.example.carescheduling.Ui.HomeScreen.adapter;
 
-public class ClientDisabilitiesAdapter {
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
+import android.widget.Toast;
+
+import com.example.carescheduling.R;
+import com.example.carescheduling.Ui.HomeScreen.beans.ClientDisabilityBean;
+import com.example.carescheduling.Ui.HomeScreen.presenter.MoreInfoClick;
+import com.example.carescheduling.databinding.ItemsClientInfoDisabilitiesBinding;
+
+import java.util.ArrayList;
+
+import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.RecyclerView;
+
+public class ClientDisabilitiesAdapter extends RecyclerView.Adapter<ClientDisabilitiesAdapter.MyViewHolder> implements MoreInfoClick {
+    private Context context;
+    private ItemsClientInfoDisabilitiesBinding itemsClientInfoDisabilitiesBinding;
+    private ArrayList<ClientDisabilityBean.Datum> dataList;
+
+    public ClientDisabilitiesAdapter(Context context,ArrayList<ClientDisabilityBean.Datum> dataList) {
+        this.context = context;
+        this.dataList = dataList;
+    }
+
+    @NonNull
+    @Override
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        itemsClientInfoDisabilitiesBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.items_client_info_disabilities, parent, false);
+        return new MyViewHolder(itemsClientInfoDisabilitiesBinding);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        itemsClientInfoDisabilitiesBinding.setPos(position);
+itemsClientInfoDisabilitiesBinding.setClientDisabilityBean(dataList.get(position));
+itemsClientInfoDisabilitiesBinding.setMoreInfoClick(this);
+    }
+
+    @Override
+    public int getItemCount() {
+        return dataList.size();
+    }
+
+    @Override
+    public void moreInfoClick(int pos) {
+        Toast.makeText(context, pos, Toast.LENGTH_SHORT).show();
+    }
+
+    public class MyViewHolder extends RecyclerView.ViewHolder {
+        public MyViewHolder(@NonNull ItemsClientInfoDisabilitiesBinding itemView) {
+            super(itemView.getRoot());
+        }
+    }
 }

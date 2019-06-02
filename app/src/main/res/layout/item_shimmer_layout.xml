@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/fifty_dp"
+        android:layout_marginStart="@dimen/twenty_dp"
+        android:layout_marginTop="@dimen/twenty_dp"
+        android:layout_marginEnd="@dimen/twenty_dp"
+        android:background="@color/shimmer_color" />
+
+    <View
+        android:layout_width="@dimen/two_fifty_dp"
+        android:layout_height="@dimen/ten_dp"
+        android:layout_marginStart="@dimen/twenty_dp"
+        android:layout_marginTop="@dimen/five_dp"
+        android:layout_marginEnd="@dimen/twenty_dp"
+        android:background="@color/shimmer_color" />
+
+    <View
+        android:layout_width="@dimen/two_hundurd_dp"
+        android:layout_height="@dimen/ten_dp"
+        android:layout_marginStart="@dimen/twenty_dp"
+        android:layout_marginTop="@dimen/five_dp"
+        android:layout_marginEnd="@dimen/twenty_dp"
+        android:background="@color/shimmer_color" />
+
+    <View
+        android:layout_width="@dimen/one_fifty_dp"
+        android:layout_height="@dimen/ten_dp"
+        android:layout_marginStart="@dimen/twenty_dp"
+        android:layout_marginTop="@dimen/five_dp"
+        android:layout_marginEnd="@dimen/twenty_dp"
+        android:layout_marginBottom="@dimen/twenty_dp"
+        android:background="@color/shimmer_color" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/fifty_dp"
+        android:layout_marginStart="@dimen/twenty_dp"
+        android:layout_marginTop="@dimen/twenty_dp"
+        android:layout_marginEnd="@dimen/twenty_dp"
+        android:background="@color/shimmer_color" />
+
+    <View
+        android:layout_width="@dimen/two_fifty_dp"
+        android:layout_height="@dimen/ten_dp"
+        android:layout_marginStart="@dimen/twenty_dp"
+        android:layout_marginTop="@dimen/five_dp"
+        android:layout_marginEnd="@dimen/twenty_dp"
+        android:background="@color/shimmer_color" />
+
+    <View
+        android:layout_width="@dimen/two_hundurd_dp"
+        android:layout_height="@dimen/ten_dp"
+        android:layout_marginStart="@dimen/twenty_dp"
+        android:layout_marginTop="@dimen/five_dp"
+        android:layout_marginEnd="@dimen/twenty_dp"
+        android:background="@color/shimmer_color" />
+
+    <View
+        android:layout_width="@dimen/one_fifty_dp"
+        android:layout_height="@dimen/ten_dp"
+        android:layout_marginStart="@dimen/twenty_dp"
+        android:layout_marginTop="@dimen/five_dp"
+        android:layout_marginEnd="@dimen/twenty_dp"
+        android:layout_marginBottom="@dimen/twenty_dp"
+        android:background="@color/shimmer_color" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/fifty_dp"
+        android:layout_marginStart="@dimen/twenty_dp"
+        android:layout_marginTop="@dimen/twenty_dp"
+        android:layout_marginEnd="@dimen/twenty_dp"
+        android:background="@color/shimmer_color" />
+
+    <View
+        android:layout_width="@dimen/two_fifty_dp"
+        android:layout_height="@dimen/ten_dp"
+        android:layout_marginStart="@dimen/twenty_dp"
+        android:layout_marginTop="@dimen/five_dp"
+        android:layout_marginEnd="@dimen/twenty_dp"
+        android:background="@color/shimmer_color" />
+
+    <View
+        android:layout_width="@dimen/two_hundurd_dp"
+        android:layout_height="@dimen/ten_dp"
+        android:layout_marginStart="@dimen/twenty_dp"
+        android:layout_marginTop="@dimen/five_dp"
+        android:layout_marginEnd="@dimen/twenty_dp"
+        android:background="@color/shimmer_color" />
+
+    <View
+        android:layout_width="@dimen/one_fifty_dp"
+        android:layout_height="@dimen/ten_dp"
+        android:layout_marginStart="@dimen/twenty_dp"
+        android:layout_marginTop="@dimen/five_dp"
+        android:layout_marginEnd="@dimen/twenty_dp"
+        android:layout_marginBottom="@dimen/twenty_dp"
+        android:background="@color/shimmer_color" />
+
+</LinearLayout>

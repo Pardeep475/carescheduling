@@ -6,6 +6,10 @@
     <data>
 
         <variable
+            name="clientNoteAdapterBean"
+            type="com.example.carescheduling.Ui.HomeScreen.beans.ClientNoteAdapterBean" />
+
+        <variable
             name="backPressedClick"
             type="com.example.carescheduling.Ui.HomeScreen.presenter.BackPressedClick" />
 
@@ -56,6 +60,24 @@
 
         </RelativeLayout>
 
+        <io.supercharge.shimmerlayout.ShimmerLayout
+            android:id="@+id/sl_demo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:visibility="visible">
+
+            <include layout="@layout/item_shimmer_layout" />
+
+        </io.supercharge.shimmerlayout.ShimmerLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/ll_main_layout"
+        android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -75,7 +97,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight=".6"
-                android:text="@string/first_name"
+                android:text="@{clientNoteAdapterBean.date}"
                 android:textAlignment="textStart"
                 android:textSize="@dimen/twenty_sp" />
 
@@ -86,7 +108,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/twenty_dp"
-            android:text="lshdfklhsdflkhsdflkh"
+            android:text="@{clientNoteAdapterBean.description}"
             android:textColor="@color/black"
             android:textSize="@dimen/forteen_sp" />
 
@@ -95,7 +117,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/twenty_dp"
-            android:text="@string/last_note"
+            android:text="@string/history"
             android:textAlignment="textStart"
             android:textSize="@dimen/twenty_five_sp"
             android:textStyle="bold" />
@@ -106,6 +128,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="@dimen/ten_dp" />
+
+    </LinearLayout>
+
+        <include
+            android:id="@+id/rl_no_data_found"
+            layout="@layout/no_data_found"
+            android:visibility="gone" />
+
 
     </LinearLayout>
 </layout>

@@ -83,15 +83,17 @@ public class ClientInfoHomeFragment extends BaseFragment implements HomeScreenOn
                 break;
             }
             case 6:{
-                setFragment(ClientInfoMatchingHistoryFragment.newInstance());
-                break;
-            }
-            case 7:{
+//                setFragment(ClientInfoMatchingHistoryFragment.newInstance());
                 setFragment(ClientDisabilitiesFragment.newInstance());
                 break;
             }
-            case 8:{
+            case 7:{
+//                setFragment(ClientDisabilitiesFragment.newInstance());
                 setFragment(CarePlanFragment.newInstance());
+                break;
+            }
+            case 8:{
+//                setFragment(CarePlanFragment.newInstance());
                 break;
             }
 

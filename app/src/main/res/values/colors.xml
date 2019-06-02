@@ -9,5 +9,6 @@
     <color name="blue">#1593F5</color>
     <color name="dark_blue">#3A7DC1</color>
     <color name="red">#EF3F3F</color>
+    <color name="shimmer_color">#DCDCDC</color>
 
 </resources>
