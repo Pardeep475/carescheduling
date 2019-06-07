@@ -5,11 +5,13 @@ import com.example.carescheduling.Ui.Dashboard.beans.EditMyProfile;
 import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientCareContactsBean;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientCareDocumentBean;
+import com.example.carescheduling.Ui.HomeScreen.beans.ClientCareMedicalBean;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientCareNoteBean;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientCarePersonalDetailsBean;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientCarePlan;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientCareSummaryBean;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientDisabilityBean;
+import com.example.carescheduling.Ui.HomeScreen.beans.VisitArchiveRetroBean;
 import com.example.carescheduling.Ui.LoginActivity.beans.LoginBeanRetro;
 import com.example.carescheduling.Ui.Profile.bean.AddressByPostCode;
 import com.example.carescheduling.Ui.Profile.bean.DataList;
@@ -108,6 +110,12 @@ public interface ApiService {
                                                                     @Path("branchId") String branchId,
                                                                     @Path("clientId") String clientId);
 
+    @GET("GetClientMadicals/{customerId}/{branchId}/{clientId}")
+    Observable<Response<ClientCareMedicalBean>> GetClientMedical(@Path("customerId") String customerId,
+                                                                  @Path("branchId") String branchId,
+                                                                  @Path("clientId") String clientId);
+
+
     @GET("GetClientDisabilities/{customerId}/{branchId}/{clientId}")
     Observable<Response<ClientDisabilityBean>> GetClientDisabilities(@Path("customerId") String customerId,
                                                                      @Path("branchId") String branchId,
@@ -117,6 +125,15 @@ public interface ApiService {
     Observable<Response<ClientCarePlan>> GetClientCarePlanSchedule(@Path("customerId") String customerId,
                                                                    @Path("branchId") String branchId,
                                                                    @Path("clientId") String clientId);
+
+
+//  employeeId,arrivalDate,branchId,customerId
+    @GET("GetEmployeeVisitArchive/5633D002-F453-402E-AD63-AAECA11452B5/2019-05-24/5F98AF4F-25DC-4AC8-B867-C5072C101011/5f98af4f-25dc-4ac8-b867-c5072c100000")
+    Observable<Response<VisitArchiveRetroBean>> GetEmployeeVisitArchive(
+            @Path("clientId") String clientId,
+            @Path("arrivalDate") String arrivalDate,
+            @Path("branchId") String branchId,
+            @Path("customerId") String customerId);
 
 
 }

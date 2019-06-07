@@ -61,11 +61,12 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/sixteen_dp"
                         android:layout_marginRight="@dimen/sixteen_dp"
-                        android:fontFamily="@font/rubik_medium"
+                        android:fontFamily="@font/rubik_light"
                         android:padding="@dimen/sixteen_dp"
                         android:text="@string/edit_my_profile_info"
+                        android:textColor="@color/white"
 
-                        android:textColor="@color/white" />
+                        android:textSize="@dimen/eighteen_sp" />
 
                     <ImageView
                         android:id="@+id/img_next_arrow"
@@ -99,11 +100,12 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/sixteen_dp"
                         android:layout_marginRight="@dimen/sixteen_dp"
-                        android:fontFamily="@font/rubik_medium"
+                        android:fontFamily="@font/rubik_light"
                         android:padding="@dimen/sixteen_dp"
                         android:text="@string/edit_my_address"
+                        android:textColor="@color/white"
 
-                        android:textColor="@color/white" />
+                        android:textSize="@dimen/eighteen_sp" />
 
                     <ImageView
                         android:id="@+id/img_next_arrow_addressess"
@@ -137,11 +139,12 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/sixteen_dp"
                         android:layout_marginRight="@dimen/sixteen_dp"
-                        android:fontFamily="@font/rubik_medium"
+                        android:fontFamily="@font/rubik_light"
                         android:padding="@dimen/sixteen_dp"
                         android:text="@string/edit_my_picture"
+                        android:textColor="@color/white"
 
-                        android:textColor="@color/white" />
+                        android:textSize="@dimen/eighteen_sp" />
 
                     <ImageView
                         android:id="@+id/img_next_arrow_picture"
@@ -175,11 +178,12 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/sixteen_dp"
                         android:layout_marginRight="@dimen/sixteen_dp"
-                        android:fontFamily="@font/rubik_medium"
+                        android:fontFamily="@font/rubik_light"
                         android:padding="@dimen/sixteen_dp"
                         android:text="@string/change_password"
+                        android:textColor="@color/white"
 
-                        android:textColor="@color/white" />
+                        android:textSize="@dimen/eighteen_sp" />
 
                     <ImageView
                         android:id="@+id/img_next_arrow_user"

@@ -9,10 +9,10 @@ public class ClientDisabilityBean {
 
     @SerializedName("Data")
     @Expose
-    public ArrayList<Datum> data = null;
+    public Object data = null;
     @SerializedName("DataList")
     @Expose
-    private Object dataList;
+    private ArrayList<Datum> dataList;
     @SerializedName("Exception")
     @Expose
     private Object exception;
@@ -23,19 +23,19 @@ public class ClientDisabilityBean {
     @Expose
     private Boolean success;
 
-    public ArrayList<Datum> getData() {
+    public Object getData() {
         return data;
     }
 
-    public void setData(ArrayList<Datum> data) {
+    public void setData(Object data) {
         this.data = data;
     }
 
-    public Object getDataList() {
+    public ArrayList<Datum> getDataList() {
         return dataList;
     }
 
-    public void setDataList(Object dataList) {
+    public void setDataList(ArrayList<Datum> dataList) {
         this.dataList = dataList;
     }
 

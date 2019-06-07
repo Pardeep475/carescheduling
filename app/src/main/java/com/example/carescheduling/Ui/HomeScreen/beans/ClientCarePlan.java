@@ -2,6 +2,7 @@ package com.example.carescheduling.Ui.HomeScreen.beans;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -9,10 +10,10 @@ public class ClientCarePlan {
 
     @SerializedName("Data")
     @Expose
-    public ArrayList<Datum> data = null;
+    public Object data = null;
     @SerializedName("DataList")
     @Expose
-    private Object dataList;
+    private ArrayList<Datum> dataList;
     @SerializedName("Exception")
     @Expose
     private Object exception;
@@ -23,19 +24,19 @@ public class ClientCarePlan {
     @Expose
     private Boolean success;
 
-    public ArrayList<Datum> getData() {
+    public Object getData() {
         return data;
     }
 
-    public void setData(ArrayList<Datum> data) {
+    public void setData(Object data) {
         this.data = data;
     }
 
-    public Object getDataList() {
+    public ArrayList<Datum> getDataList() {
         return dataList;
     }
 
-    public void setDataList(Object dataList) {
+    public void setDataList(ArrayList<Datum> dataList) {
         this.dataList = dataList;
     }
 
@@ -62,6 +63,7 @@ public class ClientCarePlan {
     public void setSuccess(Boolean success) {
         this.success = success;
     }
+
     public class Datum {
 
         @SerializedName("ClientId")

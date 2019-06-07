@@ -9,10 +9,10 @@ public class ClientCareNoteBean {
 
     @SerializedName("Data")
     @Expose
-    private ArrayList<Datum> data = null;
+    private Object data;
     @SerializedName("DataList")
     @Expose
-    private Object dataList;
+    private ArrayList<DataList> dataList = null;
     @SerializedName("Exception")
     @Expose
     private Object exception;
@@ -23,19 +23,19 @@ public class ClientCareNoteBean {
     @Expose
     private Boolean success;
 
-    public ArrayList<Datum> getData() {
+    public Object getData() {
         return data;
     }
 
-    public void setData(ArrayList<Datum> data) {
+    public void setData(Object data) {
         this.data = data;
     }
 
-    public Object getDataList() {
+    public ArrayList<DataList> getDataList() {
         return dataList;
     }
 
-    public void setDataList(Object dataList) {
+    public void setDataList(ArrayList<DataList> dataList) {
         this.dataList = dataList;
     }
 
@@ -62,9 +62,7 @@ public class ClientCareNoteBean {
     public void setSuccess(Boolean success) {
         this.success = success;
     }
-
-
-    public class Datum {
+    public class DataList {
 
         @SerializedName("Note")
         @Expose
@@ -88,121 +86,122 @@ public class ClientCareNoteBean {
         public void setUpdateEmployeePersonId(String updateEmployeePersonId) {
             this.updateEmployeePersonId = updateEmployeePersonId;
         }
-        public class Note {
 
-            @SerializedName("AddedByPersonId")
-            @Expose
-            private String addedByPersonId;
-            @SerializedName("CustomerId")
-            @Expose
-            private String customerId;
-            @SerializedName("NoteAdded")
-            @Expose
-            private String noteAdded;
-            @SerializedName("NoteCategoryName")
-            @Expose
-            private String noteCategoryName;
-            @SerializedName("NoteId")
-            @Expose
-            private String noteId;
-            @SerializedName("NoteSubject")
-            @Expose
-            private String noteSubject;
-            @SerializedName("NoteText")
-            @Expose
-            private String noteText;
-            @SerializedName("NoteTypeName")
-            @Expose
-            private String noteTypeName;
-            @SerializedName("NoteUpdated")
-            @Expose
-            private String noteUpdated;
-            @SerializedName("UpdatedByPersonId")
-            @Expose
-            private String updatedByPersonId;
-
-            public String getAddedByPersonId() {
-                return addedByPersonId;
-            }
-
-            public void setAddedByPersonId(String addedByPersonId) {
-                this.addedByPersonId = addedByPersonId;
-            }
-
-            public String getCustomerId() {
-                return customerId;
-            }
-
-            public void setCustomerId(String customerId) {
-                this.customerId = customerId;
-            }
-
-            public String getNoteAdded() {
-                return noteAdded;
-            }
-
-            public void setNoteAdded(String noteAdded) {
-                this.noteAdded = noteAdded;
-            }
-
-            public String getNoteCategoryName() {
-                return noteCategoryName;
-            }
-
-            public void setNoteCategoryName(String noteCategoryName) {
-                this.noteCategoryName = noteCategoryName;
-            }
-
-            public String getNoteId() {
-                return noteId;
-            }
-
-            public void setNoteId(String noteId) {
-                this.noteId = noteId;
-            }
-
-            public String getNoteSubject() {
-                return noteSubject;
-            }
-
-            public void setNoteSubject(String noteSubject) {
-                this.noteSubject = noteSubject;
-            }
-
-            public String getNoteText() {
-                return noteText;
-            }
-
-            public void setNoteText(String noteText) {
-                this.noteText = noteText;
-            }
-
-            public String getNoteTypeName() {
-                return noteTypeName;
-            }
-
-            public void setNoteTypeName(String noteTypeName) {
-                this.noteTypeName = noteTypeName;
-            }
-
-            public String getNoteUpdated() {
-                return noteUpdated;
-            }
-
-            public void setNoteUpdated(String noteUpdated) {
-                this.noteUpdated = noteUpdated;
-            }
-
-            public String getUpdatedByPersonId() {
-                return updatedByPersonId;
-            }
-
-            public void setUpdatedByPersonId(String updatedByPersonId) {
-                this.updatedByPersonId = updatedByPersonId;
-            }
-
-        }
     }
 
+    public class Note {
 
+        @SerializedName("AddedByPersonId")
+        @Expose
+        private String addedByPersonId;
+        @SerializedName("CustomerId")
+        @Expose
+        private String customerId;
+        @SerializedName("NoteAdded")
+        @Expose
+        private String noteAdded;
+        @SerializedName("NoteCategoryName")
+        @Expose
+        private String noteCategoryName;
+        @SerializedName("NoteId")
+        @Expose
+        private String noteId;
+        @SerializedName("NoteSubject")
+        @Expose
+        private String noteSubject;
+        @SerializedName("NoteText")
+        @Expose
+        private String noteText;
+        @SerializedName("NoteTypeName")
+        @Expose
+        private String noteTypeName;
+        @SerializedName("NoteUpdated")
+        @Expose
+        private String noteUpdated;
+        @SerializedName("UpdatedByPersonId")
+        @Expose
+        private String updatedByPersonId;
+
+        public String getAddedByPersonId() {
+            return addedByPersonId;
+        }
+
+        public void setAddedByPersonId(String addedByPersonId) {
+            this.addedByPersonId = addedByPersonId;
+        }
+
+        public String getCustomerId() {
+            return customerId;
+        }
+
+        public void setCustomerId(String customerId) {
+            this.customerId = customerId;
+        }
+
+        public String getNoteAdded() {
+            return noteAdded;
+        }
+
+        public void setNoteAdded(String noteAdded) {
+            this.noteAdded = noteAdded;
+        }
+
+        public String getNoteCategoryName() {
+            return noteCategoryName;
+        }
+
+        public void setNoteCategoryName(String noteCategoryName) {
+            this.noteCategoryName = noteCategoryName;
+        }
+
+        public String getNoteId() {
+            return noteId;
+        }
+
+        public void setNoteId(String noteId) {
+            this.noteId = noteId;
+        }
+
+        public String getNoteSubject() {
+            return noteSubject;
+        }
+
+        public void setNoteSubject(String noteSubject) {
+            this.noteSubject = noteSubject;
+        }
+
+        public String getNoteText() {
+            return noteText;
+        }
+
+        public void setNoteText(String noteText) {
+            this.noteText = noteText;
+        }
+
+        public String getNoteTypeName() {
+            return noteTypeName;
+        }
+
+        public void setNoteTypeName(String noteTypeName) {
+            this.noteTypeName = noteTypeName;
+        }
+
+        public String getNoteUpdated() {
+            return noteUpdated;
+        }
+
+        public void setNoteUpdated(String noteUpdated) {
+            this.noteUpdated = noteUpdated;
+        }
+
+        public String getUpdatedByPersonId() {
+            return updatedByPersonId;
+        }
+
+        public void setUpdatedByPersonId(String updatedByPersonId) {
+            this.updatedByPersonId = updatedByPersonId;
+        }
+
+    }
 }
+

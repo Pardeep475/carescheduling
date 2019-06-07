@@ -51,7 +51,7 @@ public class ClientContactsViewModel extends AndroidViewModel {
                             Log.e("LoginSuccess", "success");
                             if (loginBeanRetroResponse.isSuccessful()) {
                                 if (loginBeanRetroResponse.body() != null) {
-                                  data.setValue(getClientCareContact(loginBeanRetroResponse.body()));
+                                    data.setValue(getClientCareContact(loginBeanRetroResponse.body()));
                                 } else {
                                     data.setValue(null);
                                     Toast.makeText(getApplication(), (String) loginBeanRetroResponse.body().getResponseMessage(), Toast.LENGTH_SHORT).show();
@@ -76,15 +76,15 @@ public class ClientContactsViewModel extends AndroidViewModel {
     private ArrayList<ClientContactsBean> getClientCareContact(ClientCareContactsBean careContactsBean) {
         ArrayList<ClientContactsBean> clientContactsBeanArrayList = new ArrayList<>();
 
-        if (careContactsBean.getData() != null) {
-            for (int i = 0; i < careContactsBean.getData().size(); i++) {
+        if (careContactsBean.getDataList() != null) {
+            for (int i = 0; i < careContactsBean.getDataList().size(); i++) {
                 ClientContactsBean clientContactsBean = new ClientContactsBean();
                 clientContactsBean.setAddress("N/A");
                 clientContactsBean.setEmail("N/A");
                 clientContactsBean.setPostCode("N/A");
                 clientContactsBean.setMobile("N/A");
                 clientContactsBean.setTelephone("N/A");
-                clientContactsBean.setType(checkIsNotNull(careContactsBean.getData().get(i).getContactTypeName()));
+                clientContactsBean.setType(checkIsNotNull(careContactsBean.getDataList().get(i).getContactTypeName()));
                 clientContactsBean.setName("N/A");
 
                 clientContactsBeanArrayList.add(clientContactsBean);

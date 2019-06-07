@@ -69,7 +69,7 @@ public class EditProfileAddress extends BaseFragment implements Common, EditProf
         setCommonData();
         editProfileAddressViewModel = ViewModelProviders.of(this).get(EditProfileAddressViewModel.class);
         setEditProfileData(view);
-
+        editProfileAddressBinding.setEditAddressClick(this);
     }
 
     private void setCommonData() {

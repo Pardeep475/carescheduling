@@ -425,6 +425,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_weight=".7"
+                        android:fontFamily="@font/rubik_medium"
                         android:paddingStart="@dimen/twenty_dp"
                         android:text="@string/nationality" />
 

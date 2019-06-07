@@ -49,7 +49,7 @@ public class CarePlanViewModal extends AndroidViewModel {
                             Log.e("LoginSuccess", "success");
                             if (loginBeanRetroResponse.isSuccessful()) {
                                 if (loginBeanRetroResponse.body()!=null){
-                                    data.setValue(loginBeanRetroResponse.body().getData());
+                                    data.setValue(loginBeanRetroResponse.body().getDataList());
                                 }else{
                                     data.setValue(null);
                                     Toast.makeText(getApplication(),(String) loginBeanRetroResponse.body().getResponseMessage(), Toast.LENGTH_SHORT).show();

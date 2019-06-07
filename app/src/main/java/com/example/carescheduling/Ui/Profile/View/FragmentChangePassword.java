@@ -96,7 +96,6 @@ public class FragmentChangePassword extends BaseFragment implements Common, Frag
                 }
             } catch (Exception e) {
                 setNoDataFound();
-                hideDialog();
             }
         }
     }
@@ -157,13 +156,11 @@ public class FragmentChangePassword extends BaseFragment implements Common, Frag
     }
 
     private void GetUserInfo() {
-        showDialog();
         fragmentChangePasswordViewModel.getUserInfo(sessionManager.getPersonId(), sessionManager.getBranchId()).observe(this
                 , new Observer<UserViewModel>() {
                     @Override
                     public void onChanged(UserViewModel userViewModel) {
                         userModel = userViewModel;
-                        hideDialog();
                         if (userViewModel.getData() != null && userViewModel.getData().getUserPersons() != null && userViewModel.getData().getUserPersons().size() > 0) {
                             FragmentChangePasswordBean fragmentChangePasswordBean = new FragmentChangePasswordBean();
                             String userName = userViewModel.getData().getUserPersons().get(0).getUser().getUserName();

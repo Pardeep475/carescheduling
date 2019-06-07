@@ -76,13 +76,13 @@ public class ClientInfoNotesViewModel extends AndroidViewModel {
 
     private ArrayList<ClientNoteAdapterBean> getClientAdapterBean(ClientCareNoteBean clientCareNoteBean) {
         ArrayList<ClientNoteAdapterBean> noteAdapterBeans = new ArrayList<>();
-        if (clientCareNoteBean != null && clientCareNoteBean.getData() != null) {
-            for (int i = 0; i < clientCareNoteBean.getData().size(); i++) {
+        if (clientCareNoteBean != null && clientCareNoteBean.getDataList() != null) {
+            for (int i = 0; i < clientCareNoteBean.getDataList().size(); i++) {
                 ClientNoteAdapterBean clientNoteAdapterBean = new ClientNoteAdapterBean();
-                clientNoteAdapterBean.setDate(checkIsNotNull(clientCareNoteBean.getData().get(i).getNote().getNoteAdded()));
-                clientNoteAdapterBean.setDescription(checkIsNotNull(clientCareNoteBean.getData().get(i).getNote().getNoteText()));
-                clientNoteAdapterBean.setShortDescription(checkIsNotNull(clientCareNoteBean.getData().get(i).getNote().getNoteSubject()));
-                clientNoteAdapterBean.setTitle(checkIsNotNull(clientCareNoteBean.getData().get(i).getUpdateEmployeePersonId()));
+                clientNoteAdapterBean.setDate(checkIsNotNull(clientCareNoteBean.getDataList().get(i).getNote().getNoteAdded()));
+                clientNoteAdapterBean.setDescription(checkIsNotNull(clientCareNoteBean.getDataList().get(i).getNote().getNoteText()));
+                clientNoteAdapterBean.setShortDescription(checkIsNotNull(clientCareNoteBean.getDataList().get(i).getNote().getNoteSubject()));
+                clientNoteAdapterBean.setTitle(checkIsNotNull(clientCareNoteBean.getDataList().get(i).getUpdateEmployeePersonId()));
 
                 noteAdapterBeans.add(clientNoteAdapterBean);
             }
