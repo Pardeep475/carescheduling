@@ -80,9 +80,11 @@ public class ClientContactsFragment extends BaseFragment implements Common {
     }
 
     private void setUpRecyclerView(View view) {
-        mViewModel.getClientContact("5F98AF4F-25DC-4AC8-B867-C5072C100000",
-                "5F98AF4F-25DC-4AC8-B867-C5072C101011",
-                "978E55D2-B7B9-49E0-A654-14B70EB1A344").observe(this, new Observer<ArrayList<ClientContactsBean>>() {
+        http:
+//mobile.rota.services/CssMobileRestfulService.svc/GetClientContacts///
+        mViewModel.getClientContact(getSessionManager().getCustomerId(),
+                getSessionManager().getBranchId(),
+                getSessionManager().getClientId()).observe(this, new Observer<ArrayList<ClientContactsBean>>() {
             @Override
             public void onChanged(ArrayList<ClientContactsBean> clientContactsBeans) {
                 if (clientContactsBeans != null && clientContactsBeans.size() > 0) {

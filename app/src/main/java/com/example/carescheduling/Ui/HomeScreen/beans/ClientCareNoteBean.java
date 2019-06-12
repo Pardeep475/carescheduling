@@ -1,9 +1,9 @@
 package com.example.carescheduling.Ui.HomeScreen.beans;
 
-import java.util.ArrayList;
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
 
 public class ClientCareNoteBean {
 
@@ -62,14 +62,26 @@ public class ClientCareNoteBean {
     public void setSuccess(Boolean success) {
         this.success = success;
     }
+
     public class DataList {
 
+        @SerializedName("AddEmployeePersonName")
+        @Expose
+        private String addEmployeePersonName;
         @SerializedName("Note")
         @Expose
         private Note note;
-        @SerializedName("updateEmployeePersonId")
+        @SerializedName("UpdateEmployeePersonName")
         @Expose
-        private String updateEmployeePersonId;
+        private String updateEmployeePersonName;
+
+        public String getAddEmployeePersonName() {
+            return addEmployeePersonName;
+        }
+
+        public void setAddEmployeePersonName(String addEmployeePersonName) {
+            this.addEmployeePersonName = addEmployeePersonName;
+        }
 
         public Note getNote() {
             return note;
@@ -79,12 +91,12 @@ public class ClientCareNoteBean {
             this.note = note;
         }
 
-        public String getUpdateEmployeePersonId() {
-            return updateEmployeePersonId;
+        public String getUpdateEmployeePersonName() {
+            return updateEmployeePersonName;
         }
 
-        public void setUpdateEmployeePersonId(String updateEmployeePersonId) {
-            this.updateEmployeePersonId = updateEmployeePersonId;
+        public void setUpdateEmployeePersonName(String updateEmployeePersonName) {
+            this.updateEmployeePersonName = updateEmployeePersonName;
         }
 
     }
@@ -204,4 +216,3 @@ public class ClientCareNoteBean {
 
     }
 }
-

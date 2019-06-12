@@ -21,7 +21,7 @@ public class ClientDisabilitiesAdapter extends RecyclerView.Adapter<ClientDisabi
     private ItemsClientInfoDisabilitiesBinding itemsClientInfoDisabilitiesBinding;
     private ArrayList<ClientDisabilityBean.Datum> dataList;
 
-    public ClientDisabilitiesAdapter(Context context,ArrayList<ClientDisabilityBean.Datum> dataList) {
+    public ClientDisabilitiesAdapter(Context context, ArrayList<ClientDisabilityBean.Datum> dataList) {
         this.context = context;
         this.dataList = dataList;
     }
@@ -36,8 +36,8 @@ public class ClientDisabilitiesAdapter extends RecyclerView.Adapter<ClientDisabi
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         itemsClientInfoDisabilitiesBinding.setPos(position);
-itemsClientInfoDisabilitiesBinding.setClientDisabilityBean(dataList.get(position));
-itemsClientInfoDisabilitiesBinding.setMoreInfoClick(this);
+        itemsClientInfoDisabilitiesBinding.setClientDisabilityBean(dataList.get(position));
+        itemsClientInfoDisabilitiesBinding.setMoreInfoClick(this);
     }
 
     @Override

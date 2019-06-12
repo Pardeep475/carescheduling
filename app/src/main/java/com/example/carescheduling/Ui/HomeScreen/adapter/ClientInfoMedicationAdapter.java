@@ -5,7 +5,10 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.example.carescheduling.R;
+import com.example.carescheduling.Ui.HomeScreen.beans.ClientMedicalBeanAdapter;
 import com.example.carescheduling.databinding.ItemClientInfoMedicationBinding;
+
+import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -14,9 +17,11 @@ import androidx.recyclerview.widget.RecyclerView;
 public class ClientInfoMedicationAdapter extends RecyclerView.Adapter<ClientInfoMedicationAdapter.MyViewHolder> {
     private Context context;
     private ItemClientInfoMedicationBinding itemClientInfoMedicationBinding;
+    private ArrayList<ClientMedicalBeanAdapter> clientMedicalBeanAdapters;
 
-    public ClientInfoMedicationAdapter(Context context) {
+    public ClientInfoMedicationAdapter(Context context, ArrayList<ClientMedicalBeanAdapter> clientMedicalBeanAdapters) {
         this.context = context;
+        this.clientMedicalBeanAdapters = clientMedicalBeanAdapters;
     }
 
     @NonNull
@@ -28,12 +33,12 @@ public class ClientInfoMedicationAdapter extends RecyclerView.Adapter<ClientInfo
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-
+        itemClientInfoMedicationBinding.setClientMedicalBeanAdapter(clientMedicalBeanAdapters.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return 5;
+        return clientMedicalBeanAdapters.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {

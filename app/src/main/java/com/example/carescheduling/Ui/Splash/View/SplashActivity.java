@@ -6,10 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.arover.moment.Moment;
 import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseActivity;
 import com.example.carescheduling.Ui.Dashboard.view.Dashboard;
@@ -63,7 +65,7 @@ public class SplashActivity extends BaseActivity {
 
     public void formatDate() {
 //        /Date(1560663000000+0530)/
-        valueFromParanThics();
+//        valueFromParanThics();
 //        SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy");
 //        try {
 //            Date d = sdf.parse("20130526160000");
@@ -71,6 +73,14 @@ public class SplashActivity extends BaseActivity {
 //        } catch (ParseException ex) {
 //            Log.e("DateValue", ex.getLocalizedMessage());
 //        }
+
+        String example = "/Date(1560663000000+0530)/";
+        try {
+            Moment moment = new Moment(example, "MM/dd/yyyy");
+            moment.display();
+        } catch (ParseException ex) {
+            Log.e("DateValue", ex.getLocalizedMessage());
+        }
     }
 
     public void valueFromParanThics() {

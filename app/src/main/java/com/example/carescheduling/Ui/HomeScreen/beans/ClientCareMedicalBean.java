@@ -1,5 +1,6 @@
 package com.example.carescheduling.Ui.HomeScreen.beans;
 
+import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -11,7 +12,7 @@ public class ClientCareMedicalBean {
     private Object data;
     @SerializedName("DataList")
     @Expose
-    private List<DataList> dataList = null;
+    private ArrayList<DataList> dataList = null;
     @SerializedName("Exception")
     @Expose
     private Object exception;
@@ -30,11 +31,11 @@ public class ClientCareMedicalBean {
         this.data = data;
     }
 
-    public List<DataList> getDataList() {
+    public ArrayList<DataList> getDataList() {
         return dataList;
     }
 
-    public void setDataList(List<DataList> dataList) {
+    public void setDataList(ArrayList<DataList> dataList) {
         this.dataList = dataList;
     }
 
@@ -61,131 +62,50 @@ public class ClientCareMedicalBean {
     public void setSuccess(Boolean success) {
         this.success = success;
     }
+    public class ClientMedicationFrequencyModel {
 
-    public class ClientMedicationModel {
-
-        @SerializedName("AddedByEmployeePersonId")
-        @Expose
-        private String addedByEmployeePersonId;
-        @SerializedName("CarePlanMedicationIsSuspended")
-        @Expose
-        private Boolean carePlanMedicationIsSuspended;
-        @SerializedName("ChangedByEmployeePersonId")
-        @Expose
-        private String changedByEmployeePersonId;
-        @SerializedName("ClientCareplanModel")
-        @Expose
-        private Object clientCareplanModel;
-        @SerializedName("ClientMedicationDocumentModel")
-        @Expose
-        private List<Object> clientMedicationDocumentModel = null;
-        @SerializedName("ClientMedicationFrequencyModel")
-        @Expose
-        private List<Object> clientMedicationFrequencyModel = null;
-        @SerializedName("ClientMedicationNoteModel")
-        @Expose
-        private List<Object> clientMedicationNoteModel = null;
         @SerializedName("ClientMedicationRecordModel")
         @Expose
-        private List<Object> clientMedicationRecordModel = null;
+        private Object clientMedicationRecordModel;
         @SerializedName("ClientPersonId")
         @Expose
         private String clientPersonId;
-        @SerializedName("GPPersonId")
+        @SerializedName("CustomerId")
         @Expose
-        private Object gPPersonId;
-        @SerializedName("HasEndDate")
-        @Expose
-        private Boolean hasEndDate;
+        private String customerId;
         @SerializedName("MedicationAddedDate")
         @Expose
         private String medicationAddedDate;
-        @SerializedName("MedicationEndDate")
+        @SerializedName("MedicationDose")
         @Expose
-        private Object medicationEndDate;
+        private String medicationDose;
+        @SerializedName("MedicationFormTypeName")
+        @Expose
+        private String medicationFormTypeName;
         @SerializedName("MedicationId")
         @Expose
         private String medicationId;
-        @SerializedName("MedicationLastChangedDate")
-        @Expose
-        private String medicationLastChangedDate;
-        @SerializedName("MedicationStartDate")
-        @Expose
-        private String medicationStartDate;
         @SerializedName("MedicationStrenghtUnitName")
         @Expose
-        private Object medicationStrenghtUnitName;
+        private String medicationStrenghtUnitName;
         @SerializedName("MedicationStrenghtValue")
         @Expose
-        private Object medicationStrenghtValue;
-        @SerializedName("MedicationSuspendedDate")
+        private String medicationStrenghtValue;
+        @SerializedName("Period")
         @Expose
-        private Object medicationSuspendedDate;
-        @SerializedName("SuspendedByEmployeePersonId")
+        private String period;
+        @SerializedName("TaskPriorityName")
         @Expose
-        private Object suspendedByEmployeePersonId;
+        private String taskPriorityName;
+        @SerializedName("WeekdayName")
+        @Expose
+        private String weekdayName;
 
-        public String getAddedByEmployeePersonId() {
-            return addedByEmployeePersonId;
-        }
-
-        public void setAddedByEmployeePersonId(String addedByEmployeePersonId) {
-            this.addedByEmployeePersonId = addedByEmployeePersonId;
-        }
-
-        public Boolean getCarePlanMedicationIsSuspended() {
-            return carePlanMedicationIsSuspended;
-        }
-
-        public void setCarePlanMedicationIsSuspended(Boolean carePlanMedicationIsSuspended) {
-            this.carePlanMedicationIsSuspended = carePlanMedicationIsSuspended;
-        }
-
-        public String getChangedByEmployeePersonId() {
-            return changedByEmployeePersonId;
-        }
-
-        public void setChangedByEmployeePersonId(String changedByEmployeePersonId) {
-            this.changedByEmployeePersonId = changedByEmployeePersonId;
-        }
-
-        public Object getClientCareplanModel() {
-            return clientCareplanModel;
-        }
-
-        public void setClientCareplanModel(Object clientCareplanModel) {
-            this.clientCareplanModel = clientCareplanModel;
-        }
-
-        public List<Object> getClientMedicationDocumentModel() {
-            return clientMedicationDocumentModel;
-        }
-
-        public void setClientMedicationDocumentModel(List<Object> clientMedicationDocumentModel) {
-            this.clientMedicationDocumentModel = clientMedicationDocumentModel;
-        }
-
-        public List<Object> getClientMedicationFrequencyModel() {
-            return clientMedicationFrequencyModel;
-        }
-
-        public void setClientMedicationFrequencyModel(List<Object> clientMedicationFrequencyModel) {
-            this.clientMedicationFrequencyModel = clientMedicationFrequencyModel;
-        }
-
-        public List<Object> getClientMedicationNoteModel() {
-            return clientMedicationNoteModel;
-        }
-
-        public void setClientMedicationNoteModel(List<Object> clientMedicationNoteModel) {
-            this.clientMedicationNoteModel = clientMedicationNoteModel;
-        }
-
-        public List<Object> getClientMedicationRecordModel() {
+        public Object getClientMedicationRecordModel() {
             return clientMedicationRecordModel;
         }
 
-        public void setClientMedicationRecordModel(List<Object> clientMedicationRecordModel) {
+        public void setClientMedicationRecordModel(Object clientMedicationRecordModel) {
             this.clientMedicationRecordModel = clientMedicationRecordModel;
         }
 
@@ -197,20 +117,12 @@ public class ClientCareMedicalBean {
             this.clientPersonId = clientPersonId;
         }
 
-        public Object getGPPersonId() {
-            return gPPersonId;
+        public String getCustomerId() {
+            return customerId;
         }
 
-        public void setGPPersonId(Object gPPersonId) {
-            this.gPPersonId = gPPersonId;
-        }
-
-        public Boolean getHasEndDate() {
-            return hasEndDate;
-        }
-
-        public void setHasEndDate(Boolean hasEndDate) {
-            this.hasEndDate = hasEndDate;
+        public void setCustomerId(String customerId) {
+            this.customerId = customerId;
         }
 
         public String getMedicationAddedDate() {
@@ -221,12 +133,20 @@ public class ClientCareMedicalBean {
             this.medicationAddedDate = medicationAddedDate;
         }
 
-        public Object getMedicationEndDate() {
-            return medicationEndDate;
+        public String getMedicationDose() {
+            return medicationDose;
         }
 
-        public void setMedicationEndDate(Object medicationEndDate) {
-            this.medicationEndDate = medicationEndDate;
+        public void setMedicationDose(String medicationDose) {
+            this.medicationDose = medicationDose;
+        }
+
+        public String getMedicationFormTypeName() {
+            return medicationFormTypeName;
+        }
+
+        public void setMedicationFormTypeName(String medicationFormTypeName) {
+            this.medicationFormTypeName = medicationFormTypeName;
         }
 
         public String getMedicationId() {
@@ -237,167 +157,63 @@ public class ClientCareMedicalBean {
             this.medicationId = medicationId;
         }
 
-        public String getMedicationLastChangedDate() {
-            return medicationLastChangedDate;
-        }
-
-        public void setMedicationLastChangedDate(String medicationLastChangedDate) {
-            this.medicationLastChangedDate = medicationLastChangedDate;
-        }
-
-        public String getMedicationStartDate() {
-            return medicationStartDate;
-        }
-
-        public void setMedicationStartDate(String medicationStartDate) {
-            this.medicationStartDate = medicationStartDate;
-        }
-
-        public Object getMedicationStrenghtUnitName() {
+        public String getMedicationStrenghtUnitName() {
             return medicationStrenghtUnitName;
         }
 
-        public void setMedicationStrenghtUnitName(Object medicationStrenghtUnitName) {
+        public void setMedicationStrenghtUnitName(String medicationStrenghtUnitName) {
             this.medicationStrenghtUnitName = medicationStrenghtUnitName;
         }
 
-        public Object getMedicationStrenghtValue() {
+        public String getMedicationStrenghtValue() {
             return medicationStrenghtValue;
         }
 
-        public void setMedicationStrenghtValue(Object medicationStrenghtValue) {
+        public void setMedicationStrenghtValue(String medicationStrenghtValue) {
             this.medicationStrenghtValue = medicationStrenghtValue;
         }
 
-        public Object getMedicationSuspendedDate() {
-            return medicationSuspendedDate;
+        public String getPeriod() {
+            return period;
         }
 
-        public void setMedicationSuspendedDate(Object medicationSuspendedDate) {
-            this.medicationSuspendedDate = medicationSuspendedDate;
+        public void setPeriod(String period) {
+            this.period = period;
         }
 
-        public Object getSuspendedByEmployeePersonId() {
-            return suspendedByEmployeePersonId;
+        public String getTaskPriorityName() {
+            return taskPriorityName;
         }
 
-        public void setSuspendedByEmployeePersonId(Object suspendedByEmployeePersonId) {
-            this.suspendedByEmployeePersonId = suspendedByEmployeePersonId;
+        public void setTaskPriorityName(String taskPriorityName) {
+            this.taskPriorityName = taskPriorityName;
+        }
+
+        public String getWeekdayName() {
+            return weekdayName;
+        }
+
+        public void setWeekdayName(String weekdayName) {
+            this.weekdayName = weekdayName;
         }
 
     }
 
     public class DataList {
 
-        @SerializedName("ClientMedicationModel")
+        @SerializedName("ClientMedicationFrequencyModel")
         @Expose
-        private ClientMedicationModel clientMedicationModel;
-        @SerializedName("ClientMedicationModelList")
-        @Expose
-        private Object clientMedicationModelList;
-        @SerializedName("CustomerId")
-        @Expose
-        private Object customerId;
-        @SerializedName("MedicalModel")
-        @Expose
-        private MedicalModel medicalModel;
-
-        public ClientMedicationModel getClientMedicationModel() {
-            return clientMedicationModel;
-        }
-
-        public void setClientMedicationModel(ClientMedicationModel clientMedicationModel) {
-            this.clientMedicationModel = clientMedicationModel;
-        }
-
-        public Object getClientMedicationModelList() {
-            return clientMedicationModelList;
-        }
-
-        public void setClientMedicationModelList(Object clientMedicationModelList) {
-            this.clientMedicationModelList = clientMedicationModelList;
-        }
-
-        public Object getCustomerId() {
-            return customerId;
-        }
-
-        public void setCustomerId(Object customerId) {
-            this.customerId = customerId;
-        }
-
-        public MedicalModel getMedicalModel() {
-            return medicalModel;
-        }
-
-        public void setMedicalModel(MedicalModel medicalModel) {
-            this.medicalModel = medicalModel;
-        }
-
-    }
-
-    public class MedicalModel {
-
-        @SerializedName("CustomerId")
-        @Expose
-        private String customerId;
-        @SerializedName("MedicationGroupName")
-        @Expose
-        private String medicationGroupName;
-        @SerializedName("MedicationId")
-        @Expose
-        private String medicationId;
-        @SerializedName("MedicationLink")
-        @Expose
-        private String medicationLink;
-        @SerializedName("MedicationManufacturarName")
-        @Expose
-        private String medicationManufacturarName;
+        private ClientMedicationFrequencyModel clientMedicationFrequencyModel;
         @SerializedName("MedicationName")
         @Expose
         private String medicationName;
-        @SerializedName("MedicationVariationModel")
-        @Expose
-        private Object medicationVariationModel;
 
-        public String getCustomerId() {
-            return customerId;
+        public ClientMedicationFrequencyModel getClientMedicationFrequencyModel() {
+            return clientMedicationFrequencyModel;
         }
 
-        public void setCustomerId(String customerId) {
-            this.customerId = customerId;
-        }
-
-        public String getMedicationGroupName() {
-            return medicationGroupName;
-        }
-
-        public void setMedicationGroupName(String medicationGroupName) {
-            this.medicationGroupName = medicationGroupName;
-        }
-
-        public String getMedicationId() {
-            return medicationId;
-        }
-
-        public void setMedicationId(String medicationId) {
-            this.medicationId = medicationId;
-        }
-
-        public String getMedicationLink() {
-            return medicationLink;
-        }
-
-        public void setMedicationLink(String medicationLink) {
-            this.medicationLink = medicationLink;
-        }
-
-        public String getMedicationManufacturarName() {
-            return medicationManufacturarName;
-        }
-
-        public void setMedicationManufacturarName(String medicationManufacturarName) {
-            this.medicationManufacturarName = medicationManufacturarName;
+        public void setClientMedicationFrequencyModel(ClientMedicationFrequencyModel clientMedicationFrequencyModel) {
+            this.clientMedicationFrequencyModel = clientMedicationFrequencyModel;
         }
 
         public String getMedicationName() {
@@ -408,14 +224,6 @@ public class ClientCareMedicalBean {
             this.medicationName = medicationName;
         }
 
-        public Object getMedicationVariationModel() {
-            return medicationVariationModel;
-        }
-
-        public void setMedicationVariationModel(Object medicationVariationModel) {
-            this.medicationVariationModel = medicationVariationModel;
-        }
-
     }
-
 }
+

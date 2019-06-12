@@ -5,17 +5,9 @@
     <data>
 
         <variable
-            name="moreInfoClick"
-            type="com.example.carescheduling.Ui.HomeScreen.presenter.MoreInfoClick" />
-
-        <variable
-            name="pos"
-            type="int" />
-
-        <variable
-            name="clientNoteAdapterBean"
-            type="com.example.carescheduling.Ui.HomeScreen.beans.ClientNoteAdapterBean" />
-
+            name="visitArchiveAdapterBean"
+            type="com.example.carescheduling.Ui.HomeScreen.beans.VisitArchiveAdapterBean" />
+        <!---->
     </data>
 
     <androidx.cardview.widget.CardView
@@ -30,48 +22,50 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/sixteen_dp">
-
+            android:layout_below="@+id/txt_detail"
+            android:padding="@dimen/sixteen_dp">
 
             <TextView
-                android:id="@+id/txt_document"
+                android:id="@+id/txt_d_telephone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:fontFamily="@font/rubik_light"
-                android:text="@{clientNoteAdapterBean.title}"
+                android:fontFamily="@font/rubik_medium"
+                android:text="@{visitArchiveAdapterBean.visitTime}"
                 android:textAlignment="center"
                 android:textSize="@dimen/forteen_sp" />
 
 
             <TextView
-                android:id="@+id/txt_date"
+                android:id="@+id/txt_telephone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/fifty_dp"
-                android:layout_marginEnd="@dimen/sixteen_sp"
-                android:layout_toStartOf="@+id/txt_open"
-                android:layout_toEndOf="@+id/txt_document"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/twenty_dp"
+                android:layout_toEndOf="@+id/txt_d_telephone"
                 android:fontFamily="@font/rubik_light"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:text="@{clientNoteAdapterBean.shortDescription}"
+                android:text="@{visitArchiveAdapterBean.name}"
+                android:textAlignment="center"
                 android:textSize="@dimen/forteen_sp" />
 
             <TextView
-                android:id="@+id/txt_open"
+                android:id="@+id/txt_telephone_call"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/twenty_dp"
+                android:layout_marginEnd="@dimen/twenty_dp"
                 android:fontFamily="@font/rubik_medium"
-                android:onClick="@{(v)->moreInfoClick.moreInfoClick(pos)}"
-                android:text="@string/open"
+                android:text="@string/call"
                 android:textAlignment="center"
                 android:textColor="@color/blue"
-                android:textSize="@dimen/forteen_sp" />
-
+                android:textSize="@dimen/forteen_sp"
+                android:visibility="invisible" />
 
         </RelativeLayout>
+
     </androidx.cardview.widget.CardView>
+
+
 </layout>

@@ -52,7 +52,7 @@ public class ClientInfoNotesViewModel extends AndroidViewModel {
                             if (loginBeanRetroResponse.isSuccessful()) {
                                 if (loginBeanRetroResponse.body() != null) {
 //                                    data.setValue();
-                                   data.setValue(getClientAdapterBean(loginBeanRetroResponse.body()));
+                                    data.setValue(getClientAdapterBean(loginBeanRetroResponse.body()));
                                 } else {
                                     data.setValue(null);
                                     Toast.makeText(getApplication(), (String) loginBeanRetroResponse.body().getResponseMessage(), Toast.LENGTH_SHORT).show();
@@ -81,12 +81,12 @@ public class ClientInfoNotesViewModel extends AndroidViewModel {
                 ClientNoteAdapterBean clientNoteAdapterBean = new ClientNoteAdapterBean();
                 clientNoteAdapterBean.setDate(checkIsNotNull(clientCareNoteBean.getDataList().get(i).getNote().getNoteAdded()));
                 clientNoteAdapterBean.setDescription(checkIsNotNull(clientCareNoteBean.getDataList().get(i).getNote().getNoteText()));
-                clientNoteAdapterBean.setShortDescription(checkIsNotNull(clientCareNoteBean.getDataList().get(i).getNote().getNoteSubject()));
-                clientNoteAdapterBean.setTitle(checkIsNotNull(clientCareNoteBean.getDataList().get(i).getUpdateEmployeePersonId()));
+                clientNoteAdapterBean.setShortDescription(checkIsNotNull(clientCareNoteBean.getDataList().get(i).getNote().getNoteCategoryName()));
+                clientNoteAdapterBean.setTitle(checkIsNotNull(clientCareNoteBean.getDataList().get(i).getUpdateEmployeePersonName()));
 
                 noteAdapterBeans.add(clientNoteAdapterBean);
             }
-}
+        }
         return noteAdapterBeans;
     }
 

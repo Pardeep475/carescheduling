@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="@dimen/five_dp"
+    android:weightSum="3">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.1"
+        android:fontFamily="@font/rubik_medium"
+        android:text="Monday"
+        android:textColor="@color/black"
+        android:textSize="@dimen/sixteen_sp"
+        android:textStyle="normal" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.1"
+        android:fontFamily="@font/rubik_medium"
+        android:text="Morning"
+        android:textColor="@color/black"
+        android:textSize="@dimen/forteen_sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight=".8"
+        android:fontFamily="@font/rubik_medium"
+        android:text="@string/task"
+        android:textColor="@color/blue"
+        android:textSize="@dimen/forteen_sp" />
+</LinearLayout>

@@ -11,11 +11,14 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.carescheduling.R;
@@ -23,9 +26,14 @@ import com.example.carescheduling.Ui.Base.BaseFragment;
 import com.example.carescheduling.Ui.Common.Common;
 import com.example.carescheduling.Ui.Common.CommonBean;
 import com.example.carescheduling.Ui.HomeScreen.ViewModel.VisitArchiveViewModel;
+import com.example.carescheduling.Ui.HomeScreen.adapter.ClientInfoMedicationAdapter;
+import com.example.carescheduling.Ui.HomeScreen.adapter.VisitArchiveAdapter;
+import com.example.carescheduling.Ui.HomeScreen.beans.ClientInfoCarePlanRetro;
+import com.example.carescheduling.Ui.HomeScreen.beans.VisitArchiveAdapterBean;
 import com.example.carescheduling.Ui.HomeScreen.presenter.VisitArchiveClick;
 import com.example.carescheduling.databinding.VisitArchiveFragmentBinding;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class VisitArchiveFragment extends BaseFragment implements Common, VisitArchiveClick {
@@ -55,11 +63,50 @@ public class VisitArchiveFragment extends BaseFragment implements Common, VisitA
         visitArchiveFragmentBinding.setVisitArchiveClick(this);
     }
 
+
+    private void getVisitArchiveData() {
+// "5633D002-F453-402E-AD63-AAECA11452B5", "2019-05-24",
+//                "5F98AF4F-25DC-4AC8-B867-C5072C101011", "5f98af4f-25dc-4ac8-b867-c5072c100000"
+        mViewModel.getVisitArchiveClient(getSessionManager().getClientId(),
+                visitArchiveFragmentBinding.txtDateOfBirth.getText().toString(),
+                getSessionManager().getBranchId(),
+                getSessionManager().getCustomerId()).observe(this, new Observer<ArrayList<VisitArchiveAdapterBean>>() {
+            @Override
+            public void onChanged(ArrayList<VisitArchiveAdapterBean> visitArchiveAdapterBeans) {
+                if (getActivity() != null && visitArchiveAdapterBeans != null && visitArchiveAdapterBeans.size() > 0) {
+                    visitArchiveFragmentBinding.rcvVisitArchive.setLayoutManager(new LinearLayoutManager(getActivity()));
+                    VisitArchiveAdapter clientInfoMedicationAdapter = new VisitArchiveAdapter(getActivity(), visitArchiveAdapterBeans);
+                    visitArchiveFragmentBinding.rcvVisitArchive.setAdapter(clientInfoMedicationAdapter);
+                    visitArchiveFragmentBinding.rcvVisitArchive.hideShimmerAdapter();
+                    setDataOriginal();
+                } else {
+                    setNoDataFound();
+                }
+            }
+        });
+    }
+
+
+    private void setNoDataFound() {
+        visitArchiveFragmentBinding.rcvVisitArchive.hideShimmerAdapter();
+        visitArchiveFragmentBinding.rcvVisitArchive.setVisibility(View.GONE);
+        visitArchiveFragmentBinding.rlDate.setVisibility(View.GONE);
+        visitArchiveFragmentBinding.rlNoDataFound.setVisibility(View.VISIBLE);
+    }
+
+    private void setDataOriginal() {
+        visitArchiveFragmentBinding.rcvVisitArchive.showShimmerAdapter();
+        visitArchiveFragmentBinding.rcvVisitArchive.setVisibility(View.VISIBLE);
+        visitArchiveFragmentBinding.rlDate.setVisibility(View.GONE);
+        visitArchiveFragmentBinding.rlNoDataFound.setVisibility(View.GONE);
+    }
+
+
     private void setCommonData() {
         CommonBean commonBean = new CommonBean();
         commonBean.setLeftImageDrawable(R.drawable.ic_left_back);
         commonBean.setLeftImageVisible(true);
-        commonBean.setRightImageDrawable(R.drawable.ic_logout);
+        commonBean.setRightImageDrawable(R.drawable.ic_tick);
         commonBean.setRightImageVisible(true);
         commonBean.setTitle("Visits");
         visitArchiveFragmentBinding.setCommonData(commonBean);
@@ -90,17 +137,13 @@ public class VisitArchiveFragment extends BaseFragment implements Common, VisitA
                 @Override
                 public void onDateSet(DatePicker arg0,
                                       int arg1, int arg2, int arg3) {
-                    // TODO Auto-generated method stub
-                    // arg1 = year
-                    // arg2 = month
-                    // arg3 = day
                     showDate(arg1, arg2 + 1, arg3);
                 }
             };
 
     private void showDate(int year, int month, int day) {
         Toast.makeText(getActivity(), year + " " + month + " " + day, Toast.LENGTH_SHORT).show();
-        mViewModel.datePicker(year + "/" + month + "/" + day).observe(getActivity(), new Observer<String>() {
+        mViewModel.datePicker(year + "-" + month + "-" + day).observe(getActivity(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
                 visitArchiveFragmentBinding.setDate(s);
@@ -112,12 +155,32 @@ public class VisitArchiveFragment extends BaseFragment implements Common, VisitA
 
     @Override
     public void leftClick() {
-        if (getActivity() != null)
-            getActivity().onBackPressed();
+        if (getActivity() != null) {
+            if (visitArchiveFragmentBinding.rlNoDataFound.getVisibility() == View.VISIBLE)
+                setBackData();
+            else
+                getActivity().onBackPressed();
+
+        }
+
+    }
+
+    private void setBackData() {
+        visitArchiveFragmentBinding.rcvVisitArchive.hideShimmerAdapter();
+        visitArchiveFragmentBinding.rcvVisitArchive.setVisibility(View.GONE);
+        visitArchiveFragmentBinding.rlDate.setVisibility(View.VISIBLE);
+        visitArchiveFragmentBinding.rlNoDataFound.setVisibility(View.GONE);
     }
 
     @Override
     public void rightClick() {
-
+        if (!visitArchiveFragmentBinding.txtDateOfBirth.getText().toString().equalsIgnoreCase("")) {
+//            setDataOriginal();
+            getVisitArchiveData();
+        } else {
+            Toast.makeText(getActivity(), "Please select date", Toast.LENGTH_SHORT).show();
+        }
     }
+
+
 }

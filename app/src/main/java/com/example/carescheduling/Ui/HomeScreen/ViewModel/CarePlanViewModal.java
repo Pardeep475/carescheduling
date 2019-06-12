@@ -6,6 +6,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientCarePlan;
+import com.example.carescheduling.Ui.HomeScreen.beans.ClientInfoCarePlanRetro;
 import com.example.carescheduling.data.Network.ApiClient;
 import com.example.carescheduling.data.Network.ApiService;
 
@@ -36,23 +37,23 @@ public class CarePlanViewModal extends AndroidViewModel {
     }
 
 
-    public LiveData<ArrayList<ClientCarePlan.Datum>> getCarePlan(String customerId, String branchId, String clientId) {
-        final MutableLiveData<ArrayList<ClientCarePlan.Datum>> data = new MutableLiveData<>();
+    public LiveData<ArrayList<ClientInfoCarePlanRetro.DataList>> getCarePlan(String customerId, String branchId, String clientId) {
+        final MutableLiveData<ArrayList<ClientInfoCarePlanRetro.DataList>> data = new MutableLiveData<>();
         try {
 
-            Disposable disposable = apiService.GetClientCarePlanSchedule(customerId,branchId,clientId)
+            Disposable disposable = apiService.GetClientCarePlanSchedule(customerId, branchId, clientId)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Consumer<Response<ClientCarePlan>>() {
+                    .subscribe(new Consumer<Response<ClientInfoCarePlanRetro>>() {
                         @Override
-                        public void accept(Response<ClientCarePlan> loginBeanRetroResponse) throws Exception {
+                        public void accept(Response<ClientInfoCarePlanRetro> loginBeanRetroResponse) throws Exception {
                             Log.e("LoginSuccess", "success");
                             if (loginBeanRetroResponse.isSuccessful()) {
-                                if (loginBeanRetroResponse.body()!=null){
+                                if (loginBeanRetroResponse.body() != null) {
                                     data.setValue(loginBeanRetroResponse.body().getDataList());
-                                }else{
+                                } else {
                                     data.setValue(null);
-                                    Toast.makeText(getApplication(),(String) loginBeanRetroResponse.body().getResponseMessage(), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplication(), (String) loginBeanRetroResponse.body().getResponseMessage(), Toast.LENGTH_SHORT).show();
                                 }
                             }
                         }

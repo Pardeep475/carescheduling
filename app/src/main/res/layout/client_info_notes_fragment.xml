@@ -24,6 +24,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         android:orientation="vertical">
 
         <include
@@ -44,68 +45,101 @@
         </io.supercharge.shimmerlayout.ShimmerLayout>
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:id="@+id/ll_main_layout"
-        android:layout_height="match_parent">
-
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/ten_dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight=".3"
-                android:text="@string/last_note"
-                android:textAlignment="textStart"
-                android:fontFamily="@font/rubik_medium"
-                android:textSize="@dimen/twenty_sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/rubik_light"
-                android:layout_weight=".6"
-                android:text="@{clientNoteAdapterBean.date}"
-                android:textAlignment="textStart"
-                android:textSize="@dimen/twenty_sp" />
-
-        </LinearLayout>
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/twenty_dp"
-            android:fontFamily="@font/rubik_light"
-            android:text="@{clientNoteAdapterBean.description}"
-            android:textColor="@color/black"
-            android:textSize="@dimen/forteen_sp" />
-
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/twenty_dp"
-            android:text="@string/history"
-            android:fontFamily="@font/rubik_medium"
-            android:textAlignment="textStart"
-            android:textSize="@dimen/twenty_five_sp"
-            android:textStyle="bold" />
-
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcv_client_notes"
+            android:id="@+id/ll_main_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/ten_dp" />
+            android:orientation="vertical">
 
-    </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/sixteen_sp"
+                android:layout_marginTop="@dimen/sixteen_sp"
+                android:layout_marginEnd="@dimen/sixteen_sp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".3"
+                    android:fontFamily="@font/rubik_medium"
+                    android:text="@string/last_note"
+                    android:textAlignment="textStart"
+                    android:textSize="@dimen/eighteen_sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".6"
+                    android:fontFamily="@font/rubik_light"
+                    android:text="@{clientNoteAdapterBean.date}"
+                    android:textAlignment="textStart"
+                    android:textSize="@dimen/sixteen_sp" />
+
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/sixteen_sp"
+                android:layout_marginTop="@dimen/sixteen_sp"
+                android:layout_marginEnd="@dimen/sixteen_sp"
+                android:fontFamily="@font/rubik_light"
+                android:text="@{clientNoteAdapterBean.description}"
+                android:textColor="@color/black"
+                android:textSize="@dimen/forteen_sp" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/sixteen_sp"
+                android:layout_marginTop="@dimen/sixteen_sp"
+                android:layout_marginEnd="@dimen/sixteen_sp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".3"
+                    android:fontFamily="@font/rubik_light"
+                    android:text="@string/wriiten_by"
+                    android:textAlignment="textStart"
+                    android:textSize="@dimen/eighteen_sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".6"
+                    android:fontFamily="@font/rubik_light"
+                    android:text="@{clientNoteAdapterBean.title}"
+                    android:textAlignment="textStart"
+                    android:textSize="@dimen/sixteen_sp" />
+
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/sixteen_sp"
+                android:layout_marginTop="@dimen/sixteen_sp"
+                android:layout_marginEnd="@dimen/sixteen_sp"
+                android:fontFamily="@font/rubik_medium"
+                android:text="@string/history"
+                android:textAlignment="textStart"
+                android:textSize="@dimen/eighteen_sp" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcv_client_notes"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/ten_dp" />
+
+        </LinearLayout>
 
         <include
             android:id="@+id/rl_no_data_found"

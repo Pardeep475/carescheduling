@@ -1,113 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
+        <variable
+            name="clientMedicalBeanAdapter"
+            type="com.example.carescheduling.Ui.HomeScreen.beans.ClientMedicalBeanAdapter" />
     </data>
 
-    <RelativeLayout
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/sixteen_dp"
+        android:layout_marginTop="@dimen/sixteen_dp"
+        android:layout_marginEnd="@dimen/sixteen_sp"
+        app:cardCornerRadius="@dimen/ten_dp"
+        app:cardElevation="@dimen/three_dp">
 
         <RelativeLayout
-            android:id="@+id/rl_medication_name"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/sixteen_dp">
+
+            <RelativeLayout
+                android:id="@+id/rl_medication_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/txt_d_medication_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/rubik_medium"
+                    android:text="@{clientMedicalBeanAdapter.medicationName}"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/sixteen_sp" />
+
+
+                <TextView
+                    android:id="@+id/txt_medication_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/twenty_dp"
+                    android:layout_toEndOf="@+id/txt_d_medication_name"
+                    android:fontFamily="@font/rubik_light"
+                    android:text="@{clientMedicalBeanAdapter.medicationQuantity}"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/sixteen_sp" />
+
+            </RelativeLayout>
 
             <TextView
-                android:id="@+id/txt_d_medication_name"
+                android:id="@+id/txt_detail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/rl_medication_name"
                 android:layout_gravity="center_vertical"
-                android:fontFamily="@font/rubik_medium"
-                android:text="Paracetamol"
-                android:textAlignment="center"
-                android:textSize="@dimen/sixteen_sp" />
-
-
-            <TextView
-                android:id="@+id/txt_medication_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="@dimen/twenty_dp"
-                android:layout_toEndOf="@+id/txt_d_medication_name"
+                android:layout_marginTop="@dimen/ten_dp"
                 android:fontFamily="@font/rubik_light"
-                android:text="500 mg"
+                android:text="@{clientMedicalBeanAdapter.description}"
                 android:textAlignment="center"
                 android:textSize="@dimen/sixteen_sp" />
 
-        </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/rl_medication_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_detail"
+                android:layout_marginTop="@dimen/ten_dp">
 
-        <TextView
-            android:id="@+id/txt_detail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/rl_medication_name"
-            android:layout_gravity="center_vertical"
-            android:layout_marginTop="@dimen/ten_dp"
-            android:fontFamily="@font/rubik_light"
-            android:text="One pill in the morning, One in the afternoon"
-            android:textAlignment="center"
-            android:textSize="@dimen/sixteen_sp" />
+                <TextView
+                    android:id="@+id/txt_d_medication_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/rubik_medium"
+                    android:text="Date: "
+                    android:textAlignment="center"
+                    android:textSize="@dimen/forteen_sp"
+                    android:textStyle="bold" />
 
-        <RelativeLayout
-            android:id="@+id/rl_medication_time"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/txt_detail"
-            android:layout_marginTop="@dimen/ten_dp">
+
+                <TextView
+                    android:id="@+id/txt_medication_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/twenty_dp"
+                    android:layout_toEndOf="@+id/txt_d_medication_time"
+                    android:fontFamily="@font/rubik_light"
+                    android:text="@{clientMedicalBeanAdapter.date}"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/sixteen_sp" />
+
+            </RelativeLayout>
 
             <TextView
-                android:id="@+id/txt_d_medication_time"
+                android:id="@+id/txt_doctor_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/rl_medication_time"
                 android:layout_gravity="center_vertical"
+                android:layout_marginTop="@dimen/fiften_dp"
                 android:fontFamily="@font/rubik_medium"
-                android:text="Paracetamol"
+                android:text="Dr Mr. Frank"
                 android:textAlignment="center"
+                android:textSize="@dimen/forteen_sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/txt_send_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_doctor_name"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="@dimen/ten_dp"
+                android:fontFamily="@font/rubik_medium"
+                android:text="@string/contact_info"
+                android:textAlignment="center"
+                android:textColor="@color/blue"
                 android:textSize="@dimen/sixteen_sp"
-                android:textStyle="bold" />
-
-
-            <TextView
-                android:id="@+id/txt_medication_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="@dimen/twenty_dp"
-                android:layout_toEndOf="@+id/txt_d_medication_time"
-                android:fontFamily="@font/rubik_light"
-                android:text="500 mg"
-                android:textAlignment="center"
-                android:textSize="@dimen/sixteen_sp" />
-
+                android:visibility="gone" />
         </RelativeLayout>
-
-        <TextView
-            android:id="@+id/txt_doctor_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/rl_medication_time"
-            android:layout_gravity="center_vertical"
-            android:layout_marginTop="@dimen/fiften_dp"
-            android:fontFamily="@font/rubik_medium"
-            android:text="Dr Mr. Frank"
-            android:textAlignment="center"
-            android:textSize="@dimen/forteen_sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/txt_send_email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/txt_doctor_name"
-            android:layout_gravity="center_vertical"
-            android:layout_marginTop="@dimen/ten_dp"
-            android:fontFamily="@font/rubik_medium"
-            android:text="@string/contact_info"
-            android:textAlignment="center"
-            android:textColor="@color/blue"
-            android:textSize="@dimen/sixteen_sp" />
-    </RelativeLayout>
+    </androidx.cardview.widget.CardView>
 </layout>

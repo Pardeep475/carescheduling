@@ -72,7 +72,7 @@ public class HomeFViewModel extends AndroidViewModel {
                     @Override
                     public void accept(Response<ClientCarePlan> loginBeanRetroResponse) throws Exception {
                         Log.e("LoginSuccess", "success");
-                        if (loginBeanRetroResponse.isSuccessful()) {
+                        if (loginBeanRetroResponse.isSuccessful() && loginBeanRetroResponse.body() != null) {
                             data.setValue(loginBeanRetroResponse.body());
                         } else {
                             data.setValue(null);

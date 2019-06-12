@@ -2,6 +2,9 @@ package com.example.carescheduling.Ui.HomeScreen.ViewModel;
 
 import android.app.Application;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -79,14 +82,28 @@ public class ClientContactsViewModel extends AndroidViewModel {
         if (careContactsBean.getDataList() != null) {
             for (int i = 0; i < careContactsBean.getDataList().size(); i++) {
                 ClientContactsBean clientContactsBean = new ClientContactsBean();
-                clientContactsBean.setAddress("N/A");
-                clientContactsBean.setEmail("N/A");
-                clientContactsBean.setPostCode("N/A");
-                clientContactsBean.setMobile("N/A");
+                clientContactsBean.setEmail(checkIsNotNull(careContactsBean.getDataList().get(i).getEmailAddress()));
+                clientContactsBean.setMobile(checkIsNotNull(careContactsBean.getDataList().get(i).getMobileNumber()));
                 clientContactsBean.setTelephone("N/A");
                 clientContactsBean.setType(checkIsNotNull(careContactsBean.getDataList().get(i).getContactTypeName()));
-                clientContactsBean.setName("N/A");
+                clientContactsBean.setName(checkIsNotNull(careContactsBean.getDataList().get(i).getContactPersonName()));
+                if (!checkIsNotNullWithOutNA(careContactsBean.getDataList().get(i).getImageHexString()).equalsIgnoreCase(""))
+                    clientContactsBean.setImage(ImageFromBase64(careContactsBean.getDataList().get(i).getImageHexString()));
 
+                if (careContactsBean.getDataList().get(i).getAddress() != null) {
+                    clientContactsBean.setPostCode(checkIsNotNull(careContactsBean.getDataList().get(i).getAddress().getPostCodeName()));
+                    String address = checkIsNotNullWithOutNA(careContactsBean.getDataList().get(i).getAddress().getBuildingName()) + " " +
+                            checkIsNotNullWithOutNA(careContactsBean.getDataList().get(i).getAddress().getBuildingNumber()) + " " +
+                            checkIsNotNullWithOutNA(careContactsBean.getDataList().get(i).getAddress().getDepartmentName()) + " " +
+                            checkIsNotNullWithOutNA(careContactsBean.getDataList().get(i).getAddress().getDependentLocality()) + " " +
+                            checkIsNotNullWithOutNA(careContactsBean.getDataList().get(i).getAddress().getOrganisationName()) + " " +
+                            checkIsNotNullWithOutNA(careContactsBean.getDataList().get(i).getAddress().getStreetName()) + " " +
+                            checkIsNotNullWithOutNA(careContactsBean.getDataList().get(i).getAddress().getCountryName()) + " " +
+                            checkIsNotNullWithOutNA(careContactsBean.getDataList().get(i).getAddress().getPostCodeName());
+                    clientContactsBean.setAddress(address);
+                } else {
+                    clientContactsBean.setAddress("N/A");
+                }
                 clientContactsBeanArrayList.add(clientContactsBean);
             }
         }
@@ -95,7 +112,16 @@ public class ClientContactsViewModel extends AndroidViewModel {
 
 
     private String checkIsNotNull(String value) {
-        return value != null && !value.equalsIgnoreCase("") ? value : "N/A";
+        return value != null && !value.equalsIgnoreCase("") && !value.equalsIgnoreCase("null") ? value : "N/A";
+    }
+
+    private String checkIsNotNullWithOutNA(String value) {
+        return value != null && !value.equalsIgnoreCase("null") ? value : "";
+    }
+
+    private Bitmap ImageFromBase64(String img) {
+        byte[] decodedString = Base64.decode(img, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
     }
 
     @Override

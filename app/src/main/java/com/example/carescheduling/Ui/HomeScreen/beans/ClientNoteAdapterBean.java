@@ -1,7 +1,7 @@
 package com.example.carescheduling.Ui.HomeScreen.beans;
 
 public class ClientNoteAdapterBean {
-    private String title,description,date,shortDescription;
+    private String title, description, date, shortDescription;
 
     public String getTitle() {
         return title;

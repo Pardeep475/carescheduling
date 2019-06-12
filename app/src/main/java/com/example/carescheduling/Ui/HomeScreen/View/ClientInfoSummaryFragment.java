@@ -20,19 +20,36 @@ import com.example.carescheduling.Ui.Base.BaseFragment;
 import com.example.carescheduling.Ui.Common.Common;
 import com.example.carescheduling.Ui.Common.CommonBean;
 import com.example.carescheduling.Ui.HomeScreen.ViewModel.ClientInfoSummaryViewModel;
+import com.example.carescheduling.Ui.HomeScreen.beans.ClientBookingScreenModel;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientCareSummaryBean;
 import com.example.carescheduling.Ui.HomeScreen.presenter.BackPressedClick;
 import com.example.carescheduling.Utils.ConnectivityReceiver;
 import com.example.carescheduling.databinding.ClientInfoSummaryFragmentBinding;
 
+import java.io.Serializable;
+
 public class ClientInfoSummaryFragment extends BaseFragment implements Common {
 
     private ClientInfoSummaryViewModel mViewModel;
     private ClientInfoSummaryFragmentBinding clientInfoSummaryFragmentBinding;
+    ClientBookingScreenModel clientBookingModel;
 
-    public static ClientInfoSummaryFragment newInstance() {
-        return new ClientInfoSummaryFragment();
+    public static ClientInfoSummaryFragment newInstance(ClientBookingScreenModel clientBookingModel) {
+        ClientInfoSummaryFragment clientInfoSummaryFragment = new ClientInfoSummaryFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("DATA", clientBookingModel);
+        clientInfoSummaryFragment.setArguments(bundle);
+        return clientInfoSummaryFragment;
     }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            clientBookingModel = (ClientBookingScreenModel) getArguments().getSerializable("DATA");
+        }
+    }
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -46,11 +63,12 @@ public class ClientInfoSummaryFragment extends BaseFragment implements Common {
     private void setUpView(View view) {
         setCommonData();
         clientInfoSummaryFragmentBinding.slDemo.startShimmerAnimation();
+        clientInfoSummaryFragmentBinding.setClientBookingScreenModel(clientBookingModel);
         mViewModel = ViewModelProviders.of(this).get(ClientInfoSummaryViewModel.class);
         try {
             if (ConnectivityReceiver.isNetworkAvailable(getActivity())) {
                 setUpData();
-            }else {
+            } else {
                 setNoDataFound();
                 Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
             }
@@ -75,9 +93,9 @@ public class ClientInfoSummaryFragment extends BaseFragment implements Common {
 
     private void setUpData() {
 
-        mViewModel.getDisabilities("5F98AF4F-25DC-4AC8-B867-C5072C100000",
-                "5F98AF4F-25DC-4AC8-B867-C5072C101011",
-                "978E55D2-B7B9-49E0-A654-14B70EB1A344").observe(this, new Observer<ClientCareSummaryBean>() {
+        mViewModel.getDisabilities(getSessionManager().getCustomerId(),
+                getSessionManager().getBranchId(),
+                getSessionManager().getClientId()).observe(this, new Observer<ClientCareSummaryBean>() {
             @Override
             public void onChanged(ClientCareSummaryBean clientCareSummaryBean) {
                 if (clientCareSummaryBean != null) {

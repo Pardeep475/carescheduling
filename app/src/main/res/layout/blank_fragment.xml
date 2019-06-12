@@ -18,6 +18,10 @@
         <variable
             name="myNextVisitClick"
             type="com.example.carescheduling.Ui.HomeScreen.presenter.MyNextVisitClick" />
+
+        <variable
+            name="clientBookingScreenModel"
+            type="com.example.carescheduling.Ui.HomeScreen.beans.ClientBookingScreenModel" />
     </data>
 
     <RelativeLayout
@@ -34,24 +38,26 @@
 
 
         <ScrollView
+            android:id="@+id/s_blank"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/rl_tool">
+            android:layout_below="@+id/rl_tool"
+            android:visibility="gone">
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/sixteen_dp"
                 android:layout_marginTop="@dimen/sixteen_dp"
-                android:layout_marginBottom="@dimen/sixteen_dp"
-                android:layout_marginEnd="@dimen/sixteen_dp">
+                android:layout_marginEnd="@dimen/sixteen_dp"
+                android:layout_marginBottom="@dimen/sixteen_dp">
 
                 <TextView
                     android:id="@+id/edt_visit_person_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/rubik_medium"
-                    android:text="Mr. John Smith"
+                    android:text="@{clientBookingScreenModel.name}"
                     android:textColor="@color/black"
                     android:textSize="@dimen/eighteen_sp" />
 
@@ -62,7 +68,7 @@
                     android:layout_below="@+id/edt_visit_person_name"
                     android:layout_marginTop="@dimen/five_dp"
                     android:fontFamily="@font/rubik_light"
-                    android:text="Wednesday 12.10.2016"
+                    android:text="@{clientBookingScreenModel.date}"
                     android:textColor="@color/red"
                     android:textSize="@dimen/forteen_sp" />
 
@@ -86,19 +92,18 @@
                     android:layout_marginTop="@dimen/five_dp"
                     android:layout_toEndOf="@+id/txt_visit_person_timing"
                     android:fontFamily="@font/rubik_light"
-                    android:text="08:30 - 09:30"
+                    android:text="@{clientBookingScreenModel.time}"
                     android:textColor="@color/black"
                     android:textSize="@dimen/forteen_sp" />
 
 
                 <ImageView
                     android:id="@+id/img_visit_person"
-                    android:layout_width="@dimen/hundrd_dp"
-                    android:layout_height="@dimen/hundrd_dp"
-                    android:layout_below="@+id/txt_visit_person_timing"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginTop="@dimen/ten_dp"
+                    android:layout_width="@dimen/eighty_dp"
+                    android:layout_height="@dimen/eighty_dp"
+                    android:layout_alignParentEnd="true"
                     android:contentDescription="@string/user_profile"
+                    app:setImage="@{clientBookingScreenModel.image}"
                     app:srcCompat="@drawable/user_placeholder" />
 
                 <TextView
@@ -114,7 +119,8 @@
                     android:padding="@dimen/ten_dp"
                     android:text="@string/running_late"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/forteen_sp" />
+                    android:textSize="@dimen/forteen_sp"
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/txt_key"
@@ -129,7 +135,8 @@
                     android:padding="@dimen/ten_dp"
                     android:text="@string/running_late"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/forteen_sp" />
+                    android:textSize="@dimen/forteen_sp"
+                    android:visibility="gone" />
 
 
                 <TextView
@@ -150,7 +157,7 @@
                     android:layout_below="@+id/txt_next_upcoming_visit"
                     android:layout_marginTop="@dimen/five_dp"
                     android:fontFamily="@font/rubik_light"
-                    android:text="Mr John smith."
+                    android:text="@{clientBookingScreenModel.name}"
                     android:textColor="@color/black"
                     android:textSize="@dimen/forteen_sp" />
 
@@ -172,7 +179,7 @@
                     android:layout_below="@+id/txt_person_address"
                     android:layout_marginTop="@dimen/five_dp"
                     android:fontFamily="@font/rubik_light"
-                    android:text="Mr John smith."
+                    android:text="@{clientBookingScreenModel.address}"
                     android:textColor="@color/black"
                     android:textSize="@dimen/forteen_sp" />
 
@@ -194,7 +201,7 @@
                     android:layout_below="@+id/txt_person_telephone"
                     android:layout_marginTop="@dimen/five_dp"
                     android:fontFamily="@font/rubik_light"
-                    android:text="01234567890"
+                    android:text="@{clientBookingScreenModel.telephone}"
                     android:textColor="@color/black"
                     android:textSize="@dimen/forteen_sp" />
 
@@ -219,6 +226,7 @@
                     android:layout_marginTop="@dimen/five_dp"
                     android:background="@color/blue"
                     android:fontFamily="@font/rubik_medium"
+                    android:onClick="@{(v)-> myNextVisitClick.ClientTask(clientBookingScreenModel.getTasksArrayList())}"
                     android:text="@string/todays_client_task"
                     android:textColor="@color/white" />
 
@@ -268,6 +276,25 @@
 
         </ScrollView>
 
+        <io.supercharge.shimmerlayout.ShimmerLayout
+            android:id="@+id/sl_demo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/rl_tool"
+            android:background="@color/white"
+            android:visibility="visible">
+
+            <include layout="@layout/item_shimmer_layout" />
+
+        </io.supercharge.shimmerlayout.ShimmerLayout>
+
+        <include
+            android:id="@+id/rl_no_data_found"
+            layout="@layout/no_data_found"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/rl_tool"
+            android:visibility="gone" />
 
     </RelativeLayout>
 </layout>

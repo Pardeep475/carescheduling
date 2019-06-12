@@ -14,6 +14,7 @@
             name="commonClick"
             type="com.example.carescheduling.Ui.Common.Common" />
 
+
     </data>
 
     <RelativeLayout
@@ -26,14 +27,36 @@
             bind:commonClick="@{commonClick}"
             bind:commonData="@{commonData}" />
 
-        <com.cooltechworks.views.shimmer.ShimmerRecyclerView
-            android:id="@+id/rcv_client_info_medication"
+        <!--<TextView
+            android:id="@+id/txt_document"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rl_tool"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="@dimen/ten_dp"
+            android:text="@string/Documents"
+            android:textAlignment="center"
+            android:textSize="@dimen/twenty_five_dp"
+            android:textStyle="bold" />-->
+
+        <io.supercharge.shimmerlayout.ShimmerLayout
+            android:id="@+id/sl_demo"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/rl_tool"
-            app:shimmer_demo_angle="20"
-            app:shimmer_demo_grid_child_count="4"
-            app:shimmer_demo_layout_manager_type="linear_vertical" />
+            android:background="@color/white"
+            android:visibility="gone">
+
+            <include layout="@layout/item_shimmer_layout" />
+
+        </io.supercharge.shimmerlayout.ShimmerLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcv_client_info_documents"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/rl_tool"
+            android:visibility="visible" />
 
         <include
             android:id="@+id/rl_no_data_found"

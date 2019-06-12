@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:bind="http://schemas.android.com/apk/res-auto"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -17,7 +17,7 @@
 
         <variable
             name="backPressedClick"
-            type="com.example.carescheduling.Ui.HomeScreen.presenter.BackPressedClick"/>
+            type="com.example.carescheduling.Ui.HomeScreen.presenter.BackPressedClick" />
     </data>
 
     <RelativeLayout
@@ -54,18 +54,24 @@
 
         </io.supercharge.shimmerlayout.ShimmerLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/carePlanRecyclerview"
-            android:layout_below="@+id/rl_tool"
+        <!--<androidx.recyclerview.widget.RecyclerView-->
+        <!--android:id="@+id/carePlanRecyclerview"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_below="@+id/rl_tool"-->
+        <!--android:visibility="gone"/>-->
+        <ScrollView
+            android:id="@+id/sv_care_plan"
             android:layout_width="match_parent"
-            android:paddingStart="@dimen/twenty_dp"
-            android:paddingEnd="@dimen/twenty_dp"
-            android:visibility="gone"
-            android:paddingBottom="@dimen/twenty_dp"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rl_tool">
 
-        </androidx.recyclerview.widget.RecyclerView>
-
+            <LinearLayout
+                android:id="@+id/ll_care_plan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+        </ScrollView>
 
         <include
             android:id="@+id/rl_no_data_found"

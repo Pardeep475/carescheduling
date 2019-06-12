@@ -73,9 +73,9 @@ public class ClientInfoPersonalDetails extends BaseFragment implements Common {
     }
 
     private void setClientPersonalDetails() {
-        mViewModel.getProfileDetails("5F98AF4F-25DC-4AC8-B867-C5072C100000",
-                "5F98AF4F-25DC-4AC8-B867-C5072C101011",
-                "978E55D2-B7B9-49E0-A654-14B70EB1A344").observe(this, new Observer<EditProfileInfoBean>() {
+        mViewModel.getProfileDetails(getSessionManager().getCustomerId(),
+                getSessionManager().getBranchId(),
+                getSessionManager().getClientId()).observe(this, new Observer<EditProfileInfoBean>() {
             @Override
             public void onChanged(EditProfileInfoBean editProfileInfoBean) {
                 if (editProfileInfoBean != null) {

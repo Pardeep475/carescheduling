@@ -76,7 +76,7 @@ public class ClientInfoDocumentsViewModel extends AndroidViewModel {
 
     private ArrayList<ClientNoteAdapterBean> getClientAdapterBean(ClientCareDocumentBean clientCareNoteBean) {
         ArrayList<ClientNoteAdapterBean> noteAdapterBeans = new ArrayList<>();
-        if (clientCareNoteBean != null && clientCareNoteBean.getData() != null) {
+        if (clientCareNoteBean != null && clientCareNoteBean.getDataList() != null) {
             for (int i = 0; i < clientCareNoteBean.getDataList().size(); i++) {
                 ClientNoteAdapterBean clientNoteAdapterBean = new ClientNoteAdapterBean();
                 clientNoteAdapterBean.setDate(checkIsNotNull(clientCareNoteBean.getDataList().get(i).getDocument().getDocumentAdded()));

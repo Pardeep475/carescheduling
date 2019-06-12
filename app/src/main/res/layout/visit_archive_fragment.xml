@@ -9,6 +9,7 @@
         <variable
             name="visitArchiveClick"
             type="com.example.carescheduling.Ui.HomeScreen.presenter.VisitArchiveClick" />
+
         <variable
             name="commonData"
             type="com.example.carescheduling.Ui.Common.CommonBean" />
@@ -16,14 +17,17 @@
         <variable
             name="commonClick"
             type="com.example.carescheduling.Ui.Common.Common" />
+
         <variable
             name="date"
             type="String" />
+
     </data>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         tools:context=".Ui.HomeScreen.View.VisitArchiveFragment">
 
         <include
@@ -32,41 +36,72 @@
             bind:commonClick="@{commonClick}"
             bind:commonData="@{commonData}" />
 
-
-        <RelativeLayout
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rl_tool"
-            android:layout_margin="@dimen/sixteen_dp">
+            app:cardCornerRadius="@dimen/ten_dp"
+            app:cardElevation="@dimen/three_dp">
 
-            <TextView
-                android:id="@+id/txt_select_date"
+            <RelativeLayout
+                android:id="@+id/rl_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/rubik_medium"
-                android:layout_gravity="center_vertical"
-                android:paddingTop="@dimen/five_dp"
-                android:paddingBottom="@dimen/five_dp"
-                android:text="@string/please_select_date" />
+                android:layout_below="@+id/rl_tool"
+                android:layout_margin="@dimen/sixteen_dp"
 
-            <TextView
-                android:id="@+id/txt_date_of_birth"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/txt_select_date"
-                android:layout_marginTop="@dimen/ten_dp"
-                android:background="@android:color/white"
-                android:drawableTint="@color/grey"
-                android:fontFamily="@font/rubik_light"
-                android:onClick="@{(v)->visitArchiveClick.calenderOnClick()}"
-                android:paddingStart="@dimen/ten_dp"
-                android:paddingTop="@dimen/ten_dp"
-                android:paddingEnd="@dimen/ten_dp"
-                android:paddingBottom="@dimen/ten_dp"
-                android:text="@{date}"
-                app:drawableRightCompat="@drawable/ic_calendar" />
+                android:visibility="visible">
 
-        </RelativeLayout>
+                <TextView
+                    android:id="@+id/txt_select_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/rubik_medium"
+                    android:paddingTop="@dimen/five_dp"
+                    android:paddingBottom="@dimen/five_dp"
+                    android:text="@string/please_select_date" />
+
+                <TextView
+                    android:id="@+id/txt_date_of_birth"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txt_select_date"
+                    android:layout_marginTop="@dimen/ten_dp"
+                    android:background="@color/white_trans"
+                    android:drawableTint="@color/grey"
+                    android:fontFamily="@font/rubik_light"
+                    android:onClick="@{(v)->visitArchiveClick.calenderOnClick()}"
+                    android:paddingStart="@dimen/ten_dp"
+                    android:paddingTop="@dimen/ten_dp"
+                    android:paddingEnd="@dimen/ten_dp"
+                    android:paddingBottom="@dimen/ten_dp"
+                    android:text="@{date}"
+                    app:drawableRightCompat="@drawable/ic_calendar" />
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+        <com.cooltechworks.views.shimmer.ShimmerRecyclerView
+            android:id="@+id/rcv_visit_archive"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/rl_tool"
+            android:background="@color/white"
+            android:visibility="gone"
+            app:shimmer_demo_angle="20"
+            app:shimmer_demo_grid_child_count="4"
+            app:shimmer_demo_layout_manager_type="linear_vertical" />
+
+        <include
+            android:id="@+id/rl_no_data_found"
+            layout="@layout/no_data_found"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/rl_tool"
+            android:visibility="gone" />
 
     </RelativeLayout>
 </layout>

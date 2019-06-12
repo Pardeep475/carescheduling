@@ -2,24 +2,17 @@ package com.example.carescheduling.Ui.HomeScreen.beans;
 
 import android.graphics.Bitmap;
 
-public class ClientContactsBean {
-    private String type, name, address, mobile, telephone, email, postCode;
+public class VisitArchiveAdapterBean {
+    private String visitTime, name, address, telephone;
     private Bitmap image;
 
-    public String getPostCode() {
-        return postCode;
+
+    public String getVisitTime() {
+        return visitTime;
     }
 
-    public void setPostCode(String postCode) {
-        this.postCode = postCode;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
+    public void setVisitTime(String visitTime) {
+        this.visitTime = visitTime;
     }
 
     public String getName() {
@@ -38,28 +31,12 @@ public class ClientContactsBean {
         this.address = address;
     }
 
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
-    }
-
     public String getTelephone() {
         return telephone;
     }
 
     public void setTelephone(String telephone) {
         this.telephone = telephone;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public Bitmap getImage() {

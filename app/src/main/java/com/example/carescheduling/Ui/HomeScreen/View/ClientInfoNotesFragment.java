@@ -58,7 +58,7 @@ public class ClientInfoNotesFragment extends BaseFragment implements Common {
         try {
             if (ConnectivityReceiver.isNetworkAvailable(getActivity())) {
                 setUpData(view);
-            }else {
+            } else {
                 setNoDataFound();
                 Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
             }
@@ -83,15 +83,16 @@ public class ClientInfoNotesFragment extends BaseFragment implements Common {
     }
 
     private void setUpData(View view) {
-        mViewModel.getClientNotes("5F98AF4F-25DC-4AC8-B867-C5072C100000",
-                "5F98AF4F-25DC-4AC8-B867-C5072C101011",
-                "511E0DF3-7A01-438D-BA67-A3A8C254BFE0").observe(this, new Observer<ArrayList<ClientNoteAdapterBean>>() {
+//        http://mobile.rota.services/CssMobileRestfulService.svc/GetClientNotes///
+        mViewModel.getClientNotes(getSessionManager().getCustomerId(),
+                getSessionManager().getBranchId(),
+                getSessionManager().getClientId()).observe(this, new Observer<ArrayList<ClientNoteAdapterBean>>() {
             @Override
             public void onChanged(ArrayList<ClientNoteAdapterBean> clientNoteAdapterBeans) {
 
                 if (clientNoteAdapterBeans != null && clientNoteAdapterBeans.size() > 0) {
                     clientInfoNotesFragmentBinding.setClientNoteAdapterBean(clientNoteAdapterBeans.get(0));
-
+//                    clientNoteAdapterBeans.remove(0);
                     clientInfoNotesFragmentBinding.rcvClientNotes.setLayoutManager(new LinearLayoutManager(getActivity()));
                     ClientNoteAdapter clientDisabilitiesAdapter = new ClientNoteAdapter(getActivity(), clientNoteAdapterBeans);
                     clientInfoNotesFragmentBinding.rcvClientNotes.setAdapter(clientDisabilitiesAdapter);

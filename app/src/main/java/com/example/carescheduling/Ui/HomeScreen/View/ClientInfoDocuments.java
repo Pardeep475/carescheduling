@@ -80,9 +80,12 @@ public class ClientInfoDocuments extends BaseFragment implements Common {
     }
 
     private void setUpRecyclerView(View view) {
-        mViewModel.getClientDocument("5F98AF4F-25DC-4AC8-B867-C5072C100000",
-                "C38D6479-7CAC-4F77-8AAA-05B0E0F7C88F",
-                "5F98AF4F-25DC-4AC8-B867-C5072C101011").observe(this, new Observer<ArrayList<ClientNoteAdapterBean>>() {
+
+//        //
+
+        mViewModel.getClientDocument(getSessionManager().getCustomerId(),
+                getSessionManager().getBranchId(),
+                getSessionManager().getClientId()).observe(this, new Observer<ArrayList<ClientNoteAdapterBean>>() {
             @Override
             public void onChanged(ArrayList<ClientNoteAdapterBean> clientNoteAdapterBeans) {
                 if (clientNoteAdapterBeans != null && clientNoteAdapterBeans.size() > 0) {

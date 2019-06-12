@@ -13,8 +13,11 @@ import com.example.carescheduling.Ui.Common.CommonBean;
 import com.example.carescheduling.Ui.Dashboard.Adapter.HomeScreenAdapter;
 import com.example.carescheduling.Ui.Dashboard.presenter.HomeScreenOnClick;
 import com.example.carescheduling.Ui.HomeScreen.ViewModel.ClientInfoHomeFragmentViewModel;
+import com.example.carescheduling.Ui.HomeScreen.beans.ClientBookingScreenModel;
 import com.example.carescheduling.Ui.HomeScreen.presenter.ClientInfoHomeClick;
 import com.example.carescheduling.databinding.ClientInfoHomeFragmentBinding;
+
+import java.io.Serializable;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,9 +30,22 @@ public class ClientInfoHomeFragment extends BaseFragment implements Common, Home
 
     private ClientInfoHomeFragmentBinding clientInfoHomeFragmentBinding;
     private ClientInfoHomeFragmentViewModel clientInfoHomeFragmentViewModel;
+private ClientBookingScreenModel clientBookingModel;
 
-    public static ClientInfoHomeFragment newInstance() {
-        return new ClientInfoHomeFragment();
+    public static ClientInfoHomeFragment newInstance(ClientBookingScreenModel clientBookingModel) {
+        ClientInfoHomeFragment clientInfoHomeFragment = new ClientInfoHomeFragment();
+        Bundle bundle= new Bundle();
+        bundle.putSerializable("DATA",(Serializable) clientBookingModel);
+        clientInfoHomeFragment.setArguments(bundle);
+        return clientInfoHomeFragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            clientBookingModel = (ClientBookingScreenModel) getArguments().getSerializable("DATA");
+        }
     }
 
     @Nullable
@@ -73,7 +89,7 @@ public class ClientInfoHomeFragment extends BaseFragment implements Common, Home
     public void OnClickHomeScreen(int pos) {
         switch (pos) {
             case 0: {
-                setFragment(ClientInfoSummaryFragment.newInstance());
+                setFragment(ClientInfoSummaryFragment.newInstance(clientBookingModel));
                 break;
             }
             case 1: {

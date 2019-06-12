@@ -61,67 +61,75 @@ public class ClientBookingListModel {
     public void setSuccess(Boolean success) {
         this.success = success;
     }
-    public class BookingClientInformation {
+    public class Data {
 
-        @SerializedName("BookingDateTime")
+        @SerializedName("BookingDate")
         @Expose
-        private String bookingDateTime;
-        @SerializedName("BookingStatusTypeName")
+        private String bookingDate;
+        @SerializedName("BookingEndTime")
         @Expose
-        private String bookingStatusTypeName;
-        @SerializedName("ClientBookingEmployeeModel")
+        private String bookingEndTime;
+        @SerializedName("BookingStartTime")
         @Expose
-        private List<ClientBookingEmployeeModel> clientBookingEmployeeModel = null;
+        private String bookingStartTime;
+        @SerializedName("ClientAddress")
+        @Expose
+        private ClientAddress clientAddress;
         @SerializedName("ClientBookingId")
         @Expose
         private String clientBookingId;
-        @SerializedName("ClientBookingTaskModel")
+        @SerializedName("ClientName")
         @Expose
-        private List<Object> clientBookingTaskModel = null;
-        @SerializedName("Clientd")
+        private String clientName;
+        @SerializedName("ClientPersonId")
         @Expose
-        private String clientd;
-        @SerializedName("CreatedDateTime")
+        private String clientPersonId;
+        @SerializedName("ClientPhoneNumber")
         @Expose
-        private String createdDateTime;
-        @SerializedName("CustomerId")
+        private String clientPhoneNumber;
+        @SerializedName("ImageHexString")
         @Expose
-        private String customerId;
-        @SerializedName("ScheduleStartDate")
+        private String imageHexString;
+        @SerializedName("Person")
         @Expose
-        private String scheduleStartDate;
-        @SerializedName("TimeTableName")
+        private Object person;
+        @SerializedName("TaskList")
         @Expose
-        private String timeTableName;
-        @SerializedName("WeekRotationTypeName")
+        private List<TaskList> taskList = null;
+        @SerializedName("Weekdayname")
         @Expose
-        private String weekRotationTypeName;
-        @SerializedName("WeekdayName")
-        @Expose
-        private String weekdayName;
+        private String weekdayname;
 
-        public String getBookingDateTime() {
-            return bookingDateTime;
+        public String getBookingDate() {
+            return bookingDate;
         }
 
-        public void setBookingDateTime(String bookingDateTime) {
-            this.bookingDateTime = bookingDateTime;
+        public void setBookingDate(String bookingDate) {
+            this.bookingDate = bookingDate;
         }
 
-        public String getBookingStatusTypeName() {
-            return bookingStatusTypeName;
+        public String getBookingEndTime() {
+            return bookingEndTime;
         }
 
-        public void setBookingStatusTypeName(String bookingStatusTypeName) {
-            this.bookingStatusTypeName = bookingStatusTypeName;
+        public void setBookingEndTime(String bookingEndTime) {
+            this.bookingEndTime = bookingEndTime;
         }
 
-        public List<ClientBookingEmployeeModel> getClientBookingEmployeeModel() {
-            return clientBookingEmployeeModel;
+        public String getBookingStartTime() {
+            return bookingStartTime;
         }
 
-        public void setClientBookingEmployeeModel(List<ClientBookingEmployeeModel> clientBookingEmployeeModel) {
-            this.clientBookingEmployeeModel = clientBookingEmployeeModel;
+        public void setBookingStartTime(String bookingStartTime) {
+            this.bookingStartTime = bookingStartTime;
+        }
+
+        public ClientAddress getClientAddress() {
+            return clientAddress;
+        }
+
+        public void setClientAddress(ClientAddress clientAddress) {
+            this.clientAddress = clientAddress;
         }
 
         public String getClientBookingId() {
@@ -132,297 +140,109 @@ public class ClientBookingListModel {
             this.clientBookingId = clientBookingId;
         }
 
-        public List<Object> getClientBookingTaskModel() {
-            return clientBookingTaskModel;
+        public String getClientName() {
+            return clientName;
         }
 
-        public void setClientBookingTaskModel(List<Object> clientBookingTaskModel) {
-            this.clientBookingTaskModel = clientBookingTaskModel;
+        public void setClientName(String clientName) {
+            this.clientName = clientName;
         }
 
-        public String getClientd() {
-            return clientd;
+        public String getClientPersonId() {
+            return clientPersonId;
         }
 
-        public void setClientd(String clientd) {
-            this.clientd = clientd;
+        public void setClientPersonId(String clientPersonId) {
+            this.clientPersonId = clientPersonId;
         }
 
-        public String getCreatedDateTime() {
-            return createdDateTime;
+        public String getClientPhoneNumber() {
+            return clientPhoneNumber;
         }
 
-        public void setCreatedDateTime(String createdDateTime) {
-            this.createdDateTime = createdDateTime;
+        public void setClientPhoneNumber(String clientPhoneNumber) {
+            this.clientPhoneNumber = clientPhoneNumber;
         }
 
-        public String getCustomerId() {
-            return customerId;
+        public String getImageHexString() {
+            return imageHexString;
         }
 
-        public void setCustomerId(String customerId) {
-            this.customerId = customerId;
+        public void setImageHexString(String imageHexString) {
+            this.imageHexString = imageHexString;
         }
 
-        public String getScheduleStartDate() {
-            return scheduleStartDate;
+        public Object getPerson() {
+            return person;
         }
 
-        public void setScheduleStartDate(String scheduleStartDate) {
-            this.scheduleStartDate = scheduleStartDate;
+        public void setPerson(Object person) {
+            this.person = person;
         }
 
-        public String getTimeTableName() {
-            return timeTableName;
+        public List<TaskList> getTaskList() {
+            return taskList;
         }
 
-        public void setTimeTableName(String timeTableName) {
-            this.timeTableName = timeTableName;
+        public void setTaskList(List<TaskList> taskList) {
+            this.taskList = taskList;
         }
 
-        public String getWeekRotationTypeName() {
-            return weekRotationTypeName;
+        public String getWeekdayname() {
+            return weekdayname;
         }
 
-        public void setWeekRotationTypeName(String weekRotationTypeName) {
-            this.weekRotationTypeName = weekRotationTypeName;
-        }
-
-        public String getWeekdayName() {
-            return weekdayName;
-        }
-
-        public void setWeekdayName(String weekdayName) {
-            this.weekdayName = weekdayName;
-        }
-
-        public class ClientBookingEmployeeModel {
-
-            @SerializedName("BookingConfirmationTypeName")
-            @Expose
-            private String bookingConfirmationTypeName;
-            @SerializedName("ClientBookingId")
-            @Expose
-            private String clientBookingId;
-            @SerializedName("CustomerId")
-            @Expose
-            private String customerId;
-            @SerializedName("EmployeePersonId")
-            @Expose
-            private String employeePersonId;
-
-            public String getBookingConfirmationTypeName() {
-                return bookingConfirmationTypeName;
-            }
-
-            public void setBookingConfirmationTypeName(String bookingConfirmationTypeName) {
-                this.bookingConfirmationTypeName = bookingConfirmationTypeName;
-            }
-
-            public String getClientBookingId() {
-                return clientBookingId;
-            }
-
-            public void setClientBookingId(String clientBookingId) {
-                this.clientBookingId = clientBookingId;
-            }
-
-            public String getCustomerId() {
-                return customerId;
-            }
-
-            public void setCustomerId(String customerId) {
-                this.customerId = customerId;
-            }
-
-            public String getEmployeePersonId() {
-                return employeePersonId;
-            }
-
-            public void setEmployeePersonId(String employeePersonId) {
-                this.employeePersonId = employeePersonId;
-            }
-
-        }
-    }
-    public class Data {
-
-        @SerializedName("BookingClient")
-        @Expose
-        private Object bookingClient;
-        @SerializedName("BookingClientInformation")
-        @Expose
-        private BookingClientInformation bookingClientInformation;
-        @SerializedName("BookingClientModel")
-        @Expose
-        private Object bookingClientModel;
-        @SerializedName("BookingClients")
-        @Expose
-        private Object bookingClients;
-        @SerializedName("BookingHealthcare")
-        @Expose
-        private Object bookingHealthcare;
-        @SerializedName("BookingHealthcares")
-        @Expose
-        private Object bookingHealthcares;
-        @SerializedName("ScheduleClientModel")
-        @Expose
-        private ScheduleClientModel scheduleClientModel;
-        @SerializedName("ScheduleClients")
-        @Expose
-        private Object scheduleClients;
-
-        public Object getBookingClient() {
-            return bookingClient;
-        }
-
-        public void setBookingClient(Object bookingClient) {
-            this.bookingClient = bookingClient;
-        }
-
-        public BookingClientInformation getBookingClientInformation() {
-            return bookingClientInformation;
-        }
-
-        public void setBookingClientInformation(BookingClientInformation bookingClientInformation) {
-            this.bookingClientInformation = bookingClientInformation;
-        }
-
-        public Object getBookingClientModel() {
-            return bookingClientModel;
-        }
-
-        public void setBookingClientModel(Object bookingClientModel) {
-            this.bookingClientModel = bookingClientModel;
-        }
-
-        public Object getBookingClients() {
-            return bookingClients;
-        }
-
-        public void setBookingClients(Object bookingClients) {
-            this.bookingClients = bookingClients;
-        }
-
-        public Object getBookingHealthcare() {
-            return bookingHealthcare;
-        }
-
-        public void setBookingHealthcare(Object bookingHealthcare) {
-            this.bookingHealthcare = bookingHealthcare;
-        }
-
-        public Object getBookingHealthcares() {
-            return bookingHealthcares;
-        }
-
-        public void setBookingHealthcares(Object bookingHealthcares) {
-            this.bookingHealthcares = bookingHealthcares;
-        }
-
-        public ScheduleClientModel getScheduleClientModel() {
-            return scheduleClientModel;
-        }
-
-        public void setScheduleClientModel(ScheduleClientModel scheduleClientModel) {
-            this.scheduleClientModel = scheduleClientModel;
-        }
-
-        public Object getScheduleClients() {
-            return scheduleClients;
-        }
-
-        public void setScheduleClients(Object scheduleClients) {
-            this.scheduleClients = scheduleClients;
+        public void setWeekdayname(String weekdayname) {
+            this.weekdayname = weekdayname;
         }
 
     }
-    public class ScheduleClientModel {
 
-        @SerializedName("ClientId")
+    public class TaskList {
+
+        @SerializedName("ActionModel")
         @Expose
-        private String clientId;
-        @SerializedName("CustomEndHour")
-        @Expose
-        private String customEndHour;
-        @SerializedName("CustomEndMinute")
-        @Expose
-        private String customEndMinute;
-        @SerializedName("CustomStartHour")
-        @Expose
-        private String customStartHour;
-        @SerializedName("CustomStartMinute")
-        @Expose
-        private String customStartMinute;
+        private ActionModel actionModel;
         @SerializedName("CustomerId")
         @Expose
         private String customerId;
-        @SerializedName("IsOverRidingTimeTableStartTime")
+        @SerializedName("TaskAdded")
         @Expose
-        private Boolean isOverRidingTimeTableStartTime;
-        @SerializedName("ScheduleEndDate")
+        private String taskAdded;
+        @SerializedName("TaskAddedByEmployeePersonId")
         @Expose
-        private Object scheduleEndDate;
-        @SerializedName("ScheduleEnteredDate")
+        private String taskAddedByEmployeePersonId;
+        @SerializedName("TaskId")
         @Expose
-        private String scheduleEnteredDate;
-        @SerializedName("ScheduleStartDate")
+        private String taskId;
+        @SerializedName("TaskIsRemoved")
         @Expose
-        private String scheduleStartDate;
-        @SerializedName("ScheduledBy")
+        private Object taskIsRemoved;
+        @SerializedName("TaskName")
         @Expose
-        private String scheduledBy;
-        @SerializedName("ScheduledDurationMinutes")
+        private String taskName;
+        @SerializedName("TaskRemoved")
         @Expose
-        private Integer scheduledDurationMinutes;
-        @SerializedName("TimeTableName")
+        private Object taskRemoved;
+        @SerializedName("TaskRemovedByEmployeePersonId")
         @Expose
-        private String timeTableName;
-        @SerializedName("WeekRotationTypeName")
+        private Object taskRemovedByEmployeePersonId;
+        @SerializedName("TaskTypeName")
         @Expose
-        private String weekRotationTypeName;
-        @SerializedName("WeekdayName")
+        private String taskTypeName;
+        @SerializedName("TaskUpdatedByEmployeePersonId")
         @Expose
-        private String weekdayName;
+        private String taskUpdatedByEmployeePersonId;
+        @SerializedName("TaskUpdatedDate")
+        @Expose
+        private String taskUpdatedDate;
 
-        public String getClientId() {
-            return clientId;
+        public ActionModel getActionModel() {
+            return actionModel;
         }
 
-        public void setClientId(String clientId) {
-            this.clientId = clientId;
-        }
-
-        public String getCustomEndHour() {
-            return customEndHour;
-        }
-
-        public void setCustomEndHour(String customEndHour) {
-            this.customEndHour = customEndHour;
-        }
-
-        public String getCustomEndMinute() {
-            return customEndMinute;
-        }
-
-        public void setCustomEndMinute(String customEndMinute) {
-            this.customEndMinute = customEndMinute;
-        }
-
-        public String getCustomStartHour() {
-            return customStartHour;
-        }
-
-        public void setCustomStartHour(String customStartHour) {
-            this.customStartHour = customStartHour;
-        }
-
-        public String getCustomStartMinute() {
-            return customStartMinute;
-        }
-
-        public void setCustomStartMinute(String customStartMinute) {
-            this.customStartMinute = customStartMinute;
+        public void setActionModel(ActionModel actionModel) {
+            this.actionModel = actionModel;
         }
 
         public String getCustomerId() {
@@ -433,78 +253,403 @@ public class ClientBookingListModel {
             this.customerId = customerId;
         }
 
-        public Boolean getIsOverRidingTimeTableStartTime() {
-            return isOverRidingTimeTableStartTime;
+        public String getTaskAdded() {
+            return taskAdded;
         }
 
-        public void setIsOverRidingTimeTableStartTime(Boolean isOverRidingTimeTableStartTime) {
-            this.isOverRidingTimeTableStartTime = isOverRidingTimeTableStartTime;
+        public void setTaskAdded(String taskAdded) {
+            this.taskAdded = taskAdded;
         }
 
-        public Object getScheduleEndDate() {
-            return scheduleEndDate;
+        public String getTaskAddedByEmployeePersonId() {
+            return taskAddedByEmployeePersonId;
         }
 
-        public void setScheduleEndDate(Object scheduleEndDate) {
-            this.scheduleEndDate = scheduleEndDate;
+        public void setTaskAddedByEmployeePersonId(String taskAddedByEmployeePersonId) {
+            this.taskAddedByEmployeePersonId = taskAddedByEmployeePersonId;
         }
 
-        public String getScheduleEnteredDate() {
-            return scheduleEnteredDate;
+        public String getTaskId() {
+            return taskId;
         }
 
-        public void setScheduleEnteredDate(String scheduleEnteredDate) {
-            this.scheduleEnteredDate = scheduleEnteredDate;
+        public void setTaskId(String taskId) {
+            this.taskId = taskId;
         }
 
-        public String getScheduleStartDate() {
-            return scheduleStartDate;
+        public Object getTaskIsRemoved() {
+            return taskIsRemoved;
         }
 
-        public void setScheduleStartDate(String scheduleStartDate) {
-            this.scheduleStartDate = scheduleStartDate;
+        public void setTaskIsRemoved(Object taskIsRemoved) {
+            this.taskIsRemoved = taskIsRemoved;
         }
 
-        public String getScheduledBy() {
-            return scheduledBy;
+        public String getTaskName() {
+            return taskName;
         }
 
-        public void setScheduledBy(String scheduledBy) {
-            this.scheduledBy = scheduledBy;
+        public void setTaskName(String taskName) {
+            this.taskName = taskName;
         }
 
-        public Integer getScheduledDurationMinutes() {
-            return scheduledDurationMinutes;
+        public Object getTaskRemoved() {
+            return taskRemoved;
         }
 
-        public void setScheduledDurationMinutes(Integer scheduledDurationMinutes) {
-            this.scheduledDurationMinutes = scheduledDurationMinutes;
+        public void setTaskRemoved(Object taskRemoved) {
+            this.taskRemoved = taskRemoved;
         }
 
-        public String getTimeTableName() {
-            return timeTableName;
+        public Object getTaskRemovedByEmployeePersonId() {
+            return taskRemovedByEmployeePersonId;
         }
 
-        public void setTimeTableName(String timeTableName) {
-            this.timeTableName = timeTableName;
+        public void setTaskRemovedByEmployeePersonId(Object taskRemovedByEmployeePersonId) {
+            this.taskRemovedByEmployeePersonId = taskRemovedByEmployeePersonId;
         }
 
-        public String getWeekRotationTypeName() {
-            return weekRotationTypeName;
+        public String getTaskTypeName() {
+            return taskTypeName;
         }
 
-        public void setWeekRotationTypeName(String weekRotationTypeName) {
-            this.weekRotationTypeName = weekRotationTypeName;
+        public void setTaskTypeName(String taskTypeName) {
+            this.taskTypeName = taskTypeName;
         }
 
-        public String getWeekdayName() {
-            return weekdayName;
+        public String getTaskUpdatedByEmployeePersonId() {
+            return taskUpdatedByEmployeePersonId;
         }
 
-        public void setWeekdayName(String weekdayName) {
-            this.weekdayName = weekdayName;
+        public void setTaskUpdatedByEmployeePersonId(String taskUpdatedByEmployeePersonId) {
+            this.taskUpdatedByEmployeePersonId = taskUpdatedByEmployeePersonId;
+        }
+
+        public String getTaskUpdatedDate() {
+            return taskUpdatedDate;
+        }
+
+        public void setTaskUpdatedDate(String taskUpdatedDate) {
+            this.taskUpdatedDate = taskUpdatedDate;
+        }
+
+    }
+
+    public class ActionModel {
+
+        @SerializedName("ActionAlarmDate")
+        @Expose
+        private String actionAlarmDate;
+        @SerializedName("ActionDocumentModel")
+        @Expose
+        private List<Object> actionDocumentModel = null;
+        @SerializedName("ActionDueDate")
+        @Expose
+        private String actionDueDate;
+        @SerializedName("ActionMessageModel")
+        @Expose
+        private List<Object> actionMessageModel = null;
+        @SerializedName("ActionNoteModel")
+        @Expose
+        private List<Object> actionNoteModel = null;
+        @SerializedName("ActionStatusTypeName")
+        @Expose
+        private String actionStatusTypeName;
+        @SerializedName("ActionSubject")
+        @Expose
+        private String actionSubject;
+        @SerializedName("ActionTypeName")
+        @Expose
+        private String actionTypeName;
+        @SerializedName("CustomerId")
+        @Expose
+        private String customerId;
+        @SerializedName("TaskId")
+        @Expose
+        private String taskId;
+
+        public String getActionAlarmDate() {
+            return actionAlarmDate;
+        }
+
+        public void setActionAlarmDate(String actionAlarmDate) {
+            this.actionAlarmDate = actionAlarmDate;
+        }
+
+        public List<Object> getActionDocumentModel() {
+            return actionDocumentModel;
+        }
+
+        public void setActionDocumentModel(List<Object> actionDocumentModel) {
+            this.actionDocumentModel = actionDocumentModel;
+        }
+
+        public String getActionDueDate() {
+            return actionDueDate;
+        }
+
+        public void setActionDueDate(String actionDueDate) {
+            this.actionDueDate = actionDueDate;
+        }
+
+        public List<Object> getActionMessageModel() {
+            return actionMessageModel;
+        }
+
+        public void setActionMessageModel(List<Object> actionMessageModel) {
+            this.actionMessageModel = actionMessageModel;
+        }
+
+        public List<Object> getActionNoteModel() {
+            return actionNoteModel;
+        }
+
+        public void setActionNoteModel(List<Object> actionNoteModel) {
+            this.actionNoteModel = actionNoteModel;
+        }
+
+        public String getActionStatusTypeName() {
+            return actionStatusTypeName;
+        }
+
+        public void setActionStatusTypeName(String actionStatusTypeName) {
+            this.actionStatusTypeName = actionStatusTypeName;
+        }
+
+        public String getActionSubject() {
+            return actionSubject;
+        }
+
+        public void setActionSubject(String actionSubject) {
+            this.actionSubject = actionSubject;
+        }
+
+        public String getActionTypeName() {
+            return actionTypeName;
+        }
+
+        public void setActionTypeName(String actionTypeName) {
+            this.actionTypeName = actionTypeName;
+        }
+
+        public String getCustomerId() {
+            return customerId;
+        }
+
+        public void setCustomerId(String customerId) {
+            this.customerId = customerId;
+        }
+
+        public String getTaskId() {
+            return taskId;
+        }
+
+        public void setTaskId(String taskId) {
+            this.taskId = taskId;
+        }
+
+    }
+
+    public class ClientAddress {
+
+        @SerializedName("AddressId")
+        @Expose
+        private Integer addressId;
+        @SerializedName("BuildingName")
+        @Expose
+        private String buildingName;
+        @SerializedName("BuildingNumber")
+        @Expose
+        private String buildingNumber;
+        @SerializedName("CountryName")
+        @Expose
+        private String countryName;
+        @SerializedName("DeliveryPointSuffix")
+        @Expose
+        private String deliveryPointSuffix;
+        @SerializedName("DepartmentName")
+        @Expose
+        private String departmentName;
+        @SerializedName("DependentLocality")
+        @Expose
+        private String dependentLocality;
+        @SerializedName("DoubleDependentLocality")
+        @Expose
+        private String doubleDependentLocality;
+        @SerializedName("IsActive")
+        @Expose
+        private Boolean isActive;
+        @SerializedName("IsCustom")
+        @Expose
+        private Boolean isCustom;
+        @SerializedName("OrganisationName")
+        @Expose
+        private String organisationName;
+        @SerializedName("POBox")
+        @Expose
+        private String pOBox;
+        @SerializedName("PostCodeName")
+        @Expose
+        private String postCodeName;
+        @SerializedName("SUOrganisationFlag")
+        @Expose
+        private String sUOrganisationFlag;
+        @SerializedName("StreetName")
+        @Expose
+        private String streetName;
+        @SerializedName("SubBuildingName")
+        @Expose
+        private String subBuildingName;
+        @SerializedName("Thoroughfare")
+        @Expose
+        private String thoroughfare;
+        @SerializedName("UDPRN")
+        @Expose
+        private Integer uDPRN;
+
+        public Integer getAddressId() {
+            return addressId;
+        }
+
+        public void setAddressId(Integer addressId) {
+            this.addressId = addressId;
+        }
+
+        public String getBuildingName() {
+            return buildingName;
+        }
+
+        public void setBuildingName(String buildingName) {
+            this.buildingName = buildingName;
+        }
+
+        public String getBuildingNumber() {
+            return buildingNumber;
+        }
+
+        public void setBuildingNumber(String buildingNumber) {
+            this.buildingNumber = buildingNumber;
+        }
+
+        public String getCountryName() {
+            return countryName;
+        }
+
+        public void setCountryName(String countryName) {
+            this.countryName = countryName;
+        }
+
+        public String getDeliveryPointSuffix() {
+            return deliveryPointSuffix;
+        }
+
+        public void setDeliveryPointSuffix(String deliveryPointSuffix) {
+            this.deliveryPointSuffix = deliveryPointSuffix;
+        }
+
+        public String getDepartmentName() {
+            return departmentName;
+        }
+
+        public void setDepartmentName(String departmentName) {
+            this.departmentName = departmentName;
+        }
+
+        public String getDependentLocality() {
+            return dependentLocality;
+        }
+
+        public void setDependentLocality(String dependentLocality) {
+            this.dependentLocality = dependentLocality;
+        }
+
+        public String getDoubleDependentLocality() {
+            return doubleDependentLocality;
+        }
+
+        public void setDoubleDependentLocality(String doubleDependentLocality) {
+            this.doubleDependentLocality = doubleDependentLocality;
+        }
+
+        public Boolean getIsActive() {
+            return isActive;
+        }
+
+        public void setIsActive(Boolean isActive) {
+            this.isActive = isActive;
+        }
+
+        public Boolean getIsCustom() {
+            return isCustom;
+        }
+
+        public void setIsCustom(Boolean isCustom) {
+            this.isCustom = isCustom;
+        }
+
+        public String getOrganisationName() {
+            return organisationName;
+        }
+
+        public void setOrganisationName(String organisationName) {
+            this.organisationName = organisationName;
+        }
+
+        public String getPOBox() {
+            return pOBox;
+        }
+
+        public void setPOBox(String pOBox) {
+            this.pOBox = pOBox;
+        }
+
+        public String getPostCodeName() {
+            return postCodeName;
+        }
+
+        public void setPostCodeName(String postCodeName) {
+            this.postCodeName = postCodeName;
+        }
+
+        public String getSUOrganisationFlag() {
+            return sUOrganisationFlag;
+        }
+
+        public void setSUOrganisationFlag(String sUOrganisationFlag) {
+            this.sUOrganisationFlag = sUOrganisationFlag;
+        }
+
+        public String getStreetName() {
+            return streetName;
+        }
+
+        public void setStreetName(String streetName) {
+            this.streetName = streetName;
+        }
+
+        public String getSubBuildingName() {
+            return subBuildingName;
+        }
+
+        public void setSubBuildingName(String subBuildingName) {
+            this.subBuildingName = subBuildingName;
+        }
+
+        public String getThoroughfare() {
+            return thoroughfare;
+        }
+
+        public void setThoroughfare(String thoroughfare) {
+            this.thoroughfare = thoroughfare;
+        }
+
+        public Integer getUDPRN() {
+            return uDPRN;
+        }
+
+        public void setUDPRN(Integer uDPRN) {
+            this.uDPRN = uDPRN;
         }
 
     }
 }
-

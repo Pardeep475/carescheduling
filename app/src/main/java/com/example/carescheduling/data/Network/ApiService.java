@@ -11,6 +11,7 @@ import com.example.carescheduling.Ui.HomeScreen.beans.ClientCarePersonalDetailsB
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientCarePlan;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientCareSummaryBean;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientDisabilityBean;
+import com.example.carescheduling.Ui.HomeScreen.beans.ClientInfoCarePlanRetro;
 import com.example.carescheduling.Ui.HomeScreen.beans.VisitArchiveRetroBean;
 import com.example.carescheduling.Ui.LoginActivity.beans.LoginBeanRetro;
 import com.example.carescheduling.Ui.Profile.bean.AddressByPostCode;
@@ -112,8 +113,8 @@ public interface ApiService {
 
     @GET("GetClientMadicals/{customerId}/{branchId}/{clientId}")
     Observable<Response<ClientCareMedicalBean>> GetClientMedical(@Path("customerId") String customerId,
-                                                                  @Path("branchId") String branchId,
-                                                                  @Path("clientId") String clientId);
+                                                                 @Path("branchId") String branchId,
+                                                                 @Path("clientId") String clientId);
 
 
     @GET("GetClientDisabilities/{customerId}/{branchId}/{clientId}")
@@ -122,18 +123,19 @@ public interface ApiService {
                                                                      @Path("clientId") String clientId);
 
     @GET("GetClientCareplanSchedule/{customerId}/{branchId}/{clientId}")
-    Observable<Response<ClientCarePlan>> GetClientCarePlanSchedule(@Path("customerId") String customerId,
-                                                                   @Path("branchId") String branchId,
-                                                                   @Path("clientId") String clientId);
+    Observable<Response<ClientInfoCarePlanRetro>> GetClientCarePlanSchedule(@Path("customerId") String customerId,
+                                                                            @Path("branchId") String branchId,
+                                                                            @Path("clientId") String clientId);
 
 
-//  employeeId,arrivalDate,branchId,customerId
-    @GET("GetEmployeeVisitArchive/5633D002-F453-402E-AD63-AAECA11452B5/2019-05-24/5F98AF4F-25DC-4AC8-B867-C5072C101011/5f98af4f-25dc-4ac8-b867-c5072c100000")
+    //  employeeId,arrivalDate,branchId,customerId
+//    @GET("GetEmployeeVisitArchive/5633D002-F453-402E-AD63-AAECA11452B5/2019-05-24/5F98AF4F-25DC-4AC8-B867-C5072C101011/5f98af4f-25dc-4ac8-b867-c5072c100000")
+    @GET("GetEmployeeVisitArchive/{clientId}/{arrivalDate}/{branchId}/{customerId}")
     Observable<Response<VisitArchiveRetroBean>> GetEmployeeVisitArchive(
             @Path("clientId") String clientId,
             @Path("arrivalDate") String arrivalDate,
             @Path("branchId") String branchId,
             @Path("customerId") String customerId);
 
-
+//89a31092-d483-4d4d-adbe-72e5e14934bd/2019-05-24/5F98AF4F-25DC-4AC8-B867-C5072C101011/5f98af4f-25dc-4ac8-b867-c5072c100000
 }

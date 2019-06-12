@@ -74,6 +74,12 @@ public class ApiClient {
                     } catch (IOException e) {
                         Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
                         return null;
+                    } catch (RuntimeException e) {
+                        Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
+                        return null;
+                    } catch (Exception e) {
+                        Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
+                        return null;
                     }
                 }
             });

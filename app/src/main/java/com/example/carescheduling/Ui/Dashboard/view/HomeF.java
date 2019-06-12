@@ -49,8 +49,7 @@ public class HomeF extends BaseFragment implements Common, HomeScreenOnClick {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         fragmentHomeBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_home
                 , container, false);
@@ -63,7 +62,13 @@ public class HomeF extends BaseFragment implements Common, HomeScreenOnClick {
         setCommonData();
 
         homeFViewModel = ViewModelProviders.of(this).get(HomeFViewModel.class);
-//        getClientBookingList();
+        try {
+            GetClientPlan();
+        } catch (Exception e) {
+            hideDialog();
+            Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+        }
+
 
         sessionManager = getSessionManager();
         String[] some_array = getResources().getStringArray(R.array.home_array);
@@ -87,42 +92,28 @@ public class HomeF extends BaseFragment implements Common, HomeScreenOnClick {
     }
 
     private void GetClientPlan() {
+        showDialog();
 //5F98AF4F-25DC-4AC8-B867-C5072C100000/5F98AF4F-25DC-4AC8-B867-C5072C101011/A529B2CC-515E-4501-AE48-1E3FE9B384D6
-        homeFViewModel.GetClientAndClientCarePlan("5F98AF4F-25DC-4AC8-B867-C5072C100000"
-                , "5F98AF4F-25DC-4AC8-B867-C5072C101011"
-                , "A529B2CC-515E-4501-AE48-1E3FE9B384D6").observe(this, new Observer<ClientCarePlan>() {
-            @Override
-            public void onChanged(ClientCarePlan clientCarePlan) {
-
-            }
-        });
-    }
-
-    private void getClientBookingList() {
         if (getActivity() != null) {
             if (ConnectivityReceiver.isNetworkAvailable(getActivity())) {
-                try {
-                    showDialog();
-                    homeFViewModel.getClientBookingList(getSessionManager().getPersonId(),
-                            getSessionManager().getBranchId(),
-                            getSessionManager().getCustomerId()).observe(this, new Observer<ClientBookingListModel>() {
-                        @Override
-                        public void onChanged(ClientBookingListModel clientBookingListModel) {
-                            hideDialog();
-                            if (clientBookingListModel != null && clientBookingListModel.getSuccess() && clientBookingListModel.getData() != null && clientBookingListModel.getData().getBookingClientInformation() != null) {
-                                getSessionManager().setClientId(clientBookingListModel.getData().getBookingClientInformation().getClientd());
-                            }
-                            if (clientBookingListModel != null)
-                                Toast.makeText(getActivity(), clientBookingListModel.getResponseMessage().toString(), Toast.LENGTH_SHORT).show();
+                homeFViewModel.GetClientAndClientCarePlan("5F98AF4F-25DC-4AC8-B867-C5072C100000"
+                        , "5F98AF4F-25DC-4AC8-B867-C5072C101011"
+                        , "A529B2CC-515E-4501-AE48-1E3FE9B384D6").observe(this, new Observer<ClientCarePlan>() {
+                    @Override
+                    public void onChanged(ClientCarePlan clientCarePlan) {
+                        hideDialog();
+                        if (clientCarePlan.getData() != null
+                                && clientCarePlan.getData().getClientVM() != null
+                                && clientCarePlan.getData().getClientVM().getClientModel() != null) {
+                            getSessionManager().setClientId(clientCarePlan.getData().getClientVM().getClientModel().getClientPersonId());
+                        } else {
+                            Toast.makeText(getActivity(), (String) clientCarePlan.getResponseMessage(), Toast.LENGTH_SHORT).show();
                         }
-                    });
-                } catch (Exception e) {
-                    hideDialog();
-                    Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
-                }
-            } else {
-                Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
-            }
+
+                    }
+                });
+            } else
+                Toast.makeText(getActivity(), "Please check your internet connection", Toast.LENGTH_SHORT).show();
         }
     }
 

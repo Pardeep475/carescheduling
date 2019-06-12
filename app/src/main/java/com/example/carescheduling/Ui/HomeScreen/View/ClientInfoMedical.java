@@ -1,6 +1,7 @@
 package com.example.carescheduling.Ui.HomeScreen.View;
 
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
@@ -20,8 +21,11 @@ import com.example.carescheduling.Ui.Common.Common;
 import com.example.carescheduling.Ui.Common.CommonBean;
 import com.example.carescheduling.Ui.HomeScreen.ViewModel.ClientInfoMedicalViewModel;
 import com.example.carescheduling.Ui.HomeScreen.adapter.ClientInfoMedicationAdapter;
+import com.example.carescheduling.Ui.HomeScreen.beans.ClientMedicalBeanAdapter;
 import com.example.carescheduling.Ui.HomeScreen.presenter.BackPressedClick;
 import com.example.carescheduling.databinding.ClientInfoMedicalFragmentBinding;
+
+import java.util.ArrayList;
 
 public class ClientInfoMedical extends BaseFragment implements Common {
 
@@ -45,9 +49,12 @@ public class ClientInfoMedical extends BaseFragment implements Common {
 
     private void setUpView(View view) {
         setCommonData();
-        setUpRecyclerView(view);
-
         mViewModel = ViewModelProviders.of(this).get(ClientInfoMedicalViewModel.class);
+//        setUpRecyclerView(view);
+        setDataOriginal();
+        getClientTabletsInfo();
+
+
     }
 
     private void setCommonData() {
@@ -61,13 +68,13 @@ public class ClientInfoMedical extends BaseFragment implements Common {
         clientInfoDocumentsFragmentBinding.setCommonClick(this);
     }
 
-    private void setUpRecyclerView(View view) {
-        if (getActivity() != null) {
-            clientInfoDocumentsFragmentBinding.rcvClientInfoMedication.setLayoutManager(new LinearLayoutManager(getActivity()));
-            ClientInfoMedicationAdapter clientInfoMedicationAdapter = new ClientInfoMedicationAdapter(getActivity());
-            clientInfoDocumentsFragmentBinding.rcvClientInfoMedication.setAdapter(clientInfoMedicationAdapter);
-        }
-    }
+//    private void setUpRecyclerView(View view) {
+//        if (getActivity() != null) {
+//            clientInfoDocumentsFragmentBinding.rcvClientInfoMedication.setLayoutManager(new LinearLayoutManager(getActivity()));
+//            ClientInfoMedicationAdapter clientInfoMedicationAdapter = new ClientInfoMedicationAdapter(getActivity());
+//            clientInfoDocumentsFragmentBinding.rcvClientInfoMedication.setAdapter(clientInfoMedicationAdapter);
+//        }
+//    }
 
 
     @Override
@@ -79,5 +86,37 @@ public class ClientInfoMedical extends BaseFragment implements Common {
     @Override
     public void rightClick() {
 
+    }
+
+    private void getClientTabletsInfo() {
+//        http://mobile.rota.services/CssMobileRestfulService.svc/GetClientMadicals///
+        mViewModel.getClientMedical(getSessionManager().getCustomerId(),
+                getSessionManager().getBranchId(),
+                getSessionManager().getClientId()).observe(this, new Observer<ArrayList<ClientMedicalBeanAdapter>>() {
+            @Override
+            public void onChanged(ArrayList<ClientMedicalBeanAdapter> clientMedicalBeanAdapters) {
+                if (getActivity() != null && clientMedicalBeanAdapters != null && clientMedicalBeanAdapters.size() > 0) {
+                    clientInfoDocumentsFragmentBinding.rcvClientInfoMedication.setLayoutManager(new LinearLayoutManager(getActivity()));
+                    ClientInfoMedicationAdapter clientInfoMedicationAdapter = new ClientInfoMedicationAdapter(getActivity(), clientMedicalBeanAdapters);
+                    clientInfoDocumentsFragmentBinding.rcvClientInfoMedication.setAdapter(clientInfoMedicationAdapter);
+                    clientInfoDocumentsFragmentBinding.rcvClientInfoMedication.hideShimmerAdapter();
+                } else {
+                    setNoDataFound();
+                }
+
+            }
+        });
+    }
+
+    private void setNoDataFound() {
+        clientInfoDocumentsFragmentBinding.rcvClientInfoMedication.hideShimmerAdapter();
+        clientInfoDocumentsFragmentBinding.rcvClientInfoMedication.setVisibility(View.GONE);
+        clientInfoDocumentsFragmentBinding.rlNoDataFound.setVisibility(View.VISIBLE);
+    }
+
+    private void setDataOriginal() {
+        clientInfoDocumentsFragmentBinding.rcvClientInfoMedication.showShimmerAdapter();
+        clientInfoDocumentsFragmentBinding.rcvClientInfoMedication.setVisibility(View.VISIBLE);
+        clientInfoDocumentsFragmentBinding.rlNoDataFound.setVisibility(View.GONE);
     }
 }
