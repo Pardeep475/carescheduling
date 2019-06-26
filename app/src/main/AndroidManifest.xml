@@ -24,7 +24,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Ui.Profile.View.EditProfile"></activity>
+        <activity android:name=".Ui.BarCodeScannerActivity">
+
+        </activity>
+        <activity android:name=".Ui.Profile.View.EditProfile" />
         <activity
             android:name=".Ui.Dashboard.view.Dashboard"
             android:label="@string/title_activity_dashboard" />
@@ -35,7 +38,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Ui.LoginActivity.View.LoginActivity"></activity>
+        <activity android:name=".Ui.LoginActivity.View.LoginActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

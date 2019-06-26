@@ -141,8 +141,13 @@ public class EditPhoneNumber extends BaseFragment implements Common {
                     if (profileBean != null && profileBean.getData() != null && profileBean.getData().getPerson() != null) {
                         if (profileBean.getData().getPerson().getPersonPhone() != null) {
                             if (profileBean.getData().getPerson().getPersonPhone().size() > 0) {
-                                int pos = adapter.getPosition(profileBean.getData().getPerson().getPersonPhone().get(0).getPhoneTypeName());
-                                editPhoneNumberBinding.spinnerPhoneType.setSelection(pos);
+                                for (int i = 0; i < profileBean.getData().getPerson().getPersonPhone().size(); i++) {
+                                    if (stringValue.equalsIgnoreCase(profileBean.getData().getPerson().getPersonPhone().get(i).getPhoneTypeName())) {
+                                        int pos = adapter.getPosition(profileBean.getData().getPerson().getPersonPhone().get(i).getPhoneTypeName());
+                                        editPhoneNumberBinding.spinnerPhoneType.setSelection(pos);
+                                    }
+                                }
+
                             }
                         }
                     }

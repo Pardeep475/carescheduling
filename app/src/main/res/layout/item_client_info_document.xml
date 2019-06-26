@@ -67,6 +67,7 @@
                 android:fontFamily="@font/rubik_medium"
                 android:onClick="@{(v)->moreInfoClick.moreInfoClick(pos)}"
                 android:text="@string/open"
+                android:visibility="gone"
                 android:textAlignment="center"
                 android:textColor="@color/blue"
                 android:textSize="@dimen/forteen_sp" />

@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:padding="@dimen/five_dp"
     android:layout_margin="@dimen/sixteen_dp">
 
 
@@ -21,8 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/fifty_dp"
         android:layout_marginEnd="@dimen/sixteen_sp"
-        android:layout_toStartOf="@+id/txt_open"
-        android:layout_toEndOf="@+id/txt_document"
+        android:layout_centerHorizontal="true"
         android:fontFamily="@font/rubik_light"
         android:maxLines="1"
         android:singleLine="true"
@@ -36,6 +36,7 @@
         android:layout_gravity="center_vertical"
         android:fontFamily="@font/rubik_medium"
         android:text="@string/task"
+        android:visibility="gone"
         android:textAlignment="center"
         android:textColor="@color/blue"
         android:textSize="@dimen/forteen_sp" />

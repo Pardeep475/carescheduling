@@ -119,7 +119,6 @@ public class ProfileImageList extends BaseFragment implements Common, ProfileIma
         }
 
 
-
         profileImageListBinding.setProfileImageList(this);
     }
 
@@ -147,7 +146,7 @@ public class ProfileImageList extends BaseFragment implements Common, ProfileIma
         try {
             showDialog();
             profileImageListViewModel.getProfileImages(getSessionManager().getPersonId()
-                , getSessionManager().getCustomerId(),
+                    , getSessionManager().getCustomerId(),
                     getSessionManager().getBranchId()).observe(this, new Observer<ProfileImageRetro>() {
                 @Override
                 public void onChanged(ProfileImageRetro profileImageRetro) {
@@ -174,8 +173,6 @@ public class ProfileImageList extends BaseFragment implements Common, ProfileIma
 
 
     }
-
-
 
 
     @Override
@@ -239,14 +236,19 @@ public class ProfileImageList extends BaseFragment implements Common, ProfileIma
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Log.e("Result", requestCode + "       " + resultCode);
-        if (data != null) {
+        if (data != null ) {
             if (requestCode == Constants.REQUEST_CAMERA) {
+                if (data.getExtras() == null)
+                return;
                 Bitmap bitmap = (Bitmap) data.getExtras().get("data");
                 Uri uri = getImageUri(getContext(), bitmap);
                 path = getRealPathFromURI(getContext(), uri);
 
 //                Glide.with(getActivity()).load(data.getExtras().get("data")).into(cvi_profile);
             } else if (requestCode == Constants.SELECT_FILE) {
+                if (data.getData() == null)
+                    return;
+
                 if (buildVer) {
                     path = getpath19(getContext(), data.getData());
                 } else {
@@ -431,7 +433,7 @@ public class ProfileImageList extends BaseFragment implements Common, ProfileIma
 
     private ProfileBean.Data AddNewImage() {
 
-        if (profileBean != null && profileBean.getData() != null && profileBean.getData().getPersonImage()!= null){
+        if (profileBean != null && profileBean.getData() != null && profileBean.getData().getPersonImage() != null) {
             PersonImage personImage = new PersonImage();
             personImage.setCustomerId(getSessionManager().getCustomerId());
             personImage.setImageAddedDate("/Date(1559193723680+0530)/");

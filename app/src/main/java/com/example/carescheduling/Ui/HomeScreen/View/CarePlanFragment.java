@@ -16,6 +16,7 @@ import com.example.carescheduling.Ui.HomeScreen.ViewModel.CarePlanViewModal;
 import com.example.carescheduling.Ui.HomeScreen.adapter.CarePlanAdapter;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientCarePlan;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientInfoCarePlanRetro;
+import com.example.carescheduling.Ui.HomeScreen.beans.ScheduleClientList;
 import com.example.carescheduling.Ui.HomeScreen.presenter.BackPressedClick;
 import com.example.carescheduling.Ui.HomeScreen.presenter.CarePlanAdapterClick;
 import com.example.carescheduling.Utils.ConnectivityReceiver;
@@ -85,9 +86,10 @@ public class CarePlanFragment extends BaseFragment implements Common, CarePlanAd
 
             carePlanViewModal.getCarePlan("5F98AF4F-25DC-4AC8-B867-C5072C100000",
                     "5F98AF4F-25DC-4AC8-B867-C5072C101011",
-                    "978E55D2-B7B9-49E0-A654-14B70EB1A344").observe(this, new Observer<ArrayList<ClientInfoCarePlanRetro.DataList>>() {
+                    "978E55D2-B7B9-49E0-A654-14B70EB1A344").observe(this,
+                    new Observer<ArrayList<ScheduleClientList>>() {
                 @Override
-                public void onChanged(ArrayList<ClientInfoCarePlanRetro.DataList> data) {
+                public void onChanged(ArrayList<ScheduleClientList> data) {
                     if (data != null && data.size() > 0) {
                         setLayoutDynamic(clientInfoCarePlanFragmentBinding.llCarePlan, data);
                         setDataOriginal();
@@ -161,7 +163,7 @@ public class CarePlanFragment extends BaseFragment implements Common, CarePlanAd
 
     }
 
-    private void setLayoutDynamic(LinearLayout linearLayout, ArrayList<ClientInfoCarePlanRetro.DataList> dataLists) {
+    private void setLayoutDynamic(LinearLayout linearLayout, ArrayList<ScheduleClientList> dataLists) {
         String weekday = "";
         LinearLayout ll_nested = null;
         linearLayout.removeAllViews();
@@ -183,7 +185,7 @@ public class CarePlanFragment extends BaseFragment implements Common, CarePlanAd
         }
     }
 
-    private void setLayoutNested(LinearLayout linearLayout, ClientInfoCarePlanRetro.DataList dataList) {
+    private void setLayoutNested(LinearLayout linearLayout, ScheduleClientList dataList) {
         View v = LayoutInflater.from(getActivity()).inflate(R.layout.item_nested_client_care_plan, null);
         linearLayout.addView(v);
         TextView txt_document = v.findViewById(R.id.txt_document);

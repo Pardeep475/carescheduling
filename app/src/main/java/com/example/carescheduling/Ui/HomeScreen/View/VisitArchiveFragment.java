@@ -67,7 +67,11 @@ public class VisitArchiveFragment extends BaseFragment implements Common, VisitA
     private void getVisitArchiveData() {
 // "5633D002-F453-402E-AD63-AAECA11452B5", "2019-05-24",
 //                "5F98AF4F-25DC-4AC8-B867-C5072C101011", "5f98af4f-25dc-4ac8-b867-c5072c100000"
-        mViewModel.getVisitArchiveClient(getSessionManager().getClientId(),
+//        getSessionManager().getClientId(),
+//                visitArchiveFragmentBinding.txtDateOfBirth.getText().toString(),
+//                getSessionManager().getBranchId(),
+//                getSessionManager().getCustomerId()
+        mViewModel.getVisitArchiveClient(getSessionManager().getPersonId(),
                 visitArchiveFragmentBinding.txtDateOfBirth.getText().toString(),
                 getSessionManager().getBranchId(),
                 getSessionManager().getCustomerId()).observe(this, new Observer<ArrayList<VisitArchiveAdapterBean>>() {
@@ -78,7 +82,6 @@ public class VisitArchiveFragment extends BaseFragment implements Common, VisitA
                     VisitArchiveAdapter clientInfoMedicationAdapter = new VisitArchiveAdapter(getActivity(), visitArchiveAdapterBeans);
                     visitArchiveFragmentBinding.rcvVisitArchive.setAdapter(clientInfoMedicationAdapter);
                     visitArchiveFragmentBinding.rcvVisitArchive.hideShimmerAdapter();
-                    setDataOriginal();
                 } else {
                     setNoDataFound();
                 }
@@ -175,7 +178,7 @@ public class VisitArchiveFragment extends BaseFragment implements Common, VisitA
     @Override
     public void rightClick() {
         if (!visitArchiveFragmentBinding.txtDateOfBirth.getText().toString().equalsIgnoreCase("")) {
-//            setDataOriginal();
+            setDataOriginal();
             getVisitArchiveData();
         } else {
             Toast.makeText(getActivity(), "Please select date", Toast.LENGTH_SHORT).show();

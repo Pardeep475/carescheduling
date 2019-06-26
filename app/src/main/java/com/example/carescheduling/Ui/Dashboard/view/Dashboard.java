@@ -79,7 +79,7 @@ public class Dashboard extends BaseActivity {
         activityDashboardBinding.navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         setFragment(SettingF.newInstance());
 
-//        getDefaultData();
+        getDefaultData();
     }
 
     private void getDefaultData() {

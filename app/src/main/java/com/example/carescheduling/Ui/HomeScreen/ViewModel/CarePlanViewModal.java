@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientCarePlan;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientInfoCarePlanRetro;
+import com.example.carescheduling.Ui.HomeScreen.beans.ScheduleClientList;
 import com.example.carescheduling.data.Network.ApiClient;
 import com.example.carescheduling.data.Network.ApiService;
 
@@ -37,8 +38,8 @@ public class CarePlanViewModal extends AndroidViewModel {
     }
 
 
-    public LiveData<ArrayList<ClientInfoCarePlanRetro.DataList>> getCarePlan(String customerId, String branchId, String clientId) {
-        final MutableLiveData<ArrayList<ClientInfoCarePlanRetro.DataList>> data = new MutableLiveData<>();
+    public LiveData<ArrayList<ScheduleClientList>> getCarePlan(String customerId, String branchId, String clientId) {
+        final MutableLiveData<ArrayList<ScheduleClientList>> data = new MutableLiveData<>();
         try {
 
             Disposable disposable = apiService.GetClientCarePlanSchedule(customerId, branchId, clientId)
@@ -49,8 +50,12 @@ public class CarePlanViewModal extends AndroidViewModel {
                         public void accept(Response<ClientInfoCarePlanRetro> loginBeanRetroResponse) throws Exception {
                             Log.e("LoginSuccess", "success");
                             if (loginBeanRetroResponse.isSuccessful()) {
-                                if (loginBeanRetroResponse.body() != null) {
-                                    data.setValue(loginBeanRetroResponse.body().getDataList());
+                                if (loginBeanRetroResponse.body() != null && loginBeanRetroResponse.body().getDataList() != null && loginBeanRetroResponse.body().getDataList().size() > 0) {
+                                    ArrayList<ScheduleClientList> clientLists = new ArrayList<>();
+                                    for (int i = 0; i < loginBeanRetroResponse.body().getDataList().size(); i++) {
+                                        clientLists.addAll(loginBeanRetroResponse.body().getDataList().get(i).getScheduleClientList());
+                                    }
+                                    data.setValue(clientLists);
                                 } else {
                                     data.setValue(null);
                                     Toast.makeText(getApplication(), (String) loginBeanRetroResponse.body().getResponseMessage(), Toast.LENGTH_SHORT).show();

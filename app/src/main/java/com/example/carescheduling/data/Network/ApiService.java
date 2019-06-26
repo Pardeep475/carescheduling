@@ -43,7 +43,7 @@ public interface ApiService {
     @GET("GetMyProfileWithoutPersonImages/{person_id}/{customer_id}/{branch_id}")
     Observable<Response<ProfileBean>> getProfile(@Path("person_id") String PersonId, @Path("customer_id") String CustomerId, @Path("branch_id") String BranchId);
 
-    @GET("GetProfileImage/{person_id}/{customer_id}/{branch_id}/Small")
+    @GET("GetProfileImage/{person_id}/{branch_id}/{customer_id}/Small")
     Observable<Response<ProfileImageRetro>> getProfileImages(@Path("person_id") String PersonId, @Path("customer_id") String CustomerId, @Path("branch_id") String BranchId);
 
 

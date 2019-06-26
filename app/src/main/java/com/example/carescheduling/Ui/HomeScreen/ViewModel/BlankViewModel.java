@@ -51,7 +51,7 @@ public class BlankViewModel extends AndroidViewModel {
                     public void accept(Response<ClientBookingListModel> loginBeanRetroResponse) throws Exception {
                         Log.e("LoginSuccess", "success");
                         if (loginBeanRetroResponse.isSuccessful()) {
-                            if (loginBeanRetroResponse.body() != null)
+                            if (loginBeanRetroResponse.body() != null && loginBeanRetroResponse.body().getData() != null)
                                 data.setValue(getClientData(loginBeanRetroResponse.body()));
                         } else {
                             data.setValue(null);

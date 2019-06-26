@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.carescheduling.Utils.Constants;
@@ -73,12 +74,7 @@ public class ApiClient {
                         return chain.proceed(request);
                     } catch (IOException e) {
                         Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
-                        return null;
-                    } catch (RuntimeException e) {
-                        Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
-                        return null;
-                    } catch (Exception e) {
-                        Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
+                        Log.e("ExceptionHandling",""+e.toString());
                         return null;
                     }
                 }

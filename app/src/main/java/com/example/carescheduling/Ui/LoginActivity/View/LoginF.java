@@ -74,7 +74,7 @@ public class LoginF extends BaseFragment implements LoginPresenter {
 
     private void setUpLayout(View view) {
         loginViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
-        LoginBeanData loginBeanData = new LoginBeanData("Tommy@bhc.co.uk", "Tommy");
+        LoginBeanData loginBeanData = new LoginBeanData("pardeep@felagi.in", "pardeep");
         fragmentLoginBinding.setLoginBeanData(loginBeanData);
         fragmentLoginBinding.setLoginPresenter(this);
     }

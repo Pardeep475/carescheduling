@@ -74,10 +74,10 @@ public class BlankFragment extends BaseFragment implements Common, MyNextVisitCl
 
     @Override
     public void moreClientInfoClick() {
-        if (clientBookingModel != null)
+        if (clientBookingModel != null && clientBookingModel.getTasksArrayList().size() > 0)
             setFragment(ClientInfoHomeFragment.newInstance(clientBookingModel));
         else
-            Toast.makeText(getActivity(), "Client not found", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Client task not found", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -106,7 +106,6 @@ public class BlankFragment extends BaseFragment implements Common, MyNextVisitCl
     }
 
     private void getClientBookingList() {
-//        //
         if (getActivity() != null) {
             if (ConnectivityReceiver.isNetworkAvailable(getActivity())) {
                 try {

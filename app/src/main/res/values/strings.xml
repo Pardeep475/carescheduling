@@ -171,13 +171,13 @@
     </string-array>
 
     <string-array name="client_info_home_array">
-    <item>Summary</item>
-    <item>Personal Details</item>
-    <item>Client Notes</item>
-    <item>Client Contacts</item>
-    <item>Client Documents</item>
-    <item>Medical History</item>
-    <item>Disabilites</item>
-    <item>Care plan schedule</item>
+        <item>Summary</item>
+        <item>Personal Details</item>
+        <item>Client Notes</item>
+        <item>Client Contacts</item>
+        <item>Client Documents</item>
+        <item>Medical History</item>
+        <item>Disabilites</item>
+        <item>Care plan schedule</item>
     </string-array>
 </resources>
