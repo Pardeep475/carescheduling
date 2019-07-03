@@ -77,6 +77,7 @@ public class ClientInfoNotesFragment extends BaseFragment implements Common {
         commonBean.setLeftImageVisible(true);
         commonBean.setRightImageDrawable(R.drawable.ic_logout);
         commonBean.setRightImageVisible(false);
+        commonBean.setRightTextVisible(false);
         commonBean.setTitle("Notes");
         clientInfoNotesFragmentBinding.setCommonData(commonBean);
         clientInfoNotesFragmentBinding.setCommonClick(this);

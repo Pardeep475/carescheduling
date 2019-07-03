@@ -78,6 +78,7 @@ public class EditProfileAddress extends BaseFragment implements Common, EditProf
         commonBean.setLeftImageVisible(true);
         commonBean.setRightImageDrawable(R.drawable.ic_tick);
         commonBean.setRightImageVisible(false);
+        commonBean.setRightTextVisible(false);
         commonBean.setTitle("Change Address");
         editProfileAddressBinding.setCommonData(commonBean);
         editProfileAddressBinding.setCommonClick(this);

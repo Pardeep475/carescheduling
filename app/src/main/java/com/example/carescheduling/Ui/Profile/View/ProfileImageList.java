@@ -128,6 +128,7 @@ public class ProfileImageList extends BaseFragment implements Common, ProfileIma
         commonBean.setLeftImageVisible(true);
         commonBean.setRightImageDrawable(R.drawable.ic_tick);
         commonBean.setRightImageVisible(true);
+        commonBean.setRightTextVisible(true);
         commonBean.setTitle("Profile Pics");
         profileImageListBinding.setCommonData(commonBean);
         profileImageListBinding.setCommonClick(this);

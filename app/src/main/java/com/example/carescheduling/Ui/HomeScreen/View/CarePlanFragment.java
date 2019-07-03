@@ -76,6 +76,7 @@ public class CarePlanFragment extends BaseFragment implements Common, CarePlanAd
         commonBean.setLeftImageVisible(true);
         commonBean.setRightImageDrawable(R.drawable.ic_logout);
         commonBean.setRightImageVisible(false);
+        commonBean.setRightTextVisible(false);
         commonBean.setTitle("Care Plan");
         clientInfoCarePlanFragmentBinding.setCommonData(commonBean);
         clientInfoCarePlanFragmentBinding.setCommonClick(this);

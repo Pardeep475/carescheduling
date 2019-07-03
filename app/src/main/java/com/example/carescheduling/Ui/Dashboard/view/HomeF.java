@@ -86,6 +86,7 @@ public class HomeF extends BaseFragment implements Common, HomeScreenOnClick {
         commonBean.setLeftImageVisible(false);
         commonBean.setRightImageDrawable(R.drawable.ic_logout);
         commonBean.setRightImageVisible(true);
+        commonBean.setRightTextVisible(false);
         commonBean.setTitle("Home");
         fragmentHomeBinding.setCommonData(commonBean);
         fragmentHomeBinding.setCommonClick(this);

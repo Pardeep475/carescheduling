@@ -71,6 +71,7 @@ private ClientBookingScreenModel clientBookingModel;
         commonBean.setLeftImageVisible(true);
         commonBean.setRightImageDrawable(R.drawable.ic_logout);
         commonBean.setRightImageVisible(false);
+        commonBean.setRightTextVisible(false);
         commonBean.setTitle("Client Info");
         clientInfoHomeFragmentBinding.setCommonData(commonBean);
         clientInfoHomeFragmentBinding.setCommonClick(this);

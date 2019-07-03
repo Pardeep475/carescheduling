@@ -85,7 +85,8 @@ public class EditPhoneNumber extends BaseFragment implements Common {
         commonBean.setLeftImageDrawable(R.drawable.ic_left_back);
         commonBean.setLeftImageVisible(true);
         commonBean.setRightImageDrawable(R.drawable.ic_tick);
-        commonBean.setRightImageVisible(true);
+        commonBean.setRightImageVisible(false);
+        commonBean.setRightTextVisible(true);
         commonBean.setTitle("Change Password");
         editPhoneNumberBinding.setCommonData(commonBean);
         editPhoneNumberBinding.setCommonClick(this);
@@ -98,6 +99,8 @@ public class EditPhoneNumber extends BaseFragment implements Common {
                 ArrayList<String> arrayList = new ArrayList<>();
                 if (countryCodes != null && countryCodes.size() > 0) {
                     for (int i = 0; i < countryCodes.size(); i++) {
+                        if (i == 0)
+                            arrayList.add("Select Country");
                         arrayList.add(countryCodes.get(i).getCountryName());
                     }
                     CustomAdapter adapter = new CustomAdapter(getActivity(),
@@ -133,6 +136,8 @@ public class EditPhoneNumber extends BaseFragment implements Common {
                 ArrayList<String> arrayList = new ArrayList<>();
                 if (phoneTypes != null && phoneTypes.size() > 0) {
                     for (int i = 0; i < phoneTypes.size(); i++) {
+                        if (i == 0)
+                            arrayList.add("Select Phone Type");
                         arrayList.add(phoneTypes.get(i).getPhoneName());
                     }
                     CustomAdapter adapter = new CustomAdapter(getActivity(),

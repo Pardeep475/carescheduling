@@ -71,7 +71,8 @@ public class ChangePassword extends BaseFragment implements Common {
         commonBean.setLeftImageDrawable(R.drawable.ic_left_back);
         commonBean.setLeftImageVisible(true);
         commonBean.setRightImageDrawable(R.drawable.ic_tick);
-        commonBean.setRightImageVisible(true);
+        commonBean.setRightImageVisible(false);
+        commonBean.setRightTextVisible(true);
         commonBean.setTitle("Change Password");
         changePasswordBinding.setCommonData(commonBean);
         changePasswordBinding.setCommonClick(this);

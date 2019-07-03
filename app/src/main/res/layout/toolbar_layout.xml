@@ -44,13 +44,31 @@
             android:textColor="@color/white"
             android:textSize="@dimen/eighteen_sp" />
 
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/rubik_medium"
+            android:gravity="center"
+            android:onClick="@{(v) -> commonClick.rightClick()}"
+            android:paddingStart="@dimen/ten_dp"
+            android:paddingEnd="@dimen/ten_dp"
+            android:text="Save"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/eighteen_sp"
+            android:visibility="@{commonData.rightTextVisible ? View.VISIBLE :View.GONE}" />
+
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:contentDescription="@string/user_profile"
-            android:onClick="@{(v) -> commonClick.rightClick()}"
             android:paddingStart="@dimen/ten_dp"
             android:paddingEnd="@dimen/ten_dp"
             android:tint="@color/white"

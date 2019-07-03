@@ -7,6 +7,7 @@ public class CommonBean {
     private boolean isLeftImageVisible = false;
     private int rightImageDrawable = R.drawable.ic_logout;
     private int leftImageDrawable = R.drawable.ic_left_back;
+    private boolean isRightTextVisible = false;
     private String title = "Home";
 
     public boolean isRightImageVisible() {
@@ -47,5 +48,13 @@ public class CommonBean {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public boolean isRightTextVisible() {
+        return isRightTextVisible;
+    }
+
+    public void setRightTextVisible(boolean rightTextVisible) {
+        isRightTextVisible = rightTextVisible;
     }
 }

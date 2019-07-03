@@ -60,6 +60,7 @@ public class SettingF extends BaseFragment implements Common {
         commonBean.setRightImageDrawable(R.drawable.ic_logout);
         commonBean.setRightImageVisible(true);
         commonBean.setTitle("Settings");
+        commonBean.setRightTextVisible(false);
         fragmentSettingBinding.setCommonData(commonBean);
         fragmentSettingBinding.setCommonClick(this);
     }

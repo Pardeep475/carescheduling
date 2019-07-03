@@ -63,6 +63,7 @@ public class ClientInfoMedical extends BaseFragment implements Common {
         commonBean.setLeftImageVisible(true);
         commonBean.setRightImageDrawable(R.drawable.ic_logout);
         commonBean.setRightImageVisible(false);
+        commonBean.setRightTextVisible(false);
         commonBean.setTitle(getString(R.string.medication));
         clientInfoDocumentsFragmentBinding.setCommonData(commonBean);
         clientInfoDocumentsFragmentBinding.setCommonClick(this);

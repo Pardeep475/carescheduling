@@ -60,6 +60,7 @@ public class DirectionsFragment extends BaseFragment implements Common, HomeScre
         commonBean.setLeftImageVisible(true);
         commonBean.setRightImageDrawable(R.drawable.ic_logout);
         commonBean.setRightImageVisible(false);
+        commonBean.setRightTextVisible(false);
         commonBean.setTitle("Directions");
         directionsFragmentBinding.setCommonData(commonBean);
         directionsFragmentBinding.setCommonClick(this);

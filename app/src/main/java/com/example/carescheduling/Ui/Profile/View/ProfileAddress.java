@@ -93,8 +93,9 @@ public class ProfileAddress extends BaseFragment implements Common, ProfileAddre
         commonBean.setLeftImageDrawable(R.drawable.ic_left_back);
         commonBean.setLeftImageVisible(true);
         commonBean.setRightImageDrawable(R.drawable.ic_tick);
-        commonBean.setRightImageVisible(true);
+        commonBean.setRightImageVisible(false);
         commonBean.setTitle("Address");
+        commonBean.setRightTextVisible(true);
         profileAddressBinding.setCommonData(commonBean);
         profileAddressBinding.setCommonClick(this);
     }
@@ -129,6 +130,8 @@ public class ProfileAddress extends BaseFragment implements Common, ProfileAddre
 
                 if (nationalities != null && nationalities.size() > 0) {
                     for (int i = 0; i < nationalities.size(); i++) {
+                        if (i == 0)
+                            arrayList.add("Select Nationality");
                         arrayList.add(nationalities.get(i).getNationalityName());
                     }
                     CustomAdapter adapter = new CustomAdapter(getActivity(),
@@ -234,7 +237,8 @@ public class ProfileAddress extends BaseFragment implements Common, ProfileAddre
         } else {
             profileBean = addNewAddress();
         }
-
+        if (profileBean == null)
+            return;
         profileAddressViewModel.getEditProfilePost(profileBean.getData()).observe(this, new Observer<ProfileBean>() {
             @Override
             public void onChanged(ProfileBean profileBean) {
@@ -258,7 +262,12 @@ public class ProfileAddress extends BaseFragment implements Common, ProfileAddre
 
         for (int i = 0; i < profileBean.getData().getPerson().getPersonAddress().size(); i++) {
             if (profileBean.getData().getPerson().getPersonAddress().get(i).getAddressTypeName().equalsIgnoreCase((String) profileAddressBinding.spinnerAddressType.getSelectedItem())) {
-                profileBean.getData().getPerson().getPersonAddress().get(i).setAddressTypeName((String) profileAddressBinding.spinnerAddressType.getSelectedItem());
+                if ((profileAddressBinding.spinnerAddressType.getSelectedItemPosition() - 1) > 0)
+                    profileBean.getData().getPerson().getPersonAddress().get(i).setAddressTypeName((String) profileAddressBinding.spinnerAddressType.getSelectedItem());
+                else {
+                    Toast.makeText(getActivity(), "please select address type", Toast.LENGTH_SHORT).show();
+                    return null;
+                }
                 profileBean.getData().getPerson().getPersonAddress().get(i).setIsDefaultAddress(true);
                 profileBean.getData().getPerson().getPersonAddress().get(i).setPersonId(getSessionManager().getPersonId());
                 profileBean.getData().getPerson().getPersonAddress().get(i).setCustomerId(getSessionManager().getCustomerId());
@@ -282,7 +291,12 @@ public class ProfileAddress extends BaseFragment implements Common, ProfileAddre
     private ProfileBean addNewAddress() {
         if (profileBean.getData().getPerson().getPersonAddress().size() > 0) {
             PersonAddress personAddress = new PersonAddress();
-            personAddress.setAddressTypeName((String) profileAddressBinding.spinnerAddressType.getSelectedItem());
+            if ((profileAddressBinding.spinnerAddressType.getSelectedItemPosition() - 1) > 0)
+                personAddress.setAddressTypeName((String) profileAddressBinding.spinnerAddressType.getSelectedItem());
+            else {
+                Toast.makeText(getActivity(), "please select address type", Toast.LENGTH_SHORT).show();
+                return null;
+            }
             personAddress.setIsDefaultAddress(true);
             personAddress.setPersonId(getSessionManager().getPersonId());
             personAddress.setCustomerId(getSessionManager().getCustomerId());

@@ -61,6 +61,7 @@ public class HoursAndExspenses extends BaseFragment implements Common, HomeScree
         commonBean.setLeftImageVisible(true);
         commonBean.setRightImageDrawable(R.drawable.ic_logout);
         commonBean.setRightImageVisible(false);
+        commonBean.setRightTextVisible(false);
         commonBean.setTitle("Hours and Expenses");
         hoursAndExspensesFragmentBinding.setCommonData(commonBean);
         hoursAndExspensesFragmentBinding.setCommonClick(this);

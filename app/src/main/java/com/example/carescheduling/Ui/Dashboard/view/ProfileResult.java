@@ -78,6 +78,7 @@ public class ProfileResult extends BaseFragment implements Common, EditProfileCl
         commonBean.setLeftImageVisible(false);
         commonBean.setRightImageDrawable(R.drawable.ic_logout);
         commonBean.setRightImageVisible(true);
+        commonBean.setRightTextVisible(false);
         commonBean.setTitle("Profile");
         fragmentProfileResultBinding.setCommonData(commonBean);
         fragmentProfileResultBinding.setCommonClick(this);

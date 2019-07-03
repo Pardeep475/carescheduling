@@ -61,6 +61,7 @@ public class MyTimeFragment extends BaseFragment implements Common, HomeScreenOn
         commonBean.setLeftImageVisible(true);
         commonBean.setRightImageDrawable(R.drawable.ic_logout);
         commonBean.setRightImageVisible(false);
+        commonBean.setRightTextVisible(false);
         commonBean.setTitle("My Time");
         myTimeFragmentBinding.setCommonData(commonBean);
         myTimeFragmentBinding.setCommonClick(this);

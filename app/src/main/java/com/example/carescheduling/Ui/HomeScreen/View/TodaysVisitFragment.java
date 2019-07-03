@@ -62,6 +62,7 @@ public class TodaysVisitFragment extends BaseFragment implements Common, HomeScr
         commonBean.setLeftImageVisible(true);
         commonBean.setRightImageDrawable(R.drawable.ic_logout);
         commonBean.setRightImageVisible(false);
+        commonBean.setRightTextVisible(false);
         commonBean.setTitle("Today's Visit");
         todaysVisitFragmentBinding.setCommonData(commonBean);
         todaysVisitFragmentBinding.setCommonClick(this);

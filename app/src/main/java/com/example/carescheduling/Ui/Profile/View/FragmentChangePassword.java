@@ -80,7 +80,8 @@ public class FragmentChangePassword extends BaseFragment implements Common, Frag
         commonBean.setLeftImageDrawable(R.drawable.ic_left_back);
         commonBean.setLeftImageVisible(true);
         commonBean.setRightImageDrawable(R.drawable.ic_tick);
-        commonBean.setRightImageVisible(true);
+        commonBean.setRightImageVisible(false);
+        commonBean.setRightTextVisible(true);
         commonBean.setTitle("Change Password");
         fragmentChangePasswordBinding.setCommonData(commonBean);
         fragmentChangePasswordBinding.setCommonClick(this);

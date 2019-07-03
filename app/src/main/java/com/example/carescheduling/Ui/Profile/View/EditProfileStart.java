@@ -52,6 +52,7 @@ public class EditProfileStart extends BaseFragment implements Common, EditProfil
     }
 
     private void setUpView(View view) {
+        setCommonData();
         editProfileStartBinding.setProfileResultBean(profileResultBean);
         editProfileStartBinding.setEditProfileStartClick(this);
     }
@@ -63,6 +64,7 @@ public class EditProfileStart extends BaseFragment implements Common, EditProfil
         commonBean.setRightImageDrawable(R.drawable.ic_tick);
         commonBean.setRightImageVisible(false);
         commonBean.setTitle("Profile");
+        commonBean.setRightTextVisible(false);
         editProfileStartBinding.setCommonData(commonBean);
         editProfileStartBinding.setCommonClick(this);
     }

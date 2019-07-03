@@ -74,6 +74,7 @@ public class ClientInfoDocuments extends BaseFragment implements Common {
         commonBean.setLeftImageVisible(true);
         commonBean.setRightImageDrawable(R.drawable.ic_logout);
         commonBean.setRightImageVisible(false);
+        commonBean.setRightTextVisible(false);
         commonBean.setTitle("Documents");
         clientInfoDocumentsFragmentBinding.setCommonData(commonBean);
         clientInfoDocumentsFragmentBinding.setCommonClick(this);

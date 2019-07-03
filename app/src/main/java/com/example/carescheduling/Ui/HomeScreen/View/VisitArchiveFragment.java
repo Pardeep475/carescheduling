@@ -110,7 +110,8 @@ public class VisitArchiveFragment extends BaseFragment implements Common, VisitA
         commonBean.setLeftImageDrawable(R.drawable.ic_left_back);
         commonBean.setLeftImageVisible(true);
         commonBean.setRightImageDrawable(R.drawable.ic_tick);
-        commonBean.setRightImageVisible(true);
+        commonBean.setRightImageVisible(false);
+        commonBean.setRightTextVisible(true);
         commonBean.setTitle("Visits");
         visitArchiveFragmentBinding.setCommonData(commonBean);
         visitArchiveFragmentBinding.setCommonClick(this);

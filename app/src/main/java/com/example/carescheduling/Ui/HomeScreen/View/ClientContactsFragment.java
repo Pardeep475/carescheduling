@@ -74,6 +74,7 @@ public class ClientContactsFragment extends BaseFragment implements Common {
         commonBean.setLeftImageVisible(true);
         commonBean.setRightImageDrawable(R.drawable.ic_logout);
         commonBean.setRightImageVisible(false);
+        commonBean.setRightTextVisible(false);
         commonBean.setTitle("Contacts");
         clientContactsFragmentBinding.setCommonData(commonBean);
         clientContactsFragmentBinding.setCommonClick(this);
