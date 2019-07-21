@@ -62,12 +62,12 @@ public class HomeF extends BaseFragment implements Common, HomeScreenOnClick {
         setCommonData();
 
         homeFViewModel = ViewModelProviders.of(this).get(HomeFViewModel.class);
-        try {
-            GetClientPlan();
-        } catch (Exception e) {
-            hideDialog();
-            Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
-        }
+//        try {
+//            GetClientPlan();
+//        } catch (Exception e) {
+//            hideDialog();
+//            Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+//        }
 
 
         sessionManager = getSessionManager();

@@ -23,29 +23,28 @@ import com.example.carescheduling.Ui.Dashboard.beans.PersonPhone;
 import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
 import com.example.carescheduling.Ui.Dashboard.view.Dashboard;
 import com.example.carescheduling.Ui.Profile.Adapter.CustomAdapter;
-import com.example.carescheduling.Ui.Profile.ViewModel.EditPhoneNumberViewModel;
 import com.example.carescheduling.Ui.Profile.bean.EditPhoneNumberBean;
-import com.example.carescheduling.Ui.Profile.presenter.EditEmailClick;
 import com.example.carescheduling.Utils.ConnectivityReceiver;
 import com.example.carescheduling.Utils.Constants;
 import com.example.carescheduling.data.Local.DatabaseTable.CountryCode;
-import com.example.carescheduling.data.Local.DatabaseTable.Nationality;
 import com.example.carescheduling.data.Local.DatabaseTable.PhoneType;
 import com.example.carescheduling.data.Local.SessionManager;
-import com.example.carescheduling.databinding.FragmentEditPhoneNumberBinding;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class EditPhoneNumber extends BaseFragment implements Common {
-    private FragmentEditPhoneNumberBinding editPhoneNumberBinding;
+import com.example.carescheduling.Ui.Profile.ViewModel.AddPhoneNumberViewModel;
+import com.example.carescheduling.databinding.AddPhoneNumberFragmentBinding;
+
+public class AddPhoneNumber extends BaseFragment implements Common {
+    private AddPhoneNumberFragmentBinding editPhoneNumberBinding;
     private String stringValue, type;
     private ProfileBean profileBean;
-    private EditPhoneNumberViewModel editPhoneNumberViewModel;
+    private AddPhoneNumberViewModel editPhoneNumberViewModel;
     private SessionManager sessionManager;
 
-    public static EditPhoneNumber newInstance(String value, String type, ProfileBean profileBean) {
-        EditPhoneNumber editPhoneNumber = new EditPhoneNumber();
+    public static AddPhoneNumber newInstance(String value, String type, ProfileBean profileBean) {
+        AddPhoneNumber editPhoneNumber = new AddPhoneNumber();
         Bundle bundle = new Bundle();
         bundle.putString(Constants.STRING_VALUE, value);
         bundle.putString(Constants.TYPE, type);
@@ -68,7 +67,7 @@ public class EditPhoneNumber extends BaseFragment implements Common {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        editPhoneNumberBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_edit_phone_number, container, false);
+        editPhoneNumberBinding = DataBindingUtil.inflate(inflater, R.layout.add_phone_number_fragment, container, false);
         View view = editPhoneNumberBinding.getRoot();
         setUpView(view);
         return view;
@@ -77,7 +76,7 @@ public class EditPhoneNumber extends BaseFragment implements Common {
     private void setUpView(View view) {
         setCommonData();
         sessionManager = getSessionManager();
-        editPhoneNumberViewModel = ViewModelProviders.of(this).get(EditPhoneNumberViewModel.class);
+        editPhoneNumberViewModel = ViewModelProviders.of(this).get(AddPhoneNumberViewModel.class);
         if (type.equalsIgnoreCase("Update")) {
             editPhoneNumberBinding.spinnerPhoneType.setEnabled(false);
             editPhoneNumberBinding.spinnerPhoneType.setClickable(false);
@@ -87,7 +86,7 @@ public class EditPhoneNumber extends BaseFragment implements Common {
         }
         setCodePrefix();
         setPhoneType();
-        setEditPhoneNumber();
+//        setEditPhoneNumber();
 
     }
 
@@ -98,7 +97,7 @@ public class EditPhoneNumber extends BaseFragment implements Common {
         commonBean.setRightImageDrawable(R.drawable.ic_tick);
         commonBean.setRightImageVisible(false);
         commonBean.setRightTextVisible(true);
-        commonBean.setTitle("Edit Phone Number");
+        commonBean.setTitle("Add Phone Number");
         editPhoneNumberBinding.setCommonData(commonBean);
         editPhoneNumberBinding.setCommonClick(this);
     }
@@ -117,14 +116,6 @@ public class EditPhoneNumber extends BaseFragment implements Common {
                     CustomAdapter adapter = new CustomAdapter(getActivity(),
                             R.layout.item_spinner_sf, R.id.title, arrayList);
                     editPhoneNumberBinding.spinnerCountryCode.setAdapter(adapter);
-                    if (profileBean != null && profileBean.getData() != null && profileBean.getData().getPerson() != null) {
-                        if (profileBean.getData().getPerson().getPersonPhone() != null) {
-                            if (profileBean.getData().getPerson().getPersonPhone().size() > 0) {
-                                int pos = adapter.getPosition(profileBean.getData().getPerson().getPersonPhone().get(0).getCountryTelephonePrefix());
-                                editPhoneNumberBinding.spinnerPhoneType.setSelection(pos);
-                            }
-                        }
-                    }
                 }
             }
         });
@@ -154,19 +145,6 @@ public class EditPhoneNumber extends BaseFragment implements Common {
                     CustomAdapter adapter = new CustomAdapter(getActivity(),
                             R.layout.item_spinner_sf, R.id.title, arrayList);
                     editPhoneNumberBinding.spinnerPhoneType.setAdapter(adapter);
-                    if (profileBean != null && profileBean.getData() != null && profileBean.getData().getPerson() != null) {
-                        if (profileBean.getData().getPerson().getPersonPhone() != null) {
-                            if (profileBean.getData().getPerson().getPersonPhone().size() > 0) {
-                                for (int i = 0; i < profileBean.getData().getPerson().getPersonPhone().size(); i++) {
-                                    if (stringValue.equalsIgnoreCase(profileBean.getData().getPerson().getPersonPhone().get(i).getPhoneTypeName())) {
-                                        int pos = adapter.getPosition(profileBean.getData().getPerson().getPersonPhone().get(i).getPhoneTypeName());
-                                        editPhoneNumberBinding.spinnerPhoneType.setSelection(pos);
-                                    }
-                                }
-
-                            }
-                        }
-                    }
                 }
             }
         });
@@ -174,17 +152,23 @@ public class EditPhoneNumber extends BaseFragment implements Common {
 
 
     private void setDataRemote() {
-        showDialog();
+
         setPhoneData();
 
     }
 
     private void setPhoneData() {
 
-        if (profileBean.getData() != null && profileBean.getData().getPerson() != null && profileBean.getData().getPerson().getPersonPhone() != null && stringValue != null) {
-            profileBean = updateNumber();
-        } else {
-            profileBean = addNewNumber();
+//        if (profileBean.getData() != null && profileBean.getData().getPerson() != null && profileBean.getData().getPerson().getPersonPhone() != null && stringValue != null) {
+//            profileBean = updateNumber();
+//        } else {
+//            profileBean = addNewNumber();
+//        }
+        showDialog();
+        profileBean = addNewNumber();
+        if (profileBean == null) {
+            hideDialog();
+            return;
         }
 
         editPhoneNumberViewModel.getEditProfilePost(profileBean.getData()).observe(this, new Observer<ProfileBean>() {
@@ -275,3 +259,4 @@ public class EditPhoneNumber extends BaseFragment implements Common {
         }
     }
 }
+

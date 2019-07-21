@@ -8,6 +8,7 @@ import android.util.Base64;
 import android.util.Log;
 
 import com.example.carescheduling.R;
+import com.example.carescheduling.Ui.Dashboard.beans.GetMyProfileHome;
 import com.example.carescheduling.Ui.Dashboard.beans.PersonAddress_;
 import com.example.carescheduling.Ui.Dashboard.beans.PersonImage;
 import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
@@ -194,18 +195,18 @@ public class ProfileResultViewModel extends AndroidViewModel {
         return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
     }
 
-    public LiveData<ProfileBean> getClientData(String personId, String customerId, String branchId) {
-        final MutableLiveData<ProfileBean> data = new MutableLiveData<>();
+    public LiveData<ProfileResultBean> getClientData(String personId, String customerId, String branchId) {
+        final MutableLiveData<ProfileResultBean> data = new MutableLiveData<>();
 
-        Disposable disposable = apiService.getProfile(personId, customerId, branchId)
+        Disposable disposable = apiService.GetMyProfileHome(personId, customerId, branchId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<Response<ProfileBean>>() {
+                .subscribe(new Consumer<Response<GetMyProfileHome>>() {
                     @Override
-                    public void accept(Response<ProfileBean> loginBeanRetroResponse) throws Exception {
+                    public void accept(Response<GetMyProfileHome> loginBeanRetroResponse) throws Exception {
                         Log.e("LoginSuccess", "success");
                         if (loginBeanRetroResponse.isSuccessful()) {
-                            data.setValue(loginBeanRetroResponse.body());
+                            data.setValue(getPersonFullData(loginBeanRetroResponse.body().getData()));
                         } else {
                             data.setValue(null);
                         }
@@ -221,6 +222,19 @@ public class ProfileResultViewModel extends AndroidViewModel {
         return data;
     }
 
+
+    private ProfileResultBean getPersonFullData(GetMyProfileHome.Data data) {
+        ProfileResultBean profileResultBean = new ProfileResultBean();
+        profileResultBean.setUserName(checkIsNotNull(data.getPersonName()));
+        profileResultBean.setAddress(checkIsNotNull(data.getPersonAddress()));
+        profileResultBean.setMobile(checkIsNotNull(data.getPersonPhoneNumber()));
+        profileResultBean.setEmail(checkIsNotNull(data.getPersonEmailAddress()));
+        if (data.getPersonImage() != null && !data.getPersonImage().equalsIgnoreCase("null") && !data.getPersonImage().equalsIgnoreCase(""))
+            profileResultBean.setImgUrl(ImageFromBase64(data.getPersonImage()));
+
+        return profileResultBean;
+    }
+
     @Override
     protected void onCleared() {
         super.onCleared();
@@ -228,6 +242,6 @@ public class ProfileResultViewModel extends AndroidViewModel {
     }
 
     private String checkIsNotNull(String value) {
-        return value != null ? value : "";
+        return value != null && !value.equalsIgnoreCase("null") ? value : "";
     }
 }

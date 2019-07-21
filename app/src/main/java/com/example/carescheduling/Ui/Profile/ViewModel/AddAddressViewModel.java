@@ -22,6 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -29,12 +30,12 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
 
-public class ProfileAddressViewModel extends AndroidViewModel {
+public class AddAddressViewModel extends AndroidViewModel {
     private CompositeDisposable compositeDisposable;
     private ApiService apiService;
     private Context context;
 
-    public ProfileAddressViewModel(@NonNull Application application) {
+    public AddAddressViewModel(@NonNull Application application) {
         super(application);
         this.context = application;
         apiService = ApiClient.getClient(application)
@@ -73,21 +74,13 @@ public class ProfileAddressViewModel extends AndroidViewModel {
         return value != null ? value : "";
     }
 
-    public LiveData<AddressByPostCode> getAddressByPostCode(String value, ProfileBean profileBean,String postCode) {
-        String country = null, postalCode = postCode;
-        if (profileBean != null && profileBean.getData() != null) {
-            for (int i = 0; i < profileBean.getData().getPersonAddresses().size(); i++) {
-                if (profileBean.getData().getPersonAddresses().get(i).getAddressTypeName().equalsIgnoreCase(value)) {
-                    country = profileBean.getData().getPersonAddresses().get(i).getCountryPostCode().getCountryName();
-//                    postalCode = profileBean.getData().getPersonAddresses().get(i).getCountryPostCode().getPostCodeName();
-                }
-            }
-        }
+    public LiveData<AddressByPostCode> getAddressByPostCode(String value, ProfileBean profileBean, String postCode) {
+        String  postalCode = postCode;
 
         final MutableLiveData<AddressByPostCode> profileAddressBeanMutableLiveData = new MutableLiveData<>();
 
-        if (country != null && postalCode != null) {
-            Disposable disposable = apiService.fetchAddressByPostalCode(country, postalCode)
+        if (value != null && postalCode != null) {
+            Disposable disposable = apiService.fetchAddressByPostalCode(value, postalCode)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Consumer<Response<AddressByPostCode>>() {

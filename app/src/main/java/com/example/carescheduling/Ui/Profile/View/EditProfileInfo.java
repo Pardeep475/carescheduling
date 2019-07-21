@@ -2,6 +2,7 @@ package com.example.carescheduling.Ui.Profile.View;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -10,6 +11,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,9 +31,11 @@ import com.example.carescheduling.Ui.Dashboard.beans.PersonReligion;
 import com.example.carescheduling.Ui.Dashboard.beans.PersonSexuality;
 import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
 import com.example.carescheduling.Ui.Dashboard.beans.ProfileResultBean;
+import com.example.carescheduling.Ui.Dashboard.view.Dashboard;
 import com.example.carescheduling.Ui.Profile.Adapter.CustomAdapter;
 import com.example.carescheduling.Ui.Profile.ViewModel.EditProfileInfoViewModel;
 import com.example.carescheduling.Ui.Profile.bean.EditProfileInfoBean;
+import com.example.carescheduling.Ui.Profile.bean.EditProfileInfoBeanRetro;
 import com.example.carescheduling.Ui.Profile.presenter.EditEmailClick;
 import com.example.carescheduling.Ui.Profile.presenter.EditProfileInfoClick;
 import com.example.carescheduling.Utils.ConnectivityReceiver;
@@ -60,23 +64,17 @@ public class EditProfileInfo extends BaseFragment implements Common, EditProfile
     private DatePicker datePicker;
     private Calendar calendar;
     private int year, month, day;
-    private ProfileBean profileResultBean;
     private SessionManager sessionManager;
+    private EditProfileInfoBean editProfileBean;
 
-    public static EditProfileInfo newInstance(ProfileBean profileResultBean) {
-        EditProfileInfo editProfileInfo = new EditProfileInfo();
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(Constants.PROFILE_DATA, (Serializable) profileResultBean);
-        editProfileInfo.setArguments(bundle);
-        return editProfileInfo;
+    public static EditProfileInfo newInstance() {
+        return new EditProfileInfo();
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            profileResultBean = (ProfileBean) getArguments().getSerializable(Constants.PROFILE_DATA);
-        }
+
     }
 
     @Override
@@ -93,20 +91,11 @@ public class EditProfileInfo extends BaseFragment implements Common, EditProfile
         setCommonData();
         editProfileInfoViewModel = ViewModelProviders.of(this).get(EditProfileInfoViewModel.class);
         sessionManager = getSessionManager();
-        setLanguageData();
-        setEthnicityData();
-        setGenderData();
-        setPrefixData();
-        setMaritalData();
-        setDisabilityType();
-        setReligion();
-        setSexualityType();
-        setNationalityData();
-        setProfileInfoBeanData(profileResultBean);
-
+        setProfileInfoBeanData();
         fragmentEditProfileInfoBinding.setEditProfileInfoClick(this);
 
     }
+
 
     private void setCommonData() {
         CommonBean commonBean = new CommonBean();
@@ -120,14 +109,47 @@ public class EditProfileInfo extends BaseFragment implements Common, EditProfile
         fragmentEditProfileInfoBinding.setCommonClick(this);
     }
 
-    private void setProfileInfoBeanData(final ProfileBean profileResultBean) {
-        editProfileInfoViewModel.getProfileEditBean(profileResultBean).observe(this, new Observer<EditProfileInfoBean>() {
-            @Override
-            public void onChanged(EditProfileInfoBean editProfileInfoBean) {
-                fragmentEditProfileInfoBinding.setProfileInfoBean(editProfileInfoBean);
+    private void setProfileInfoBeanData() {
+        if (getActivity() != null) {
+            if (ConnectivityReceiver.isNetworkAvailable(getActivity())) {
+                showDialog();
+                try {
+                    editProfileInfoViewModel.GetMyProfileEdit(sessionManager.getPersonId(), sessionManager.getCustomerId(), sessionManager.getBranchId())
+                            .observe(this, new Observer<EditProfileInfoBean>() {
+                                @Override
+                                public void onChanged(EditProfileInfoBean editProfileInfoBean) {
+                                    hideDialog();
+                                    editProfileBean = editProfileInfoBean;
+                                    if (editProfileInfoBean != null) {
+                                        fragmentEditProfileInfoBinding.setDate(editProfileInfoBean.getDateOfBirth());
+                                        fragmentEditProfileInfoBinding.setProfileInfoBean(editProfileInfoBean);
+                                    }
+                                    setSpinnerData();
+                                }
+                            });
 
+                } catch (Exception e) {
+                    hideDialog();
+                    Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+                    setSpinnerData();
+                }
+            } else {
+                Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
+                setSpinnerData();
             }
-        });
+        }
+    }
+
+    private void setSpinnerData() {
+        setLanguageData();
+        setEthnicityData();
+        setGenderData();
+        setPrefixData();
+        setMaritalData();
+        setDisabilityType();
+        setReligion();
+        setSexualityType();
+        setNationalityData();
     }
 
     private void setNationalityData() {
@@ -144,12 +166,10 @@ public class EditProfileInfo extends BaseFragment implements Common, EditProfile
                     CustomAdapter adapter = new CustomAdapter(getActivity(),
                             R.layout.item_spinner_sf, R.id.title, arrayList);
                     fragmentEditProfileInfoBinding.spinnerNationality.setAdapter(adapter);
-                    if (profileResultBean != null && profileResultBean.getData() != null && profileResultBean.getData().getPerson() != null) {
-                        if (profileResultBean.getData().getPerson().getPersonNationality() != null) {
-                            if (profileResultBean.getData().getPerson().getPersonNationality().size() > 0) {
-                                int pos = adapter.getPosition(profileResultBean.getData().getPerson().getPersonNationality().get(0).getCountryName());
-                                fragmentEditProfileInfoBinding.spinnerNationality.setSelection(pos);
-                            }
+                    if (editProfileBean != null) {
+                        if (editProfileBean.getNationality() != null) {
+                            int pos = adapter.getPosition(editProfileBean.getNationality());
+                            fragmentEditProfileInfoBinding.spinnerNationality.setSelection(pos);
                         }
                     }
                 }
@@ -171,12 +191,10 @@ public class EditProfileInfo extends BaseFragment implements Common, EditProfile
                     CustomAdapter adapter = new CustomAdapter(getActivity(),
                             R.layout.item_spinner_sf, R.id.title, arrayList);
                     fragmentEditProfileInfoBinding.spinnerSexuality.setAdapter(adapter);
-                    if (profileResultBean != null && profileResultBean.getData() != null && profileResultBean.getData().getPerson() != null) {
-                        if (profileResultBean.getData().getPerson().getPersonSexuality() != null) {
-                            if (profileResultBean.getData().getPerson().getPersonSexuality().size() > 0) {
-                                int pos = adapter.getPosition(profileResultBean.getData().getPerson().getPersonSexuality().get(0).getSexualityTypeName());
-                                fragmentEditProfileInfoBinding.spinnerSexuality.setSelection(pos);
-                            }
+                    if (editProfileBean != null) {
+                        if (editProfileBean.getSexuality() != null) {
+                            int pos = adapter.getPosition(editProfileBean.getSexuality());
+                            fragmentEditProfileInfoBinding.spinnerSexuality.setSelection(pos);
                         }
                     }
                 }
@@ -198,12 +216,10 @@ public class EditProfileInfo extends BaseFragment implements Common, EditProfile
                     CustomAdapter adapter = new CustomAdapter(getActivity(),
                             R.layout.item_spinner_sf, R.id.title, arrayList);
                     fragmentEditProfileInfoBinding.spinnerReligion.setAdapter(adapter);
-                    if (profileResultBean != null && profileResultBean.getData() != null && profileResultBean.getData().getPerson() != null) {
-                        if (profileResultBean.getData().getPerson().getPersonReligion() != null) {
-                            if (profileResultBean.getData().getPerson().getPersonReligion().size() > 0) {
-                                int pos = adapter.getPosition(profileResultBean.getData().getPerson().getPersonReligion().get(0).getReligionTypeName());
-                                fragmentEditProfileInfoBinding.spinnerReligion.setSelection(pos);
-                            }
+                    if (editProfileBean != null) {
+                        if (editProfileBean.getReligion() != null) {
+                            int pos = adapter.getPosition(editProfileBean.getReligion());
+                            fragmentEditProfileInfoBinding.spinnerReligion.setSelection(pos);
                         }
                     }
                 }
@@ -225,12 +241,10 @@ public class EditProfileInfo extends BaseFragment implements Common, EditProfile
                     CustomAdapter adapter = new CustomAdapter(getActivity(),
                             R.layout.item_spinner_sf, R.id.title, arrayList);
                     fragmentEditProfileInfoBinding.spinnerDisability.setAdapter(adapter);
-                    if (profileResultBean != null && profileResultBean.getData() != null && profileResultBean.getData().getPerson() != null) {
-                        if (profileResultBean.getData().getPerson().getPersonDisability() != null) {
-                            if (profileResultBean.getData().getPerson().getPersonDisability().size() > 0) {
-                                int pos = adapter.getPosition(profileResultBean.getData().getPerson().getPersonDisability().get(0).getDisabilityTypeName());
-                                fragmentEditProfileInfoBinding.spinnerDisability.setSelection(pos);
-                            }
+                    if (editProfileBean != null) {
+                        if (editProfileBean.getDisabaility() != null) {
+                            int pos = adapter.getPosition(editProfileBean.getDisabaility());
+                            fragmentEditProfileInfoBinding.spinnerDisability.setSelection(pos);
                         }
                     }
                 }
@@ -253,12 +267,10 @@ public class EditProfileInfo extends BaseFragment implements Common, EditProfile
                     CustomAdapter adapter = new CustomAdapter(getActivity(),
                             R.layout.item_spinner_sf, R.id.title, arrayList);
                     fragmentEditProfileInfoBinding.spinnerLanguage.setAdapter(adapter);
-                    if (profileResultBean != null && profileResultBean.getData() != null && profileResultBean.getData().getPerson() != null) {
-                        if (profileResultBean.getData().getPerson().getPersonLanguage() != null) {
-                            if (profileResultBean.getData().getPerson().getPersonLanguage().size() > 0) {
-                                int pos = adapter.getPosition(profileResultBean.getData().getPerson().getPersonLanguage().get(0).getLanguageName());
-                                fragmentEditProfileInfoBinding.spinnerLanguage.setSelection(pos);
-                            }
+                    if (editProfileBean != null) {
+                        if (editProfileBean.getLanguage() != null) {
+                            int pos = adapter.getPosition(editProfileBean.getLanguage());
+                            fragmentEditProfileInfoBinding.spinnerLanguage.setSelection(pos);
                         }
                     }
                 }
@@ -281,9 +293,9 @@ public class EditProfileInfo extends BaseFragment implements Common, EditProfile
                     CustomAdapter adapter = new CustomAdapter(getActivity(),
                             R.layout.item_spinner_sf, R.id.title, arrayList);
                     fragmentEditProfileInfoBinding.spinnerPrefix.setAdapter(adapter);
-                    if (profileResultBean != null && profileResultBean.getData() != null && profileResultBean.getData().getPerson() != null) {
-                        if (profileResultBean.getData().getPerson().getPrefixTypeName() != null) {
-                            int pos = adapter.getPosition(profileResultBean.getData().getPerson().getPrefixTypeName());
+                    if (editProfileBean != null) {
+                        if (editProfileBean.getPrefix() != null) {
+                            int pos = adapter.getPosition(editProfileBean.getPrefix());
                             fragmentEditProfileInfoBinding.spinnerPrefix.setSelection(pos);
                         }
                     }
@@ -307,12 +319,10 @@ public class EditProfileInfo extends BaseFragment implements Common, EditProfile
                     CustomAdapter adapter = new CustomAdapter(getActivity(),
                             R.layout.item_spinner_sf, R.id.title, arrayList);
                     fragmentEditProfileInfoBinding.spinnerEthnicity.setAdapter(adapter);
-                    if (profileResultBean != null && profileResultBean.getData() != null && profileResultBean.getData().getPerson() != null) {
-                        if (profileResultBean.getData().getPerson().getPersonEthnicity() != null) {
-                            if (profileResultBean.getData().getPerson().getPersonEthnicity().size() > 0) {
-                                int pos = adapter.getPosition(profileResultBean.getData().getPerson().getPersonEthnicity().get(0).getEthnicityTypeName());
-                                fragmentEditProfileInfoBinding.spinnerEthnicity.setSelection(pos);
-                            }
+                    if (editProfileBean != null) {
+                        if (editProfileBean.getEthnicity() != null) {
+                            int pos = adapter.getPosition(editProfileBean.getEthnicity());
+                            fragmentEditProfileInfoBinding.spinnerEthnicity.setSelection(pos);
                         }
                     }
                 }
@@ -334,12 +344,10 @@ public class EditProfileInfo extends BaseFragment implements Common, EditProfile
                     CustomAdapter adapter = new CustomAdapter(getActivity(),
                             R.layout.item_spinner_sf, R.id.title, arrayList);
                     fragmentEditProfileInfoBinding.spinnerMaritalStatus.setAdapter(adapter);
-                    if (profileResultBean != null && profileResultBean.getData() != null && profileResultBean.getData().getPerson() != null) {
-                        if (profileResultBean.getData().getPerson().getPersonMaritalStatus() != null) {
-                            if (profileResultBean.getData().getPerson().getPersonMaritalStatus().size() > 0) {
-                                int pos = adapter.getPosition(profileResultBean.getData().getPerson().getPersonMaritalStatus().get(0).getMaritalStatusName());
-                                fragmentEditProfileInfoBinding.spinnerMaritalStatus.setSelection(pos);
-                            }
+                    if (editProfileBean != null) {
+                        if (editProfileBean.getMaritalStatus() != null) {
+                            int pos = adapter.getPosition(editProfileBean.getMaritalStatus());
+                            fragmentEditProfileInfoBinding.spinnerMaritalStatus.setSelection(pos);
                         }
                     }
                 }
@@ -362,9 +370,9 @@ public class EditProfileInfo extends BaseFragment implements Common, EditProfile
                     CustomAdapter adapter = new CustomAdapter(getActivity(),
                             R.layout.item_spinner_sf, R.id.title, arrayList);
                     fragmentEditProfileInfoBinding.spinnerGender.setAdapter(adapter);
-                    if (profileResultBean != null && profileResultBean.getData() != null && profileResultBean.getData().getPerson() != null) {
-                        if (profileResultBean.getData().getPerson().getGenderTypeName() != null) {
-                            int pos = adapter.getPosition(profileResultBean.getData().getPerson().getGenderTypeName());
+                    if (editProfileBean != null) {
+                        if (editProfileBean.getMaritalStatus() != null) {
+                            int pos = adapter.getPosition(editProfileBean.getGender());
                             fragmentEditProfileInfoBinding.spinnerGender.setSelection(pos);
                         }
                     }
@@ -419,8 +427,9 @@ public class EditProfileInfo extends BaseFragment implements Common, EditProfile
             };
 
     private void showDate(int year, int month, int day) {
-        Toast.makeText(getActivity(), year + " " + month + " " + day, Toast.LENGTH_SHORT).show();
-        editProfileInfoViewModel.datePicker(year + "/" + month + "/" + day).observe(getActivity(), new Observer<String>() {
+        // DD-MM-YYYY
+        Toast.makeText(getActivity(), day + "-" + month + "-" + year, Toast.LENGTH_SHORT).show();
+        editProfileInfoViewModel.datePicker(day + "-" + month + "-" + year).observe(getActivity(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
                 fragmentEditProfileInfoBinding.setDate(s);
@@ -431,116 +440,40 @@ public class EditProfileInfo extends BaseFragment implements Common, EditProfile
     }
 
 
-    private void setDataRemote() {
-        showDialog();
+//    private void setDataRemote() {
+//
+//        ProfileBean profileBean = sendDataRemote();
+//        if (profileBean == null || profileBean.getData() == null) {
+//            return;
+//        }
+//        showDialog();
+//        editProfileInfoViewModel.getEditProfilePost(sessionManager.getCustomerId(), sessionManager.getPersonId(), profileBean.getData()).observe(this, new Observer<ProfileBean>() {
+//            @Override
+//            public void onChanged(ProfileBean profileBean) {
+//                hideDialog();
+//                if (profileBean != null) {
+//                    if (profileBean.getSuccess()) {
+//                        Toast.makeText(getActivity(), (String) profileBean.getResponseMessage(), Toast.LENGTH_SHORT).show();
+//                        openDashboardActivity();
+//                    } else {
+//                        Toast.makeText(getActivity(), (String) profileBean.getResponseMessage(), Toast.LENGTH_SHORT).show();
+//                    }
+//                } else {
+//                    Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
+//                }
+//
+//            }
+//        });
+//    }
 
-        editProfileInfoViewModel.getEditProfilePost(sessionManager.getCustomerId(), sessionManager.getPersonId(), sendDataRemote().getData()).observe(this, new Observer<ProfileBean>() {
-            @Override
-            public void onChanged(ProfileBean profileBean) {
-                hideDialog();
-                if (profileBean != null) {
-                    if (profileBean.getSuccess()) {
-                        Toast.makeText(getActivity(), (String) profileBean.getResponseMessage(), Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(getActivity(), (String) profileBean.getResponseMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        });
+    private void openDashboardActivity() {
+        Intent intent = new Intent(getActivity(), Dashboard.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        if (getActivity() != null)
+            getActivity().finish();
     }
 
-    private ProfileBean sendDataRemote() {
-
-        ProfileBean profileBean = profileResultBean;
-        profileResultBean.getData().getPerson().setFirstName(fragmentEditProfileInfoBinding.edtFirstName.getText().toString());
-        profileResultBean.getData().getPerson().setSurName(fragmentEditProfileInfoBinding.edtSurname.getText().toString());
-        profileResultBean.getData().getPerson().setMiddleName(fragmentEditProfileInfoBinding.edtMiddleName.getText().toString());
-        profileResultBean.getData().getPerson().setMaidenName(fragmentEditProfileInfoBinding.edtMaidenName.getText().toString());
-        profileBean.getData().getPerson().setGenderTypeName((String) fragmentEditProfileInfoBinding.spinnerGender.getSelectedItem());
-        profileBean.getData().getPerson().setPrefixTypeName((String) fragmentEditProfileInfoBinding.spinnerPrefix.getSelectedItem());
-        if ((fragmentEditProfileInfoBinding.spinnerNationality.getSelectedItemPosition() - 1) > 0) {
-            if (profileBean.getData().getPerson().getPersonNationality() != null && profileBean.getData().getPerson().getPersonNationality().size() > 0) {
-                profileBean.getData().getPerson().getPersonNationality().get(0).setCountryName((String) fragmentEditProfileInfoBinding.spinnerNationality.getSelectedItem());
-            } else {
-                PersonNationality personNationality = new PersonNationality();
-                personNationality.setCountryName((String) fragmentEditProfileInfoBinding.spinnerNationality.getSelectedItem());
-                personNationality.setCustomerId(getSessionManager().getCustomerId());
-                personNationality.setPersonId(getSessionManager().getPersonId());
-                profileBean.getData().getPerson().getPersonNationality().add(personNationality);
-            }
-        }
-        if ((fragmentEditProfileInfoBinding.spinnerLanguage.getSelectedItemPosition() - 1) > 0) {
-            if (profileBean.getData().getPerson().getPersonLanguage() != null && profileBean.getData().getPerson().getPersonLanguage().size() > 0) {
-                profileBean.getData().getPerson().getPersonLanguage().get(0).setLanguageName((String) fragmentEditProfileInfoBinding.spinnerLanguage.getSelectedItem());
-            } else {
-                com.example.carescheduling.Ui.Dashboard.beans.PersonLanguage personLanguage = new com.example.carescheduling.Ui.Dashboard.beans.PersonLanguage();
-                personLanguage.setLanguageName((String) fragmentEditProfileInfoBinding.spinnerLanguage.getSelectedItem());
-                personLanguage.setCustomerId(getSessionManager().getCustomerId());
-                personLanguage.setPersonId(getSessionManager().getPersonId());
-                profileBean.getData().getPerson().getPersonLanguage().add(personLanguage);
-            }
-        }
-        if ((fragmentEditProfileInfoBinding.spinnerMaritalStatus.getSelectedItemPosition() - 1) > 0) {
-            if (profileBean.getData().getPerson().getPersonMaritalStatus() != null && profileBean.getData().getPerson().getPersonMaritalStatus().size() > 0) {
-                profileBean.getData().getPerson().getPersonMaritalStatus().get(0).setMaritalStatusName((String) fragmentEditProfileInfoBinding.spinnerMaritalStatus.getSelectedItem());
-            } else {
-                PersonMaritalstatus personMaritalstatus = new PersonMaritalstatus();
-                personMaritalstatus.setCustomerId(getSessionManager().getCustomerId());
-                personMaritalstatus.setPersonId(getSessionManager().getPersonId());
-                personMaritalstatus.setMaritalStatusName((String) fragmentEditProfileInfoBinding.spinnerMaritalStatus.getSelectedItem());
-                profileBean.getData().getPerson().getPersonMaritalStatus().add(personMaritalstatus);
-            }
-        }
-        if ((fragmentEditProfileInfoBinding.spinnerEthnicity.getSelectedItemPosition() - 1) > 0) {
-            if (profileBean.getData().getPerson().getPersonEthnicity() != null && profileBean.getData().getPerson().getPersonEthnicity().size() > 0) {
-                profileBean.getData().getPerson().getPersonEthnicity().get(0).setEthnicityTypeName((String) fragmentEditProfileInfoBinding.spinnerEthnicity.getSelectedItem());
-            } else {
-                PersonEthnicity personEthnicity = new PersonEthnicity();
-                personEthnicity.setEthnicityTypeName((String) fragmentEditProfileInfoBinding.spinnerEthnicity.getSelectedItem());
-                personEthnicity.setCustomerId(getSessionManager().getCustomerId());
-                personEthnicity.setPersonId(getSessionManager().getPersonId());
-                profileBean.getData().getPerson().getPersonEthnicity().add(personEthnicity);
-            }
-        }
-        if ((fragmentEditProfileInfoBinding.spinnerReligion.getSelectedItemPosition() - 1) > 0) {
-            if (profileBean.getData().getPerson().getPersonReligion() != null && profileBean.getData().getPerson().getPersonReligion().size() > 0) {
-                profileBean.getData().getPerson().getPersonReligion().get(0).setReligionTypeName((String) fragmentEditProfileInfoBinding.spinnerReligion.getSelectedItem());
-            } else {
-                PersonReligion personReligion = new PersonReligion();
-                personReligion.setReligionTypeName((String) fragmentEditProfileInfoBinding.spinnerReligion.getSelectedItem());
-                personReligion.setCustomerId(getSessionManager().getCustomerId());
-                personReligion.setPersonId(getSessionManager().getPersonId());
-                profileBean.getData().getPerson().getPersonReligion().add(personReligion);
-            }
-        }
-        if ((fragmentEditProfileInfoBinding.spinnerSexuality.getSelectedItemPosition() - 1) > 0) {
-            if (profileBean.getData().getPerson().getPersonSexuality() != null && profileBean.getData().getPerson().getPersonSexuality().size() > 0) {
-                profileBean.getData().getPerson().getPersonSexuality().get(0).setSexualityTypeName((String) fragmentEditProfileInfoBinding.spinnerSexuality.getSelectedItem());
-            } else {
-                PersonSexuality personSexuality = new PersonSexuality();
-                personSexuality.setSexualityTypeName((String) fragmentEditProfileInfoBinding.spinnerSexuality.getSelectedItem());
-                personSexuality.setCustomerId(getSessionManager().getCustomerId());
-                personSexuality.setPersonId(getSessionManager().getPersonId());
-                profileBean.getData().getPerson().getPersonSexuality().add(personSexuality);
-            }
-        }
-        if ((fragmentEditProfileInfoBinding.spinnerDisability.getSelectedItemPosition() - 1) > 0) {
-            if (profileBean.getData().getPerson().getPersonDisability() != null && profileBean.getData().getPerson().getPersonDisability().size() > 0) {
-                profileBean.getData().getPerson().getPersonDisability().get(0).setDisabilityTypeName((String) fragmentEditProfileInfoBinding.spinnerDisability.getSelectedItem());
-            } else {
-                PersonDisability personDisability = new PersonDisability();
-                personDisability.setDisabilityTypeName((String) fragmentEditProfileInfoBinding.spinnerDisability.getSelectedItem());
-                personDisability.setCustomerId(getSessionManager().getCustomerId());
-                personDisability.setPersonId(getSessionManager().getPersonId());
-                profileBean.getData().getPerson().getPersonDisability().add(personDisability);
-            }
-        }
-
-        return profileResultBean;
-    }
 
     @Override
     public void leftClick() {
@@ -563,4 +496,85 @@ public class EditProfileInfo extends BaseFragment implements Common, EditProfile
             }
         }
     }
+
+    private void setDataRemote() {
+        if (validation()) {
+            EditProfileInfoBeanRetro editProfileInfoBeanRetro = new EditProfileInfoBeanRetro(
+                    getSessionManager().getPersonId(), getSessionManager().getBranchId(), getSessionManager().getCustomerId(),
+                    fragmentEditProfileInfoBinding.edtFirstName.getText().toString(), fragmentEditProfileInfoBinding.edtMiddleName.getText().toString(),
+                    fragmentEditProfileInfoBinding.edtSurname.getText().toString(), fragmentEditProfileInfoBinding.edtMaidenName.getText().toString(),
+                    (String) fragmentEditProfileInfoBinding.spinnerGender.getSelectedItem(), fragmentEditProfileInfoBinding.txtDateOfBirth.getText().toString(),
+                    (String) fragmentEditProfileInfoBinding.spinnerPrefix.getSelectedItem(), (String) fragmentEditProfileInfoBinding.spinnerLanguage.getSelectedItem(),
+                    (String) fragmentEditProfileInfoBinding.spinnerMaritalStatus.getSelectedItem(), (String) fragmentEditProfileInfoBinding.spinnerEthnicity.getSelectedItem(),
+                    (String) fragmentEditProfileInfoBinding.spinnerDisability.getSelectedItem(), (String) fragmentEditProfileInfoBinding.spinnerReligion.getSelectedItem(),
+                    (String) fragmentEditProfileInfoBinding.spinnerSexuality.getSelectedItem(), (String) fragmentEditProfileInfoBinding.spinnerNationality.getSelectedItem(),
+                    editProfileBean.isDisability()
+            );
+            showDialog();
+            editProfileInfoViewModel.UpdateProfile(editProfileInfoBeanRetro).observe(this, new Observer<Boolean>() {
+                @Override
+                public void onChanged(Boolean aBoolean) {
+                    hideDialog();
+                    if (aBoolean != null) {
+                        if (aBoolean) {
+                            // on back press
+                            if (getActivity() != null)
+                                getActivity().onBackPressed();
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    private boolean validation() {
+        if (TextUtils.isEmpty(fragmentEditProfileInfoBinding.edtFirstName.getText().toString())) {
+            showAToast("please select first name");
+            return false;
+        } else if (TextUtils.isEmpty(fragmentEditProfileInfoBinding.edtMiddleName.getText().toString())) {
+            showAToast("please select middle name");
+            return false;
+        } else if (TextUtils.isEmpty(fragmentEditProfileInfoBinding.edtSurname.getText().toString())) {
+            showAToast("please select surname name");
+            return false;
+        } else if (TextUtils.isEmpty(fragmentEditProfileInfoBinding.edtMaidenName.getText().toString())) {
+            showAToast("please select maiden name");
+            return false;
+        } else if (TextUtils.isEmpty(fragmentEditProfileInfoBinding.txtDateOfBirth.getText().toString())) {
+            showAToast("please select date of birth");
+            return false;
+        } else if ((fragmentEditProfileInfoBinding.spinnerGender.getSelectedItemPosition() - 1) < 0) {
+            showAToast("please select gender type");
+            return false;
+        } else if ((fragmentEditProfileInfoBinding.spinnerGender.getSelectedItemPosition() - 1) < 0) {
+            showAToast("please select gender type");
+            return false;
+        } else if ((fragmentEditProfileInfoBinding.spinnerPrefix.getSelectedItemPosition() - 1) < 0) {
+            showAToast("please select prefix type");
+            return false;
+        } else if ((fragmentEditProfileInfoBinding.spinnerLanguage.getSelectedItemPosition() - 1) < 0) {
+            showAToast("please select Language");
+            return false;
+        } else if ((fragmentEditProfileInfoBinding.spinnerMaritalStatus.getSelectedItemPosition() - 1) < 0) {
+            showAToast("please select marital status");
+            return false;
+        } else if ((fragmentEditProfileInfoBinding.spinnerEthnicity.getSelectedItemPosition() - 1) < 0) {
+            showAToast("please select ethnicity");
+            return false;
+        } else if ((fragmentEditProfileInfoBinding.spinnerDisability.getSelectedItemPosition() - 1) < 0) {
+            showAToast("please select disability");
+            return false;
+        } else if ((fragmentEditProfileInfoBinding.spinnerReligion.getSelectedItemPosition() - 1) < 0) {
+            showAToast("please select religion");
+            return false;
+        } else if ((fragmentEditProfileInfoBinding.spinnerSexuality.getSelectedItemPosition() - 1) < 0) {
+            showAToast("please select sexuality");
+            return false;
+        } else if ((fragmentEditProfileInfoBinding.spinnerNationality.getSelectedItemPosition() - 1) < 0) {
+            showAToast("please select nationality");
+            return false;
+        }
+        return true;
+    }
+
 }

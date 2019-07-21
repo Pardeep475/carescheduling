@@ -9,8 +9,14 @@
         <import type="android.view.View" />
 
         <variable
-            name="editProfileAddressBean"
-            type="com.example.carescheduling.Ui.Profile.bean.EditProfileAddressBean" />
+            name="PersonAddressList"
+            type="int" />
+        <variable
+            name="PersonPhoneList"
+            type="int" />
+        <variable
+            name="PersonEmailList"
+            type="int" />
 
         <variable
             name="commonData"
@@ -56,66 +62,222 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/ll_edit_address"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ten_dp"
+                        android:layout_marginBottom="@dimen/ten_dp"
+                        android:layout_weight="1"
+                        android:onClick="@{(v)-> editAddressClick.EditAddressClick()}"
+                        android:orientation="horizontal"
+                        android:paddingStart="@dimen/ten_dp"
+                        android:paddingTop="@dimen/ten_dp"
+                        android:paddingEnd="@dimen/ten_dp"
+                        android:paddingBottom="@dimen/ten_dp"
+                        android:visibility="@{PersonAddressList > 0 ? View.VISIBLE :View.VISIBLE}">
+
+                        <ImageView
+                            android:layout_width="@dimen/twenty_dp"
+                            android:layout_height="@dimen/twenty_dp"
+                            android:contentDescription="@string/user_profile"
+                            android:tint="@color/blue"
+                            app:srcCompat="@drawable/ic_edit" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="@dimen/ten_dp"
+                            android:fontFamily="@font/rubik_medium"
+                            android:gravity="start"
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:text="@string/add_my_address_underline"
+                            android:textAlignment="textStart"
+                            android:textColor="@color/blue" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_update_address"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ten_dp"
+                        android:layout_marginBottom="@dimen/ten_dp"
+                        android:layout_weight="1"
+                        android:onClick="@{(v)-> editAddressClick.UpdateAddressClick()}"
+                        android:orientation="horizontal"
+                        android:paddingStart="@dimen/ten_dp"
+                        android:paddingTop="@dimen/ten_dp"
+                        android:paddingEnd="@dimen/ten_dp"
+                        android:paddingBottom="@dimen/ten_dp"
+                        android:visibility="@{PersonAddressList > 0 ? View.VISIBLE :View.GONE}">
+
+                        <ImageView
+                            android:layout_width="@dimen/twenty_dp"
+                            android:layout_height="@dimen/twenty_dp"
+                            android:contentDescription="@string/user_profile"
+                            android:tint="@color/blue"
+                            app:srcCompat="@drawable/ic_edit" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="@dimen/ten_dp"
+                            android:fontFamily="@font/rubik_medium"
+                            android:gravity="start"
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:text="@string/update_my_address_underline"
+                            android:textAlignment="textStart"
+                            android:textColor="@color/blue" />
+                    </LinearLayout>
+                </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/ll_edit_address"
+                    android:id="@+id/ll_delete_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
                     android:layout_marginTop="@dimen/ten_dp"
                     android:layout_marginBottom="@dimen/ten_dp"
-                    android:onClick="@{(v)-> editAddressClick.EditAddressClick()}"
+                    android:onClick="@{(v)-> editAddressClick.DeleteAddressClick()}"
                     android:orientation="horizontal"
                     android:paddingStart="@dimen/ten_dp"
                     android:paddingTop="@dimen/ten_dp"
                     android:paddingEnd="@dimen/ten_dp"
                     android:paddingBottom="@dimen/ten_dp"
-                    android:visibility="@{editProfileAddressBean.getAddressArray().size() > 0 ? View.VISIBLE :View.GONE}">
+                    android:visibility="@{PersonAddressList > 0 ? View.VISIBLE :View.GONE}">
 
                     <ImageView
                         android:layout_width="@dimen/twenty_dp"
                         android:layout_height="@dimen/twenty_dp"
                         android:contentDescription="@string/user_profile"
                         android:tint="@color/blue"
+                        android:visibility="gone"
                         app:srcCompat="@drawable/ic_edit" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginStart="@dimen/ten_dp"
                         android:fontFamily="@font/rubik_medium"
                         android:gravity="start"
-                        android:text="@string/edit_my_address_underline"
+                        android:text="@string/delete_my_address_underline"
                         android:textAlignment="textStart"
-                        android:textColor="@color/blue" />
+                        android:textColor="@color/red" />
                 </LinearLayout>
-
 
                 <RadioGroup
                     android:id="@+id/rb_phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/ll_edit_phone_number"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ten_dp"
+                        android:layout_marginBottom="@dimen/ten_dp"
+                        android:layout_weight="1"
+                        android:onClick="@{(v)-> editAddressClick.EditPhoneNumberClick()}"
+                        android:orientation="horizontal"
+                        android:paddingStart="@dimen/ten_dp"
+                        android:paddingTop="@dimen/ten_dp"
+                        android:paddingEnd="@dimen/ten_dp"
+                        android:paddingBottom="@dimen/ten_dp"
+                        android:visibility="@{PersonPhoneList > 0 ? View.VISIBLE :View.VISIBLE}">
+
+                        <ImageView
+                            android:layout_width="@dimen/twenty_dp"
+                            android:layout_height="@dimen/twenty_dp"
+                            android:contentDescription="@string/user_profile"
+                            android:tint="@color/blue"
+                            app:srcCompat="@drawable/ic_edit" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="@dimen/ten_dp"
+                            android:fontFamily="@font/rubik_medium"
+                            android:gravity="start"
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:text="@string/add_my_phone_number_underline"
+                            android:textAlignment="textStart"
+                            android:textColor="@color/blue" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_update_phone_number"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ten_dp"
+                        android:layout_marginBottom="@dimen/ten_dp"
+                        android:layout_weight="1"
+                        android:onClick="@{(v)-> editAddressClick.UpdatePhoneNumberClick()}"
+                        android:orientation="horizontal"
+                        android:paddingStart="@dimen/ten_dp"
+                        android:paddingTop="@dimen/ten_dp"
+                        android:paddingEnd="@dimen/ten_dp"
+                        android:paddingBottom="@dimen/ten_dp"
+                        android:visibility="@{PersonPhoneList > 0 ? View.VISIBLE :View.GONE}">
+
+                        <ImageView
+                            android:layout_width="@dimen/twenty_dp"
+                            android:layout_height="@dimen/twenty_dp"
+                            android:contentDescription="@string/user_profile"
+                            android:tint="@color/blue"
+                            app:srcCompat="@drawable/ic_edit" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="@dimen/ten_dp"
+                            android:fontFamily="@font/rubik_medium"
+                            android:gravity="start"
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:text="@string/update_my_phone_number_underline"
+                            android:textAlignment="textStart"
+                            android:textColor="@color/blue" />
+                    </LinearLayout>
+                </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/ll_edit_phone_number"
+                    android:id="@+id/ll_delete_phone_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
                     android:layout_marginTop="@dimen/ten_dp"
                     android:layout_marginBottom="@dimen/ten_dp"
-                    android:onClick="@{(v)-> editAddressClick.EditPhoneNumberClick()}"
+                    android:onClick="@{(v)-> editAddressClick.DeletePhoneNumberClick()}"
                     android:orientation="horizontal"
                     android:paddingStart="@dimen/ten_dp"
                     android:paddingTop="@dimen/ten_dp"
                     android:paddingEnd="@dimen/ten_dp"
                     android:paddingBottom="@dimen/ten_dp"
-                    android:visibility="@{editProfileAddressBean.getPhoneArray().size() > 0 ? View.VISIBLE :View.GONE}">
+                    android:visibility="@{PersonPhoneList > 0 ? View.VISIBLE :View.GONE}">
 
                     <ImageView
                         android:layout_width="@dimen/twenty_dp"
                         android:layout_height="@dimen/twenty_dp"
                         android:contentDescription="@string/user_profile"
                         android:tint="@color/blue"
+                        android:visibility="gone"
                         app:srcCompat="@drawable/ic_edit" />
 
                     <TextView
@@ -125,9 +287,9 @@
                         android:layout_marginStart="@dimen/ten_dp"
                         android:fontFamily="@font/rubik_medium"
                         android:gravity="start"
-                        android:text="@string/edit_my_phone_number_underline"
+                        android:text="@string/delete_my_phone_number_underline"
                         android:textAlignment="textStart"
-                        android:textColor="@color/blue" />
+                        android:textColor="@color/red" />
                 </LinearLayout>
 
                 <RadioGroup
@@ -135,26 +297,104 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/ll_edit_email"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ten_dp"
+                        android:layout_marginBottom="@dimen/ten_dp"
+                        android:layout_weight="1"
+                        android:onClick="@{(v)-> editAddressClick.EditEmailClick()}"
+                        android:orientation="horizontal"
+                        android:paddingStart="@dimen/ten_dp"
+                        android:paddingTop="@dimen/ten_dp"
+                        android:paddingEnd="@dimen/ten_dp"
+                        android:paddingBottom="@dimen/ten_dp"
+                        android:visibility="@{PersonEmailList > 0 ? View.VISIBLE :View.VISIBLE}">
+
+                        <ImageView
+                            android:layout_width="@dimen/twenty_dp"
+                            android:layout_height="@dimen/twenty_dp"
+                            android:contentDescription="@string/user_profile"
+                            android:tint="@color/blue"
+                            app:srcCompat="@drawable/ic_edit" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="@dimen/ten_dp"
+                            android:fontFamily="@font/rubik_medium"
+                            android:gravity="start"
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:text="@string/add_my_email_underline"
+                            android:textAlignment="textStart"
+                            android:textColor="@color/blue" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_update_email"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ten_dp"
+                        android:layout_marginBottom="@dimen/ten_dp"
+                        android:onClick="@{(v)-> editAddressClick.UpdateEmailClick()}"
+                        android:orientation="horizontal"
+                        android:paddingStart="@dimen/ten_dp"
+                        android:paddingTop="@dimen/ten_dp"
+                        android:paddingEnd="@dimen/ten_dp"
+                        android:paddingBottom="@dimen/ten_dp"
+                        android:visibility="@{PersonEmailList > 0 ? View.VISIBLE :View.GONE}">
+
+                        <ImageView
+                            android:layout_width="@dimen/twenty_dp"
+                            android:layout_height="@dimen/twenty_dp"
+                            android:contentDescription="@string/user_profile"
+                            android:tint="@color/blue"
+                            app:srcCompat="@drawable/ic_edit" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="@dimen/ten_dp"
+                            android:fontFamily="@font/rubik_medium"
+                            android:gravity="start"
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:text="@string/update_my_email_underline"
+                            android:textAlignment="textStart"
+                            android:textColor="@color/blue" />
+                    </LinearLayout>
+                </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/ll_edit_email"
+                    android:id="@+id/ll_delete_email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
                     android:layout_marginTop="@dimen/ten_dp"
                     android:layout_marginBottom="@dimen/ten_dp"
-                    android:onClick="@{(v)-> editAddressClick.EditEmailClick()}"
+                    android:onClick="@{(v)-> editAddressClick.DeleteEmailClick()}"
                     android:orientation="horizontal"
                     android:paddingStart="@dimen/ten_dp"
                     android:paddingTop="@dimen/ten_dp"
                     android:paddingEnd="@dimen/ten_dp"
                     android:paddingBottom="@dimen/ten_dp"
-                    android:visibility="@{editProfileAddressBean.getEmailArray().size() > 0 ? View.VISIBLE :View.GONE}">
+                    android:visibility="@{PersonEmailList > 0 ? View.VISIBLE :View.GONE}">
 
                     <ImageView
                         android:layout_width="@dimen/twenty_dp"
                         android:layout_height="@dimen/twenty_dp"
                         android:contentDescription="@string/user_profile"
                         android:tint="@color/blue"
+                        android:visibility="gone"
                         app:srcCompat="@drawable/ic_edit" />
 
                     <TextView
@@ -164,11 +404,12 @@
                         android:layout_marginStart="@dimen/ten_dp"
                         android:fontFamily="@font/rubik_medium"
                         android:gravity="start"
-                        android:text="@string/edit_my_email_underline"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:text="@string/delete_my_email_underline"
                         android:textAlignment="textStart"
-                        android:textColor="@color/blue" />
+                        android:textColor="@color/red" />
                 </LinearLayout>
-
             </LinearLayout>
         </ScrollView>
     </LinearLayout>

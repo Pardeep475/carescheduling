@@ -670,7 +670,7 @@ public class DatabaseInitializer {
         return disabilityTypeLiveData;
     }
 
-    //    get SexualityType
+    //     get SexualityType
     public static MutableLiveData<List<SexualityType>> loadSexualityType(final AppDataBase db) {
         new AsyncTask<Void, Void, List<SexualityType>>() {
             @Override
@@ -687,7 +687,7 @@ public class DatabaseInitializer {
         return sexualityTypeLiveData;
     }
 
-    //    CountryCode
+    //     CountryCode
     public static MutableLiveData<List<CountryCode>> loadCountryCode(final AppDataBase db) {
         new AsyncTask<Void, Void, List<CountryCode>>() {
             @Override
@@ -704,7 +704,7 @@ public class DatabaseInitializer {
         return countryCodeLiveData;
     }
 
-    //    Religion
+    //     Religion
     public static MutableLiveData<List<Religion>> loadReligion(final AppDataBase db) {
         new AsyncTask<Void, Void, List<Religion>>() {
             @Override
@@ -721,7 +721,7 @@ public class DatabaseInitializer {
         return religionLiveData;
     }
 
-    //    Nationality
+    //     Nationality
     public static MutableLiveData<List<Nationality>> loadNationality(final AppDataBase db) {
         new AsyncTask<Void, Void, List<Nationality>>() {
             @Override
@@ -739,7 +739,7 @@ public class DatabaseInitializer {
     }
 
 
-    //    Phone Type
+    //     Phone Type
     public static MutableLiveData<List<PhoneType>> loadPhoneType(final AppDataBase db) {
         new AsyncTask<Void, Void, List<PhoneType>>() {
             @Override
@@ -756,7 +756,7 @@ public class DatabaseInitializer {
         return phoneLiveData;
     }
 
-    //    AddressType
+    //     AddressType
     public static MutableLiveData<List<AddressType>> loadAddressType(final AppDataBase db) {
         new AsyncTask<Void, Void, List<AddressType>>() {
             @Override
@@ -773,7 +773,7 @@ public class DatabaseInitializer {
         return addressTypeLiveData;
     }
 
-    //    EmailType
+    //     EmailType
     public static MutableLiveData<List<EmailType>> loadEmailType(final AppDataBase db) {
         new AsyncTask<Void, Void, List<EmailType>>() {
             @Override

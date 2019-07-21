@@ -1,5 +1,6 @@
 package com.example.carescheduling.Ui.Profile.View;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseFragment;
 import com.example.carescheduling.Ui.Common.Common;
 import com.example.carescheduling.Ui.Common.CommonBean;
+import com.example.carescheduling.Ui.Dashboard.view.Dashboard;
 import com.example.carescheduling.Ui.Profile.ViewModel.ChangePasswordViewModel;
 import com.example.carescheduling.Ui.Profile.bean.UserViewModel;
 import com.example.carescheduling.Ui.Profile.presenter.EditEmailClick;
@@ -73,7 +75,7 @@ public class ChangePassword extends BaseFragment implements Common {
         commonBean.setRightImageDrawable(R.drawable.ic_tick);
         commonBean.setRightImageVisible(false);
         commonBean.setRightTextVisible(true);
-        commonBean.setTitle("Change Password");
+        commonBean.setTitle("Edit My User");
         changePasswordBinding.setCommonData(commonBean);
         changePasswordBinding.setCommonClick(this);
     }
@@ -90,9 +92,18 @@ public class ChangePassword extends BaseFragment implements Common {
                 public void onChanged(String s) {
                     hideDialog();
                     Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
+                    openDashboardActivity();
                 }
             });
         }
+    }
+
+    private void openDashboardActivity() {
+        Intent intent = new Intent(getActivity(), Dashboard.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        if (getActivity() != null)
+            getActivity().finish();
     }
 
     private boolean checkValidation() {

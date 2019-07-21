@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="profileAddressBean"
+            type="com.example.carescheduling.Ui.Profile.bean.ProfileAddressBean" />
+
+        <variable
+            name="profileAddressClick"
+            type="com.example.carescheduling.Ui.Profile.presenter.ProfileAddressClick" />
+
+        <variable
+            name="commonData"
+            type="com.example.carescheduling.Ui.Common.CommonBean" />
+
+        <variable
+            name="commonClick"
+            type="com.example.carescheduling.Ui.Common.Common" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/rl_tool"
+            layout="@layout/toolbar_layout"
+            bind:commonClick="@{commonClick}"
+            bind:commonData="@{commonData}" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/rl_tool"
+            tools:context=".Ui.Profile.View.ProfileAddress">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/ten_dp"
+                    android:layout_marginEnd="@dimen/twenty_dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight=".7"
+                        android:fontFamily="@font/rubik_light"
+                        android:text="@string/country"
+                        android:textAlignment="center" />
+
+                    <Spinner
+                        android:id="@+id/spinner_nationality"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.3"
+                        android:background="@android:color/white"
+                        android:paddingStart="@dimen/ten_dp"
+                        android:paddingEnd="@dimen/ten_dp" />
+
+                    <!--<EditText
+                        android:id="@+id/edt_country"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.3"
+                        android:background="@android:color/white"
+                        android:paddingStart="@dimen/ten_dp"
+                        android:paddingTop="@dimen/ten_dp"
+                        android:paddingEnd="@dimen/ten_dp"
+                        android:paddingBottom="@dimen/ten_dp"
+                        android:text="@{profileAddressBean.getCountry()}" />-->
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/ten_dp"
+                    android:layout_marginEnd="@dimen/twenty_dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight=".7"
+                        android:fontFamily="@font/rubik_light"
+                        android:text="@string/address_type"
+                        android:textAlignment="center" />
+
+                    <Spinner
+                        android:id="@+id/spinner_address_type"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.3"
+                        android:background="@android:color/white"
+                        android:paddingStart="@dimen/ten_dp"
+                        android:paddingEnd="@dimen/ten_dp" />
+
+                    <!--<EditText
+                        android:id="@+id/edt_country"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.3"
+                        android:background="@android:color/white"
+                        android:paddingStart="@dimen/ten_dp"
+                        android:paddingTop="@dimen/ten_dp"
+                        android:paddingEnd="@dimen/ten_dp"
+                        android:paddingBottom="@dimen/ten_dp"
+                        android:text="@{profileAddressBean.getCountry()}" />-->
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/twenty_dp"
+                    android:layout_marginEnd="@dimen/twenty_dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight=".7"
+                        android:fontFamily="@font/rubik_light"
+                        android:text="@string/post_code"
+                        android:textAlignment="center" />
+
+                    <EditText
+                        android:id="@+id/edt_post_code"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.3"
+                        android:background="@android:color/white"
+                        android:fontFamily="@font/rubik_light"
+                        android:paddingStart="@dimen/ten_dp"
+                        android:paddingTop="@dimen/ten_dp"
+                        android:paddingEnd="@dimen/ten_dp"
+                        android:paddingBottom="@dimen/ten_dp"
+                        android:text="@{profileAddressBean.getPostCode()}" />
+                </LinearLayout>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="@dimen/ten_dp"
+                    android:layout_marginEnd="@dimen/twenty_dp"
+                    android:background="@color/blue"
+                    android:fontFamily="@font/rubik_medium"
+                    android:onClick="@{(v) -> profileAddressClick.fetchAddressFromPostalCode()}"
+                    android:paddingStart="@dimen/ten_dp"
+                    android:paddingTop="@dimen/ten_dp"
+                    android:paddingEnd="@dimen/ten_dp"
+                    android:paddingBottom="@dimen/ten_dp"
+                    android:text="@string/address_finder"
+                    android:textColor="@color/white" />
+
+
+                <Spinner
+                    android:id="@+id/spinner_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/twenty_dp"
+                    android:layout_marginTop="@dimen/ten_dp"
+                    android:layout_marginEnd="@dimen/twenty_dp"
+                    android:layout_weight="1.3"
+                    android:background="@android:color/white"
+                    android:paddingStart="@dimen/ten_dp"
+                    android:paddingEnd="@dimen/ten_dp" />
+
+                <LinearLayout
+                    android:id="@+id/ll_main"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ten_dp"
+                        android:layout_marginEnd="@dimen/twenty_dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight=".7"
+                            android:fontFamily="@font/rubik_light"
+                            android:text="@string/house_number"
+                            android:textAlignment="center" />
+
+                        <EditText
+                            android:id="@+id/edt_house_number"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.3"
+                            android:background="@android:color/white"
+                            android:editable="false"
+                            android:focusable="false"
+                            android:fontFamily="@font/rubik_light"
+                            android:paddingStart="@dimen/ten_dp"
+                            android:paddingTop="@dimen/ten_dp"
+                            android:paddingEnd="@dimen/ten_dp"
+                            android:paddingBottom="@dimen/ten_dp"
+                            android:text="@{profileAddressBean.getHouseNumber()}" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ten_dp"
+                        android:layout_marginEnd="@dimen/twenty_dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight=".7"
+                            android:fontFamily="@font/rubik_light"
+                            android:text="@string/house_name"
+                            android:textAlignment="center" />
+
+                        <EditText
+                            android:id="@+id/edt_house_name"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.3"
+                            android:background="@android:color/white"
+                            android:editable="false"
+                            android:focusable="false"
+                            android:fontFamily="@font/rubik_light"
+                            android:paddingStart="@dimen/ten_dp"
+                            android:paddingTop="@dimen/ten_dp"
+                            android:paddingEnd="@dimen/ten_dp"
+                            android:paddingBottom="@dimen/ten_dp"
+                            android:text="@{profileAddressBean.getHouseName()}" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ten_dp"
+                        android:layout_marginEnd="@dimen/twenty_dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight=".7"
+                            android:fontFamily="@font/rubik_light"
+                            android:text="@string/street_name"
+                            android:textAlignment="center" />
+
+                        <EditText
+                            android:id="@+id/edt_street_name"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.3"
+                            android:background="@android:color/white"
+                            android:editable="false"
+                            android:focusable="false"
+                            android:fontFamily="@font/rubik_light"
+                            android:paddingStart="@dimen/ten_dp"
+                            android:paddingTop="@dimen/ten_dp"
+                            android:paddingEnd="@dimen/ten_dp"
+                            android:paddingBottom="@dimen/ten_dp"
+                            android:text="@{profileAddressBean.getStreetName()}" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ten_dp"
+                        android:layout_marginEnd="@dimen/twenty_dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight=".7"
+                            android:fontFamily="@font/rubik_light"
+                            android:text="@string/town"
+                            android:textAlignment="center" />
+
+                        <EditText
+                            android:id="@+id/edt_town"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.3"
+                            android:background="@android:color/white"
+                            android:editable="false"
+                            android:focusable="false"
+                            android:fontFamily="@font/rubik_light"
+                            android:paddingStart="@dimen/ten_dp"
+                            android:paddingTop="@dimen/ten_dp"
+                            android:paddingEnd="@dimen/ten_dp"
+                            android:paddingBottom="@dimen/ten_dp"
+                            android:text="@{profileAddressBean.getTown()}" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ten_dp"
+                        android:layout_marginEnd="@dimen/twenty_dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight=".7"
+                            android:fontFamily="@font/rubik_light"
+                            android:text="@string/city"
+                            android:textAlignment="center" />
+
+                        <EditText
+                            android:id="@+id/edt_city"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.3"
+                            android:background="@android:color/white"
+                            android:editable="false"
+                            android:focusable="false"
+                            android:fontFamily="@font/rubik_light"
+                            android:paddingStart="@dimen/ten_dp"
+                            android:paddingTop="@dimen/ten_dp"
+                            android:paddingEnd="@dimen/ten_dp"
+                            android:paddingBottom="@dimen/ten_dp"
+                            android:text="@{profileAddressBean.getCity()}" />
+                    </LinearLayout>
+
+
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rb_is_default"
+                        android:layout_marginTop="@dimen/ten_dp"
+                        android:layout_marginStart="@dimen/forty_dp"
+                        android:text="@string/set_as_default"
+                        android:textColor="#5F5F5F"
+                        android:fontFamily="@font/rubik_light"
+                        android:paddingStart="@dimen/sixty_five_dp"
+                        android:layout_marginEnd="@dimen/twenty_dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/fiften_dp"
+                        android:layout_marginEnd="@dimen/twenty_dp"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginEnd="@dimen/five_dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/rubik_medium"
+                            android:gravity="center"
+                            android:paddingTop="@dimen/ten_dp"
+                            android:paddingBottom="@dimen/ten_dp"
+                            android:text="@string/cancel" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="@dimen/five_dp"
+                            android:layout_marginEnd="@dimen/twenty_dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/rubik_medium"
+                            android:gravity="center"
+                            android:paddingTop="@dimen/ten_dp"
+                            android:paddingBottom="@dimen/ten_dp"
+                            android:text="@string/save" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </ScrollView>
+    </RelativeLayout>
+</layout>

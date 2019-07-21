@@ -26,14 +26,15 @@ public class EditProfile extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         editProfileBinding = DataBindingUtil.setContentView(this, R.layout.activity_edit_profile);
+        setFragment(EditProfileStart.newInstance());
         if (getIntent() != null) {
-            ProfileBean profileResultBean = (ProfileBean) getIntent().getSerializableExtra(Constants.PROFILE_DATA);
-            if (profileResultBean != null) {
+
+            /*if (profileResultBean != null) {
                 setFragment(EditProfileStart.newInstance(profileResultBean));
             } else {
                 int pos = getIntent().getIntExtra("pos", 0);
                 setHomeFragments(pos);
-            }
+            }*/
         }
     }
 
@@ -68,7 +69,7 @@ public class EditProfile extends AppCompatActivity {
 
     private void setFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fm_edit_container, fragment).commitAllowingStateLoss();
+                .replace(R.id.fm_edit_container, fragment).addToBackStack(null).commitAllowingStateLoss();
     }
 
     @Override

@@ -4,15 +4,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseFragment;
 import com.example.carescheduling.Ui.Common.Common;
 import com.example.carescheduling.Ui.Common.CommonBean;
-import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
-import com.example.carescheduling.Ui.Dashboard.beans.ProfileResultBean;
 import com.example.carescheduling.Ui.Profile.presenter.EditProfileStartClick;
-import com.example.carescheduling.Utils.Constants;
 import com.example.carescheduling.databinding.EditProfileStartBinding;
 
 import java.io.Serializable;
@@ -24,22 +20,16 @@ import androidx.fragment.app.Fragment;
 
 public class EditProfileStart extends BaseFragment implements Common, EditProfileStartClick {
     private EditProfileStartBinding editProfileStartBinding;
-    private ProfileBean profileResultBean;
+  
 
-    public static EditProfileStart newInstance(ProfileBean profileResultBean) {
-        EditProfileStart editProfileStart = new EditProfileStart();
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(Constants.PROFILE_DATA, (Serializable) profileResultBean);
-        editProfileStart.setArguments(bundle);
-        return editProfileStart;
+    public static EditProfileStart newInstance() {
+        return new EditProfileStart();
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            profileResultBean = (ProfileBean) getArguments().getSerializable(Constants.PROFILE_DATA);
-        }
+       
     }
 
     @Nullable
@@ -53,7 +43,6 @@ public class EditProfileStart extends BaseFragment implements Common, EditProfil
 
     private void setUpView(View view) {
         setCommonData();
-        editProfileStartBinding.setProfileResultBean(profileResultBean);
         editProfileStartBinding.setEditProfileStartClick(this);
     }
 
@@ -71,23 +60,23 @@ public class EditProfileStart extends BaseFragment implements Common, EditProfil
 
 
     @Override
-    public void EditMyProfileInfo(ProfileBean profileResultBean) {
-        setFragment(EditProfileInfo.newInstance(profileResultBean));
+    public void EditMyProfileInfo() {
+        setFragment(EditProfileInfo.newInstance());
     }
 
     @Override
-    public void EditMyAddress(ProfileBean profileResultBean) {
-        setFragment(EditProfileAddress.newInstance(profileResultBean));
+    public void EditMyAddress() {
+        setFragment(EditProfileAddress.newInstance());
     }
 
     @Override
-    public void EditMyPicture(ProfileBean profileResultBean) {
-        setFragment(ProfileImageList.newInstance(profileResultBean));
+    public void EditMyPicture() {
+        setFragment(ProfileImageList.newInstance());
     }
 
     @Override
-    public void EditChangePassword(ProfileBean profileResultBean) {
-        setFragment(FragmentChangePassword.newInstance(profileResultBean));
+    public void EditChangePassword() {
+        setFragment(FragmentChangePassword.newInstance());
     }
 
     private void setFragment(Fragment fragment) {

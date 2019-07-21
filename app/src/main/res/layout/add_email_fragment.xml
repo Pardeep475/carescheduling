@@ -23,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".Ui.Profile.View.EditEmail">
+        tools:context=".Ui.Profile.View.AddEmail">
 
         <include
             android:id="@+id/rl_tool"
@@ -31,37 +31,10 @@
             bind:commonClick="@{commonClick}"
             bind:commonData="@{commonData}" />
 
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/twenty_dp"
-            android:layout_marginTop="@dimen/fifty_dp"
-            android:layout_marginEnd="@dimen/twenty_dp"
-            android:fontFamily="@font/rubik_medium"
-            android:padding="@dimen/ten_dp"
-            android:text="@string/private_email_address" />
-
-        <EditText
-            android:id="@+id/edt_email_address"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/twenty_dp"
-            android:layout_marginTop="@dimen/ten_dp"
-            android:layout_marginEnd="@dimen/twenty_dp"
-            android:background="@android:color/white"
-            android:fontFamily="@font/rubik_light"
-            android:inputType="textEmailAddress"
-            android:paddingStart="@dimen/ten_dp"
-            android:paddingTop="@dimen/ten_dp"
-            android:paddingEnd="@dimen/ten_dp"
-            android:paddingBottom="@dimen/ten_dp"
-            android:text="@{editEmailBean.getEmail()}" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/ten_dp"
+            android:layout_marginTop="@dimen/fifty_dp"
             android:layout_marginEnd="@dimen/twenty_dp"
             android:orientation="horizontal">
 
@@ -96,17 +69,44 @@
                 android:text="@{profileAddressBean.getCountry()}" />-->
         </LinearLayout>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/twenty_dp"
+            android:layout_marginTop="@dimen/twenty_dp"
+            android:layout_marginEnd="@dimen/twenty_dp"
+            android:fontFamily="@font/rubik_medium"
+            android:padding="@dimen/ten_dp"
+            android:text="@string/private_email_address" />
+
+        <EditText
+            android:id="@+id/edt_email_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/twenty_dp"
+            android:layout_marginTop="@dimen/ten_dp"
+            android:layout_marginEnd="@dimen/twenty_dp"
+            android:background="@android:color/white"
+            android:fontFamily="@font/rubik_light"
+            android:paddingStart="@dimen/ten_dp"
+            android:paddingTop="@dimen/ten_dp"
+            android:inputType="textEmailAddress"
+            android:paddingEnd="@dimen/ten_dp"
+            android:paddingBottom="@dimen/ten_dp"
+            android:text="@{editEmailBean.getEmail()}" />
+
+
         <RadioButton
             android:id="@+id/rb_default_email"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/twenty_dp"
             android:layout_marginTop="@dimen/fifty_dp"
             android:layout_marginEnd="@dimen/twenty_dp"
             android:fontFamily="@font/rubik_light"
             android:paddingStart="@dimen/sixty_five_dp"
-            android:textColor="#5F5F5F"
-            android:text="@string/set_as_my_default_email" />
+            android:text="@string/set_as_my_default_email"
+            android:textColor="#5F5F5F" />
 
     </LinearLayout>
 </layout>

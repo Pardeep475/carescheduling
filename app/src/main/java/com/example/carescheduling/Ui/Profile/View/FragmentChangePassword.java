@@ -39,12 +39,8 @@ public class FragmentChangePassword extends BaseFragment implements Common, Frag
     private SessionManager sessionManager;
     private UserViewModel userModel;
 
-    public static FragmentChangePassword newInstance(ProfileBean profileResultBean) {
-        FragmentChangePassword fragmentChangePassword = new FragmentChangePassword();
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(Constants.PROFILE_DATA, (Serializable) profileResultBean);
-        fragmentChangePassword.setArguments(bundle);
-        return fragmentChangePassword;
+    public static FragmentChangePassword newInstance() {
+        return new FragmentChangePassword();
     }
 
     @Override
@@ -82,7 +78,8 @@ public class FragmentChangePassword extends BaseFragment implements Common, Frag
         commonBean.setRightImageDrawable(R.drawable.ic_tick);
         commonBean.setRightImageVisible(false);
         commonBean.setRightTextVisible(true);
-        commonBean.setTitle("Change Password");
+//        commonBean.setTitle("Change Password");
+        commonBean.setTitle("Edit My User");
         fragmentChangePasswordBinding.setCommonData(commonBean);
         fragmentChangePasswordBinding.setCommonClick(this);
     }
@@ -91,7 +88,7 @@ public class FragmentChangePassword extends BaseFragment implements Common, Frag
         if (getActivity() != null) {
             try {
                 if (ConnectivityReceiver.isNetworkAvailable(getActivity())) {
-                        GetUserInfo();
+                    GetUserInfo();
                 } else {
                     Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
                 }
@@ -122,11 +119,11 @@ public class FragmentChangePassword extends BaseFragment implements Common, Frag
             showDialog();
             fragmentChangePasswordViewModel.checkUserName(fragmentChangePasswordBinding.edtUserName.getText().toString(),
                     sessionManager.getCustomerId(), sessionManager.getPersonId(), sessionManager.getBranchId()).observe(this
-                    , new Observer<Boolean>() {
+                    , new Observer<String>() {
                         @Override
-                        public void onChanged(Boolean aBoolean) {
+                        public void onChanged(String aBoolean) {
                             hideDialog();
-                            if (aBoolean) {
+                            if (!aBoolean.equalsIgnoreCase("false")) {
                                 Toast.makeText(getActivity(), "User name saved successfully", Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(getActivity(), "This user name is already exist", Toast.LENGTH_SHORT).show();
@@ -194,8 +191,6 @@ public class FragmentChangePassword extends BaseFragment implements Common, Frag
         fragmentChangePasswordBinding.llMainLayout.setVisibility(View.VISIBLE);
         fragmentChangePasswordBinding.rlNoDataFound.setVisibility(View.GONE);
     }
-
-
 
 
     private boolean checkValidationDone() {

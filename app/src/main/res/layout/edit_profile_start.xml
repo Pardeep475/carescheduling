@@ -6,10 +6,6 @@
     <data>
 
         <variable
-            name="profileResultBean"
-            type="com.example.carescheduling.Ui.Dashboard.beans.ProfileBean" />
-
-        <variable
             name="commonData"
             type="com.example.carescheduling.Ui.Common.CommonBean" />
 
@@ -50,7 +46,7 @@
                     android:layout_marginTop="@dimen/twenty_dp"
                     android:layout_marginEnd="@dimen/ten_dp"
                     android:background="@drawable/start_profile_views_bg"
-                    android:onClick="@{(v)-> editProfileStartClick.EditMyProfileInfo(profileResultBean)}"
+                    android:onClick="@{(v)-> editProfileStartClick.EditMyProfileInfo()}"
                     android:paddingTop="@dimen/ten_dp"
                     android:paddingBottom="@dimen/ten_dp">
 
@@ -89,7 +85,7 @@
                     android:layout_marginTop="@dimen/ten_dp"
                     android:layout_marginEnd="@dimen/ten_dp"
                     android:background="@drawable/start_profile_views_bg"
-                    android:onClick="@{(v)-> editProfileStartClick.EditMyAddress(profileResultBean)}"
+                    android:onClick="@{(v)-> editProfileStartClick.EditMyAddress()}"
                     android:paddingTop="@dimen/ten_dp"
                     android:paddingBottom="@dimen/ten_dp">
 
@@ -128,7 +124,7 @@
                     android:layout_marginTop="@dimen/ten_dp"
                     android:layout_marginEnd="@dimen/ten_dp"
                     android:background="@drawable/start_profile_views_bg"
-                    android:onClick="@{(v)-> editProfileStartClick.EditMyPicture(profileResultBean)}"
+                    android:onClick="@{(v)-> editProfileStartClick.EditMyPicture()}"
                     android:paddingTop="@dimen/ten_dp"
                     android:paddingBottom="@dimen/ten_dp">
 
@@ -167,7 +163,7 @@
                     android:layout_marginTop="@dimen/fifty_dp"
                     android:layout_marginEnd="@dimen/ten_dp"
                     android:background="@drawable/start_profile_views_bg"
-                    android:onClick="@{(v)-> editProfileStartClick.EditChangePassword(profileResultBean)}"
+                    android:onClick="@{(v)-> editProfileStartClick.EditChangePassword()}"
                     android:paddingTop="@dimen/ten_dp"
                     android:paddingBottom="@dimen/ten_dp">
 
@@ -180,7 +176,7 @@
                         android:layout_marginRight="@dimen/sixteen_dp"
                         android:fontFamily="@font/rubik_light"
                         android:padding="@dimen/sixteen_dp"
-                        android:text="@string/change_password"
+                        android:text="@string/edit_my_user_caps"
                         android:textColor="@color/white"
 
                         android:textSize="@dimen/eighteen_sp" />

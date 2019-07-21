@@ -89,12 +89,11 @@ public class ProfileResult extends BaseFragment implements Common, EditProfileCl
             if (ConnectivityReceiver.isNetworkAvailable(getActivity())) {
                 try {
                     profileResultViewModel.getClientData(sessionManager.getPersonId(), sessionManager.getCustomerId(), sessionManager.getBranchId())
-                            .observe(this, new Observer<ProfileBean>() {
+                            .observe(this, new Observer<ProfileResultBean>() {
                                 @Override
-                                public void onChanged(ProfileBean profileBean) {
-                                    if (profileBean != null) {
-                                        fragmentProfileResultBinding.setProfileResultBean(profileBean);
-                                        setDataProfile(profileBean);
+                                public void onChanged(ProfileResultBean profileResultBean) {
+                                    if (profileResultBean != null) {
+                                        fragmentProfileResultBinding.setProfileEditBean(profileResultBean);
                                         setDataOriginal();
                                     } else {
                                         setNoDataFound();
@@ -126,26 +125,9 @@ public class ProfileResult extends BaseFragment implements Common, EditProfileCl
         fragmentProfileResultBinding.rlNoDataFound.setVisibility(View.GONE);
     }
 
-    private void setDataProfile(ProfileBean profileBean) {
-
-        try {
-            showDialog();
-            profileResultViewModel.getProfileData(profileBean).observe(this, new Observer<ProfileResultBean>() {
-                @Override
-                public void onChanged(ProfileResultBean profileResultBean) {
-                    hideDialog();
-                    fragmentProfileResultBinding.setProfileEditBean(profileResultBean);
-                }
-            });
-        } catch (Exception e) {
-            Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
-        }
-    }
-
     @Override
-    public void EditBtnClick(ProfileBean profileResultBean) {
+    public void EditBtnClick() {
         Intent intent = new Intent(getActivity(), EditProfile.class);
-        intent.putExtra(Constants.PROFILE_DATA, (Serializable) profileResultBean);
         startActivity(intent);
     }
 

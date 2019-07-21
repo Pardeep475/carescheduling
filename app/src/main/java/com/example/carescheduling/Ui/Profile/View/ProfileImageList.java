@@ -46,6 +46,7 @@ import com.example.carescheduling.Ui.Common.CommonBean;
 import com.example.carescheduling.Ui.Dashboard.beans.PersonImage;
 import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
 import com.example.carescheduling.Ui.Dashboard.beans.ProfileResultBean;
+import com.example.carescheduling.Ui.Dashboard.view.Dashboard;
 import com.example.carescheduling.Ui.Profile.Adapter.ProfileImageListAdapter;
 import com.example.carescheduling.Ui.Profile.ViewModel.ProfileImageListViewModel;
 import com.example.carescheduling.Ui.Profile.bean.DataList;
@@ -79,12 +80,8 @@ public class ProfileImageList extends BaseFragment implements Common, ProfileIma
     private ProfileBean profileBean;
     private Bitmap bitmap = null;
 
-    public static ProfileImageList newInstance(ProfileBean profileResultBean) {
-        ProfileImageList profileImageList = new ProfileImageList();
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(Constants.PROFILE_DATA, (Serializable) profileResultBean);
-        profileImageList.setArguments(bundle);
-        return profileImageList;
+    public static ProfileImageList newInstance() {
+        return new ProfileImageList();
     }
 
     @Override
@@ -127,7 +124,7 @@ public class ProfileImageList extends BaseFragment implements Common, ProfileIma
         commonBean.setLeftImageDrawable(R.drawable.ic_left_back);
         commonBean.setLeftImageVisible(true);
         commonBean.setRightImageDrawable(R.drawable.ic_tick);
-        commonBean.setRightImageVisible(true);
+        commonBean.setRightImageVisible(false);
         commonBean.setRightTextVisible(true);
         commonBean.setTitle("Profile Pics");
         profileImageListBinding.setCommonData(commonBean);
@@ -175,6 +172,13 @@ public class ProfileImageList extends BaseFragment implements Common, ProfileIma
 
     }
 
+    private void openDashboardActivity() {
+        Intent intent = new Intent(getActivity(), Dashboard.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        if (getActivity() != null)
+            getActivity().finish();
+    }
 
     @Override
     public void ProfileClick() {
@@ -237,10 +241,10 @@ public class ProfileImageList extends BaseFragment implements Common, ProfileIma
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Log.e("Result", requestCode + "       " + resultCode);
-        if (data != null ) {
+        if (data != null) {
             if (requestCode == Constants.REQUEST_CAMERA) {
                 if (data.getExtras() == null)
-                return;
+                    return;
                 Bitmap bitmap = (Bitmap) data.getExtras().get("data");
                 Uri uri = getImageUri(getContext(), bitmap);
                 path = getRealPathFromURI(getContext(), uri);
@@ -421,6 +425,7 @@ public class ProfileImageList extends BaseFragment implements Common, ProfileIma
                     public void onChanged(String s) {
                         hideDialog();
                         Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
+                        openDashboardActivity();
                     }
                 });
             } else {

@@ -20,25 +20,25 @@ import com.example.carescheduling.Ui.Dashboard.beans.PersonEmail;
 import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
 import com.example.carescheduling.Ui.Dashboard.view.Dashboard;
 import com.example.carescheduling.Ui.Profile.Adapter.CustomAdapter;
-import com.example.carescheduling.Ui.Profile.ViewModel.EditEmailViewModel;
+import com.example.carescheduling.Ui.Profile.ViewModel.AddEmailViewModel;
 import com.example.carescheduling.Ui.Profile.bean.EditEmailBean;
-import com.example.carescheduling.Ui.Profile.presenter.EditEmailClick;
 import com.example.carescheduling.Utils.ConnectivityReceiver;
 import com.example.carescheduling.Utils.Constants;
 import com.example.carescheduling.data.Local.DatabaseTable.EmailType;
-import com.example.carescheduling.databinding.FragmentEditEmailBinding;
+import com.example.carescheduling.databinding.AddEmailFragmentBinding;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class EditEmail extends BaseFragment implements Common {
-    private FragmentEditEmailBinding editEmailBinding;
+
+public class AddEmail extends BaseFragment implements Common {
+    private AddEmailFragmentBinding editEmailBinding;
     private String stringValue, type;
     private ProfileBean profileBean;
-    private EditEmailViewModel editEmailViewModel;
+    private AddEmailViewModel editEmailViewModel;
 
-    public static EditEmail newInstance(String value, String type, ProfileBean profileBean) {
-        EditEmail editEmail = new EditEmail();
+    public static AddEmail newInstance(String value, String type, ProfileBean profileBean) {
+        AddEmail editEmail = new AddEmail();
         Bundle bundle = new Bundle();
         bundle.putString(Constants.STRING_VALUE, value);
         bundle.putString(Constants.TYPE, type);
@@ -61,7 +61,7 @@ public class EditEmail extends BaseFragment implements Common {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        editEmailBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_edit_email, container, false);
+        editEmailBinding = DataBindingUtil.inflate(inflater, R.layout.add_email_fragment, container, false);
         View view = editEmailBinding.getRoot();
         setUpView(view);
         return view;
@@ -69,7 +69,7 @@ public class EditEmail extends BaseFragment implements Common {
 
     private void setUpView(View view) {
         setCommonData();
-        editEmailViewModel = ViewModelProviders.of(this).get(EditEmailViewModel.class);
+        editEmailViewModel = ViewModelProviders.of(this).get(AddEmailViewModel.class);
         if (type.equalsIgnoreCase("Update")) {
             editEmailBinding.spinnerEmailType.setEnabled(false);
             editEmailBinding.spinnerEmailType.setClickable(false);
@@ -78,7 +78,7 @@ public class EditEmail extends BaseFragment implements Common {
             editEmailBinding.spinnerEmailType.setClickable(true);
         }
         setEmailType();
-        setEditEmailData();
+//        setEditEmailData();
     }
 
     private void setCommonData() {
@@ -88,7 +88,7 @@ public class EditEmail extends BaseFragment implements Common {
         commonBean.setRightImageDrawable(R.drawable.ic_tick);
         commonBean.setRightImageVisible(false);
         commonBean.setRightTextVisible(true);
-        commonBean.setTitle("Edit Email");
+        commonBean.setTitle("Change Email");
         editEmailBinding.setCommonData(commonBean);
         editEmailBinding.setCommonClick(this);
     }
@@ -121,10 +121,6 @@ public class EditEmail extends BaseFragment implements Common {
                             R.layout.item_spinner_sf, R.id.title, arrayList);
                     editEmailBinding.spinnerEmailType.setAdapter(adapter);
 
-                    if (stringValue != null) {
-                        int pos = adapter.getPosition(stringValue);
-                        editEmailBinding.spinnerEmailType.setSelection(pos);
-                    }
                 }
             }
         });
@@ -140,15 +136,16 @@ public class EditEmail extends BaseFragment implements Common {
 
     private void setEmailData() {
         ProfileBean myProfileBean = null;
-        if (profileBean.getData() != null && profileBean.getData().getPerson() != null && profileBean.getData().getPerson().getPersonEmail() != null && stringValue != null) {
-            myProfileBean = updateEmail();
-        } else {
-            myProfileBean = addNewEmail();
-        }
-        if (myProfileBean == null)
-            return;
-
+//        if (profileBean.getData() != null && profileBean.getData().getPerson() != null && profileBean.getData().getPerson().getPersonEmail() != null && stringValue != null) {
+//            myProfileBean = updateEmail();
+//        } else {
+//        }
         showDialog();
+        myProfileBean = addNewEmail();
+        if (profileBean == null) {
+            hideDialog();
+            return;
+        }
 
         editEmailViewModel.getEditProfilePost(myProfileBean.getData()).observe(this, new Observer<ProfileBean>() {
             @Override
@@ -238,3 +235,4 @@ public class EditEmail extends BaseFragment implements Common {
         }
     }
 }
+

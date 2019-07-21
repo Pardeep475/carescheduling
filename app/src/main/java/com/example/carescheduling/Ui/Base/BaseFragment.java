@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.carescheduling.Utils.Utils;
 import com.example.carescheduling.data.Local.SessionManager;
@@ -19,7 +20,7 @@ public abstract class BaseFragment extends Fragment {
     protected SessionManager sessionManager;
     //    protected ApiInterface apiInterface;
     protected Dialog dialog;
-
+    private Toast toast;
 
     @Override
     public void onResume() {
@@ -58,7 +59,8 @@ public abstract class BaseFragment extends Fragment {
         }
         return dialog;
     }
-//    public void makeSnackBar(View view, String text) {
+
+    //    public void makeSnackBar(View view, String text) {
 //        Snackbar snackbar = null;
 //        if (snackbar == null)
 //            snackbar.make(view, text, Snackbar.LENGTH_LONG).show();
@@ -67,7 +69,15 @@ public abstract class BaseFragment extends Fragment {
 //    public boolean getConnectivity(Context context) {
 //        return ConnectivityReceiver.isNetworkAvailable(context);
 //    }
-
+    public void showAToast(String st) { //"Toast toast" is declared in the class
+        try {
+            toast.getView().isShown();     // true if visible
+            toast.setText(st);
+        } catch (Exception e) {         // invisible if exception
+            toast = Toast.makeText(getActivity(), st, Toast.LENGTH_SHORT);
+        }
+        toast.show();  //finally display it
+    }
 
 }
 

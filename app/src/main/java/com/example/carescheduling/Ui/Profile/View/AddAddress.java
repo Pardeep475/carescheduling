@@ -1,12 +1,11 @@
 package com.example.carescheduling.Ui.Profile.View;
 
-import android.content.Intent;
-import android.os.Bundle;
-
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,39 +16,33 @@ import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseFragment;
 import com.example.carescheduling.Ui.Common.Common;
 import com.example.carescheduling.Ui.Common.CommonBean;
-import com.example.carescheduling.Ui.Dashboard.beans.Address;
-import com.example.carescheduling.Ui.Dashboard.beans.CountryPostCode;
 import com.example.carescheduling.Ui.Dashboard.beans.PersonAddress;
-import com.example.carescheduling.Ui.Dashboard.beans.PersonAddress_;
 import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
 import com.example.carescheduling.Ui.Dashboard.view.Dashboard;
 import com.example.carescheduling.Ui.Profile.Adapter.CustomAdapter;
-import com.example.carescheduling.Ui.Profile.ViewModel.ProfileAddressViewModel;
+import com.example.carescheduling.Ui.Profile.ViewModel.AddAddressViewModel;
 import com.example.carescheduling.Ui.Profile.bean.AddressByPostCode;
 import com.example.carescheduling.Ui.Profile.bean.AddressData;
 import com.example.carescheduling.Ui.Profile.bean.ProfileAddressBean;
-import com.example.carescheduling.Ui.Profile.bean.UserViewModel;
-import com.example.carescheduling.Ui.Profile.presenter.EditEmailClick;
 import com.example.carescheduling.Ui.Profile.presenter.ProfileAddressClick;
 import com.example.carescheduling.Utils.Constants;
 import com.example.carescheduling.data.Local.DatabaseTable.AddressType;
 import com.example.carescheduling.data.Local.DatabaseTable.Nationality;
-import com.example.carescheduling.databinding.ProfileAddressBinding;
+import com.example.carescheduling.databinding.AddAddressFragmentBinding;
 
 import java.util.ArrayList;
 import java.util.List;
-//import com.example.carescheduling.databinding.FragmentProfileBinding;
 
-public class ProfileAddress extends BaseFragment implements Common, ProfileAddressClick {
-    private ProfileAddressBinding profileAddressBinding;
-    private ProfileAddressViewModel profileAddressViewModel;
+public class AddAddress extends BaseFragment implements Common, ProfileAddressClick {
+    private AddAddressFragmentBinding profileAddressBinding;
+    private AddAddressViewModel profileAddressViewModel;
     private String stringValue, type;
     private ProfileBean profileBean;
     private List<AddressData> addressTypesList = new ArrayList<>();
 
     // TODO: Rename and change types and number of parameters
-    public static ProfileAddress newInstance(String value, String type, ProfileBean profileBean) {
-        ProfileAddress profileAddress = new ProfileAddress();
+    public static AddAddress newInstance(String value, String type, ProfileBean profileBean) {
+        AddAddress profileAddress = new AddAddress();
         Bundle bundle = new Bundle();
         bundle.putString(Constants.STRING_VALUE, value);
         bundle.putString(Constants.TYPE, type);
@@ -72,7 +65,7 @@ public class ProfileAddress extends BaseFragment implements Common, ProfileAddre
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        profileAddressBinding = DataBindingUtil.inflate(inflater, R.layout.profile_address
+        profileAddressBinding = DataBindingUtil.inflate(inflater, R.layout.add_address_fragment
                 , container, false);
         View view = profileAddressBinding.getRoot();
         setUpView(view);
@@ -82,7 +75,7 @@ public class ProfileAddress extends BaseFragment implements Common, ProfileAddre
 
     private void setUpView(View view) {
         setCommonData();
-        profileAddressViewModel = ViewModelProviders.of(this).get(ProfileAddressViewModel.class);
+        profileAddressViewModel = ViewModelProviders.of(this).get(AddAddressViewModel.class);
         sessionManager = getSessionManager();
         if (type.equalsIgnoreCase("Update")) {
             profileAddressBinding.spinnerAddressType.setEnabled(false);
@@ -91,9 +84,9 @@ public class ProfileAddress extends BaseFragment implements Common, ProfileAddre
             profileAddressBinding.spinnerAddressType.setEnabled(true);
             profileAddressBinding.spinnerAddressType.setClickable(true);
         }
-        setProfileAddressData();
         setAddressTypeData();
         setNationalityData();
+//        setProfileAddressData();
 
         profileAddressBinding.setProfileAddressClick(this);
     }
@@ -124,11 +117,6 @@ public class ProfileAddress extends BaseFragment implements Common, ProfileAddre
                     CustomAdapter adapter = new CustomAdapter(getActivity(),
                             R.layout.item_spinner_sf, R.id.title, arrayList);
                     profileAddressBinding.spinnerAddressType.setAdapter(adapter);
-
-                    if (stringValue != null) {
-                        int pos = adapter.getPosition(stringValue);
-                        profileAddressBinding.spinnerAddressType.setSelection(pos);
-                    }
                 }
             }
         });
@@ -150,21 +138,6 @@ public class ProfileAddress extends BaseFragment implements Common, ProfileAddre
                             R.layout.item_spinner_sf, R.id.title, arrayList);
                     profileAddressBinding.spinnerNationality.setAdapter(adapter);
 
-
-                    if (profileBean != null && profileBean.getData() != null && profileBean.getData().getPerson() != null) {
-                        if (profileBean.getData().getPersonAddresses().size() > 0) {
-                            for (int i = 0; i < profileBean.getData().getPersonAddresses().size(); i++) {
-                                if (profileBean.getData().getPersonAddresses().get(i).getAddressTypeName().equalsIgnoreCase(stringValue)) {
-                                    String str = profileBean.getData().getPersonAddresses().get(0).getAddress().getCountryName();
-                                    String cap = str.substring(0, 1).toUpperCase() + str.substring(1);
-                                    int pos = adapter.getPosition(cap);
-                                    profileAddressBinding.spinnerNationality.setSelection(pos);
-                                }
-                            }
-
-                        }
-                    }
-
                 }
             }
         });
@@ -183,13 +156,17 @@ public class ProfileAddress extends BaseFragment implements Common, ProfileAddre
     @Override
     public void fetchAddressFromPostalCode() {
         showDialog();
+        if (profileAddressBinding.spinnerNationality.getSelectedItemPosition() <= 0){
+            hideDialog();
+            return;
+        }
 
-        profileAddressViewModel.getAddressByPostCode(stringValue, profileBean, profileAddressBinding.edtPostCode.getText().toString()).observe(this, new Observer<AddressByPostCode>() {
+        profileAddressViewModel.getAddressByPostCode(profileAddressBinding.spinnerNationality.getSelectedItem().toString(), profileBean, profileAddressBinding.edtPostCode.getText().toString()).observe(this, new Observer<AddressByPostCode>() {
             @Override
             public void onChanged(AddressByPostCode addressByPostCode) {
                 hideDialog();
 
-                profileAddressViewModel.FetchAddressSpinnerData(addressByPostCode).observe(ProfileAddress.this, new Observer<ArrayList<AddressData>>() {
+                profileAddressViewModel.FetchAddressSpinnerData(addressByPostCode).observe(AddAddress.this, new Observer<ArrayList<AddressData>>() {
                     @Override
                     public void onChanged(ArrayList<AddressData> addressData) {
                         addressTypesList = addressData;
@@ -201,10 +178,13 @@ public class ProfileAddress extends BaseFragment implements Common, ProfileAddre
                                 R.layout.item_spinner_sf, R.id.title, arrayList1);
                         profileAddressBinding.spinnerAddress.setAdapter(adapter);
 
+
+                        profileAddressBinding.llMain.setVisibility(View.VISIBLE);
+
                     }
                 });
 
-                profileAddressViewModel.FetchAddressSpinnerContent(addressByPostCode).observe(ProfileAddress.this, new Observer<ArrayList<ProfileAddressBean>>() {
+                profileAddressViewModel.FetchAddressSpinnerContent(addressByPostCode).observe(AddAddress.this, new Observer<ArrayList<ProfileAddressBean>>() {
                     @Override
                     public void onChanged(final ArrayList<ProfileAddressBean> profileAddressBeans) {
                         profileAddressBinding.spinnerAddress.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -243,13 +223,11 @@ public class ProfileAddress extends BaseFragment implements Common, ProfileAddre
     }
 
     private void setAddressData() {
-        if (profileBean.getData() != null && profileBean.getData().getPerson() != null && profileBean.getData().getPerson().getPersonAddress() != null && stringValue != null) {
-            profileBean = updateAddress();
-        } else {
-            profileBean = addNewAddress();
-        }
-        if (profileBean == null)
+        profileBean = addNewAddress();
+        if (profileBean == null) {
+            hideDialog();
             return;
+        }
         profileAddressViewModel.getEditProfilePost(profileBean.getData()).observe(this, new Observer<ProfileBean>() {
             @Override
             public void onChanged(ProfileBean profileBean) {
@@ -288,7 +266,7 @@ public class ProfileAddress extends BaseFragment implements Common, ProfileAddre
                     Toast.makeText(getActivity(), "please select address type", Toast.LENGTH_SHORT).show();
                     return null;
                 }
-                profileBean.getData().getPerson().getPersonAddress().get(i).setIsDefaultAddress(profileAddressBinding.rbIsDefault.isChecked());
+                profileBean.getData().getPerson().getPersonAddress().get(i).setIsDefaultAddress(true);
                 profileBean.getData().getPerson().getPersonAddress().get(i).setPersonId(getSessionManager().getPersonId());
                 profileBean.getData().getPerson().getPersonAddress().get(i).setCustomerId(getSessionManager().getCustomerId());
                 if (addressTypesList.size() > 0)

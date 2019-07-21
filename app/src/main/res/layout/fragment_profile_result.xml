@@ -7,10 +7,6 @@
     <data>
 
         <variable
-            name="profileResultBean"
-            type="com.example.carescheduling.Ui.Dashboard.beans.ProfileBean" />
-
-        <variable
             name="editClickHandler"
             type="com.example.carescheduling.Ui.Dashboard.presenter.EditProfileClickHandler" />
 
@@ -112,7 +108,6 @@
                     android:id="@+id/ll_telephone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
                     android:layout_below="@+id/img_user_profile"
                     android:layout_marginTop="@dimen/twenty_dp"
                     android:orientation="horizontal">
@@ -124,9 +119,9 @@
                         android:layout_weight=".7"
                         android:gravity="start"
                         android:fontFamily="@font/rubik_medium"
-                        android:text="@{profileEditBean.telephone}"
+                        android:text="@string/phone_number"
                         android:textAlignment="textStart" />
-
+<!--android:text="@{profileEditBean.telephone}"-->
                     <TextView
                         android:id="@+id/txt_telephone"
                         android:layout_width="0dp"
@@ -174,7 +169,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/ll_email"
                     android:layout_marginTop="@dimen/thirty_dp"
-                    android:onClick="@{(v)->editClickHandler.EditBtnClick(profileResultBean)}"
+                    android:onClick="@{(v)->editClickHandler.EditBtnClick()}"
                     android:orientation="horizontal"
                     android:paddingTop="@dimen/ten_dp"
                     android:paddingEnd="@dimen/ten_dp"

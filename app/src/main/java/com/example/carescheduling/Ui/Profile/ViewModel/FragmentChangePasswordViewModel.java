@@ -85,8 +85,8 @@ public class FragmentChangePasswordViewModel extends AndroidViewModel {
         return data;
     }
 
-    public LiveData<Boolean> checkUserName(String userName, String customerId, String personId, String branchId) {
-        final MutableLiveData<Boolean> data = new MutableLiveData<>();
+    public LiveData<String> checkUserName(String userName, String customerId, String personId, String branchId) {
+        final MutableLiveData<String> data = new MutableLiveData<>();
 
         Disposable disposable = apiService.checkUserName(userName, customerId,personId,branchId)
                 .subscribeOn(Schedulers.io())
@@ -96,7 +96,7 @@ public class FragmentChangePasswordViewModel extends AndroidViewModel {
                     public void accept(Response<JsonElement> loginBeanRetroResponse) throws Exception {
                         Log.e("LoginSuccess", "success");
                         if (loginBeanRetroResponse.isSuccessful()) {
-//                            data.setValue(loginBeanRetroResponse.body());
+                            data.setValue(loginBeanRetroResponse.body().toString());
                         } else {
                             data.setValue(null);
                         }

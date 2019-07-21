@@ -54,7 +54,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/twenty_dp"
                     android:layout_marginEnd="@dimen/twenty_dp"
-                    android:layout_marginBottom="@dimen/twenty_dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -200,6 +199,7 @@
                         android:paddingEnd="@dimen/ten_dp"
                         android:paddingBottom="@dimen/ten_dp"
                         android:text="@{date}"
+                        android:textColor="@color/black"
                         app:drawableRightCompat="@drawable/ic_calendar" />
                 </LinearLayout>
 

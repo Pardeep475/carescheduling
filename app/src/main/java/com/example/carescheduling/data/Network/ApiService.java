@@ -2,6 +2,7 @@ package com.example.carescheduling.data.Network;
 
 import com.example.carescheduling.Ui.Dashboard.beans.ClientBookingListModel;
 import com.example.carescheduling.Ui.Dashboard.beans.EditMyProfile;
+import com.example.carescheduling.Ui.Dashboard.beans.GetMyProfileHome;
 import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientCareContactsBean;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientCareDocumentBean;
@@ -16,6 +17,12 @@ import com.example.carescheduling.Ui.HomeScreen.beans.VisitArchiveRetroBean;
 import com.example.carescheduling.Ui.LoginActivity.beans.LoginBeanRetro;
 import com.example.carescheduling.Ui.Profile.bean.AddressByPostCode;
 import com.example.carescheduling.Ui.Profile.bean.DataList;
+import com.example.carescheduling.Ui.Profile.bean.EditAddressAllData;
+import com.example.carescheduling.Ui.Profile.bean.EditProfileInfoBeanRetro;
+import com.example.carescheduling.Ui.Profile.bean.GetMyProfileEdit;
+import com.example.carescheduling.Ui.Profile.bean.PersonAddressList;
+import com.example.carescheduling.Ui.Profile.bean.PersonEmailList;
+import com.example.carescheduling.Ui.Profile.bean.PersonPhoneList;
 import com.example.carescheduling.Ui.Profile.bean.ProfileImageRetro;
 import com.example.carescheduling.Ui.Profile.bean.UserViewModel;
 import com.google.gson.JsonElement;
@@ -138,4 +145,44 @@ public interface ApiService {
             @Path("customerId") String customerId);
 
 //89a31092-d483-4d4d-adbe-72e5e14934bd/2019-05-24/5F98AF4F-25DC-4AC8-B867-C5072C101011/5f98af4f-25dc-4ac8-b867-c5072c100000
+
+//http://mobile.rota.services/CssMobileRestfulService.svc/GetMyProfileHome/EC38283E-BE96-4B38-A66B-89FE3C882D90/5F98AF4F-25DC-4AC8-B867-C5072C100000/5F98AF4F-25DC-4AC8-B867-C5072C101011
+
+
+    @GET("GetMyProfileHome/{personId}/{customerId}/{branchId}")
+    Observable<Response<GetMyProfileHome>> GetMyProfileHome(
+            @Path("personId") String clientId,
+            @Path("customerId") String customerId,
+            @Path("branchId") String branchId);
+
+    //    GetMyProfileEdit
+//    http://mobile.rota.services/CssMobileRestfulService.svc/GetMyProfileEdit/EC38283E-BE96-4B38-A66B-89FE3C882D90/5F98AF4F-25DC-4AC8-B867-C5072C100000/5F98AF4F-25DC-4AC8-B867-C5072C101011
+    @GET("GetMyProfileEdit/{personId}/{customerId}/{branchId}")
+    Observable<Response<GetMyProfileEdit>> GetMyProfileEdit(
+            @Path("personId") String clientId,
+            @Path("customerId") String customerId,
+            @Path("branchId") String branchId);
+
+    @POST("UpdateMyProfile")
+    Observable<Response<JsonElement>> UpdateMyProfile(
+            @Body EditProfileInfoBeanRetro editProfileInfoBeanRetro);
+
+    //    http://mobile.rota.services/CssMobileRestfulService.svc/GetMyAddressEdit/EC38283E-BE96-4B38-A66B-89FE3C882D90/5F98AF4F-25DC-4AC8-B867-C5072C100000/5F98AF4F-25DC-4AC8-B867-C5072C101011
+    @GET("GetMyAddressEdit/{personId}/{customerId}/{branchId}")
+    Observable<Response<EditAddressAllData>> GetMyAddressEdit(
+            @Path("personId") String clientId,
+            @Path("customerId") String customerId,
+            @Path("branchId") String branchId);
+
+    @POST("DeletePhone")
+    Observable<Response<JsonElement>> DeletePhone(
+            @Body PersonPhoneList personPhoneList);
+
+    @POST("DeleteAddress")
+    Observable<Response<JsonElement>> DeleteAddress(
+            @Body PersonAddressList personAddressList);
+
+    @POST("DeleteEmail")
+    Observable<Response<JsonElement>> DeleteEmail(
+            @Body PersonEmailList personEmailList);
 }

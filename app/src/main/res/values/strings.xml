@@ -67,9 +67,18 @@
     <string name="nationality">Nationality:</string>
     <string name="private_address">Private address</string>
     <string name="work_address">Work address</string>
-    <string name="edit_my_address_underline"><u>Edit my address</u></string>
-    <string name="edit_my_phone_number_underline"><u>Edit my phone number</u></string>
-    <string name="edit_my_email_underline"><u>Edit my email address</u></string>
+    <string name="edit_my_address_underline"><u>Edit address</u></string>
+    <string name="add_my_address_underline"><u>Add address</u></string>
+    <string name="edit_my_phone_number_underline"><u>Edit phone number</u></string>
+    <string name="add_my_phone_number_underline"><u>Add phone number</u></string>
+    <string name="edit_my_email_underline"><u>Edit email address</u></string>
+    <string name="add_my_email_underline"><u>Add email address</u></string>
+    <string name="update_my_address_underline"><u>Update address</u></string>
+    <string name="update_my_phone_number_underline"><u>Update phone number</u></string>
+    <string name="update_my_email_underline"><u>Update email address</u></string>
+    <string name="delete_my_address_underline"><u>Delete address</u></string>
+    <string name="delete_my_phone_number_underline"><u>Delete phone number</u></string>
+    <string name="delete_my_email_underline"><u>Delete email address</u></string>
     <string name="private_email">Private email</string>
     <string name="work_email">Work email</string>
     <string name="private_landline">Private landline</string>
@@ -138,6 +147,9 @@
     <string name="last_note">Last Note</string>
     <string name="client_notes">Client Notes</string>
     <string name="history">History</string>
+    <string name="edit_my_user_caps">Edit My User</string>
+    <string name="set_as_default">Set as default</string>
+    <string name="phone_number">Phone Number</string>
 
     <string-array name="home_array">
         <item>My Next Visit</item>

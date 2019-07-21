@@ -2,8 +2,17 @@ package com.example.carescheduling.Ui.Profile.bean;
 
 public class EditProfileInfoBean {
     private String firstName, middleName, surName, maidenName, dateOfBirth, gender, prefix,
-            language, maritalStatus, ethnicity, religion, sexuality, nationality;
+            language, maritalStatus, ethnicity, religion, sexuality, nationality,disabaility;
     private boolean disability;
+
+
+    public String getDisabaility() {
+        return disabaility;
+    }
+
+    public void setDisabaility(String disabaility) {
+        this.disabaility = disabaility;
+    }
 
     public String getFirstName() {
         return firstName;

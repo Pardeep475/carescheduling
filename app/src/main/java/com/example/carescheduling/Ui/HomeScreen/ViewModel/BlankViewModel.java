@@ -53,6 +53,8 @@ public class BlankViewModel extends AndroidViewModel {
                         if (loginBeanRetroResponse.isSuccessful()) {
                             if (loginBeanRetroResponse.body() != null && loginBeanRetroResponse.body().getData() != null)
                                 data.setValue(getClientData(loginBeanRetroResponse.body()));
+                            else
+                                data.setValue(null);
                         } else {
                             data.setValue(null);
                             Toast.makeText(getApplication(), loginBeanRetroResponse.message(), Toast.LENGTH_SHORT).show();
