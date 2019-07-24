@@ -72,6 +72,7 @@
             android:paddingStart="@dimen/ten_dp"
             android:paddingEnd="@dimen/ten_dp"
             android:tint="@color/white"
+            android:onClick="@{(v) -> commonClick.rightClick()}"
             android:visibility="@{commonData.rightImageVisible ? View.VISIBLE :View.GONE}"
             app:setImageResource="@{commonData.getRightImageDrawable()}" />
 

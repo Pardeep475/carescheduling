@@ -18,18 +18,12 @@
             name="commonClick"
             type="com.example.carescheduling.Ui.Common.Common" />
 
-        <variable
-            name="profileImageList"
-            type="com.example.carescheduling.Ui.Profile.presenter.ProfileImageListClick" />
-
-        <variable
-            name="imageUrl"
-            type="android.graphics.Bitmap" />
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         android:orientation="vertical"
         tools:context=".Ui.Profile.View.ProfileImageList">
 
@@ -39,22 +33,13 @@
             bind:commonClick="@{commonClick}"
             bind:commonData="@{commonData}" />
 
-
-        <ImageView
-            android:layout_width="@dimen/one_fifty_dp"
-            android:layout_height="@dimen/one_fifty_dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/fifty_dp"
-            android:layout_marginBottom="@dimen/twenty_dp"
-            android:contentDescription="@string/user_image"
-            android:onClick="@{(v)->profileImageList.ProfileClick()}"
-            app:setImage="@{imageUrl}"
-            app:srcCompat="@drawable/user_placeholder" />
-
-        <androidx.recyclerview.widget.RecyclerView
+        <com.cooltechworks.views.shimmer.ShimmerRecyclerView
             android:id="@+id/rcv_images"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/twenty_dp" />
+            android:layout_marginTop="@dimen/twenty_dp"
+            app:shimmer_demo_angle="20"
+            app:shimmer_demo_grid_child_count="4"
+            app:shimmer_demo_layout_manager_type="linear_vertical" />
     </LinearLayout>
 </layout>

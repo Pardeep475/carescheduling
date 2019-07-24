@@ -15,10 +15,13 @@ import com.example.carescheduling.Ui.HomeScreen.beans.ClientDisabilityBean;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientInfoCarePlanRetro;
 import com.example.carescheduling.Ui.HomeScreen.beans.VisitArchiveRetroBean;
 import com.example.carescheduling.Ui.LoginActivity.beans.LoginBeanRetro;
+import com.example.carescheduling.Ui.Profile.bean.AddImageBeanRetro;
 import com.example.carescheduling.Ui.Profile.bean.AddressByPostCode;
 import com.example.carescheduling.Ui.Profile.bean.DataList;
+import com.example.carescheduling.Ui.Profile.bean.DeleteImageRetro;
 import com.example.carescheduling.Ui.Profile.bean.EditAddressAllData;
 import com.example.carescheduling.Ui.Profile.bean.EditProfileInfoBeanRetro;
+import com.example.carescheduling.Ui.Profile.bean.GetMyPicturesEditBeanRetro;
 import com.example.carescheduling.Ui.Profile.bean.GetMyProfileEdit;
 import com.example.carescheduling.Ui.Profile.bean.PersonAddressList;
 import com.example.carescheduling.Ui.Profile.bean.PersonEmailList;
@@ -185,4 +188,19 @@ public interface ApiService {
     @POST("DeleteEmail")
     Observable<Response<JsonElement>> DeleteEmail(
             @Body PersonEmailList personEmailList);
+
+    //    http://mobile.rota.services/CssMobileRestfulService.svc/GetMyPicturesEdit/EC38283E-BE96-4B38-A66B-89FE3C882D90/5F98AF4F-25DC-4AC8-B867-C5072C100000/5F98AF4F-25DC-4AC8-B867-C5072C101011
+    @GET("GetMyPicturesEdit/{personId}/{customerId}/{branchId}")
+    Observable<Response<GetMyPicturesEditBeanRetro>> GetMyPicturesEdit(
+            @Path("personId") String clientId,
+            @Path("customerId") String customerId,
+            @Path("branchId") String branchId);
+
+    @POST("DeleteUserImage")
+    Observable<Response<JsonElement>> DeleteUserImage(
+            @Body DeleteImageRetro personEmailList);
+
+    @POST("AddUserImage")
+    Observable<Response<JsonElement>> AddUserImage(
+            @Body AddImageBeanRetro personEmailList);
 }

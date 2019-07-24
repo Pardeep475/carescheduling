@@ -77,9 +77,9 @@ public class EditProfile extends AppCompatActivity {
 
         int fragmentCount = getSupportFragmentManager().getBackStackEntryCount();
 
-        if (fragmentCount > 0)
+        if (fragmentCount > 1)
             getSupportFragmentManager().popBackStack();
         else
-            super.onBackPressed();
+            finish();
     }
 }
