@@ -7,6 +7,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
 import com.example.carescheduling.Ui.Dashboard.view.Dashboard;
 import com.example.carescheduling.Ui.Profile.Adapter.CustomAdapter;
 import com.example.carescheduling.Ui.Profile.ViewModel.AddEmailViewModel;
+import com.example.carescheduling.Ui.Profile.bean.AddEmailBeanRetro;
 import com.example.carescheduling.Ui.Profile.bean.EditEmailBean;
 import com.example.carescheduling.Utils.ConnectivityReceiver;
 import com.example.carescheduling.Utils.Constants;
@@ -33,28 +35,15 @@ import java.util.List;
 
 public class AddEmail extends BaseFragment implements Common {
     private AddEmailFragmentBinding editEmailBinding;
-    private String stringValue, type;
-    private ProfileBean profileBean;
     private AddEmailViewModel editEmailViewModel;
 
-    public static AddEmail newInstance(String value, String type, ProfileBean profileBean) {
-        AddEmail editEmail = new AddEmail();
-        Bundle bundle = new Bundle();
-        bundle.putString(Constants.STRING_VALUE, value);
-        bundle.putString(Constants.TYPE, type);
-        bundle.putSerializable(Constants.PROFILE_DATA, profileBean);
-        editEmail.setArguments(bundle);
-        return editEmail;
+    public static AddEmail newInstance() {
+        return new AddEmail();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            stringValue = getArguments().getString(Constants.STRING_VALUE);
-            type = getArguments().getString(Constants.TYPE);
-            profileBean = (ProfileBean) getArguments().getSerializable(Constants.PROFILE_DATA);
-        }
     }
 
     @Override
@@ -70,15 +59,7 @@ public class AddEmail extends BaseFragment implements Common {
     private void setUpView(View view) {
         setCommonData();
         editEmailViewModel = ViewModelProviders.of(this).get(AddEmailViewModel.class);
-        if (type.equalsIgnoreCase("Update")) {
-            editEmailBinding.spinnerEmailType.setEnabled(false);
-            editEmailBinding.spinnerEmailType.setClickable(false);
-        } else {
-            editEmailBinding.spinnerEmailType.setEnabled(true);
-            editEmailBinding.spinnerEmailType.setClickable(true);
-        }
         setEmailType();
-//        setEditEmailData();
     }
 
     private void setCommonData() {
@@ -92,17 +73,6 @@ public class AddEmail extends BaseFragment implements Common {
         editEmailBinding.setCommonData(commonBean);
         editEmailBinding.setCommonClick(this);
     }
-
-    private void setEditEmailData() {
-        editEmailViewModel.getEditEmailBean(stringValue, profileBean).observe(this, new Observer<EditEmailBean>() {
-            @Override
-            public void onChanged(EditEmailBean editEmailBean) {
-                editEmailBinding.setEditEmailBean(editEmailBean);
-                editEmailBinding.rbDefaultEmail.setSelected(editEmailBean.isDefault());
-            }
-        });
-    }
-
 
     private void setEmailType() {
 
@@ -128,91 +98,6 @@ public class AddEmail extends BaseFragment implements Common {
     }
 
 
-    private void setDataRemote() {
-
-        setEmailData();
-
-    }
-
-    private void setEmailData() {
-        ProfileBean myProfileBean = null;
-//        if (profileBean.getData() != null && profileBean.getData().getPerson() != null && profileBean.getData().getPerson().getPersonEmail() != null && stringValue != null) {
-//            myProfileBean = updateEmail();
-//        } else {
-//        }
-        showDialog();
-        myProfileBean = addNewEmail();
-        if (profileBean == null) {
-            hideDialog();
-            return;
-        }
-
-        editEmailViewModel.getEditProfilePost(myProfileBean.getData()).observe(this, new Observer<ProfileBean>() {
-            @Override
-            public void onChanged(ProfileBean profileBean) {
-                hideDialog();
-                if (profileBean != null) {
-                    if (profileBean.getSuccess()) {
-                        Toast.makeText(getActivity(), (String) profileBean.getResponseMessage(), Toast.LENGTH_SHORT).show();
-                        openDashboardActivity();
-                    } else {
-                        Toast.makeText(getActivity(), (String) profileBean.getResponseMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-    }
-
-    private void openDashboardActivity() {
-        Intent intent = new Intent(getActivity(), Dashboard.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-        if (getActivity() != null)
-            getActivity().finish();
-    }
-
-    private ProfileBean updateEmail() {
-        int emailCounter = 0;
-        if (profileBean.getData().getPerson().getPersonEmail().size() > 0) {
-            for (int i = 0; i < profileBean.getData().getPerson().getPersonEmail().size(); i++) {
-                if (profileBean.getData().getPerson().getPersonEmail().get(i).getEmailTypeName().equalsIgnoreCase((String) editEmailBinding.spinnerEmailType.getSelectedItem())) {
-                    profileBean.getData().getPerson().getPersonEmail().get(i).setEmailAddress(editEmailBinding.edtEmailAddress.getText().toString());
-                    profileBean.getData().getPerson().getPersonEmail().get(i).setIsDefaultEmail(editEmailBinding.rbDefaultEmail.isChecked());
-                    emailCounter++;
-                    break;
-                }
-            }
-        }
-
-        if (emailCounter == 0) {
-            profileBean = addNewEmail();
-        }
-
-        return profileBean;
-    }
-
-    private ProfileBean addNewEmail() {
-
-        PersonEmail personEmail = new PersonEmail();
-        personEmail.setCustomerId(getSessionManager().getCustomerId());
-        personEmail.setPersonId(getSessionManager().getPersonId());
-        personEmail.setIsDefaultEmail(editEmailBinding.rbDefaultEmail.isChecked());
-        personEmail.setEmailAddress(editEmailBinding.edtEmailAddress.getText().toString());
-        if (editEmailBinding.spinnerEmailType.getSelectedItemPosition() > 0)
-            personEmail.setEmailTypeName((String) editEmailBinding.spinnerEmailType.getSelectedItem());
-        else {
-            Toast.makeText(getActivity(), "Please select email type", Toast.LENGTH_SHORT).show();
-            return null;
-        }
-        profileBean.getData().getPerson().getPersonEmail().add(personEmail);
-
-        return profileBean;
-    }
-
-
     @Override
     public void leftClick() {
         if (getActivity() != null)
@@ -233,6 +118,54 @@ public class AddEmail extends BaseFragment implements Common {
                 Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    private void setDataRemote() {
+        if (getActivity() != null && ConnectivityReceiver.isNetworkAvailable(getActivity())) {
+            if (validation()) {
+                showDialog();
+                editEmailViewModel.AddEmail(AddEmailRetro()).observe(this, new Observer<Boolean>() {
+                    @Override
+                    public void onChanged(Boolean s) {
+                        hideDialog();
+                        if (s != null) {
+                            if (s) {
+                                if (getActivity() != null) {
+                                    getActivity().onBackPressed();
+                                }
+                            }
+                        }
+
+                    }
+                });
+            } else {
+                hideDialog();
+            }
+        } else {
+            Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private AddEmailBeanRetro AddEmailRetro() {
+        AddEmailBeanRetro addEmailBeanRetro = new AddEmailBeanRetro();
+        addEmailBeanRetro.setCustomerId(getSessionManager().getCustomerId());
+        addEmailBeanRetro.setPersonId(getSessionManager().getPersonId());
+        addEmailBeanRetro.setEmailTypeName((String) editEmailBinding.spinnerEmailType.getSelectedItem());
+        addEmailBeanRetro.setEmailAddress(editEmailBinding.edtEmailAddress.getText().toString());
+        addEmailBeanRetro.setDefaultEmail(editEmailBinding.rbDefaultEmail.isChecked());
+        return addEmailBeanRetro;
+    }
+
+    private boolean validation() {
+         if (editEmailBinding.spinnerEmailType.getSelectedItemPosition() <= 0) {
+            showAToast("Please select email type");
+            return false;
+        }
+        if (TextUtils.isEmpty(editEmailBinding.edtEmailAddress.getText())) {
+            showAToast("Please enter email");
+            return false;
+        }
+        return true;
     }
 }
 

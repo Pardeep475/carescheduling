@@ -3,8 +3,10 @@ package com.example.carescheduling.Ui.Profile.ViewModel;
 import android.app.Application;
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
+import com.example.carescheduling.Ui.Profile.bean.AddPhoneNumberBeanRetro;
 import com.example.carescheduling.Ui.Profile.bean.EditPhoneNumberBean;
 import com.example.carescheduling.data.Local.AppDataBase;
 import com.example.carescheduling.data.Local.DatabaseInitializer;
@@ -12,6 +14,9 @@ import com.example.carescheduling.data.Local.DatabaseTable.CountryCode;
 import com.example.carescheduling.data.Local.DatabaseTable.PhoneType;
 import com.example.carescheduling.data.Network.ApiClient;
 import com.example.carescheduling.data.Network.ApiService;
+import com.google.gson.JsonElement;
+
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -43,38 +48,24 @@ public class AddPhoneNumberViewModel extends AndroidViewModel {
         return DatabaseInitializer.loadCountryCode(AppDataBase.getAppDatabase(context));
     }
 
-    public LiveData<EditPhoneNumberBean> getEditPhoneNumberBean(String value, ProfileBean profileBean) {
-        MutableLiveData<EditPhoneNumberBean> editPhoneNumberBeanMutableLiveData = new MutableLiveData<>();
-        EditPhoneNumberBean editPhoneNumberBean = new EditPhoneNumberBean();
 
-        if (profileBean != null && profileBean.getData() != null && profileBean.getData().getPerson() != null) {
-            for (int i = 0; i < profileBean.getData().getPerson().getPersonPhone().size(); i++) {
-                if (value.equalsIgnoreCase(profileBean.getData().getPerson().getPersonPhone().get(i).getPhoneTypeName())) {
-                    editPhoneNumberBean.setDefault(profileBean.getData().getPerson().getPersonPhone().get(i).getIsDefaultPhone());
-                    editPhoneNumberBean.setPhoneNumber(profileBean.getData().getPerson().getPersonPhone().get(i).getPhoneNumber());
-                    editPhoneNumberBean.setCountryCode(profileBean.getData().getPerson().getPersonPhone().get(i).getCountryTelephonePrefix());
-                }
-            }
-            editPhoneNumberBeanMutableLiveData.setValue(editPhoneNumberBean);
-        }
+    public LiveData<Boolean> AddPhone(AddPhoneNumberBeanRetro addPhoneNumberBeanRetro) {
+        final MutableLiveData<Boolean> data = new MutableLiveData<>();
 
-        return editPhoneNumberBeanMutableLiveData;
-    }
-
-    public LiveData<ProfileBean> getEditProfilePost(ProfileBean.Data profileBean) {
-        final MutableLiveData<ProfileBean> data = new MutableLiveData<>();
-
-        Disposable disposable = apiService.editMyProfilePost(profileBean)
+        Disposable disposable = apiService.AddPhone(addPhoneNumberBeanRetro)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<Response<ProfileBean>>() {
+                .subscribe(new Consumer<Response<JsonElement>>() {
                     @Override
-                    public void accept(Response<ProfileBean> loginBeanRetroResponse) throws Exception {
+                    public void accept(Response<JsonElement> loginBeanRetroResponse) throws Exception {
                         Log.e("LoginSuccess", "success");
                         if (loginBeanRetroResponse.isSuccessful()) {
-                            data.setValue(loginBeanRetroResponse.body());
-                        } else {
-                            data.setValue(null);
+                            JSONObject jsonObject = new JSONObject(loginBeanRetroResponse.body().toString());
+                            boolean isSuccess = jsonObject.getBoolean("Success");
+                            data.setValue(isSuccess);
+                            if (jsonObject.getString("ResponseMessage") != null)
+                                Toast.makeText(context, jsonObject.getString("ResponseMessage"), Toast.LENGTH_SHORT).show();
+
                         }
                     }
                 }, new Consumer<Throwable>() {

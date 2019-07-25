@@ -7,8 +7,8 @@
     <data>
 
         <variable
-            name="editPhoneNumberBean"
-            type="com.example.carescheduling.Ui.Profile.bean.EditPhoneNumberBean" />
+            name="personPhoneList"
+            type="com.example.carescheduling.Ui.Profile.bean.PersonPhoneList" />
 
         <variable
             name="commonData"
@@ -31,36 +31,10 @@
             bind:commonData="@{commonData}" />
 
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/twenty_dp"
-            android:layout_marginTop="@dimen/fifty_dp"
-            android:layout_marginEnd="@dimen/twenty_dp"
-            android:fontFamily="@font/rubik_medium"
-            android:padding="@dimen/ten_dp"
-            android:text="@string/mobile_telephone_number" />
-
-        <EditText
-            android:id="@+id/edt_number"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/twenty_dp"
-            android:layout_marginTop="@dimen/ten_dp"
-            android:layout_marginEnd="@dimen/twenty_dp"
-            android:background="@android:color/white"
-            android:fontFamily="@font/rubik_light"
-            android:paddingStart="@dimen/ten_dp"
-            android:inputType="number"
-            android:paddingTop="@dimen/ten_dp"
-            android:paddingEnd="@dimen/ten_dp"
-            android:paddingBottom="@dimen/ten_dp"
-            android:text="@{editPhoneNumberBean.getPhoneNumber()}" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/twenty_dp"
+            android:layout_marginTop="@dimen/fifty_dp"
             android:layout_marginEnd="@dimen/twenty_dp"
             android:orientation="horizontal">
 
@@ -110,6 +84,34 @@
                 android:paddingEnd="@dimen/ten_dp" />
         </LinearLayout>
 
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/twenty_dp"
+            android:layout_marginTop="@dimen/twenty_dp"
+            android:layout_marginEnd="@dimen/twenty_dp"
+            android:fontFamily="@font/rubik_medium"
+            android:padding="@dimen/ten_dp"
+            android:text="@string/mobile_telephone_number" />
+
+        <EditText
+            android:id="@+id/edt_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/twenty_dp"
+            android:layout_marginTop="@dimen/ten_dp"
+            android:layout_marginEnd="@dimen/twenty_dp"
+            android:background="@android:color/white"
+            android:fontFamily="@font/rubik_light"
+            android:inputType="number"
+            android:paddingStart="@dimen/ten_dp"
+            android:paddingTop="@dimen/ten_dp"
+            android:paddingEnd="@dimen/ten_dp"
+            android:paddingBottom="@dimen/ten_dp"
+            android:text="@{personPhoneList.getPhoneNumber()}" />
+
+
         <RadioButton
             android:id="@+id/rb_default_number"
             android:layout_width="wrap_content"
@@ -120,8 +122,7 @@
             android:fontFamily="@font/rubik_light"
             android:paddingStart="@dimen/sixty_five_dp"
             android:text="@string/set_as_my_default_phone"
-            android:textColor="#5F5F5F"
-             />
+            android:textColor="#5F5F5F" />
 
         <RadioButton
             android:id="@+id/rb_do_not_call"
@@ -132,8 +133,9 @@
             android:layout_marginEnd="@dimen/twenty_dp"
             android:fontFamily="@font/rubik_light"
             android:paddingStart="@dimen/sixty_five_dp"
+            android:text="@string/do_not_call"
             android:textColor="#5F5F5F"
-            android:text="@string/do_not_call" />
+            android:visibility="gone" />
 
     </LinearLayout>
 </layout>

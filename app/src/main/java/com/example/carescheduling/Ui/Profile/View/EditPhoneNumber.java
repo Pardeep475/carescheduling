@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +25,9 @@ import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
 import com.example.carescheduling.Ui.Dashboard.view.Dashboard;
 import com.example.carescheduling.Ui.Profile.Adapter.CustomAdapter;
 import com.example.carescheduling.Ui.Profile.ViewModel.EditPhoneNumberViewModel;
+import com.example.carescheduling.Ui.Profile.bean.EditNumberBeanRetro;
 import com.example.carescheduling.Ui.Profile.bean.EditPhoneNumberBean;
+import com.example.carescheduling.Ui.Profile.bean.PersonPhoneList;
 import com.example.carescheduling.Ui.Profile.presenter.EditEmailClick;
 import com.example.carescheduling.Utils.ConnectivityReceiver;
 import com.example.carescheduling.Utils.Constants;
@@ -39,16 +42,14 @@ import java.util.List;
 
 public class EditPhoneNumber extends BaseFragment implements Common {
     private FragmentEditPhoneNumberBinding editPhoneNumberBinding;
-    private String stringValue, type;
-    private ProfileBean profileBean;
+    private String stringValue;
+    private PersonPhoneList profileBean;
     private EditPhoneNumberViewModel editPhoneNumberViewModel;
-    private SessionManager sessionManager;
 
-    public static EditPhoneNumber newInstance(String value, String type, ProfileBean profileBean) {
+    public static EditPhoneNumber newInstance(String value, PersonPhoneList profileBean) {
         EditPhoneNumber editPhoneNumber = new EditPhoneNumber();
         Bundle bundle = new Bundle();
         bundle.putString(Constants.STRING_VALUE, value);
-        bundle.putString(Constants.TYPE, type);
         bundle.putSerializable(Constants.PROFILE_DATA, profileBean);
         editPhoneNumber.setArguments(bundle);
         return editPhoneNumber;
@@ -59,8 +60,7 @@ public class EditPhoneNumber extends BaseFragment implements Common {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             stringValue = getArguments().getString(Constants.STRING_VALUE);
-            type = getArguments().getString(Constants.TYPE);
-            profileBean = (ProfileBean) getArguments().getSerializable(Constants.PROFILE_DATA);
+            profileBean = (PersonPhoneList) getArguments().getSerializable(Constants.PROFILE_DATA);
         }
     }
 
@@ -78,13 +78,8 @@ public class EditPhoneNumber extends BaseFragment implements Common {
         setCommonData();
         sessionManager = getSessionManager();
         editPhoneNumberViewModel = ViewModelProviders.of(this).get(EditPhoneNumberViewModel.class);
-        if (type.equalsIgnoreCase("Update")) {
-            editPhoneNumberBinding.spinnerPhoneType.setEnabled(false);
-            editPhoneNumberBinding.spinnerPhoneType.setClickable(false);
-        } else {
-            editPhoneNumberBinding.spinnerPhoneType.setEnabled(true);
-            editPhoneNumberBinding.spinnerPhoneType.setClickable(true);
-        }
+        editPhoneNumberBinding.spinnerPhoneType.setEnabled(false);
+        editPhoneNumberBinding.spinnerPhoneType.setClickable(false);
         setCodePrefix();
         setPhoneType();
         setEditPhoneNumber();
@@ -117,25 +112,12 @@ public class EditPhoneNumber extends BaseFragment implements Common {
                     CustomAdapter adapter = new CustomAdapter(getActivity(),
                             R.layout.item_spinner_sf, R.id.title, arrayList);
                     editPhoneNumberBinding.spinnerCountryCode.setAdapter(adapter);
-                    if (profileBean != null && profileBean.getData() != null && profileBean.getData().getPerson() != null) {
-                        if (profileBean.getData().getPerson().getPersonPhone() != null) {
-                            if (profileBean.getData().getPerson().getPersonPhone().size() > 0) {
-                                int pos = adapter.getPosition(profileBean.getData().getPerson().getPersonPhone().get(0).getCountryTelephonePrefix());
-                                editPhoneNumberBinding.spinnerPhoneType.setSelection(pos);
-                            }
-                        }
+                    if (profileBean != null && profileBean.getCountryTelephonePrefix() != null) {
+                        int pos = adapter.getPosition(profileBean.getCountryTelephonePrefix());
+                        editPhoneNumberBinding.spinnerPhoneType.setSelection(pos);
                     }
                 }
-            }
-        });
-    }
 
-    private void setEditPhoneNumber() {
-        editPhoneNumberViewModel.getEditPhoneNumberBean(stringValue, profileBean).observe(this, new Observer<EditPhoneNumberBean>() {
-            @Override
-            public void onChanged(EditPhoneNumberBean editPhoneNumberBean) {
-                editPhoneNumberBinding.setEditPhoneNumberBean(editPhoneNumberBean);
-                editPhoneNumberBinding.rbDefaultNumber.setSelected(editPhoneNumberBean.isDefault());
             }
         });
     }
@@ -154,18 +136,9 @@ public class EditPhoneNumber extends BaseFragment implements Common {
                     CustomAdapter adapter = new CustomAdapter(getActivity(),
                             R.layout.item_spinner_sf, R.id.title, arrayList);
                     editPhoneNumberBinding.spinnerPhoneType.setAdapter(adapter);
-                    if (profileBean != null && profileBean.getData() != null && profileBean.getData().getPerson() != null) {
-                        if (profileBean.getData().getPerson().getPersonPhone() != null) {
-                            if (profileBean.getData().getPerson().getPersonPhone().size() > 0) {
-                                for (int i = 0; i < profileBean.getData().getPerson().getPersonPhone().size(); i++) {
-                                    if (stringValue.equalsIgnoreCase(profileBean.getData().getPerson().getPersonPhone().get(i).getPhoneTypeName())) {
-                                        int pos = adapter.getPosition(profileBean.getData().getPerson().getPersonPhone().get(i).getPhoneTypeName());
-                                        editPhoneNumberBinding.spinnerPhoneType.setSelection(pos);
-                                    }
-                                }
-
-                            }
-                        }
+                    if (stringValue != null) {
+                        int pos = adapter.getPosition(stringValue);
+                        editPhoneNumberBinding.spinnerPhoneType.setSelection(pos);
                     }
                 }
             }
@@ -173,84 +146,9 @@ public class EditPhoneNumber extends BaseFragment implements Common {
     }
 
 
-    private void setDataRemote() {
-        showDialog();
-        setPhoneData();
-
-    }
-
-    private void setPhoneData() {
-
-        if (profileBean.getData() != null && profileBean.getData().getPerson() != null && profileBean.getData().getPerson().getPersonPhone() != null && stringValue != null) {
-            profileBean = updateNumber();
-        } else {
-            profileBean = addNewNumber();
-        }
-
-        editPhoneNumberViewModel.getEditProfilePost(profileBean.getData()).observe(this, new Observer<ProfileBean>() {
-            @Override
-            public void onChanged(ProfileBean profileBean) {
-                hideDialog();
-                if (profileBean != null) {
-                    if (profileBean.getSuccess()) {
-                        Toast.makeText(getActivity(), (String) profileBean.getResponseMessage(), Toast.LENGTH_SHORT).show();
-                        openDashboardActivity();
-                    } else {
-                        Toast.makeText(getActivity(), (String) profileBean.getResponseMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        });
-
-    }
-
-
-    private void openDashboardActivity() {
-        Intent intent = new Intent(getActivity(), Dashboard.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-        if (getActivity() != null)
-            getActivity().finish();
-    }
-
-
-    private ProfileBean updateNumber() {
-        int phoneCounter = 0;
-        if (profileBean.getData().getPerson().getPersonPhone().size() > 0) {
-            for (int i = 0; i < profileBean.getData().getPerson().getPersonPhone().size(); i++) {
-                if (profileBean.getData().getPerson().getPersonPhone().get(i).getPhoneTypeName().equalsIgnoreCase((String) editPhoneNumberBinding.spinnerPhoneType.getSelectedItem())) {
-                    profileBean.getData().getPerson().getPersonPhone().get(i).setCountryTelephonePrefix((String) editPhoneNumberBinding.spinnerCountryCode.getSelectedItem());
-                    profileBean.getData().getPerson().getPersonPhone().get(i).setPhoneNumber(editPhoneNumberBinding.edtNumber.getText().toString());
-                    profileBean.getData().getPerson().getPersonPhone().get(i).setIsDefaultPhone(editPhoneNumberBinding.rbDefaultNumber.isChecked());
-                    phoneCounter++;
-                    break;
-                }
-            }
-        }
-
-        if (phoneCounter == 0) {
-            profileBean = addNewNumber();
-        }
-
-        return profileBean;
-    }
-
-    private ProfileBean addNewNumber() {
-
-        PersonPhone personPhoneProfileBean = new PersonPhone();
-        personPhoneProfileBean.setCanNotCall(editPhoneNumberBinding.rbDoNotCall.isChecked());
-        personPhoneProfileBean.setCountryTelephonePrefix((String) editPhoneNumberBinding.spinnerCountryCode.getSelectedItem());
-        personPhoneProfileBean.setCustomerId(sessionManager.getCustomerId());
-        personPhoneProfileBean.setIsDefaultPhone(editPhoneNumberBinding.rbDefaultNumber.isChecked());
-        personPhoneProfileBean.setPersonId(sessionManager.getPersonId());
-        personPhoneProfileBean.setPhoneNumber(editPhoneNumberBinding.edtNumber.getText().toString());
-        personPhoneProfileBean.setPhoneTypeName((String) editPhoneNumberBinding.spinnerPhoneType.getSelectedItem());
-        profileBean.getData().getPerson().getPersonPhone().add(personPhoneProfileBean);
-
-        return profileBean;
+    private void setEditPhoneNumber() {
+        editPhoneNumberBinding.setPersonPhoneList(profileBean);
+        editPhoneNumberBinding.rbDefaultNumber.setSelected(profileBean.getIsDefaultPhone());
     }
 
     @Override
@@ -273,5 +171,60 @@ public class EditPhoneNumber extends BaseFragment implements Common {
                 Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    private void setDataRemote() {
+        if (getActivity() != null && ConnectivityReceiver.isNetworkAvailable(getActivity())) {
+            if (validation()) {
+                showDialog();
+                editPhoneNumberViewModel.EditNumber(EditNumber()).observe(this, new Observer<Boolean>() {
+                    @Override
+                    public void onChanged(Boolean s) {
+                        hideDialog();
+                        if (s != null) {
+                            if (s) {
+                                if (getActivity() != null) {
+                                    getActivity().onBackPressed();
+                                }
+                            }
+                        }
+
+                    }
+                });
+            } else {
+
+                hideDialog();
+                Toast.makeText(getActivity(), "Please select image", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private EditNumberBeanRetro EditNumber() {
+        EditNumberBeanRetro editPhoneNumberBean = new EditNumberBeanRetro();
+        editPhoneNumberBean.setCustomerId(getSessionManager().getCustomerId());
+        editPhoneNumberBean.setPersonId(getSessionManager().getPersonId());
+        editPhoneNumberBean.setOldPhoneNumber(profileBean.getPhoneNumber());
+        editPhoneNumberBean.setCountryTelephonePrefix((String) editPhoneNumberBinding.spinnerCountryCode.getSelectedItem());
+        editPhoneNumberBean.setPhoneNumber(editPhoneNumberBinding.edtNumber.getText().toString());
+        editPhoneNumberBean.setPhoneTypeName((String) editPhoneNumberBinding.spinnerPhoneType.getSelectedItem());
+        editPhoneNumberBean.setDefaultPhone(editPhoneNumberBinding.rbDefaultNumber.isChecked());
+        return editPhoneNumberBean;
+    }
+
+    private boolean validation() {
+        if (editPhoneNumberBinding.spinnerCountryCode.getSelectedItemPosition() <= 0) {
+            showAToast("Please select country code");
+            return false;
+        } else if (editPhoneNumberBinding.spinnerPhoneType.getSelectedItemPosition() <= 0) {
+            showAToast("Please select phone type");
+            return false;
+        }
+        if (TextUtils.isEmpty(editPhoneNumberBinding.edtNumber.getText())) {
+            showAToast("Please enter number");
+            return false;
+        }
+        return true;
     }
 }

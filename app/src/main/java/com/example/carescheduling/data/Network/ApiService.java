@@ -15,11 +15,15 @@ import com.example.carescheduling.Ui.HomeScreen.beans.ClientDisabilityBean;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientInfoCarePlanRetro;
 import com.example.carescheduling.Ui.HomeScreen.beans.VisitArchiveRetroBean;
 import com.example.carescheduling.Ui.LoginActivity.beans.LoginBeanRetro;
+import com.example.carescheduling.Ui.Profile.bean.AddEmailBeanRetro;
 import com.example.carescheduling.Ui.Profile.bean.AddImageBeanRetro;
+import com.example.carescheduling.Ui.Profile.bean.AddPhoneNumberBeanRetro;
 import com.example.carescheduling.Ui.Profile.bean.AddressByPostCode;
 import com.example.carescheduling.Ui.Profile.bean.DataList;
 import com.example.carescheduling.Ui.Profile.bean.DeleteImageRetro;
 import com.example.carescheduling.Ui.Profile.bean.EditAddressAllData;
+import com.example.carescheduling.Ui.Profile.bean.EditEmailRetroBean;
+import com.example.carescheduling.Ui.Profile.bean.EditNumberBeanRetro;
 import com.example.carescheduling.Ui.Profile.bean.EditProfileInfoBeanRetro;
 import com.example.carescheduling.Ui.Profile.bean.GetMyPicturesEditBeanRetro;
 import com.example.carescheduling.Ui.Profile.bean.GetMyProfileEdit;
@@ -203,4 +207,21 @@ public interface ApiService {
     @POST("AddUserImage")
     Observable<Response<JsonElement>> AddUserImage(
             @Body AddImageBeanRetro personEmailList);
+
+    @POST("AddPhone")
+    Observable<Response<JsonElement>> AddPhone(
+            @Body AddPhoneNumberBeanRetro addPhoneNumberBeanRetro);
+
+    @POST("AddEmail")
+    Observable<Response<JsonElement>> AddEmail(
+            @Body AddEmailBeanRetro addEmailBeanRetro);
+
+    @POST("EditPhone")
+    Observable<Response<JsonElement>> EditPhone(
+            @Body EditNumberBeanRetro editNumberBeanRetro);
+
+    @POST("EditEmail")
+    Observable<Response<JsonElement>> EditEmail(
+            @Body EditEmailRetroBean editEmailRetroBean);
+
 }

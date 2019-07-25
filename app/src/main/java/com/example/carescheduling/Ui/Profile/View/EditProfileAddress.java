@@ -71,8 +71,13 @@ public class EditProfileAddress extends BaseFragment implements Common, EditProf
     private void setUpView(View view) {
         setCommonData();
         editProfileAddressViewModel = ViewModelProviders.of(this).get(EditProfileAddressViewModel.class);
-        setProfileInfoBeanData();
         editProfileAddressBinding.setEditAddressClick(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setProfileInfoBeanData();
     }
 
     private void setCommonData() {
@@ -181,12 +186,12 @@ public class EditProfileAddress extends BaseFragment implements Common, EditProf
 
     @Override
     public void EditPhoneNumberClick() {
-//        setFragment(AddPhoneNumber.newInstance("", "Edit", profileResultBean));
+        setFragment(AddPhoneNumber.newInstance());
     }
 
     @Override
     public void EditEmailClick() {
-//        setFragment(AddEmail.newInstance("", "Edit", profileResultBean));
+        setFragment(AddEmail.newInstance());
     }
 
     @Override
@@ -200,20 +205,31 @@ public class EditProfileAddress extends BaseFragment implements Common, EditProf
 
     @Override
     public void UpdatePhoneNumberClick() {
-//        String address = getRadioGroupText(editProfileAddressBinding.rbAddress);
-//        if (!address.isEmpty())
-//            setFragment(EditPhoneNumber.newInstance(address, "Update", profileResultBean));
-//        else
-//            Toast.makeText(getActivity(), "Please select above address type", Toast.LENGTH_SHORT).show();
+        String address = getRadioGroupText(editProfileAddressBinding.rbPhone);
+        if (!address.isEmpty()) {
+            for (int i = 0; i < profileResultBean.getPersonPhoneList().size(); i++) {
+                if (profileResultBean.getPersonPhoneList().get(i).getPhoneTypeName().equalsIgnoreCase(address)){
+                    setFragment(EditPhoneNumber.newInstance(address, profileResultBean.getPersonPhoneList().get(i)));
+                    return;
+                }
+            }
+        }else
+            Toast.makeText(getActivity(), "Please select above phone type", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void UpdateEmailClick() {
-//        String address = getRadioGroupText(editProfileAddressBinding.rbAddress);
-//        if (!address.isEmpty())
-//            setFragment(EditEmail.newInstance(address, "Update", profileResultBean));
-//        else
-//            Toast.makeText(getActivity(), "Please select above address type", Toast.LENGTH_SHORT).show();
+        String address = getRadioGroupText(editProfileAddressBinding.rbEmail);
+        if (!address.isEmpty()){
+            for (int i = 0; i < profileResultBean.getPersonEmailList().size(); i++) {
+                if (profileResultBean.getPersonEmailList().get(i).getEmailTypeName().equalsIgnoreCase(address)){
+                    setFragment(EditEmail.newInstance(address,  profileResultBean.getPersonEmailList().get(i)));
+                    return;
+                }
+            }
+        }
+        else
+            Toast.makeText(getActivity(), "Please select above email type", Toast.LENGTH_SHORT).show();
     }
 
     @Override

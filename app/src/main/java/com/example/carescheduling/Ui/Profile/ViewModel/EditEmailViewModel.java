@@ -3,15 +3,20 @@ package com.example.carescheduling.Ui.Profile.ViewModel;
 import android.app.Application;
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
 import com.example.carescheduling.Ui.Profile.View.EditEmail;
 import com.example.carescheduling.Ui.Profile.bean.EditEmailBean;
+import com.example.carescheduling.Ui.Profile.bean.EditEmailRetroBean;
 import com.example.carescheduling.data.Local.AppDataBase;
 import com.example.carescheduling.data.Local.DatabaseInitializer;
 import com.example.carescheduling.data.Local.DatabaseTable.EmailType;
 import com.example.carescheduling.data.Network.ApiClient;
 import com.example.carescheduling.data.Network.ApiService;
+import com.google.gson.JsonElement;
+
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -30,45 +35,32 @@ public class EditEmailViewModel extends AndroidViewModel {
     private Context context;
     private CompositeDisposable compositeDisposable;
     private ApiService apiService;
+
     public EditEmailViewModel(@NonNull Application application) {
         super(application);
+        context = application;
         apiService = ApiClient.getClient(application)
                 .create(ApiService.class);
         compositeDisposable = new CompositeDisposable();
     }
 
+    public LiveData<Boolean> EditEmail(EditEmailRetroBean editEmailRetroBean) {
+        final MutableLiveData<Boolean> data = new MutableLiveData<>();
 
-    public LiveData<EditEmailBean> getEditEmailBean(String value, ProfileBean profileBean) {
-        MutableLiveData<EditEmailBean> editEmailBeanMutableLiveData = new MutableLiveData<>();
-        EditEmailBean editEmailBean = new EditEmailBean();
-
-        if (profileBean != null && profileBean.getData() != null && profileBean.getData().getPerson() != null) {
-            for (int i = 0; i < profileBean.getData().getPerson().getPersonEmail().size(); i++) {
-                if (value.equalsIgnoreCase(profileBean.getData().getPerson().getPersonEmail().get(i).getEmailTypeName())) {
-                    editEmailBean.setDefault(profileBean.getData().getPerson().getPersonEmail().get(i).getIsDefaultEmail());
-                    editEmailBean.setEmail(profileBean.getData().getPerson().getPersonEmail().get(i).getEmailAddress());
-                }
-            }
-            editEmailBeanMutableLiveData.setValue(editEmailBean);
-        }
-
-        return editEmailBeanMutableLiveData;
-    }
-
-    public LiveData<ProfileBean> getEditProfilePost(ProfileBean.Data profileBean) {
-        final MutableLiveData<ProfileBean> data = new MutableLiveData<>();
-
-        Disposable disposable = apiService.editMyProfilePost(profileBean)
+        Disposable disposable = apiService.EditEmail(editEmailRetroBean)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<Response<ProfileBean>>() {
+                .subscribe(new Consumer<Response<JsonElement>>() {
                     @Override
-                    public void accept(Response<ProfileBean> loginBeanRetroResponse) throws Exception {
+                    public void accept(Response<JsonElement> loginBeanRetroResponse) throws Exception {
                         Log.e("LoginSuccess", "success");
                         if (loginBeanRetroResponse.isSuccessful()) {
-                            data.setValue(loginBeanRetroResponse.body());
-                        } else {
-                            data.setValue(null);
+                            JSONObject jsonObject = new JSONObject(loginBeanRetroResponse.body().toString());
+                            boolean isSuccess = jsonObject.getBoolean("Success");
+                            data.setValue(isSuccess);
+                            if (jsonObject.getString("ResponseMessage") != null)
+                                Toast.makeText(context, jsonObject.getString("ResponseMessage"), Toast.LENGTH_SHORT).show();
+
                         }
                     }
                 }, new Consumer<Throwable>() {

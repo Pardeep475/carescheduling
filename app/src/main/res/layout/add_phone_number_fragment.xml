@@ -130,6 +130,7 @@
             android:layout_marginStart="@dimen/twenty_dp"
             android:layout_marginTop="@dimen/ten_dp"
             android:layout_marginEnd="@dimen/twenty_dp"
+            android:visibility="gone"
             android:fontFamily="@font/rubik_light"
             android:paddingStart="@dimen/sixty_five_dp"
             android:text="@string/do_not_call"
