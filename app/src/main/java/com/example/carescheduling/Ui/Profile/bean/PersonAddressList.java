@@ -3,7 +3,9 @@ package com.example.carescheduling.Ui.Profile.bean;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class PersonAddressList {
+import java.io.Serializable;
+
+public class PersonAddressList implements Serializable {
 
     @SerializedName("AddressId")
     @Expose

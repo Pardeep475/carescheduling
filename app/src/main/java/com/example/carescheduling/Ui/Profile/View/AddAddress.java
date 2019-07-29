@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,10 +22,12 @@ import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
 import com.example.carescheduling.Ui.Dashboard.view.Dashboard;
 import com.example.carescheduling.Ui.Profile.Adapter.CustomAdapter;
 import com.example.carescheduling.Ui.Profile.ViewModel.AddAddressViewModel;
+import com.example.carescheduling.Ui.Profile.bean.AddAddressBeanRetro;
 import com.example.carescheduling.Ui.Profile.bean.AddressByPostCode;
 import com.example.carescheduling.Ui.Profile.bean.AddressData;
 import com.example.carescheduling.Ui.Profile.bean.ProfileAddressBean;
 import com.example.carescheduling.Ui.Profile.presenter.ProfileAddressClick;
+import com.example.carescheduling.Utils.ConnectivityReceiver;
 import com.example.carescheduling.Utils.Constants;
 import com.example.carescheduling.data.Local.DatabaseTable.AddressType;
 import com.example.carescheduling.data.Local.DatabaseTable.Nationality;
@@ -36,29 +39,17 @@ import java.util.List;
 public class AddAddress extends BaseFragment implements Common, ProfileAddressClick {
     private AddAddressFragmentBinding profileAddressBinding;
     private AddAddressViewModel profileAddressViewModel;
-    private String stringValue, type;
-    private ProfileBean profileBean;
     private List<AddressData> addressTypesList = new ArrayList<>();
 
     // TODO: Rename and change types and number of parameters
-    public static AddAddress newInstance(String value, String type, ProfileBean profileBean) {
-        AddAddress profileAddress = new AddAddress();
-        Bundle bundle = new Bundle();
-        bundle.putString(Constants.STRING_VALUE, value);
-        bundle.putString(Constants.TYPE, type);
-        bundle.putSerializable(Constants.PROFILE_DATA, profileBean);
-        profileAddress.setArguments(bundle);
-        return profileAddress;
+    public static AddAddress newInstance() {
+        return new AddAddress();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            stringValue = getArguments().getString(Constants.STRING_VALUE);
-            type = getArguments().getString(Constants.TYPE);
-            profileBean = (ProfileBean) getArguments().getSerializable(Constants.PROFILE_DATA);
-        }
+
     }
 
     @Override
@@ -77,13 +68,7 @@ public class AddAddress extends BaseFragment implements Common, ProfileAddressCl
         setCommonData();
         profileAddressViewModel = ViewModelProviders.of(this).get(AddAddressViewModel.class);
         sessionManager = getSessionManager();
-        if (type.equalsIgnoreCase("Update")) {
-            profileAddressBinding.spinnerAddressType.setEnabled(false);
-            profileAddressBinding.spinnerAddressType.setClickable(false);
-        } else {
-            profileAddressBinding.spinnerAddressType.setEnabled(true);
-            profileAddressBinding.spinnerAddressType.setClickable(true);
-        }
+
         setAddressTypeData();
         setNationalityData();
 //        setProfileAddressData();
@@ -143,25 +128,21 @@ public class AddAddress extends BaseFragment implements Common, ProfileAddressCl
         });
     }
 
-    private void setProfileAddressData() {
-        profileAddressViewModel.getProfileAddressBean(stringValue, profileBean).observe(this, new Observer<ProfileAddressBean>() {
-            @Override
-            public void onChanged(ProfileAddressBean profileAddressBean) {
-                profileAddressBinding.setProfileAddressBean(profileAddressBean);
-            }
-        });
-    }
-
-
     @Override
     public void fetchAddressFromPostalCode() {
         showDialog();
-        if (profileAddressBinding.spinnerNationality.getSelectedItemPosition() <= 0){
+        if (profileAddressBinding.spinnerNationality.getSelectedItemPosition() <= 0) {
+            showAToast("Select nationality");
+            hideDialog();
+            return;
+        }else if (TextUtils.isEmpty(profileAddressBinding.edtPostCode.getText().toString())){
+            showAToast("Select postal code");
             hideDialog();
             return;
         }
 
-        profileAddressViewModel.getAddressByPostCode(profileAddressBinding.spinnerNationality.getSelectedItem().toString(), profileBean, profileAddressBinding.edtPostCode.getText().toString()).observe(this, new Observer<AddressByPostCode>() {
+        profileAddressViewModel.getAddressByPostCode(profileAddressBinding.spinnerNationality.getSelectedItem().toString(), profileAddressBinding.edtPostCode.getText().toString())
+                .observe(this, new Observer<AddressByPostCode>() {
             @Override
             public void onChanged(AddressByPostCode addressByPostCode) {
                 hideDialog();
@@ -217,92 +198,55 @@ public class AddAddress extends BaseFragment implements Common, ProfileAddressCl
 
 
     private void setDataRemote() {
-        showDialog();
-        setAddressData();
+        if (getActivity() != null && ConnectivityReceiver.isNetworkAvailable(getActivity())) {
+            if (validation()) {
+                showDialog();
+                profileAddressViewModel.AddAddress(getAddAddressBean()).observe(this, new Observer<Boolean>() {
+                    @Override
+                    public void onChanged(Boolean s) {
+                        hideDialog();
+                        if (s != null) {
+                            if (s) {
+                                if (getActivity() != null) {
+                                    getActivity().onBackPressed();
+                                }
+                            }
+                        }
 
-    }
-
-    private void setAddressData() {
-        profileBean = addNewAddress();
-        if (profileBean == null) {
-            hideDialog();
-            return;
-        }
-        profileAddressViewModel.getEditProfilePost(profileBean.getData()).observe(this, new Observer<ProfileBean>() {
-            @Override
-            public void onChanged(ProfileBean profileBean) {
-                hideDialog();
-                if (profileBean != null) {
-                    if (profileBean.getSuccess()) {
-                        Toast.makeText(getActivity(), (String) profileBean.getResponseMessage(), Toast.LENGTH_SHORT).show();
-                        openDashboardActivity();
-                    } else {
-                        Toast.makeText(getActivity(), (String) profileBean.getResponseMessage(), Toast.LENGTH_SHORT).show();
                     }
-                } else {
-                    Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
-                }
+                });
+            } else {
+                hideDialog();
             }
-        });
-
-    }
-
-    private void openDashboardActivity() {
-        Intent intent = new Intent(getActivity(), Dashboard.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-        if (getActivity() != null)
-            getActivity().finish();
-    }
-
-    private ProfileBean updateAddress() {
-        int addressCounter = 0;
-
-        for (int i = 0; i < profileBean.getData().getPerson().getPersonAddress().size(); i++) {
-            if (profileBean.getData().getPerson().getPersonAddress().get(i).getAddressTypeName().equalsIgnoreCase((String) profileAddressBinding.spinnerAddressType.getSelectedItem())) {
-                if ((profileAddressBinding.spinnerAddressType.getSelectedItemPosition() - 1) >= 0)
-                    profileBean.getData().getPerson().getPersonAddress().get(i).setAddressTypeName((String) profileAddressBinding.spinnerAddressType.getSelectedItem());
-                else {
-                    Toast.makeText(getActivity(), "please select address type", Toast.LENGTH_SHORT).show();
-                    return null;
-                }
-                profileBean.getData().getPerson().getPersonAddress().get(i).setIsDefaultAddress(true);
-                profileBean.getData().getPerson().getPersonAddress().get(i).setPersonId(getSessionManager().getPersonId());
-                profileBean.getData().getPerson().getPersonAddress().get(i).setCustomerId(getSessionManager().getCustomerId());
-                if (addressTypesList.size() > 0)
-                    profileBean.getData().getPerson().getPersonAddress().get(i).setAddressId(addressTypesList.get(profileAddressBinding.spinnerAddress.getSelectedItemPosition()).getAddressId());
-                else
-                    profileBean.getData().getPerson().getPersonAddress().get(i).setAddressId(profileBean.getData().getPerson().getPersonAddress().get(i).getAddressId());
-                addressCounter++;
-                break;
-            }
+        } else {
+            Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
         }
 
-
-        if (addressCounter == 0) {
-            profileBean = addNewAddress();
-        }
-
-        return profileBean;
     }
 
-    private ProfileBean addNewAddress() {
-        if (profileBean.getData().getPerson().getPersonAddress().size() > 0) {
-            PersonAddress personAddress = new PersonAddress();
-            if ((profileAddressBinding.spinnerAddressType.getSelectedItemPosition() - 1) >= 0)
-                personAddress.setAddressTypeName((String) profileAddressBinding.spinnerAddressType.getSelectedItem());
-            else {
-                Toast.makeText(getActivity(), "please select address type", Toast.LENGTH_SHORT).show();
-                return null;
-            }
-            personAddress.setIsDefaultAddress(profileAddressBinding.rbIsDefault.isChecked());
-            personAddress.setPersonId(getSessionManager().getPersonId());
-            personAddress.setCustomerId(getSessionManager().getCustomerId());
-            personAddress.setAddressId(addressTypesList.get(profileAddressBinding.spinnerAddress.getSelectedItemPosition()).getAddressId());
-            profileBean.getData().getPerson().getPersonAddress().add(personAddress);
-        }
-        return profileBean;
+
+    private AddAddressBeanRetro getAddAddressBean() {
+        AddAddressBeanRetro addAddressBeanRetro = new AddAddressBeanRetro();
+        addAddressBeanRetro.setAddressTypeName((String) profileAddressBinding.spinnerAddressType.getSelectedItem());
+        addAddressBeanRetro.setAddressId(addressTypesList.get(profileAddressBinding.spinnerAddress.getSelectedItemPosition()).getAddressId());
+        addAddressBeanRetro.setCustomerId(getSessionManager().getCustomerId());
+        addAddressBeanRetro.setPersonId(getSessionManager().getPersonId());
+        addAddressBeanRetro.setDefaultAddress(profileAddressBinding.rbIsDefault.isChecked());
+        return addAddressBeanRetro;
     }
+
+
+    private boolean validation() {
+        if (profileAddressBinding.spinnerAddressType.getSelectedItemPosition() <= 0) {
+            showAToast("please select address type");
+            return false;
+        } else if (profileAddressBinding.spinnerAddress.getSelectedItemPosition() <= 0) {
+            showAToast("please select address ");
+            return false;
+        }
+        return true;
+    }
+
 
     @Override
     public void leftClick() {

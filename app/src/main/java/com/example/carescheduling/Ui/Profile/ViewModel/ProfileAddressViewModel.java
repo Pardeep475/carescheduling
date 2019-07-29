@@ -3,10 +3,12 @@ package com.example.carescheduling.Ui.Profile.ViewModel;
 import android.app.Application;
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
 import com.example.carescheduling.Ui.Profile.bean.AddressByPostCode;
 import com.example.carescheduling.Ui.Profile.bean.AddressData;
+import com.example.carescheduling.Ui.Profile.bean.EditAdressBeanRetro;
 import com.example.carescheduling.Ui.Profile.bean.ProfileAddressBean;
 import com.example.carescheduling.data.Local.AppDataBase;
 import com.example.carescheduling.data.Local.DatabaseInitializer;
@@ -14,6 +16,9 @@ import com.example.carescheduling.data.Local.DatabaseTable.AddressType;
 import com.example.carescheduling.data.Local.DatabaseTable.Nationality;
 import com.example.carescheduling.data.Network.ApiClient;
 import com.example.carescheduling.data.Network.ApiService;
+import com.google.gson.JsonElement;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,21 +78,13 @@ public class ProfileAddressViewModel extends AndroidViewModel {
         return value != null ? value : "";
     }
 
-    public LiveData<AddressByPostCode> getAddressByPostCode(String value, ProfileBean profileBean,String postCode) {
-        String country = null, postalCode = postCode;
-        if (profileBean != null && profileBean.getData() != null) {
-            for (int i = 0; i < profileBean.getData().getPersonAddresses().size(); i++) {
-                if (profileBean.getData().getPersonAddresses().get(i).getAddressTypeName().equalsIgnoreCase(value)) {
-                    country = profileBean.getData().getPersonAddresses().get(i).getCountryPostCode().getCountryName();
-//                    postalCode = profileBean.getData().getPersonAddresses().get(i).getCountryPostCode().getPostCodeName();
-                }
-            }
-        }
+    public LiveData<AddressByPostCode> getAddressByPostCode(String value, String country,String postCode) {
+
 
         final MutableLiveData<AddressByPostCode> profileAddressBeanMutableLiveData = new MutableLiveData<>();
 
-        if (country != null && postalCode != null) {
-            Disposable disposable = apiService.fetchAddressByPostalCode(country, postalCode)
+
+            Disposable disposable = apiService.fetchAddressByPostalCode(country, postCode)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Consumer<Response<AddressByPostCode>>() {
@@ -111,7 +108,7 @@ public class ProfileAddressViewModel extends AndroidViewModel {
                         }
                     });
             compositeDisposable.add(disposable);
-        }
+
         return profileAddressBeanMutableLiveData;
     }
 
@@ -121,8 +118,12 @@ public class ProfileAddressViewModel extends AndroidViewModel {
         ArrayList<AddressData> stringArrayList = new ArrayList<>();
         for (int i = 0; i < addressByPostCode.getData().getCountryPostCode().getAddress().size(); i++) {
             AddressData addressData = new AddressData();
-            addressData.setAddressType(addressByPostCode.getData().getCountryPostCode().getAddress().get(0).getBuildingName());
-            addressData.setAddressId(addressByPostCode.getData().getCountryPostCode().getAddress().get(0).getAddressId());
+            if (addressByPostCode.getData().getCountryPostCode().getAddress().get(i).getOrganisationName() != null)
+                addressData.setAddressType(addressByPostCode.getData().getCountryPostCode().getAddress().get(i).getOrganisationName());
+            else{
+                addressData.setAddressType(addressByPostCode.getData().getCountryPostCode().getAddress().get(i).getStreetName());
+            }
+            addressData.setAddressId(addressByPostCode.getData().getCountryPostCode().getAddress().get(i).getAddressId());
 
             stringArrayList.add(addressData);
         }
@@ -164,6 +165,36 @@ public class ProfileAddressViewModel extends AndroidViewModel {
                             data.setValue(loginBeanRetroResponse.body());
                         } else {
                             data.setValue(null);
+                        }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        Log.e("LoginSuccess", "error" + throwable.toString());
+                        data.setValue(null);
+                    }
+                });
+        compositeDisposable.add(disposable);
+        return data;
+    }
+
+    public LiveData<Boolean> EditAddress(EditAdressBeanRetro editAdressBeanRetro) {
+        final MutableLiveData<Boolean> data = new MutableLiveData<>();
+
+        Disposable disposable = apiService.EditAddress(editAdressBeanRetro)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Response<JsonElement>>() {
+                    @Override
+                    public void accept(Response<JsonElement> loginBeanRetroResponse) throws Exception {
+                        Log.e("LoginSuccess", "success");
+                        if (loginBeanRetroResponse.isSuccessful()) {
+                            JSONObject jsonObject = new JSONObject(loginBeanRetroResponse.body().toString());
+                            boolean isSuccess = jsonObject.getBoolean("Success");
+                            data.setValue(isSuccess);
+                            if (jsonObject.getString("ResponseMessage") != null)
+                                Toast.makeText(context, jsonObject.getString("ResponseMessage"), Toast.LENGTH_SHORT).show();
+
                         }
                     }
                 }, new Consumer<Throwable>() {

@@ -181,7 +181,7 @@ public class EditProfileAddress extends BaseFragment implements Common, EditProf
 
     @Override
     public void EditAddressClick() {
-//        setFragment(AddAddress.newInstance("", "Edit", profileResultBean));
+        setFragment(AddAddress.newInstance());
     }
 
     @Override
@@ -196,11 +196,16 @@ public class EditProfileAddress extends BaseFragment implements Common, EditProf
 
     @Override
     public void UpdateAddressClick() {
-//        String address = getRadioGroupText(editProfileAddressBinding.rbAddress);
-//        if (!address.isEmpty())
-//            setFragment(ProfileAddress.newInstance(address, "Update", profileResultBean));
-//        else
-//            Toast.makeText(getActivity(), "Please select above address type", Toast.LENGTH_SHORT).show();
+        String address = getRadioGroupText(editProfileAddressBinding.rbAddress);
+        if (!address.isEmpty()) {
+            for (int i = 0; i < profileResultBean.getPersonPhoneList().size(); i++) {
+                if (profileResultBean.getPersonAddressList().get(i).getAddressTypeName().equalsIgnoreCase(address)){
+                    setFragment(ProfileAddress.newInstance(address, profileResultBean.getPersonAddressList().get(i)));
+                    return;
+                }
+            }
+        }else
+            Toast.makeText(getActivity(), "Please select above address type", Toast.LENGTH_SHORT).show();
     }
 
     @Override

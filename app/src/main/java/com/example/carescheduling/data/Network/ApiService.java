@@ -15,6 +15,7 @@ import com.example.carescheduling.Ui.HomeScreen.beans.ClientDisabilityBean;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientInfoCarePlanRetro;
 import com.example.carescheduling.Ui.HomeScreen.beans.VisitArchiveRetroBean;
 import com.example.carescheduling.Ui.LoginActivity.beans.LoginBeanRetro;
+import com.example.carescheduling.Ui.Profile.bean.AddAddressBeanRetro;
 import com.example.carescheduling.Ui.Profile.bean.AddEmailBeanRetro;
 import com.example.carescheduling.Ui.Profile.bean.AddImageBeanRetro;
 import com.example.carescheduling.Ui.Profile.bean.AddPhoneNumberBeanRetro;
@@ -22,6 +23,7 @@ import com.example.carescheduling.Ui.Profile.bean.AddressByPostCode;
 import com.example.carescheduling.Ui.Profile.bean.DataList;
 import com.example.carescheduling.Ui.Profile.bean.DeleteImageRetro;
 import com.example.carescheduling.Ui.Profile.bean.EditAddressAllData;
+import com.example.carescheduling.Ui.Profile.bean.EditAdressBeanRetro;
 import com.example.carescheduling.Ui.Profile.bean.EditEmailRetroBean;
 import com.example.carescheduling.Ui.Profile.bean.EditNumberBeanRetro;
 import com.example.carescheduling.Ui.Profile.bean.EditProfileInfoBeanRetro;
@@ -223,5 +225,14 @@ public interface ApiService {
     @POST("EditEmail")
     Observable<Response<JsonElement>> EditEmail(
             @Body EditEmailRetroBean editEmailRetroBean);
+
+    @POST("AddAddress")
+    Observable<Response<JsonElement>> AddAddress(
+            @Body AddAddressBeanRetro addAddressBeanRetro);
+
+    @POST("EditAddress")
+    Observable<Response<JsonElement>> EditAddress(
+            @Body EditAdressBeanRetro editAdressBeanRetro);
+
 
 }
