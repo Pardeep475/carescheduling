@@ -140,7 +140,7 @@ public class EditProfileAddress extends BaseFragment implements Common, EditProf
         for (int i = 0; i < arrayList.size(); i++) {
             RadioButton rdbtn = new RadioButton(getActivity());
             rdbtn.setId(View.generateViewId());
-            rdbtn.setText(arrayList.get(i).getAddressTypeName());
+            rdbtn.setText(arrayList.get(i).getPersonAddress().getAddressTypeName());
             ll.addView(rdbtn);
         }
 //        ((ViewGroup) view.findViewById(id)).addView(ll);
@@ -198,8 +198,8 @@ public class EditProfileAddress extends BaseFragment implements Common, EditProf
     public void UpdateAddressClick() {
         String address = getRadioGroupText(editProfileAddressBinding.rbAddress);
         if (!address.isEmpty()) {
-            for (int i = 0; i < profileResultBean.getPersonPhoneList().size(); i++) {
-                if (profileResultBean.getPersonAddressList().get(i).getAddressTypeName().equalsIgnoreCase(address)){
+            for (int i = 0; i < profileResultBean.getPersonAddressList().size(); i++) {
+                if (profileResultBean.getPersonAddressList().get(i).getPersonAddress().getAddressTypeName().equalsIgnoreCase(address)){
                     setFragment(ProfileAddress.newInstance(address, profileResultBean.getPersonAddressList().get(i)));
                     return;
                 }
@@ -260,7 +260,7 @@ public class EditProfileAddress extends BaseFragment implements Common, EditProf
     private void removeAddress(String address) {
         if (profileResultBean.getPersonAddressList() != null && profileResultBean.getPersonAddressList().size() > 0) {
             for (int i = 0; i < profileResultBean.getPersonAddressList().size(); i++) {
-                if (profileResultBean.getPersonAddressList().get(i).getAddressTypeName().equalsIgnoreCase(address)) {
+                if (profileResultBean.getPersonAddressList().get(i).getPersonAddress().getAddressTypeName().equalsIgnoreCase(address)) {
                     showDialog();
                     editProfileAddressViewModel.DeleteAddress(profileResultBean.getPersonAddressList().get(i)).observe(this, new Observer<Boolean>() {
                         @Override

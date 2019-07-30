@@ -78,12 +78,12 @@ public class EditPhoneNumber extends BaseFragment implements Common {
         setCommonData();
         sessionManager = getSessionManager();
         editPhoneNumberViewModel = ViewModelProviders.of(this).get(EditPhoneNumberViewModel.class);
-        editPhoneNumberBinding.spinnerPhoneType.setEnabled(false);
-        editPhoneNumberBinding.spinnerPhoneType.setClickable(false);
+        if (profileBean.getCanNotCall() != null) {
+            editPhoneNumberBinding.rbDoNotCall.setSelected((boolean) profileBean.getCanNotCall());
+        }
         setCodePrefix();
         setPhoneType();
         setEditPhoneNumber();
-
     }
 
     private void setCommonData() {
@@ -210,6 +210,7 @@ public class EditPhoneNumber extends BaseFragment implements Common {
         editPhoneNumberBean.setPhoneNumber(editPhoneNumberBinding.edtNumber.getText().toString());
         editPhoneNumberBean.setPhoneTypeName((String) editPhoneNumberBinding.spinnerPhoneType.getSelectedItem());
         editPhoneNumberBean.setDefaultPhone(editPhoneNumberBinding.rbDefaultNumber.isChecked());
+        editPhoneNumberBean.setCanNotCall(editPhoneNumberBinding.rbDoNotCall.isChecked());
         return editPhoneNumberBean;
     }
 

@@ -135,7 +135,7 @@
             android:paddingStart="@dimen/sixty_five_dp"
             android:text="@string/do_not_call"
             android:textColor="#5F5F5F"
-            android:visibility="gone" />
+            android:visibility="visible" />
 
     </LinearLayout>
 </layout>

@@ -83,19 +83,18 @@ public class ChangePassword extends BaseFragment implements Common {
 
     private void setDataRemote() {
         showDialog();
-        if (userViewModel != null && userViewModel.getData() != null && userViewModel.getData().getUserPersons().size() > 0
-                && userViewModel.getData().getUserPersons().get(0).getUser() != null) {
-            userViewModel.getData().getUserPersons().get(0).getUser().setUserPassword(changePasswordBinding.edtNewPassword.getText().toString());
-
-            changePasswordViewModel.EditUserInfo(userViewModel.getData()).observe(this, new Observer<String>() {
-                @Override
-                public void onChanged(String s) {
-                    hideDialog();
-                    Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
-                    openDashboardActivity();
-                }
-            });
-        }
+//        if (userViewModel != null && userViewModel.getData() != null) {
+//            userViewModel.getData().setUserPassword(changePasswordBinding.edtNewPassword.getText().toString());
+//
+//            changePasswordViewModel.EditUserInfo(userViewModel.getData()).observe(this, new Observer<String>() {
+//                @Override
+//                public void onChanged(String s) {
+//                    hideDialog();
+//                    Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
+//                    openDashboardActivity();
+//                }
+//            });
+//        }
     }
 
     private void openDashboardActivity() {

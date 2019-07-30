@@ -2,8 +2,15 @@ package com.example.carescheduling.Ui.Profile.bean;
 
 public class AddPhoneNumberBeanRetro {
     private String PersonId,PhoneTypeName,CountryTelephonePrefix,PhoneNumber,CustomerId;
-    private boolean IsDefaultPhone;
+    private boolean IsDefaultPhone,CanNotCall;
 
+    public boolean isCanNotCall() {
+        return CanNotCall;
+    }
+
+    public void setCanNotCall(boolean canNotCall) {
+        CanNotCall = canNotCall;
+    }
 
     public String getPersonId() {
         return PersonId;

@@ -141,7 +141,7 @@ public class FragmentChangePassword extends BaseFragment implements Common, Frag
             } else if (userModel.getData() == null) {
                 Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
                 return false;
-            } else if (userModel.getData().getUserPersons().get(0).getUser().getUserName().equalsIgnoreCase(fragmentChangePasswordBinding.edtUserName.getText().toString())) {
+            } else if (userModel.getData().getUserName().equalsIgnoreCase(fragmentChangePasswordBinding.edtUserName.getText().toString())) {
                 Toast.makeText(getActivity(), "This user name is already exist", Toast.LENGTH_SHORT).show();
                 return false;
             }
@@ -154,16 +154,16 @@ public class FragmentChangePassword extends BaseFragment implements Common, Frag
     }
 
     private void GetUserInfo() {
-        fragmentChangePasswordViewModel.getUserInfo(sessionManager.getPersonId(), sessionManager.getBranchId()).observe(this
+        fragmentChangePasswordViewModel.getUserInfo(getSessionManager().getPersonId(), getSessionManager().getBranchId(), getSessionManager().getCustomerId()).observe(this
                 , new Observer<UserViewModel>() {
                     @Override
                     public void onChanged(UserViewModel userViewModel) {
                         userModel = userViewModel;
-                        if (userViewModel.getData() != null && userViewModel.getData().getUserPersons() != null && userViewModel.getData().getUserPersons().size() > 0) {
+                        if (userViewModel.getData() != null) {
                             FragmentChangePasswordBean fragmentChangePasswordBean = new FragmentChangePasswordBean();
-                            String userName = userViewModel.getData().getUserPersons().get(0).getUser().getUserName();
-                            String passwordAns = (String) userViewModel.getData().getUserPersons().get(0).getUser().getPasswordQuestionAnswer();
-                            String passwordQus = (String) userViewModel.getData().getUserPersons().get(0).getUser().getPasswordQuestion();
+                            String userName = userViewModel.getData().getUserName();
+                            String passwordAns = (String) userViewModel.getData().getPasswordQuestionAnswer();
+                            String passwordQus = (String) userViewModel.getData().getPasswordQuestion();
                             fragmentChangePasswordBean.setPasswordAns(passwordAns != null ? passwordAns : "");
                             fragmentChangePasswordBean.setUserName(userName != null ? userName : "");
                             fragmentChangePasswordBean.setPasswordQuestion(passwordQus != null ? passwordQus : "");
@@ -195,16 +195,16 @@ public class FragmentChangePassword extends BaseFragment implements Common, Frag
 
     private boolean checkValidationDone() {
         int counter = 0;
-        if (!userModel.getData().getUserPersons().get(0).getUser().getUserName().equalsIgnoreCase(fragmentChangePasswordBinding.edtUserName.getText().toString())) {
+        if (!userModel.getData().getUserName().equalsIgnoreCase(fragmentChangePasswordBinding.edtUserName.getText().toString())) {
             counter++;
         }
-        if (userModel.getData().getUserPersons().get(0).getUser().getPasswordQuestion() != null
-                && !userModel.getData().getUserPersons().get(0).getUser().getPasswordQuestion().equalsIgnoreCase(fragmentChangePasswordBinding.edtUserName.getText().toString())) {
+        if (userModel.getData().getPasswordQuestion() != null
+                && !userModel.getData().getPasswordQuestion().equalsIgnoreCase(fragmentChangePasswordBinding.edtUserName.getText().toString())) {
             counter++;
         }
 
-        if (userModel.getData().getUserPersons().get(0).getUser().getPasswordQuestionAnswer() != null
-                && !userModel.getData().getUserPersons().get(0).getUser().getPasswordQuestionAnswer().equalsIgnoreCase(fragmentChangePasswordBinding.edtUserName.getText().toString())) {
+        if (userModel.getData().getPasswordQuestionAnswer() != null
+                && !userModel.getData().getPasswordQuestionAnswer().equalsIgnoreCase(fragmentChangePasswordBinding.edtUserName.getText().toString())) {
             counter++;
         }
         if (TextUtils.isEmpty(fragmentChangePasswordBinding.txtQuestion.getText().toString())) {
@@ -219,20 +219,19 @@ public class FragmentChangePassword extends BaseFragment implements Common, Frag
 
     private void setDataRemotely() {
 
-        if (userModel != null && userModel.getData() != null && userModel.getData().getUserPersons().size() > 0
-                && userModel.getData().getUserPersons().get(0).getUser() != null) {
-            showDialog();
-            userModel.getData().getUserPersons().get(0).getUser().setUserName(fragmentChangePasswordBinding.edtUserName.getText().toString());
-            userModel.getData().getUserPersons().get(0).getUser().setPasswordQuestion(fragmentChangePasswordBinding.txtQuestion.getText().toString());
-            userModel.getData().getUserPersons().get(0).getUser().setPasswordQuestionAnswer(fragmentChangePasswordBinding.edtAns.getText().toString());
-            fragmentChangePasswordViewModel.EditUserInfo(userModel.getData()).observe(this, new Observer<String>() {
-                @Override
-                public void onChanged(String s) {
-                    hideDialog();
-                    Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
+//        if (userModel != null && userModel.getData() != null && userModel.getData() != null) {
+//            showDialog();
+//            userModel.getData().setUserName(fragmentChangePasswordBinding.edtUserName.getText().toString());
+//            userModel.getData().setPasswordQuestion(fragmentChangePasswordBinding.txtQuestion.getText().toString());
+//            userModel.getData().setPasswordQuestionAnswer(fragmentChangePasswordBinding.edtAns.getText().toString());
+//            fragmentChangePasswordViewModel.EditUserInfo(userModel.getData()).observe(this, new Observer<String>() {
+//                @Override
+//                public void onChanged(String s) {
+//                    hideDialog();
+//                    Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
+//                }
+//            });
+//        }
     }
 
     @Override
@@ -254,8 +253,8 @@ public class FragmentChangePassword extends BaseFragment implements Common, Frag
 
     @Override
     public void rightClick() {
-        if (userModel != null && userModel.getData() != null && userModel.getData().getUserPersons().size() > 0
-                && userModel.getData().getUserPersons().get(0).getUser() != null) {
+        if (userModel != null && userModel.getData() != null
+                && userModel.getData()!= null) {
             if (getActivity() != null && ConnectivityReceiver.isNetworkAvailable(getActivity())) {
                 try {
                     //            if (checkValidationDone()) {

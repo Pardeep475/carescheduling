@@ -170,6 +170,7 @@ public class AddPhoneNumber extends BaseFragment implements Common {
         addPhoneNumberBeanRetro.setPhoneNumber(editPhoneNumberBinding.edtNumber.getText().toString());
         addPhoneNumberBeanRetro.setPhoneTypeName((String) editPhoneNumberBinding.spinnerPhoneType.getSelectedItem());
         addPhoneNumberBeanRetro.setDefaultPhone(editPhoneNumberBinding.rbDefaultNumber.isChecked());
+        addPhoneNumberBeanRetro.setDefaultPhone(editPhoneNumberBinding.rbDoNotCall.isChecked());
         return addPhoneNumberBeanRetro;
     }
 

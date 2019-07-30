@@ -151,19 +151,16 @@ public class ProfileAddress extends BaseFragment implements Common, ProfileAddre
                     profileAddressBinding.spinnerNationality.setAdapter(adapter);
 
 
-//                    if (profileBean != null && profileBean.getData() != null && profileBean.getData().getPerson() != null) {
-//                        if (profileBean.getData().getPersonAddresses().size() > 0) {
-//                            for (int i = 0; i < profileBean.getData().getPersonAddresses().size(); i++) {
-//                                if (profileBean.getData().getPersonAddresses().get(i).getAddressTypeName().equalsIgnoreCase(stringValue)) {
-//                                    String str = profileBean.getData().getPersonAddresses().get(0).getAddress().getCountryName();
-//                                    String cap = str.substring(0, 1).toUpperCase() + str.substring(1);
-//                                    int pos = adapter.getPosition(cap);
-//                                    profileAddressBinding.spinnerNationality.setSelection(pos);
-//                                }
-//                            }
-//
-//                        }
-//                    }
+                    if (profileBean != null ) {
+                            for (int i = 0; i < arrayList.size(); i++) {
+                                if (arrayList.get(i).equalsIgnoreCase(profileBean.getCountryCode())) {
+                                    String str = profileBean.getCountryCode();
+                                    String cap = str.substring(0, 1).toUpperCase() + str.substring(1);
+                                    int pos = adapter.getPosition(cap);
+                                    profileAddressBinding.spinnerNationality.setSelection(pos);
+                                }
+                            }
+                    }
 
                 }
             }
@@ -186,12 +183,13 @@ public class ProfileAddress extends BaseFragment implements Common, ProfileAddre
         String nationality, postCode;
         if (profileAddressBinding.spinnerAddressType.getSelectedItemPosition() <= 0) {
 //            showAToast("please select nationality");
+//            return;
             nationality = "England";
         } else {
             nationality = (String) profileAddressBinding.spinnerAddressType.getSelectedItem();
         }
         if (TextUtils.isEmpty(profileAddressBinding.edtPostCode.getText().toString())) {
-            postCode = "ab101al";
+            postCode = profileBean.getPostCode();
         } else {
             postCode = profileAddressBinding.edtPostCode.getText().toString();
         }
@@ -284,8 +282,8 @@ public class ProfileAddress extends BaseFragment implements Common, ProfileAddre
         editAdressBeanRetro.setCustomerId(getSessionManager().getCustomerId());
         editAdressBeanRetro.setPersonId(getSessionManager().getPersonId());
         editAdressBeanRetro.setDefaultAddress(profileAddressBinding.rbIsDefault.isChecked());
-        editAdressBeanRetro.setOldAddressId(String.valueOf(profileBean.getAddressId()));
-        editAdressBeanRetro.setOldAddressTypeName(profileBean.getAddressTypeName());
+        editAdressBeanRetro.setOldAddressId(String.valueOf(profileBean.getPersonAddress().getAddressId()));
+        editAdressBeanRetro.setOldAddressTypeName(profileBean.getPersonAddress().getAddressTypeName());
         return editAdressBeanRetro;
     }
 
@@ -294,10 +292,10 @@ public class ProfileAddress extends BaseFragment implements Common, ProfileAddre
         if (profileAddressBinding.spinnerAddressType.getSelectedItemPosition() <= 0) {
             showAToast("please select address type");
             return false;
-        } else if (profileAddressBinding.spinnerAddress.getSelectedItemPosition() <= 0) {
+        } /*else if (profileAddressBinding.spinnerAddress.getSelectedItemPosition() <= 0) {
             showAToast("please select address ");
             return false;
-        }
+        }*/
         return true;
     }
 

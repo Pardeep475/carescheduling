@@ -69,8 +69,8 @@ public interface ApiService {
     @GET("GetAddressByCountryNameAndPostCode/{countryName}/{postalCode}")
     Observable<Response<AddressByPostCode>> fetchAddressByPostalCode(@Path("countryName") String countryName, @Path("postalCode") String postalCode);
 
-    @GET("GetUser/{person_id}/{branch_id}")
-    Observable<Response<UserViewModel>> getUserInfo(@Path("person_id") String PersonId, @Path("branch_id") String BranchId);
+    @GET("GetUser/{person_id}/{branch_id}/{customerId}")
+    Observable<Response<UserViewModel>> getUserInfo(@Path("person_id") String PersonId, @Path("branch_id") String BranchId, @Path("customerId") String customerId);
 
     @GET("CheckIfUsernameExist/{userName}/{branch_id}/{customerId}/{person_id}")
     Observable<Response<JsonElement>> checkUserName(@Path("userName") String userName,

@@ -31,10 +31,10 @@ public class FragmentChangePasswordViewModel extends AndroidViewModel {
         compositeDisposable = new CompositeDisposable();
     }
 
-    public LiveData<UserViewModel> getUserInfo(String personId, String branchId) {
+    public LiveData<UserViewModel> getUserInfo(String personId, String branchId,String customerId) {
         final MutableLiveData<UserViewModel> data = new MutableLiveData<>();
 
-        Disposable disposable = apiService.getUserInfo(personId,branchId)
+        Disposable disposable = apiService.getUserInfo(personId,branchId,customerId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<Response<UserViewModel>>() {
