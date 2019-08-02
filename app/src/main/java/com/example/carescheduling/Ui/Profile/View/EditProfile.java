@@ -26,15 +26,16 @@ public class EditProfile extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         editProfileBinding = DataBindingUtil.setContentView(this, R.layout.activity_edit_profile);
-        setFragment(EditProfileStart.newInstance());
-        if (getIntent() != null) {
 
-            /*if (profileResultBean != null) {
-                setFragment(EditProfileStart.newInstance(profileResultBean));
-            } else {
-                int pos = getIntent().getIntExtra("pos", 0);
+        if (getIntent() != null) {
+            int pos = getIntent().getIntExtra("pos", 0);
+            if (pos != -1) {
                 setHomeFragments(pos);
-            }*/
+            } else {
+                setFragment(EditProfileStart.newInstance());
+            }
+        } else {
+            setFragment(EditProfileStart.newInstance());
         }
     }
 

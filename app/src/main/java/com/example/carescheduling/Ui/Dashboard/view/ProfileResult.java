@@ -128,6 +128,7 @@ public class ProfileResult extends BaseFragment implements Common, EditProfileCl
     @Override
     public void EditBtnClick() {
         Intent intent = new Intent(getActivity(), EditProfile.class);
+        intent.putExtra("pos", -1);
         startActivity(intent);
     }
 

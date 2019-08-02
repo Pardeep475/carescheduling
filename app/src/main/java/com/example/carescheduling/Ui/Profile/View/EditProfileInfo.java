@@ -428,52 +428,21 @@ public class EditProfileInfo extends BaseFragment implements Common, EditProfile
 
     private void showDate(int year, int month, int day) {
         // DD-MM-YYYY
-        Toast.makeText(getActivity(), day + "-" + month + "-" + year, Toast.LENGTH_SHORT).show();
-        editProfileInfoViewModel.datePicker(day + "-" + month + "-" + year).observe(getActivity(), new Observer<String>() {
+        String day1, month1;
+        day1 = String.valueOf(day);
+        month1 = String.valueOf(month);
+        if (day1.length() == 1)
+            day1 = "0" + day1;
+        if (month1.length() == 1)
+            month1 = "0" + month1;
+        Toast.makeText(getActivity(), day1 + "-" + month1 + "-" + year, Toast.LENGTH_SHORT).show();
+        editProfileInfoViewModel.datePicker(day1 + "-" + month1 + "-" + year).observe(getActivity(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
                 fragmentEditProfileInfoBinding.setDate(s);
             }
         });
-//        dateView.setText(new StringBuilder().append(day).append("/")
-//                .append(month).append("/").append(year));
     }
-
-
-//    private void setDataRemote() {
-//
-//        ProfileBean profileBean = sendDataRemote();
-//        if (profileBean == null || profileBean.getData() == null) {
-//            return;
-//        }
-//        showDialog();
-//        editProfileInfoViewModel.getEditProfilePost(sessionManager.getCustomerId(), sessionManager.getPersonId(), profileBean.getData()).observe(this, new Observer<ProfileBean>() {
-//            @Override
-//            public void onChanged(ProfileBean profileBean) {
-//                hideDialog();
-//                if (profileBean != null) {
-//                    if (profileBean.getSuccess()) {
-//                        Toast.makeText(getActivity(), (String) profileBean.getResponseMessage(), Toast.LENGTH_SHORT).show();
-//                        openDashboardActivity();
-//                    } else {
-//                        Toast.makeText(getActivity(), (String) profileBean.getResponseMessage(), Toast.LENGTH_SHORT).show();
-//                    }
-//                } else {
-//                    Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
-//                }
-//
-//            }
-//        });
-//    }
-
-    private void openDashboardActivity() {
-        Intent intent = new Intent(getActivity(), Dashboard.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-        if (getActivity() != null)
-            getActivity().finish();
-    }
-
 
     @Override
     public void leftClick() {

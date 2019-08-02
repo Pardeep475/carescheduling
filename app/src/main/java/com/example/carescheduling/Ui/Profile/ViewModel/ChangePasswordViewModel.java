@@ -1,12 +1,17 @@
 package com.example.carescheduling.Ui.Profile.ViewModel;
 
 import android.app.Application;
+import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.example.carescheduling.Ui.Profile.bean.ChangePasswordBeanRetro;
 import com.example.carescheduling.Ui.Profile.bean.UserViewModel;
 import com.example.carescheduling.data.Network.ApiClient;
 import com.example.carescheduling.data.Network.ApiService;
 import com.google.gson.JsonElement;
+
+import org.json.JSONObject;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -22,18 +27,20 @@ import retrofit2.Response;
 public class ChangePasswordViewModel extends AndroidViewModel {
     private ApiService apiService;
     private CompositeDisposable compositeDisposable;
+    private Context context;
 
     public ChangePasswordViewModel(@NonNull Application application) {
         super(application);
+        this.context = application;
         apiService = ApiClient.getClient(application)
                 .create(ApiService.class);
         compositeDisposable = new CompositeDisposable();
     }
 
-    public LiveData<String> EditUserInfo(UserViewModel.Data userViewModel) {
-        final MutableLiveData<String> data = new MutableLiveData<>();
+    public LiveData<Boolean> ChangePasswordRequest(ChangePasswordBeanRetro changePasswordBeanRetro) {
+        final MutableLiveData<Boolean> data = new MutableLiveData<>();
 
-        Disposable disposable = apiService.EditMyUser(userViewModel)
+        Disposable disposable = apiService.ChangePassword(changePasswordBeanRetro)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<Response<JsonElement>>() {
@@ -41,21 +48,26 @@ public class ChangePasswordViewModel extends AndroidViewModel {
                     public void accept(Response<JsonElement> loginBeanRetroResponse) throws Exception {
                         Log.e("LoginSuccess", "success");
                         if (loginBeanRetroResponse.isSuccessful()) {
-                            data.setValue("Your data saved successfully");
-                        } else {
-                            data.setValue(null);
+                            JSONObject jsonObject = new JSONObject(loginBeanRetroResponse.body().toString());
+                            boolean isSuccess = jsonObject.getBoolean("Success");
+                            data.setValue(isSuccess);
+                            if (jsonObject.getString("ResponseMessage") != null)
+                                Toast.makeText(context, jsonObject.getString("ResponseMessage"), Toast.LENGTH_SHORT).show();
+
                         }
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         Log.e("LoginSuccess", "error" + throwable.toString());
-                        data.setValue(throwable.toString());
+                        data.setValue(null);
+                        Toast.makeText(context, throwable.toString(), Toast.LENGTH_SHORT).show();
                     }
                 });
         compositeDisposable.add(disposable);
         return data;
     }
+
     @Override
     protected void onCleared() {
         super.onCleared();

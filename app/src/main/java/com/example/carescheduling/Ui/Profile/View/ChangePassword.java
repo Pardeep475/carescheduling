@@ -14,6 +14,7 @@ import com.example.carescheduling.Ui.Common.Common;
 import com.example.carescheduling.Ui.Common.CommonBean;
 import com.example.carescheduling.Ui.Dashboard.view.Dashboard;
 import com.example.carescheduling.Ui.Profile.ViewModel.ChangePasswordViewModel;
+import com.example.carescheduling.Ui.Profile.bean.ChangePasswordBeanRetro;
 import com.example.carescheduling.Ui.Profile.bean.UserViewModel;
 import com.example.carescheduling.Ui.Profile.presenter.EditEmailClick;
 import com.example.carescheduling.Utils.ConnectivityReceiver;
@@ -80,31 +81,6 @@ public class ChangePassword extends BaseFragment implements Common {
         changePasswordBinding.setCommonClick(this);
     }
 
-
-    private void setDataRemote() {
-        showDialog();
-//        if (userViewModel != null && userViewModel.getData() != null) {
-//            userViewModel.getData().setUserPassword(changePasswordBinding.edtNewPassword.getText().toString());
-//
-//            changePasswordViewModel.EditUserInfo(userViewModel.getData()).observe(this, new Observer<String>() {
-//                @Override
-//                public void onChanged(String s) {
-//                    hideDialog();
-//                    Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
-//                    openDashboardActivity();
-//                }
-//            });
-//        }
-    }
-
-    private void openDashboardActivity() {
-        Intent intent = new Intent(getActivity(), Dashboard.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-        if (getActivity() != null)
-            getActivity().finish();
-    }
-
     private boolean checkValidation() {
         if (TextUtils.isEmpty(changePasswordBinding.edtCurrentPassword.getText().toString())) {
             Toast.makeText(getActivity(), "Enter your Current password", Toast.LENGTH_SHORT).show();
@@ -134,19 +110,41 @@ public class ChangePassword extends BaseFragment implements Common {
 
     @Override
     public void rightClick() {
-        if (getActivity() != null) {
-            try {
-                if (ConnectivityReceiver.isNetworkAvailable(getActivity())) {
-                    if (checkValidation()) {
-                        setDataRemote();
+        if (getActivity() != null && ConnectivityReceiver.isNetworkAvailable(getActivity())) {
+            if (checkValidation()) {
+                showDialog();
+                changePasswordViewModel.ChangePasswordRequest(getChangePasswordBean()).observe(this, new Observer<Boolean>() {
+                    @Override
+                    public void onChanged(Boolean s) {
+                        hideDialog();
+                        if (s != null) {
+                            if (s) {
+                                if (getActivity() != null) {
+                                    getActivity().onBackPressed();
+                                }
+                            }
+                        }
+
                     }
-                } else {
-                    Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
-                }
-            } catch (Exception e) {
-                Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+                });
+            } else {
                 hideDialog();
             }
+        } else {
+            Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
         }
+
+
+    }
+
+
+    private ChangePasswordBeanRetro getChangePasswordBean() {
+        ChangePasswordBeanRetro changePasswordBeanRetro = new ChangePasswordBeanRetro();
+        changePasswordBeanRetro.setBranchId(getSessionManager().getBranchId());
+        changePasswordBeanRetro.setCustomerId(getSessionManager().getCustomerId());
+        changePasswordBeanRetro.setPersonId(getSessionManager().getPersonId());
+        changePasswordBeanRetro.setUserPassword(changePasswordBinding.edtNewPassword.getText().toString());
+
+        return changePasswordBeanRetro;
     }
 }

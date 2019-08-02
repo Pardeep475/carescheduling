@@ -185,7 +185,7 @@
                         android:paddingStart="@dimen/twenty_dp"
                         android:text="@string/date_of_birth" />
 
-                    <TextView
+                    <EditText
                         android:id="@+id/txt_date_of_birth"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -199,6 +199,9 @@
                         android:paddingEnd="@dimen/ten_dp"
                         android:paddingBottom="@dimen/ten_dp"
                         android:text="@{date}"
+                        android:clickable="true"
+                        android:editable="false"
+                        android:focusable="true"
                         android:textColor="@color/black"
                         app:drawableRightCompat="@drawable/ic_calendar" />
                 </LinearLayout>

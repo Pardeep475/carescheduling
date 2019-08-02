@@ -21,6 +21,8 @@ import com.example.carescheduling.Ui.Common.CommonBean;
 import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
 import com.example.carescheduling.Ui.Dashboard.beans.ProfileResultBean;
 import com.example.carescheduling.Ui.Profile.ViewModel.FragmentChangePasswordViewModel;
+import com.example.carescheduling.Ui.Profile.bean.EditUserWithUserNameRetro;
+import com.example.carescheduling.Ui.Profile.bean.EditUserWithoutUserNameRetro;
 import com.example.carescheduling.Ui.Profile.bean.FragmentChangePasswordBean;
 import com.example.carescheduling.Ui.Profile.bean.UserViewModel;
 import com.example.carescheduling.Ui.Profile.presenter.EditEmailClick;
@@ -38,6 +40,7 @@ public class FragmentChangePassword extends BaseFragment implements Common, Frag
     private FragmentChangePasswordViewModel fragmentChangePasswordViewModel;
     private SessionManager sessionManager;
     private UserViewModel userModel;
+    private boolean isUserNameChanged, isQnsAnsChanged;
 
     public static FragmentChangePassword newInstance() {
         return new FragmentChangePassword();
@@ -177,7 +180,6 @@ public class FragmentChangePassword extends BaseFragment implements Common, Frag
                 });
     }
 
-
     private void setNoDataFound() {
         fragmentChangePasswordBinding.slDemo.stopShimmerAnimation();
         fragmentChangePasswordBinding.slDemo.setVisibility(View.GONE);
@@ -194,44 +196,109 @@ public class FragmentChangePassword extends BaseFragment implements Common, Frag
 
 
     private boolean checkValidationDone() {
-        int counter = 0;
-        if (!userModel.getData().getUserName().equalsIgnoreCase(fragmentChangePasswordBinding.edtUserName.getText().toString())) {
-            counter++;
-        }
-        if (userModel.getData().getPasswordQuestion() != null
-                && !userModel.getData().getPasswordQuestion().equalsIgnoreCase(fragmentChangePasswordBinding.edtUserName.getText().toString())) {
-            counter++;
-        }
-
-        if (userModel.getData().getPasswordQuestionAnswer() != null
-                && !userModel.getData().getPasswordQuestionAnswer().equalsIgnoreCase(fragmentChangePasswordBinding.edtUserName.getText().toString())) {
-            counter++;
-        }
-        if (TextUtils.isEmpty(fragmentChangePasswordBinding.txtQuestion.getText().toString())) {
+        if (TextUtils.isEmpty(fragmentChangePasswordBinding.edtUserName.getText().toString())) {
+            Toast.makeText(getActivity(), "Enter your User name", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (TextUtils.isEmpty(fragmentChangePasswordBinding.txtQuestion.getText().toString())) {
             Toast.makeText(getActivity(), "Enter your password question?", Toast.LENGTH_SHORT).show();
             return false;
         } else if (TextUtils.isEmpty(fragmentChangePasswordBinding.edtAns.getText().toString())) {
             Toast.makeText(getActivity(), "Enter your password ans?", Toast.LENGTH_SHORT).show();
             return false;
         }
-        return counter != 0 ? true : false;
+
+        if (userModel.getData().getUserName() != null) {
+            if (!fragmentChangePasswordBinding.edtUserName.getText().toString().equalsIgnoreCase(userModel.getData().getUserName())) {
+                isUserNameChanged = true;
+            }
+        }
+        if (!fragmentChangePasswordBinding.txtQuestion.getText().toString().equalsIgnoreCase(userModel.getData().getPasswordQuestion())
+                || !fragmentChangePasswordBinding.edtAns.getText().toString().equalsIgnoreCase(userModel.getData().getPasswordQuestionAnswer())) {
+            isQnsAnsChanged = true;
+        }
+
+        return true;
     }
 
     private void setDataRemotely() {
 
-//        if (userModel != null && userModel.getData() != null && userModel.getData() != null) {
-//            showDialog();
-//            userModel.getData().setUserName(fragmentChangePasswordBinding.edtUserName.getText().toString());
-//            userModel.getData().setPasswordQuestion(fragmentChangePasswordBinding.txtQuestion.getText().toString());
-//            userModel.getData().setPasswordQuestionAnswer(fragmentChangePasswordBinding.edtAns.getText().toString());
-//            fragmentChangePasswordViewModel.EditUserInfo(userModel.getData()).observe(this, new Observer<String>() {
-//                @Override
-//                public void onChanged(String s) {
-//                    hideDialog();
-//                    Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
-//                }
-//            });
-//        }
+
+        if (getActivity() != null && ConnectivityReceiver.isNetworkAvailable(getActivity())) {
+            if (checkValidationDone()) {
+                showDialog();
+                if (isUserNameChanged && isQnsAnsChanged) {
+                    fragmentChangePasswordViewModel.EditUserWithUserNameRetro(getEditUserWithUserName()).observe(this, new Observer<Boolean>() {
+                        @Override
+                        public void onChanged(Boolean s) {
+                            hideDialog();
+                            if (s != null) {
+                                if (s) {
+                                    GetUserInfoValid();
+                                }
+                            }
+
+                        }
+                    });
+                } else if (isUserNameChanged) {
+                    fragmentChangePasswordViewModel.EditUserWithUserNameRetro(getEditUserWithUserName()).observe(this, new Observer<Boolean>() {
+                        @Override
+                        public void onChanged(Boolean s) {
+                            hideDialog();
+                            if (s != null) {
+                                if (s) {
+                                    GetUserInfoValid();
+                                }
+                            }
+
+                        }
+                    });
+                } else if (isQnsAnsChanged) {
+                    fragmentChangePasswordViewModel.EditUserWithoutUserNameRetro(getEditUserWithoutUserName()).observe(this, new Observer<Boolean>() {
+                        @Override
+                        public void onChanged(Boolean s) {
+                            hideDialog();
+                            if (s != null) {
+                                if (s) {
+                                    GetUserInfoValid();
+                                }
+                            }
+
+                        }
+                    });
+                } else {
+                    hideDialog();
+                    showAToast("No data for update");
+                }
+            } else {
+                hideDialog();
+            }
+        } else {
+            Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    private EditUserWithUserNameRetro getEditUserWithUserName() {
+//        BranchId,CustomerId,PasswordQuestion,PasswordQuestionAnswer,PersonId,UserName
+        EditUserWithUserNameRetro editUserWithUserNameRetro = new EditUserWithUserNameRetro();
+        editUserWithUserNameRetro.setBranchId(getSessionManager().getBranchId());
+        editUserWithUserNameRetro.setCustomerId(getSessionManager().getCustomerId());
+        editUserWithUserNameRetro.setPasswordQuestion(fragmentChangePasswordBinding.txtQuestion.getText().toString());
+        editUserWithUserNameRetro.setPasswordQuestionAnswer(fragmentChangePasswordBinding.edtAns.getText().toString());
+        editUserWithUserNameRetro.setPersonId(getSessionManager().getPersonId());
+        editUserWithUserNameRetro.setUserName(fragmentChangePasswordBinding.edtUserName.getText().toString());
+        return editUserWithUserNameRetro;
+    }
+
+    private EditUserWithoutUserNameRetro getEditUserWithoutUserName() {
+        EditUserWithoutUserNameRetro editUserWithoutUserNameRetro = new EditUserWithoutUserNameRetro();
+        editUserWithoutUserNameRetro.setBranchId(getSessionManager().getBranchId());
+        editUserWithoutUserNameRetro.setCustomerId(getSessionManager().getCustomerId());
+        editUserWithoutUserNameRetro.setPasswordQuestion(fragmentChangePasswordBinding.txtQuestion.getText().toString());
+        editUserWithoutUserNameRetro.setPasswordQuestionAnswer(fragmentChangePasswordBinding.edtAns.getText().toString());
+        editUserWithoutUserNameRetro.setPersonId(getSessionManager().getPersonId());
+
+        return editUserWithoutUserNameRetro;
     }
 
     @Override
@@ -253,22 +320,16 @@ public class FragmentChangePassword extends BaseFragment implements Common, Frag
 
     @Override
     public void rightClick() {
-        if (userModel != null && userModel.getData() != null
-                && userModel.getData()!= null) {
-            if (getActivity() != null && ConnectivityReceiver.isNetworkAvailable(getActivity())) {
-                try {
-                    //            if (checkValidationDone()) {
+        if (getActivity() != null && ConnectivityReceiver.isNetworkAvailable(getActivity())) {
+            try {
+                if (checkValidationDone()) {
                     setDataRemotely();
-//            }
-                } catch (Exception e) {
-                    Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
                 }
-            } else {
-                Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
             }
-
         } else {
-            Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
         }
 
     }

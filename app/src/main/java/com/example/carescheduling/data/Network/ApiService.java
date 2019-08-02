@@ -20,6 +20,7 @@ import com.example.carescheduling.Ui.Profile.bean.AddEmailBeanRetro;
 import com.example.carescheduling.Ui.Profile.bean.AddImageBeanRetro;
 import com.example.carescheduling.Ui.Profile.bean.AddPhoneNumberBeanRetro;
 import com.example.carescheduling.Ui.Profile.bean.AddressByPostCode;
+import com.example.carescheduling.Ui.Profile.bean.ChangePasswordBeanRetro;
 import com.example.carescheduling.Ui.Profile.bean.DataList;
 import com.example.carescheduling.Ui.Profile.bean.DeleteImageRetro;
 import com.example.carescheduling.Ui.Profile.bean.EditAddressAllData;
@@ -27,6 +28,8 @@ import com.example.carescheduling.Ui.Profile.bean.EditAdressBeanRetro;
 import com.example.carescheduling.Ui.Profile.bean.EditEmailRetroBean;
 import com.example.carescheduling.Ui.Profile.bean.EditNumberBeanRetro;
 import com.example.carescheduling.Ui.Profile.bean.EditProfileInfoBeanRetro;
+import com.example.carescheduling.Ui.Profile.bean.EditUserWithUserNameRetro;
+import com.example.carescheduling.Ui.Profile.bean.EditUserWithoutUserNameRetro;
 import com.example.carescheduling.Ui.Profile.bean.GetMyPicturesEditBeanRetro;
 import com.example.carescheduling.Ui.Profile.bean.GetMyProfileEdit;
 import com.example.carescheduling.Ui.Profile.bean.PersonAddressList;
@@ -83,8 +86,15 @@ public interface ApiService {
 
 
     @POST("EditUser")
-    Observable<Response<JsonElement>> EditMyUser(@Body UserViewModel.Data profileBean);
+    Observable<Response<JsonElement>> EditMyUserWithOutUserName(@Body EditUserWithoutUserNameRetro profileBean);
 
+    @POST("EditUser")
+    Observable<Response<JsonElement>> EditMyUserWithUserName(@Body EditUserWithUserNameRetro profileBean);
+
+    @POST("ResetUserPassword")
+    Observable<Response<JsonElement>> ChangePassword(@Body ChangePasswordBeanRetro changePasswordBeanRetro);
+
+//http://mobile.rota.services/CssMobileRestfulService.svc/ResetUserPassword
 //    http://mobile.rota.services/CssMobileRestfulService.svc/EditProfileImages
 
     @POST("EditProfileImages")

@@ -60,23 +60,18 @@ public class HomeF extends BaseFragment implements Common, HomeScreenOnClick {
 
     private void setUpView(View view) {
         setCommonData();
-
         homeFViewModel = ViewModelProviders.of(this).get(HomeFViewModel.class);
-//        try {
-//            GetClientPlan();
-//        } catch (Exception e) {
-//            hideDialog();
-//            Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
-//        }
-
-
+        /*try {
+            GetClientPlan();
+        } catch (Exception e) {
+            hideDialog();
+            Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+        }*/
         sessionManager = getSessionManager();
         String[] some_array = getResources().getStringArray(R.array.home_array);
         HomeScreenAdapter homeScreenAdapter = new HomeScreenAdapter(getActivity(), this, some_array);
         fragmentHomeBinding.rcvHome.setLayoutManager(new LinearLayoutManager(getActivity()));
         fragmentHomeBinding.rcvHome.setAdapter(homeScreenAdapter);
-
-
     }
 
 
