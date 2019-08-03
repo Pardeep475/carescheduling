@@ -226,7 +226,7 @@
                     android:layout_marginTop="@dimen/five_dp"
                     android:background="@color/blue"
                     android:fontFamily="@font/rubik_medium"
-                    android:onClick="@{(v)-> myNextVisitClick.ClientTask(clientBookingScreenModel.getTasksArrayList())}"
+                    android:onClick="@{(v)-> myNextVisitClick.ClientTask()}"
                     android:text="@string/todays_client_task"
                     android:textColor="@color/white" />
 

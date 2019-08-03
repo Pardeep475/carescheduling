@@ -57,7 +57,7 @@ public class ClientInfoPersonalDetailsViewModel extends AndroidViewModel {
 
                                 } else {
                                     data.setValue(null);
-                                    Toast.makeText(getApplication(),(String) loginBeanRetroResponse.body().getResponseMessage(), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplication(), (String) loginBeanRetroResponse.body().getResponseMessage(), Toast.LENGTH_SHORT).show();
                                 }
                             }
                         }
@@ -83,33 +83,25 @@ public class ClientInfoPersonalDetailsViewModel extends AndroidViewModel {
             editProfileInfoBean.setFirstName(checkIsNotNull(clientCarePersonalDetailsBean.getData().getFirstName()));
             editProfileInfoBean.setMiddleName(checkIsNotNull((String) clientCarePersonalDetailsBean.getData().getMiddleName()));
             editProfileInfoBean.setMaidenName(checkIsNotNull((String) clientCarePersonalDetailsBean.getData().getMaidenName()));
-            editProfileInfoBean.setSurName(checkIsNotNull(clientCarePersonalDetailsBean.getData().getSurName()));
-            editProfileInfoBean.setDateOfBirth("16.03.1946");
-            editProfileInfoBean.setGender(checkIsNotNull(clientCarePersonalDetailsBean.getData().getGenderTypeName()));
+            editProfileInfoBean.setSurName(checkIsNotNull(clientCarePersonalDetailsBean.getData().getSurname()));
+            editProfileInfoBean.setDateOfBirth(checkIsNotNull(clientCarePersonalDetailsBean.getData().getDateOfBirth()));
+//            editProfileInfoBean.setGender(checkIsNotNull(clientCarePersonalDetailsBean.getData().getGenderTypeName()));
+            editProfileInfoBean.setGender("N/A");
             editProfileInfoBean.setPrefix(checkIsNotNull(clientCarePersonalDetailsBean.getData().getPrefixTypeName()));
-            if (clientCarePersonalDetailsBean.getData().getPersonLanguage() != null
-                    && clientCarePersonalDetailsBean.getData().getPersonLanguage().size() > 0) {
-                editProfileInfoBean.setLanguage(checkIsNotNull(clientCarePersonalDetailsBean.getData().getPersonLanguage().get(0).getLanguageName()));
-            } else {
-                editProfileInfoBean.setLanguage("N/A");
-            }
+            editProfileInfoBean.setLanguage(checkIsNotNull(clientCarePersonalDetailsBean.getData().getLanguageName()));
+            editProfileInfoBean.setNationality(checkIsNotNull(clientCarePersonalDetailsBean.getData().getNationality()));
 
-            if (clientCarePersonalDetailsBean.getData().getPersonNationality() != null
-                    && clientCarePersonalDetailsBean.getData().getPersonNationality().size() > 0) {
-                editProfileInfoBean.setNationality(checkIsNotNull(clientCarePersonalDetailsBean.getData().getPersonNationality().get(0).getCountryName()));
-            } else {
-                editProfileInfoBean.setNationality("N/A");
-            }
 
 // marital status
-            editProfileInfoBean.setMaritalStatus("N/A");
+            editProfileInfoBean.setMaritalStatus(checkIsNotNull(clientCarePersonalDetailsBean.getData().getMaritialStatus()));
             // ethnicity
-            editProfileInfoBean.setEthnicity("N/A");
+            editProfileInfoBean.setEthnicity(checkIsNotNull(clientCarePersonalDetailsBean.getData().getEthnicity()));
             // disability
             editProfileInfoBean.setDisability(false);
+            editProfileInfoBean.setDisabaility(checkIsNotNull(clientCarePersonalDetailsBean.getData().getDisability()));
 // religion
-            editProfileInfoBean.setReligion("N/A");
-            editProfileInfoBean.setSexuality("N/A");
+            editProfileInfoBean.setReligion(checkIsNotNull(clientCarePersonalDetailsBean.getData().getReligion()));
+            editProfileInfoBean.setSexuality(checkIsNotNull(clientCarePersonalDetailsBean.getData().getSexuality()));
 
 
         }

@@ -9,10 +9,10 @@ public class ClientDisabilityBean {
 
     @SerializedName("Data")
     @Expose
-    public Object data = null;
+    private Object data;
     @SerializedName("DataList")
     @Expose
-    private ArrayList<Datum> dataList;
+    private ArrayList<DataList> dataList = null;
     @SerializedName("Exception")
     @Expose
     private Object exception;
@@ -31,11 +31,11 @@ public class ClientDisabilityBean {
         this.data = data;
     }
 
-    public ArrayList<Datum> getDataList() {
+    public ArrayList<DataList> getDataList() {
         return dataList;
     }
 
-    public void setDataList(ArrayList<Datum> dataList) {
+    public void setDataList(ArrayList<DataList> dataList) {
         this.dataList = dataList;
     }
 
@@ -62,65 +62,41 @@ public class ClientDisabilityBean {
     public void setSuccess(Boolean success) {
         this.success = success;
     }
+    public class DataList {
 
-    public class Datum {
-
-        @SerializedName("ClientDisabilityAdded")
+        @SerializedName("Date")
         @Expose
-        private String clientDisabilityAdded;
-        @SerializedName("ClientPersonId")
+        private String date;
+        @SerializedName("Description")
         @Expose
-        private String clientPersonId;
-        @SerializedName("CustomerId")
+        private Object description;
+        @SerializedName("DisabilitesName")
         @Expose
-        private String customerId;
-        @SerializedName("DisabilityGroupName")
-        @Expose
-        private String disabilityGroupName;
-        @SerializedName("DisabilityTypeName")
-        @Expose
-        private String disabilityTypeName;
+        private String disabilitesName;
 
-        public String getClientDisabilityAdded() {
-            return clientDisabilityAdded;
+        public String getDate() {
+            return date;
         }
 
-        public void setClientDisabilityAdded(String clientDisabilityAdded) {
-            this.clientDisabilityAdded = clientDisabilityAdded;
+        public void setDate(String date) {
+            this.date = date;
         }
 
-        public String getClientPersonId() {
-            return clientPersonId;
+        public Object getDescription() {
+            return description;
         }
 
-        public void setClientPersonId(String clientPersonId) {
-            this.clientPersonId = clientPersonId;
+        public void setDescription(Object description) {
+            this.description = description;
         }
 
-        public String getCustomerId() {
-            return customerId;
+        public String getDisabilitesName() {
+            return disabilitesName;
         }
 
-        public void setCustomerId(String customerId) {
-            this.customerId = customerId;
-        }
-
-        public String getDisabilityGroupName() {
-            return disabilityGroupName;
-        }
-
-        public void setDisabilityGroupName(String disabilityGroupName) {
-            this.disabilityGroupName = disabilityGroupName;
-        }
-
-        public String getDisabilityTypeName() {
-            return disabilityTypeName;
-        }
-
-        public void setDisabilityTypeName(String disabilityTypeName) {
-            this.disabilityTypeName = disabilityTypeName;
+        public void setDisabilitesName(String disabilitesName) {
+            this.disabilitesName = disabilitesName;
         }
 
     }
-
 }

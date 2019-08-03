@@ -6,9 +6,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class ClientBookingScreenModel implements Serializable {
-    private String name, date, time, address, telephone;
+    private String name, date, time, address, telephone, discreption;
     private Bitmap image;
-    private ArrayList<Tasks> tasksArrayList;
 
 
     public String getName() {
@@ -59,11 +58,11 @@ public class ClientBookingScreenModel implements Serializable {
         this.image = image;
     }
 
-    public ArrayList<Tasks> getTasksArrayList() {
-        return tasksArrayList;
+    public String getDiscreption() {
+        return discreption;
     }
 
-    public void setTasksArrayList(ArrayList<Tasks> tasksArrayList) {
-        this.tasksArrayList = tasksArrayList;
+    public void setDiscreption(String discreption) {
+        this.discreption = discreption;
     }
 }

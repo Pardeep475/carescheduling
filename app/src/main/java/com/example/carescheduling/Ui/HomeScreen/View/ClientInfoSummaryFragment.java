@@ -63,7 +63,6 @@ public class ClientInfoSummaryFragment extends BaseFragment implements Common {
     private void setUpView(View view) {
         setCommonData();
         clientInfoSummaryFragmentBinding.slDemo.startShimmerAnimation();
-        clientInfoSummaryFragmentBinding.setClientBookingScreenModel(clientBookingModel);
         mViewModel = ViewModelProviders.of(this).get(ClientInfoSummaryViewModel.class);
         try {
             if (ConnectivityReceiver.isNetworkAvailable(getActivity())) {
@@ -94,20 +93,19 @@ public class ClientInfoSummaryFragment extends BaseFragment implements Common {
 
     private void setUpData() {
 
-        mViewModel.getDisabilities(getSessionManager().getCustomerId(),
+        mViewModel.getClientSummary(getSessionManager().getCustomerId(),
                 getSessionManager().getBranchId(),
-                getSessionManager().getClientId()).observe(this, new Observer<ClientCareSummaryBean>() {
+                getSessionManager().getClientId()).observe(this, new Observer<ClientBookingScreenModel>() {
             @Override
-            public void onChanged(ClientCareSummaryBean clientCareSummaryBean) {
+            public void onChanged(ClientBookingScreenModel clientCareSummaryBean) {
                 if (clientCareSummaryBean != null) {
-                    if (clientCareSummaryBean.getSuccess() && clientCareSummaryBean.getData() != null) {
-                        clientInfoSummaryFragmentBinding.setDescription(clientCareSummaryBean.getData().getBriefOverview());
+                        clientInfoSummaryFragmentBinding.setClientBookingScreenModel(clientCareSummaryBean);
                         setDataOriginal();
                     } else {
-                        Toast.makeText(getActivity(), (String) clientCareSummaryBean.getResponseMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(),"Something went wrong", Toast.LENGTH_SHORT).show();
                         setNoDataFound();
                     }
-                }
+
                 clientInfoSummaryFragmentBinding.slDemo.stopShimmerAnimation();
             }
         });

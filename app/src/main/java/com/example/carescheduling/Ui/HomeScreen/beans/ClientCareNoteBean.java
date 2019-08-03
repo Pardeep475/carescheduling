@@ -1,9 +1,8 @@
 package com.example.carescheduling.Ui.HomeScreen.beans;
 
+import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
-import java.util.ArrayList;
 
 public class ClientCareNoteBean {
 
@@ -12,7 +11,7 @@ public class ClientCareNoteBean {
     private Object data;
     @SerializedName("DataList")
     @Expose
-    private ArrayList<DataList> dataList = null;
+    private List<DataList> dataList = null;
     @SerializedName("Exception")
     @Expose
     private Object exception;
@@ -31,11 +30,11 @@ public class ClientCareNoteBean {
         this.data = data;
     }
 
-    public ArrayList<DataList> getDataList() {
+    public List<DataList> getDataList() {
         return dataList;
     }
 
-    public void setDataList(ArrayList<DataList> dataList) {
+    public void setDataList(List<DataList> dataList) {
         this.dataList = dataList;
     }
 
@@ -62,156 +61,51 @@ public class ClientCareNoteBean {
     public void setSuccess(Boolean success) {
         this.success = success;
     }
-
     public class DataList {
 
-        @SerializedName("AddEmployeePersonName")
+        @SerializedName("Date")
         @Expose
-        private String addEmployeePersonName;
-        @SerializedName("Note")
+        private String date;
+        @SerializedName("FullNote")
         @Expose
-        private Note note;
-        @SerializedName("UpdateEmployeePersonName")
+        private String fullNote;
+        @SerializedName("Title")
         @Expose
-        private String updateEmployeePersonName;
-
-        public String getAddEmployeePersonName() {
-            return addEmployeePersonName;
-        }
-
-        public void setAddEmployeePersonName(String addEmployeePersonName) {
-            this.addEmployeePersonName = addEmployeePersonName;
-        }
-
-        public Note getNote() {
-            return note;
-        }
-
-        public void setNote(Note note) {
-            this.note = note;
-        }
-
-        public String getUpdateEmployeePersonName() {
-            return updateEmployeePersonName;
-        }
-
-        public void setUpdateEmployeePersonName(String updateEmployeePersonName) {
-            this.updateEmployeePersonName = updateEmployeePersonName;
-        }
-
-    }
-
-    public class Note {
-
-        @SerializedName("AddedByPersonId")
+        private String title;
+        @SerializedName("WrittenBy")
         @Expose
-        private String addedByPersonId;
-        @SerializedName("CustomerId")
-        @Expose
-        private String customerId;
-        @SerializedName("NoteAdded")
-        @Expose
-        private String noteAdded;
-        @SerializedName("NoteCategoryName")
-        @Expose
-        private String noteCategoryName;
-        @SerializedName("NoteId")
-        @Expose
-        private String noteId;
-        @SerializedName("NoteSubject")
-        @Expose
-        private String noteSubject;
-        @SerializedName("NoteText")
-        @Expose
-        private String noteText;
-        @SerializedName("NoteTypeName")
-        @Expose
-        private String noteTypeName;
-        @SerializedName("NoteUpdated")
-        @Expose
-        private String noteUpdated;
-        @SerializedName("UpdatedByPersonId")
-        @Expose
-        private String updatedByPersonId;
+        private String writtenBy;
 
-        public String getAddedByPersonId() {
-            return addedByPersonId;
+        public String getDate() {
+            return date;
         }
 
-        public void setAddedByPersonId(String addedByPersonId) {
-            this.addedByPersonId = addedByPersonId;
+        public void setDate(String date) {
+            this.date = date;
         }
 
-        public String getCustomerId() {
-            return customerId;
+        public String getFullNote() {
+            return fullNote;
         }
 
-        public void setCustomerId(String customerId) {
-            this.customerId = customerId;
+        public void setFullNote(String fullNote) {
+            this.fullNote = fullNote;
         }
 
-        public String getNoteAdded() {
-            return noteAdded;
+        public String getTitle() {
+            return title;
         }
 
-        public void setNoteAdded(String noteAdded) {
-            this.noteAdded = noteAdded;
+        public void setTitle(String title) {
+            this.title = title;
         }
 
-        public String getNoteCategoryName() {
-            return noteCategoryName;
+        public String getWrittenBy() {
+            return writtenBy;
         }
 
-        public void setNoteCategoryName(String noteCategoryName) {
-            this.noteCategoryName = noteCategoryName;
-        }
-
-        public String getNoteId() {
-            return noteId;
-        }
-
-        public void setNoteId(String noteId) {
-            this.noteId = noteId;
-        }
-
-        public String getNoteSubject() {
-            return noteSubject;
-        }
-
-        public void setNoteSubject(String noteSubject) {
-            this.noteSubject = noteSubject;
-        }
-
-        public String getNoteText() {
-            return noteText;
-        }
-
-        public void setNoteText(String noteText) {
-            this.noteText = noteText;
-        }
-
-        public String getNoteTypeName() {
-            return noteTypeName;
-        }
-
-        public void setNoteTypeName(String noteTypeName) {
-            this.noteTypeName = noteTypeName;
-        }
-
-        public String getNoteUpdated() {
-            return noteUpdated;
-        }
-
-        public void setNoteUpdated(String noteUpdated) {
-            this.noteUpdated = noteUpdated;
-        }
-
-        public String getUpdatedByPersonId() {
-            return updatedByPersonId;
-        }
-
-        public void setUpdatedByPersonId(String updatedByPersonId) {
-            this.updatedByPersonId = updatedByPersonId;
+        public void setWrittenBy(String writtenBy) {
+            this.writtenBy = writtenBy;
         }
 
     }

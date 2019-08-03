@@ -10,7 +10,7 @@
 
         <variable
             name="clientDisabilityBean"
-            type="com.example.carescheduling.Ui.HomeScreen.beans.ClientDisabilityBean.Datum" />
+            type="com.example.carescheduling.Ui.HomeScreen.beans.ClientDisabilityBean.DataList" />
 
         <variable
             name="pos"
@@ -36,7 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/rubik_medium"
-                android:text="@{clientDisabilityBean.disabilityTypeName}"
+                android:text="@{clientDisabilityBean.disabilitesName}"
                 android:textColor="@color/black"
                 android:textSize="@dimen/forteen_sp" />
 
@@ -58,7 +58,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/rubik_light"
                     android:paddingStart="@dimen/five_dp"
-                    android:text="21/10/19"
+                    android:text="@{clientDisabilityBean.date}"
                     android:textColor="@color/grey"
                     android:textSize="@dimen/forteen_sp" />
 

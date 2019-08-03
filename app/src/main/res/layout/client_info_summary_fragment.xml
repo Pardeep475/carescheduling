@@ -13,12 +13,11 @@
         <variable
             name="commonClick"
             type="com.example.carescheduling.Ui.Common.Common" />
-<variable
-    name="clientBookingScreenModel"
-    type="com.example.carescheduling.Ui.HomeScreen.beans.ClientBookingScreenModel"/>
+
         <variable
-            name="description"
-            type="String" />
+            name="clientBookingScreenModel"
+            type="com.example.carescheduling.Ui.HomeScreen.beans.ClientBookingScreenModel" />
+
 
     </data>
 
@@ -88,8 +87,8 @@
                     android:layout_height="@dimen/hundrd_dp"
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="@dimen/ten_dp"
-                    app:setImage="@{clientBookingScreenModel.image}"
                     android:contentDescription="@string/user_profile"
+                    app:setImage="@{clientBookingScreenModel.image}"
                     app:srcCompat="@drawable/user_placeholder" />
 
                 <TextView
@@ -98,7 +97,7 @@
                     android:layout_below="@+id/img_user"
                     android:layout_marginTop="@dimen/twenty_dp"
                     android:fontFamily="@font/rubik_light"
-                    android:text="@{description}"
+                    android:text="@{clientBookingScreenModel.discreption}"
                     android:textColor="@color/black"
                     android:textSize="@dimen/forteen_sp" />
 

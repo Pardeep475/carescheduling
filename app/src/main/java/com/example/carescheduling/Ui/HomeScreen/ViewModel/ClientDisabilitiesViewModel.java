@@ -37,8 +37,8 @@ public class ClientDisabilitiesViewModel extends AndroidViewModel {
     }
 
 
-    public LiveData<ArrayList<ClientDisabilityBean.Datum>> getDisabilities(String customerId, String branchId, String clientId) {
-        final MutableLiveData<ArrayList<ClientDisabilityBean.Datum>> data = new MutableLiveData<>();
+    public LiveData<ArrayList<ClientDisabilityBean.DataList>> getDisabilities(String customerId, String branchId, String clientId) {
+        final MutableLiveData<ArrayList<ClientDisabilityBean.DataList>> data = new MutableLiveData<>();
         try {
 
             Disposable disposable = apiService.GetClientDisabilities(customerId,branchId,clientId)

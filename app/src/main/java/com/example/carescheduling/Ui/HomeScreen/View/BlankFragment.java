@@ -75,18 +75,15 @@ public class BlankFragment extends BaseFragment implements Common, MyNextVisitCl
 
     @Override
     public void moreClientInfoClick() {
-        if (clientBookingModel != null && clientBookingModel.getTasksArrayList().size() > 0)
-            setFragment(ClientInfoHomeFragment.newInstance(clientBookingModel));
-        else
-            Toast.makeText(getActivity(), "Client task not found", Toast.LENGTH_SHORT).show();
+        setFragment(ClientInfoHomeFragment.newInstance(clientBookingModel));
     }
 
     @Override
-    public void ClientTask(ArrayList<Tasks> tasksArrayList) {
-        if (tasksArrayList.size() > 0)
-            setFragment(ClientTasksFragment.newInstance(tasksArrayList));
-        else
-            Toast.makeText(getActivity(), "Data not found", Toast.LENGTH_SHORT).show();
+    public void ClientTask() {
+//        if (tasksArrayList.size() > 0)
+//            setFragment(ClientTasksFragment.newInstance(tasksArrayList));
+//        else
+//            Toast.makeText(getActivity(), "Data not found", Toast.LENGTH_SHORT).show();
     }
 
     private void setFragment(Fragment fragment) {

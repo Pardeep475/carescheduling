@@ -70,7 +70,9 @@ public class TodaysVisitFragment extends BaseFragment implements Common, HomeScr
 
     @Override
     public void OnClickHomeScreen(int pos) {
-
+        if (pos == 0) {
+            setFragment(BlankFragment.newInstance());
+        }
     }
 
 
@@ -83,5 +85,12 @@ public class TodaysVisitFragment extends BaseFragment implements Common, HomeScr
     @Override
     public void rightClick() {
 
+    }
+
+    private void setFragment(Fragment fragment) {
+        if (getActivity() != null) {
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fm_edit_container, fragment).addToBackStack(null).commitAllowingStateLoss();
+        }
     }
 }

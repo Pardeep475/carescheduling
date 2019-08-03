@@ -19,9 +19,9 @@ import androidx.recyclerview.widget.RecyclerView;
 public class ClientDisabilitiesAdapter extends RecyclerView.Adapter<ClientDisabilitiesAdapter.MyViewHolder> implements MoreInfoClick {
     private Context context;
     private ItemsClientInfoDisabilitiesBinding itemsClientInfoDisabilitiesBinding;
-    private ArrayList<ClientDisabilityBean.Datum> dataList;
+    private ArrayList<ClientDisabilityBean.DataList> dataList;
 
-    public ClientDisabilitiesAdapter(Context context, ArrayList<ClientDisabilityBean.Datum> dataList) {
+    public ClientDisabilitiesAdapter(Context context, ArrayList<ClientDisabilityBean.DataList> dataList) {
         this.context = context;
         this.dataList = dataList;
     }

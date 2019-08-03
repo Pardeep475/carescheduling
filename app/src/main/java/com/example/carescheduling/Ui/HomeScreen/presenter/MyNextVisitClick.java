@@ -7,5 +7,5 @@ import java.util.ArrayList;
 public interface MyNextVisitClick {
     void moreClientInfoClick();
 
-    void ClientTask(ArrayList<Tasks> tasksArrayList);
+    void ClientTask();
 }

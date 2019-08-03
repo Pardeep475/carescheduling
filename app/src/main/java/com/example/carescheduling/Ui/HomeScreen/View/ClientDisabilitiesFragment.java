@@ -81,9 +81,9 @@ public class ClientDisabilitiesFragment extends BaseFragment implements Common {
         clientDisabilitiesViewModel.getDisabilities(getSessionManager().getCustomerId(),
                 getSessionManager().getBranchId(),
                 getSessionManager().getClientId()).observe(this
-                , new Observer<ArrayList<ClientDisabilityBean.Datum>>() {
+                , new Observer<ArrayList<ClientDisabilityBean.DataList>>() {
                     @Override
-                    public void onChanged(ArrayList<ClientDisabilityBean.Datum> data) {
+                    public void onChanged(ArrayList<ClientDisabilityBean.DataList> data) {
                         if (data != null && data.size() > 0) {
                             clientInfoDisabilitiesFragmentBinding.disabilitiesRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
                             ClientDisabilitiesAdapter clientDisabilitiesAdapter = new ClientDisabilitiesAdapter(getActivity(), data);

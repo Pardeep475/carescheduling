@@ -11,6 +11,7 @@ import com.example.carescheduling.Ui.Dashboard.beans.ClientBookingListModel;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientBookingScreenModel;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientCarePlan;
 import com.example.carescheduling.Ui.HomeScreen.beans.Tasks;
+import com.example.carescheduling.data.Local.SessionManager;
 import com.example.carescheduling.data.Network.ApiClient;
 import com.example.carescheduling.data.Network.ApiService;
 
@@ -52,7 +53,7 @@ public class BlankViewModel extends AndroidViewModel {
                         Log.e("LoginSuccess", "success");
                         if (loginBeanRetroResponse.isSuccessful()) {
                             if (loginBeanRetroResponse.body() != null && loginBeanRetroResponse.body().getData() != null)
-                                data.setValue(getClientData(loginBeanRetroResponse.body()));
+                                data.setValue(getClientData(loginBeanRetroResponse.body().getData()));
                             else
                                 data.setValue(null);
                         } else {
@@ -72,49 +73,22 @@ public class BlankViewModel extends AndroidViewModel {
         return data;
     }
 
-    private ClientBookingScreenModel getClientData(ClientBookingListModel clientBookingListModel) {
+    private ClientBookingScreenModel getClientData(ClientBookingListModel.Data data) {
+        SessionManager sessionManager = new SessionManager(getApplication());
+        if (!checkIsNotNull(data.getClientPersonId()).equalsIgnoreCase("N/A"))
+        sessionManager.setClientId(data.getClientPersonId());
         ClientBookingScreenModel clientBookingScreenModel = new ClientBookingScreenModel();
-        if (clientBookingListModel.getData() != null) {
-            if (clientBookingListModel.getData().getImageHexString() != null && !clientBookingListModel.getData().getImageHexString().equalsIgnoreCase(""))
-                clientBookingScreenModel.setImage(ImageFromBase64(clientBookingListModel.getData().getImageHexString()));
-
-            clientBookingScreenModel.setName(checkIsNotNull(clientBookingListModel.getData().getClientName()));
-            clientBookingScreenModel.setTime(checkIsNotNullWithOutNA(clientBookingListModel.getData().getBookingStartTime())
-                    + " - " + checkIsNotNullWithOutNA(clientBookingListModel.getData().getBookingEndTime()));
-
-            clientBookingScreenModel.setTelephone(checkIsNotNull(clientBookingListModel.getData().getClientPhoneNumber()));
-            clientBookingScreenModel.setDate(checkIsNotNullWithOutNA(clientBookingListModel.getData().getWeekdayname()) + " " +
-                    checkIsNotNullWithOutNA(clientBookingListModel.getData().getBookingDate()));
-
-            if (clientBookingListModel.getData().getClientAddress() != null) {
-                clientBookingScreenModel.setAddress(checkIsNotNullWithOutNA(clientBookingListModel.getData().getClientAddress().getBuildingName())
-                        + " " + checkIsNotNullWithOutNA(clientBookingListModel.getData().getClientAddress().getBuildingNumber()
-                        + " " + checkIsNotNullWithOutNA(clientBookingListModel.getData().getClientAddress().getBuildingNumber())
-                        + " " + checkIsNotNullWithOutNA(clientBookingListModel.getData().getClientAddress().getDepartmentName())
-                        + " " + checkIsNotNullWithOutNA(clientBookingListModel.getData().getClientAddress().getDependentLocality())
-                        + " " + checkIsNotNullWithOutNA(clientBookingListModel.getData().getClientAddress().getOrganisationName())
-                        + " " + checkIsNotNullWithOutNA(clientBookingListModel.getData().getClientAddress().getStreetName())
-                        + " " + checkIsNotNullWithOutNA(clientBookingListModel.getData().getClientAddress().getCountryName())
-                        + " " + checkIsNotNullWithOutNA(clientBookingListModel.getData().getClientAddress().getPostCodeName())
-
-                ));
-            } else {
-                clientBookingScreenModel.setAddress("N/A");
-            }
-
-            ArrayList<Tasks> tasksArrayList = new ArrayList<>();
-            if (clientBookingListModel.getData().getTaskList() != null && clientBookingListModel.getData().getTaskList().size() > 0) {
-                for (int i = 0; i < clientBookingListModel.getData().getTaskList().size(); i++) {
-                    Tasks tasks = new Tasks();
-                    tasks.setTitle(clientBookingListModel.getData().getTaskList().get(i).getTaskName());
-                    tasksArrayList.add(tasks);
-                }
-            }
-            clientBookingScreenModel.setTasksArrayList(tasksArrayList);
-        }
+        clientBookingScreenModel.setName(checkIsNotNull(data.getClientName()));
+        clientBookingScreenModel.setDate(checkIsNotNull(data.getBookingStartTime()) + " " + checkIsNotNull(data.getBookingDate()));
+        clientBookingScreenModel.setTime(checkIsNotNull(data.getBookingStartTime()) + " - " + checkIsNotNull(data.getBookingEndTime()));
+        if (!checkIsNotNull(data.getImageHexString()).equalsIgnoreCase("N/A"))
+            clientBookingScreenModel.setImage(ImageFromBase64(data.getImageHexString()));
+        clientBookingScreenModel.setAddress(checkIsNotNull(data.getPersonAddress()));
+        clientBookingScreenModel.setTelephone(checkIsNotNull(data.getClientPhoneNumber()));
 
         return clientBookingScreenModel;
     }
+
 
     private String checkIsNotNull(String value) {
         return value != null && !value.equalsIgnoreCase("") && !value.equalsIgnoreCase("null") ? value : "N/A";

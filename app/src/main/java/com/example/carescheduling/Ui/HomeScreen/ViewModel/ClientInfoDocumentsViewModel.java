@@ -79,10 +79,10 @@ public class ClientInfoDocumentsViewModel extends AndroidViewModel {
         if (clientCareNoteBean != null && clientCareNoteBean.getDataList() != null) {
             for (int i = 0; i < clientCareNoteBean.getDataList().size(); i++) {
                 ClientNoteAdapterBean clientNoteAdapterBean = new ClientNoteAdapterBean();
-                clientNoteAdapterBean.setDate(checkIsNotNull(clientCareNoteBean.getDataList().get(i).getDocument().getDocumentAdded()));
-                clientNoteAdapterBean.setDescription(checkIsNotNull(clientCareNoteBean.getDataList().get(i).getDocument().getDocumentFile()));
-                clientNoteAdapterBean.setShortDescription(checkIsNotNull(clientCareNoteBean.getDataList().get(i).getDocument().getDocumentTypeName()));
-                clientNoteAdapterBean.setTitle(checkIsNotNull(clientCareNoteBean.getDataList().get(i).getDocument().getDocumentCategoryName()));
+                clientNoteAdapterBean.setDate(checkIsNotNull(clientCareNoteBean.getDataList().get(i).getDate()));
+//                clientNoteAdapterBean.setDescription(checkIsNotNull(clientCareNoteBean.getDataList().get(i).getDocument().getDocumentFile()));
+//                clientNoteAdapterBean.setShortDescription(checkIsNotNull(clientCareNoteBean.getDataList().get(i).getDocument().getDocumentTypeName()));
+                clientNoteAdapterBean.setTitle(checkIsNotNull(clientCareNoteBean.getDataList().get(i).getDocumentTitle()));
 
                 noteAdapterBeans.add(clientNoteAdapterBean);
             }

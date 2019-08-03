@@ -1,7 +1,7 @@
 package com.example.carescheduling.Ui.HomeScreen.beans;
 
 public class ClientNoteAdapterBean {
-    private String title, description, date, shortDescription;
+    private String title, description, date, shortDescription,writtenBy;
 
     public String getTitle() {
         return title;
@@ -33,5 +33,13 @@ public class ClientNoteAdapterBean {
 
     public void setShortDescription(String shortDescription) {
         this.shortDescription = shortDescription;
+    }
+
+    public String getWrittenBy() {
+        return writtenBy;
+    }
+
+    public void setWrittenBy(String writtenBy) {
+        this.writtenBy = writtenBy;
     }
 }

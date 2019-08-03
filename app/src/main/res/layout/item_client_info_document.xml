@@ -55,7 +55,7 @@
                 android:fontFamily="@font/rubik_light"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:text="@{clientNoteAdapterBean.shortDescription}"
+                android:text="@{clientNoteAdapterBean.date}"
                 android:textSize="@dimen/forteen_sp" />
 
             <TextView

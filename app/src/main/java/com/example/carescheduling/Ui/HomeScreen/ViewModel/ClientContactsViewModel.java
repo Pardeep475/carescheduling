@@ -83,27 +83,14 @@ public class ClientContactsViewModel extends AndroidViewModel {
             for (int i = 0; i < careContactsBean.getDataList().size(); i++) {
                 ClientContactsBean clientContactsBean = new ClientContactsBean();
                 clientContactsBean.setEmail(checkIsNotNull(careContactsBean.getDataList().get(i).getEmailAddress()));
-                clientContactsBean.setMobile(checkIsNotNull(careContactsBean.getDataList().get(i).getMobileNumber()));
+                clientContactsBean.setMobile(checkIsNotNull(careContactsBean.getDataList().get(i).getPersonPhone()));
                 clientContactsBean.setTelephone("N/A");
                 clientContactsBean.setType(checkIsNotNull(careContactsBean.getDataList().get(i).getContactTypeName()));
-                clientContactsBean.setName(checkIsNotNull(careContactsBean.getDataList().get(i).getContactPersonName()));
-                if (!checkIsNotNullWithOutNA(careContactsBean.getDataList().get(i).getImageHexString()).equalsIgnoreCase(""))
-                    clientContactsBean.setImage(ImageFromBase64(careContactsBean.getDataList().get(i).getImageHexString()));
+                clientContactsBean.setName(checkIsNotNull(careContactsBean.getDataList().get(i).getPersonName()));
+//                if (!checkIsNotNullWithOutNA(careContactsBean.getDataList().get(i).getImageHexString()).equalsIgnoreCase(""))
+//                    clientContactsBean.setImage(ImageFromBase64(careContactsBean.getDataList().get(i).getImageHexString()));
+                clientContactsBean.setAddress(careContactsBean.getDataList().get(i).getPersonAddress());
 
-                if (careContactsBean.getDataList().get(i).getAddress() != null) {
-                    clientContactsBean.setPostCode(checkIsNotNull(careContactsBean.getDataList().get(i).getAddress().getPostCodeName()));
-                    String address = checkIsNotNullWithOutNA(careContactsBean.getDataList().get(i).getAddress().getBuildingName()) + " " +
-                            checkIsNotNullWithOutNA(careContactsBean.getDataList().get(i).getAddress().getBuildingNumber()) + " " +
-                            checkIsNotNullWithOutNA(careContactsBean.getDataList().get(i).getAddress().getDepartmentName()) + " " +
-                            checkIsNotNullWithOutNA(careContactsBean.getDataList().get(i).getAddress().getDependentLocality()) + " " +
-                            checkIsNotNullWithOutNA(careContactsBean.getDataList().get(i).getAddress().getOrganisationName()) + " " +
-                            checkIsNotNullWithOutNA(careContactsBean.getDataList().get(i).getAddress().getStreetName()) + " " +
-                            checkIsNotNullWithOutNA(careContactsBean.getDataList().get(i).getAddress().getCountryName()) + " " +
-                            checkIsNotNullWithOutNA(careContactsBean.getDataList().get(i).getAddress().getPostCodeName());
-                    clientContactsBean.setAddress(address);
-                } else {
-                    clientContactsBean.setAddress("N/A");
-                }
                 clientContactsBeanArrayList.add(clientContactsBean);
             }
         }

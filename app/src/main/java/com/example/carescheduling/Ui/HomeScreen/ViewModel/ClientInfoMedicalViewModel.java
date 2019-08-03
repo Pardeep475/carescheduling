@@ -82,13 +82,13 @@ public class ClientInfoMedicalViewModel extends AndroidViewModel {
             for (int i = 0; i < body.getDataList().size(); i++) {
                 ClientMedicalBeanAdapter clientMedicalBeanAdapter = new ClientMedicalBeanAdapter();
                 clientMedicalBeanAdapter.setDescription(
-                        checkIsNotNullWithOutNA(body.getDataList().get(i).getClientMedicationFrequencyModel().getMedicationDose())
-                                + " pill in the " +
-                                checkIsNotNullWithOutNA(body.getDataList().get(i).getClientMedicationFrequencyModel().getPeriod()));
-                clientMedicalBeanAdapter.setMedicationName(checkIsNotNull(body.getDataList().get(i).getMedicationName()));
-                clientMedicalBeanAdapter.setMedicationQuantity(checkIsNotNullWithOutNA(body.getDataList().get(i).getClientMedicationFrequencyModel().getMedicationStrenghtValue())
-                        + checkIsNotNullWithOutNA(body.getDataList().get(i).getClientMedicationFrequencyModel().getMedicationStrenghtUnitName()));
-                clientMedicalBeanAdapter.setDate(checkIsNotNullWithOutNA(body.getDataList().get(i).getClientMedicationFrequencyModel().getMedicationAddedDate()));
+                        checkIsNotNullWithOutNA(body.getDataList().get(i).getDescription())
+                               /* + " pill in the " +
+                                checkIsNotNullWithOutNA(body.getDataList().get(i).getClientMedicationFrequencyModel().getPeriod())*/);
+                clientMedicalBeanAdapter.setMedicationName(checkIsNotNull(body.getDataList().get(i).getMedicalName()));
+                clientMedicalBeanAdapter.setMedicationQuantity(checkIsNotNullWithOutNA(body.getDataList().get(i).getMedicationQuantity())
+                        /*+ checkIsNotNullWithOutNA(body.getDataList().get(i).getClientMedicationFrequencyModel().getMedicationStrenghtUnitName())*/);
+                clientMedicalBeanAdapter.setDate(checkIsNotNullWithOutNA(body.getDataList().get(i).getDate()));
                 clientMedicalBeanAdapters.add(clientMedicalBeanAdapter);
             }
         }
