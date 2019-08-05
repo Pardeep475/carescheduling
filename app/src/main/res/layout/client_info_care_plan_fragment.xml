@@ -60,7 +60,7 @@
         <!--android:layout_height="match_parent"-->
         <!--android:layout_below="@+id/rl_tool"-->
         <!--android:visibility="gone"/>-->
-        <ScrollView
+        <com.example.carescheduling.Ui.Common.ScrollViewExt
             android:id="@+id/sv_care_plan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -71,7 +71,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical" />
-        </ScrollView>
+        </com.example.carescheduling.Ui.Common.ScrollViewExt>
 
         <include
             android:id="@+id/rl_no_data_found"

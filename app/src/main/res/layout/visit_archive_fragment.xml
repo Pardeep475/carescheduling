@@ -40,6 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rl_tool"
+            android:id="@+id/cv_date_layout"
             app:cardCornerRadius="@dimen/ten_dp"
             app:cardElevation="@dimen/three_dp">
 

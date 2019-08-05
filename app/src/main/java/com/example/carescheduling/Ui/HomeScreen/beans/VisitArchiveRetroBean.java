@@ -1,7 +1,9 @@
 package com.example.carescheduling.Ui.HomeScreen.beans;
-import java.util.List;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
 
 public class VisitArchiveRetroBean {
 
@@ -10,7 +12,7 @@ public class VisitArchiveRetroBean {
     private Object data;
     @SerializedName("DataList")
     @Expose
-    private List<DataList> dataList = null;
+    private ArrayList<DataList> dataList = null;
     @SerializedName("Exception")
     @Expose
     private Object exception;
@@ -29,11 +31,11 @@ public class VisitArchiveRetroBean {
         this.data = data;
     }
 
-    public List<DataList> getDataList() {
+    public ArrayList<DataList> getDataList() {
         return dataList;
     }
 
-    public void setDataList(List<DataList> dataList) {
+    public void setDataList(ArrayList<DataList> dataList) {
         this.dataList = dataList;
     }
 
@@ -60,201 +62,131 @@ public class VisitArchiveRetroBean {
     public void setSuccess(Boolean success) {
         this.success = success;
     }
-    public class BookingClientModel {
-
-        @SerializedName("BookingDateTime")
-        @Expose
-        private String bookingDateTime;
-        @SerializedName("BookingStatusTypeName")
-        @Expose
-        private String bookingStatusTypeName;
-        @SerializedName("ClientBookingEmployeeModel")
-        @Expose
-        private Object clientBookingEmployeeModel;
-        @SerializedName("ClientBookingId")
-        @Expose
-        private String clientBookingId;
-        @SerializedName("ClientBookingTaskModel")
-        @Expose
-        private Object clientBookingTaskModel;
-        @SerializedName("Clientd")
-        @Expose
-        private String clientd;
-        @SerializedName("CreatedDateTime")
-        @Expose
-        private String createdDateTime;
-        @SerializedName("CustomerId")
-        @Expose
-        private String customerId;
-        @SerializedName("ScheduleStartDate")
-        @Expose
-        private String scheduleStartDate;
-        @SerializedName("TimeTableName")
-        @Expose
-        private String timeTableName;
-        @SerializedName("WeekRotationTypeName")
-        @Expose
-        private String weekRotationTypeName;
-        @SerializedName("WeekdayName")
-        @Expose
-        private String weekdayName;
-
-        public String getBookingDateTime() {
-            return bookingDateTime;
-        }
-
-        public void setBookingDateTime(String bookingDateTime) {
-            this.bookingDateTime = bookingDateTime;
-        }
-
-        public String getBookingStatusTypeName() {
-            return bookingStatusTypeName;
-        }
-
-        public void setBookingStatusTypeName(String bookingStatusTypeName) {
-            this.bookingStatusTypeName = bookingStatusTypeName;
-        }
-
-        public Object getClientBookingEmployeeModel() {
-            return clientBookingEmployeeModel;
-        }
-
-        public void setClientBookingEmployeeModel(Object clientBookingEmployeeModel) {
-            this.clientBookingEmployeeModel = clientBookingEmployeeModel;
-        }
-
-        public String getClientBookingId() {
-            return clientBookingId;
-        }
-
-        public void setClientBookingId(String clientBookingId) {
-            this.clientBookingId = clientBookingId;
-        }
-
-        public Object getClientBookingTaskModel() {
-            return clientBookingTaskModel;
-        }
-
-        public void setClientBookingTaskModel(Object clientBookingTaskModel) {
-            this.clientBookingTaskModel = clientBookingTaskModel;
-        }
-
-        public String getClientd() {
-            return clientd;
-        }
-
-        public void setClientd(String clientd) {
-            this.clientd = clientd;
-        }
-
-        public String getCreatedDateTime() {
-            return createdDateTime;
-        }
-
-        public void setCreatedDateTime(String createdDateTime) {
-            this.createdDateTime = createdDateTime;
-        }
-
-        public String getCustomerId() {
-            return customerId;
-        }
-
-        public void setCustomerId(String customerId) {
-            this.customerId = customerId;
-        }
-
-        public String getScheduleStartDate() {
-            return scheduleStartDate;
-        }
-
-        public void setScheduleStartDate(String scheduleStartDate) {
-            this.scheduleStartDate = scheduleStartDate;
-        }
-
-        public String getTimeTableName() {
-            return timeTableName;
-        }
-
-        public void setTimeTableName(String timeTableName) {
-            this.timeTableName = timeTableName;
-        }
-
-        public String getWeekRotationTypeName() {
-            return weekRotationTypeName;
-        }
-
-        public void setWeekRotationTypeName(String weekRotationTypeName) {
-            this.weekRotationTypeName = weekRotationTypeName;
-        }
-
-        public String getWeekdayName() {
-            return weekdayName;
-        }
-
-        public void setWeekdayName(String weekdayName) {
-            this.weekdayName = weekdayName;
-        }
-
-    }
 
     public class DataList {
 
-        @SerializedName("BookingClientModel")
+        @SerializedName("BookingDate")
         @Expose
-        private BookingClientModel bookingClientModel;
+        private String bookingDate;
+        @SerializedName("BookingEndTime")
+        @Expose
+        private String bookingEndTime;
+        @SerializedName("BookingStartTime")
+        @Expose
+        private String bookingStartTime;
+        @SerializedName("ClientBookingId")
+        @Expose
+        private Object clientBookingId;
         @SerializedName("ClientName")
         @Expose
-        private Object clientName;
-        @SerializedName("ClientVisitModel")
+        private String clientName;
+        @SerializedName("ClientPersonId")
         @Expose
-        private Object clientVisitModel;
-        @SerializedName("visitEndTime")
+        private String clientPersonId;
+        @SerializedName("ClientPhoneNumber")
         @Expose
-        private String visitEndTime;
-        @SerializedName("visitStartTime")
+        private String clientPhoneNumber;
+        @SerializedName("EmailAddress")
         @Expose
-        private String visitStartTime;
+        private Object emailAddress;
+        @SerializedName("ImageHexString")
+        @Expose
+        private Object imageHexString;
+        @SerializedName("PersonAddress")
+        @Expose
+        private String personAddress;
+        @SerializedName("Weekdayname")
+        @Expose
+        private String weekdayname;
 
-        public BookingClientModel getBookingClientModel() {
-            return bookingClientModel;
+        public String getBookingDate() {
+            return bookingDate;
         }
 
-        public void setBookingClientModel(BookingClientModel bookingClientModel) {
-            this.bookingClientModel = bookingClientModel;
+        public void setBookingDate(String bookingDate) {
+            this.bookingDate = bookingDate;
         }
 
-        public Object getClientName() {
+        public String getBookingEndTime() {
+            return bookingEndTime;
+        }
+
+        public void setBookingEndTime(String bookingEndTime) {
+            this.bookingEndTime = bookingEndTime;
+        }
+
+        public String getBookingStartTime() {
+            return bookingStartTime;
+        }
+
+        public void setBookingStartTime(String bookingStartTime) {
+            this.bookingStartTime = bookingStartTime;
+        }
+
+        public Object getClientBookingId() {
+            return clientBookingId;
+        }
+
+        public void setClientBookingId(Object clientBookingId) {
+            this.clientBookingId = clientBookingId;
+        }
+
+        public String getClientName() {
             return clientName;
         }
 
-        public void setClientName(Object clientName) {
+        public void setClientName(String clientName) {
             this.clientName = clientName;
         }
 
-        public Object getClientVisitModel() {
-            return clientVisitModel;
+        public String getClientPersonId() {
+            return clientPersonId;
         }
 
-        public void setClientVisitModel(Object clientVisitModel) {
-            this.clientVisitModel = clientVisitModel;
+        public void setClientPersonId(String clientPersonId) {
+            this.clientPersonId = clientPersonId;
         }
 
-        public String getVisitEndTime() {
-            return visitEndTime;
+        public String getClientPhoneNumber() {
+            return clientPhoneNumber;
         }
 
-        public void setVisitEndTime(String visitEndTime) {
-            this.visitEndTime = visitEndTime;
+        public void setClientPhoneNumber(String clientPhoneNumber) {
+            this.clientPhoneNumber = clientPhoneNumber;
         }
 
-        public String getVisitStartTime() {
-            return visitStartTime;
+        public Object getEmailAddress() {
+            return emailAddress;
         }
 
-        public void setVisitStartTime(String visitStartTime) {
-            this.visitStartTime = visitStartTime;
+        public void setEmailAddress(Object emailAddress) {
+            this.emailAddress = emailAddress;
         }
+
+        public Object getImageHexString() {
+            return imageHexString;
+        }
+
+        public void setImageHexString(Object imageHexString) {
+            this.imageHexString = imageHexString;
+        }
+
+        public String getPersonAddress() {
+            return personAddress;
+        }
+
+        public void setPersonAddress(String personAddress) {
+            this.personAddress = personAddress;
+        }
+
+        public String getWeekdayname() {
+            return weekdayname;
+        }
+
+        public void setWeekdayname(String weekdayname) {
+            this.weekdayname = weekdayname;
+        }
+
 
     }
-
 }

@@ -85,8 +85,7 @@ public class ClientInfoPersonalDetailsViewModel extends AndroidViewModel {
             editProfileInfoBean.setMaidenName(checkIsNotNull((String) clientCarePersonalDetailsBean.getData().getMaidenName()));
             editProfileInfoBean.setSurName(checkIsNotNull(clientCarePersonalDetailsBean.getData().getSurname()));
             editProfileInfoBean.setDateOfBirth(checkIsNotNull(clientCarePersonalDetailsBean.getData().getDateOfBirth()));
-//            editProfileInfoBean.setGender(checkIsNotNull(clientCarePersonalDetailsBean.getData().getGenderTypeName()));
-            editProfileInfoBean.setGender("N/A");
+            editProfileInfoBean.setGender(checkIsNotNull(clientCarePersonalDetailsBean.getData().getGenderTypeName()));
             editProfileInfoBean.setPrefix(checkIsNotNull(clientCarePersonalDetailsBean.getData().getPrefixTypeName()));
             editProfileInfoBean.setLanguage(checkIsNotNull(clientCarePersonalDetailsBean.getData().getLanguageName()));
             editProfileInfoBean.setNationality(checkIsNotNull(clientCarePersonalDetailsBean.getData().getNationality()));

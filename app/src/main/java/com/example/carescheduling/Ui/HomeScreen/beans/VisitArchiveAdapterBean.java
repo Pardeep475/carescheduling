@@ -3,9 +3,16 @@ package com.example.carescheduling.Ui.HomeScreen.beans;
 import android.graphics.Bitmap;
 
 public class VisitArchiveAdapterBean {
-    private String visitTime, name, address, telephone;
+    private String visitTime, name, address, telephone,visitDate,email;
     private Bitmap image;
 
+    public String getVisitDate() {
+        return visitDate;
+    }
+
+    public void setVisitDate(String visitDate) {
+        this.visitDate = visitDate;
+    }
 
     public String getVisitTime() {
         return visitTime;
@@ -45,5 +52,13 @@ public class VisitArchiveAdapterBean {
 
     public void setImage(Bitmap image) {
         this.image = image;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

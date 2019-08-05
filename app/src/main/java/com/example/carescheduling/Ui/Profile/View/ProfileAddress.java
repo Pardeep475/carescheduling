@@ -94,6 +94,8 @@ public class ProfileAddress extends BaseFragment implements Common, ProfileAddre
         fetchAddressFromPostalCode();
         setAddressTypeData();
         setNationalityData();
+        if (profileBean != null && profileBean.getPersonAddress() != null && profileBean.getPersonAddress().getIsDefaultAddress() != null)
+            profileAddressBinding.rbIsDefault.setChecked(profileBean.getPersonAddress().getIsDefaultAddress());
 
         profileAddressBinding.setProfileAddressClick(this);
     }
@@ -151,15 +153,15 @@ public class ProfileAddress extends BaseFragment implements Common, ProfileAddre
                     profileAddressBinding.spinnerNationality.setAdapter(adapter);
 
 
-                    if (profileBean != null ) {
-                            for (int i = 0; i < arrayList.size(); i++) {
-                                if (arrayList.get(i).equalsIgnoreCase(profileBean.getCountryCode())) {
-                                    String str = profileBean.getCountryCode();
-                                    String cap = str.substring(0, 1).toUpperCase() + str.substring(1);
-                                    int pos = adapter.getPosition(cap);
-                                    profileAddressBinding.spinnerNationality.setSelection(pos);
-                                }
+                    if (profileBean != null) {
+                        for (int i = 0; i < arrayList.size(); i++) {
+                            if (arrayList.get(i).equalsIgnoreCase(profileBean.getCountryCode())) {
+                                String str = profileBean.getCountryCode();
+                                String cap = str.substring(0, 1).toUpperCase() + str.substring(1);
+                                int pos = adapter.getPosition(cap);
+                                profileAddressBinding.spinnerNationality.setSelection(pos);
                             }
+                        }
                     }
 
                 }

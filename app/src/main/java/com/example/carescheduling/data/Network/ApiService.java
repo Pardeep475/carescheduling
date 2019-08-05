@@ -199,7 +199,7 @@ public interface ApiService {
 
     @POST("DeleteAddress")
     Observable<Response<JsonElement>> DeleteAddress(
-            @Body PersonAddressList personAddressList);
+            @Body PersonAddressList.PersonAddress personAddressList);
 
     @POST("DeleteEmail")
     Observable<Response<JsonElement>> DeleteEmail(

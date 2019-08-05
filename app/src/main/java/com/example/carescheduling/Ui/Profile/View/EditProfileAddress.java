@@ -141,6 +141,7 @@ public class EditProfileAddress extends BaseFragment implements Common, EditProf
             RadioButton rdbtn = new RadioButton(getActivity());
             rdbtn.setId(View.generateViewId());
             rdbtn.setText(arrayList.get(i).getPersonAddress().getAddressTypeName());
+            rdbtn.setChecked(arrayList.get(i).getPersonAddress().getIsDefaultAddress());
             ll.addView(rdbtn);
         }
 //        ((ViewGroup) view.findViewById(id)).addView(ll);
@@ -157,6 +158,7 @@ public class EditProfileAddress extends BaseFragment implements Common, EditProf
             RadioButton rdbtn = new RadioButton(getActivity());
             rdbtn.setId(View.generateViewId());
             rdbtn.setText(arrayList.get(i).getPhoneTypeName());
+            rdbtn.setChecked(arrayList.get(i).getIsDefaultPhone());
             ll.addView(rdbtn);
         }
 //        ((ViewGroup) view.findViewById(id)).addView(ll);
@@ -172,6 +174,7 @@ public class EditProfileAddress extends BaseFragment implements Common, EditProf
             RadioButton rdbtn = new RadioButton(getActivity());
             rdbtn.setId(View.generateViewId());
             rdbtn.setText(arrayList.get(i).getEmailTypeName());
+            rdbtn.setChecked(arrayList.get(i).getIsDefaultEmail());
             ll.addView(rdbtn);
         }
 //        ((ViewGroup) view.findViewById(id)).addView(ll);
@@ -262,7 +265,7 @@ public class EditProfileAddress extends BaseFragment implements Common, EditProf
             for (int i = 0; i < profileResultBean.getPersonAddressList().size(); i++) {
                 if (profileResultBean.getPersonAddressList().get(i).getPersonAddress().getAddressTypeName().equalsIgnoreCase(address)) {
                     showDialog();
-                    editProfileAddressViewModel.DeleteAddress(profileResultBean.getPersonAddressList().get(i)).observe(this, new Observer<Boolean>() {
+                    editProfileAddressViewModel.DeleteAddress(profileResultBean.getPersonAddressList().get(i).getPersonAddress()).observe(this, new Observer<Boolean>() {
                         @Override
                         public void onChanged(Boolean aBoolean) {
                             hideDialog();

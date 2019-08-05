@@ -78,12 +78,16 @@ public class EditPhoneNumber extends BaseFragment implements Common {
         setCommonData();
         sessionManager = getSessionManager();
         editPhoneNumberViewModel = ViewModelProviders.of(this).get(EditPhoneNumberViewModel.class);
-        if (profileBean.getCanNotCall() != null) {
-            editPhoneNumberBinding.rbDoNotCall.setSelected((boolean) profileBean.getCanNotCall());
-        }
+
         setCodePrefix();
         setPhoneType();
         setEditPhoneNumber();
+        if (profileBean.getCanNotCall() != null) {
+            editPhoneNumberBinding.rbDoNotCall.setChecked((boolean) profileBean.getCanNotCall());
+        }
+        if (profileBean != null &&  profileBean.getIsDefaultPhone() != null)
+            editPhoneNumberBinding.rbDefaultNumber.setChecked(profileBean.getIsDefaultPhone());
+
     }
 
     private void setCommonData() {
@@ -106,15 +110,16 @@ public class EditPhoneNumber extends BaseFragment implements Common {
                 if (countryCodes != null && countryCodes.size() > 0) {
                     for (int i = 0; i < countryCodes.size(); i++) {
                         if (i == 0)
-                            arrayList.add("Select Country");
-                        arrayList.add(countryCodes.get(i).getCountryName());
+                            arrayList.add("Select Country Code");
+                        arrayList.add(countryCodes.get(i).getCountryName().trim());
                     }
                     CustomAdapter adapter = new CustomAdapter(getActivity(),
                             R.layout.item_spinner_sf, R.id.title, arrayList);
                     editPhoneNumberBinding.spinnerCountryCode.setAdapter(adapter);
+
                     if (profileBean != null && profileBean.getCountryTelephonePrefix() != null) {
                         int pos = adapter.getPosition(profileBean.getCountryTelephonePrefix());
-                        editPhoneNumberBinding.spinnerPhoneType.setSelection(pos);
+                        editPhoneNumberBinding.spinnerCountryCode.setSelection(pos);
                     }
                 }
 

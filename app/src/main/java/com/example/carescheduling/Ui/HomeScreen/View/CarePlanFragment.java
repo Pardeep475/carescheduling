@@ -12,6 +12,8 @@ import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseFragment;
 import com.example.carescheduling.Ui.Common.Common;
 import com.example.carescheduling.Ui.Common.CommonBean;
+import com.example.carescheduling.Ui.Common.ScrollViewExt;
+import com.example.carescheduling.Ui.Common.ScrollViewListener;
 import com.example.carescheduling.Ui.HomeScreen.ViewModel.CarePlanViewModal;
 import com.example.carescheduling.Ui.HomeScreen.adapter.CarePlanAdapter;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientCarePlan;
@@ -31,9 +33,12 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-public class CarePlanFragment extends BaseFragment implements Common, CarePlanAdapterClick {
+public class CarePlanFragment extends BaseFragment implements Common, CarePlanAdapterClick, ScrollViewListener {
     private ClientInfoCarePlanFragmentBinding clientInfoCarePlanFragmentBinding;
     private CarePlanViewModal carePlanViewModal;
+    private ArrayList<ClientInfoCarePlanRetro.DataList> dataListArrayList;
+    private int startPosition = 0;
+    private int endPosition = 5;
 
     public static CarePlanFragment newInstance() {
         return new CarePlanFragment();
@@ -52,8 +57,9 @@ public class CarePlanFragment extends BaseFragment implements Common, CarePlanAd
     private void setUpView(View view) {
         setCommonData();
         carePlanViewModal = ViewModelProviders.of(this).get(CarePlanViewModal.class);
-
+        clientInfoCarePlanFragmentBinding.svCarePlan.setScrollViewListener(this);
         clientInfoCarePlanFragmentBinding.slDemo.startShimmerAnimation();
+        dataListArrayList = new ArrayList<>();
         try {
             if (ConnectivityReceiver.isNetworkAvailable(getActivity())) {
                 setUpRecyclerView(view);
@@ -85,20 +91,23 @@ public class CarePlanFragment extends BaseFragment implements Common, CarePlanAd
     private void setUpRecyclerView(View view) {
         if (getActivity() != null) {
 
-            carePlanViewModal.getCarePlan("5F98AF4F-25DC-4AC8-B867-C5072C100000",
-                    "5F98AF4F-25DC-4AC8-B867-C5072C101011",
-                    "978E55D2-B7B9-49E0-A654-14B70EB1A344").observe(this,
-                    new Observer<ArrayList<ScheduleClientList>>() {
-                @Override
-                public void onChanged(ArrayList<ScheduleClientList> data) {
-                    if (data != null && data.size() > 0) {
-                        setLayoutDynamic(clientInfoCarePlanFragmentBinding.llCarePlan, data);
-                        setDataOriginal();
-                    } else {
-                        setNoDataFound();
-                    }
-                }
-            });
+            carePlanViewModal.getCarePlan(getSessionManager().getCustomerId(),
+                    getSessionManager().getBranchId(),
+                    getSessionManager().getClientId()
+            ).observe(this,
+                    new Observer<ArrayList<ClientInfoCarePlanRetro.DataList>>() {
+                        @Override
+                        public void onChanged(ArrayList<ClientInfoCarePlanRetro.DataList> data) {
+                            if (data != null && data.size() > 0) {
+                                dataListArrayList = data;
+                                clientInfoCarePlanFragmentBinding.llCarePlan.removeAllViews();
+                                setLayoutDynamic(clientInfoCarePlanFragmentBinding.llCarePlan, data);
+                                setDataOriginal();
+                            } else {
+                                setNoDataFound();
+                            }
+                        }
+                    });
         }
     }
 
@@ -164,11 +173,11 @@ public class CarePlanFragment extends BaseFragment implements Common, CarePlanAd
 
     }
 
-    private void setLayoutDynamic(LinearLayout linearLayout, ArrayList<ScheduleClientList> dataLists) {
+    private void setLayoutDynamic(LinearLayout linearLayout, ArrayList<ClientInfoCarePlanRetro.DataList> dataLists) {
         String weekday = "";
         LinearLayout ll_nested = null;
-        linearLayout.removeAllViews();
-        for (int i = 0; i < dataLists.size(); i++) {
+
+        for (int i = startPosition; i < endPosition; i++) {
             if (!weekday.equalsIgnoreCase(dataLists.get(i).getWeekRotationTypeName())) {
                 weekday = dataLists.get(i).getWeekRotationTypeName();
                 View v = LayoutInflater.from(getActivity()).inflate(R.layout.item_linet_are_plan, null);
@@ -186,12 +195,33 @@ public class CarePlanFragment extends BaseFragment implements Common, CarePlanAd
         }
     }
 
-    private void setLayoutNested(LinearLayout linearLayout, ScheduleClientList dataList) {
+    private void setLayoutNested(LinearLayout linearLayout, ClientInfoCarePlanRetro.DataList dataList) {
         View v = LayoutInflater.from(getActivity()).inflate(R.layout.item_nested_client_care_plan, null);
         linearLayout.addView(v);
         TextView txt_document = v.findViewById(R.id.txt_document);
         TextView txt_date = v.findViewById(R.id.txt_date);
         txt_document.setText(dataList.getWeekdayName());
         txt_date.setText(dataList.getTimeTableName());
+    }
+
+    @Override
+    public void onScrollChanged(ScrollViewExt scrollView, int x, int y, int oldx, int oldy) {
+        // We take the last son in the scrollview
+        View view = (View) scrollView.getChildAt(scrollView.getChildCount() - 1);
+        int diff = (view.getBottom() - (scrollView.getHeight() + scrollView.getScrollY()));
+
+        // if diff is zero, then the bottom has been reached
+        if (diff == 0) {
+            if (dataListArrayList.size() > (endPosition + 5)) {
+                startPosition = endPosition;
+                endPosition = endPosition +5;
+                setLayoutDynamic(clientInfoCarePlanFragmentBinding.llCarePlan, dataListArrayList);
+            } else {
+                startPosition = endPosition;
+                endPosition = dataListArrayList.size();
+                setLayoutDynamic(clientInfoCarePlanFragmentBinding.llCarePlan, dataListArrayList);
+            }
+            // do stuff
+        }
     }
 }

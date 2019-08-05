@@ -88,8 +88,11 @@ public class EditEmail extends BaseFragment implements Common {
     }
 
     private void setEditEmailData() {
+        if (profileBean != null)
         editEmailBinding.setPersonEmailList(profileBean);
-        editEmailBinding.rbDefaultEmail.setSelected(profileBean.getIsDefaultEmail());
+
+        if (profileBean != null &&  profileBean.getIsDefaultEmail() != null)
+            editEmailBinding.rbDefaultEmail.setChecked(profileBean.getIsDefaultEmail());
     }
 
 

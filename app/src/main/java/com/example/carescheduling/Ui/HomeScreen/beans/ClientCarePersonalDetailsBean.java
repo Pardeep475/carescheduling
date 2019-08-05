@@ -104,6 +104,9 @@ public class ClientCarePersonalDetailsBean {
         @SerializedName("Surname")
         @Expose
         private String surname;
+        @SerializedName("GenderTypeName")
+        @Expose
+        private String genderTypeName;
 
         public String getDateOfBirth() {
             return dateOfBirth;
@@ -217,5 +220,13 @@ public class ClientCarePersonalDetailsBean {
             this.surname = surname;
         }
 
+
+        public String getGenderTypeName() {
+            return genderTypeName;
+        }
+
+        public void setGenderTypeName(String genderTypeName) {
+            this.genderTypeName = genderTypeName;
+        }
     }
 }

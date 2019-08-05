@@ -150,6 +150,7 @@
     <string name="edit_my_user_caps">Edit My User</string>
     <string name="set_as_default">Set as default</string>
     <string name="phone_number">Phone Number</string>
+    <string name="booking_date">Booking Date:</string>
 
     <string-array name="home_array">
         <item>My Next Visit</item>

@@ -72,6 +72,8 @@ public class TodaysVisitFragment extends BaseFragment implements Common, HomeScr
     public void OnClickHomeScreen(int pos) {
         if (pos == 0) {
             setFragment(BlankFragment.newInstance());
+        } else if (pos == 2) {
+            setFragment(VisitArchiveFragment.newInstance(false));
         }
     }
 

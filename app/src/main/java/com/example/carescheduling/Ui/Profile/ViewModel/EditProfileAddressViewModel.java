@@ -146,7 +146,7 @@ public class EditProfileAddressViewModel extends AndroidViewModel {
         return data;
     }
 
-    public LiveData<Boolean> DeleteAddress(PersonAddressList personAddressList) {
+    public LiveData<Boolean> DeleteAddress(PersonAddressList.PersonAddress personAddressList) {
         final MutableLiveData<Boolean> data = new MutableLiveData<>();
 
         Disposable disposable = apiService.DeleteAddress(personAddressList)

@@ -38,8 +38,8 @@ public class CarePlanViewModal extends AndroidViewModel {
     }
 
 
-    public LiveData<ArrayList<ScheduleClientList>> getCarePlan(String customerId, String branchId, String clientId) {
-        final MutableLiveData<ArrayList<ScheduleClientList>> data = new MutableLiveData<>();
+    public LiveData<ArrayList<ClientInfoCarePlanRetro.DataList>> getCarePlan(String customerId, String branchId, String clientId) {
+        final MutableLiveData<ArrayList<ClientInfoCarePlanRetro.DataList>> data = new MutableLiveData<>();
         try {
 
             Disposable disposable = apiService.GetClientCarePlanSchedule(customerId, branchId, clientId)
@@ -51,9 +51,9 @@ public class CarePlanViewModal extends AndroidViewModel {
                             Log.e("LoginSuccess", "success");
                             if (loginBeanRetroResponse.isSuccessful()) {
                                 if (loginBeanRetroResponse.body() != null && loginBeanRetroResponse.body().getDataList() != null && loginBeanRetroResponse.body().getDataList().size() > 0) {
-                                    ArrayList<ScheduleClientList> clientLists = new ArrayList<>();
+                                    ArrayList<ClientInfoCarePlanRetro.DataList> clientLists = new ArrayList<>();
                                     for (int i = 0; i < loginBeanRetroResponse.body().getDataList().size(); i++) {
-                                        clientLists.addAll(loginBeanRetroResponse.body().getDataList().get(i).getScheduleClientList());
+                                        clientLists.addAll(loginBeanRetroResponse.body().getDataList());
                                     }
                                     data.setValue(clientLists);
                                 } else {

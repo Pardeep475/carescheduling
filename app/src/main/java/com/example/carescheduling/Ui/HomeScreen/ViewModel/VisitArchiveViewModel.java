@@ -2,6 +2,9 @@ package com.example.carescheduling.Ui.HomeScreen.ViewModel;
 
 import android.app.Application;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -52,6 +55,7 @@ public class VisitArchiveViewModel extends AndroidViewModel {
                             if (loginBeanRetroResponse.isSuccessful()) {
                                 if (loginBeanRetroResponse.body() != null) {
                                     data.setValue(getVisitArchive(loginBeanRetroResponse.body()));
+//                                    data.setValue(loginBeanRetroResponse.body().getDataList());
                                 } else {
                                     data.setValue(null);
                                     Toast.makeText(getApplication(), (String) loginBeanRetroResponse.body().getResponseMessage(), Toast.LENGTH_SHORT).show();
@@ -78,10 +82,15 @@ public class VisitArchiveViewModel extends AndroidViewModel {
         if (body.getDataList() != null) {
             for (int i = 0; i < body.getDataList().size(); i++) {
                 VisitArchiveAdapterBean visitArchiveAdapterBean = new VisitArchiveAdapterBean();
-
-                visitArchiveAdapterBean.setVisitTime(checkIsNotNullWithOutNA(body.getDataList().get(i).getVisitStartTime()) + " - " +
-                        checkIsNotNullWithOutNA(body.getDataList().get(i).getVisitEndTime()));
-
+                visitArchiveAdapterBean.setVisitTime(checkIsNotNullWithOutNA(body.getDataList().get(i).getBookingStartTime()) + " - " +
+                        checkIsNotNullWithOutNA(body.getDataList().get(i).getBookingEndTime()));
+                visitArchiveAdapterBean.setVisitDate(checkIsNotNullWithOutNA(body.getDataList().get(i).getBookingDate()));
+                visitArchiveAdapterBean.setAddress(checkIsNotNullWithOutNA(body.getDataList().get(i).getPersonAddress()));
+                visitArchiveAdapterBean.setName(checkIsNotNullWithOutNA(body.getDataList().get(i).getClientName()));
+                visitArchiveAdapterBean.setTelephone(checkIsNotNullWithOutNA(body.getDataList().get(i).getClientPhoneNumber()));
+                visitArchiveAdapterBean.setEmail(checkIsNotNullWithOutNA((String) body.getDataList().get(i).getEmailAddress()));
+                if (!checkIsNotNull((String) body.getDataList().get(i).getImageHexString()).equalsIgnoreCase("N/A"))
+                    visitArchiveAdapterBean.setImage(ImageFromBase64((String) body.getDataList().get(i).getImageHexString()));
                 visitArchiveAdapterBeanArrayList.add(visitArchiveAdapterBean);
             }
         }
@@ -104,6 +113,10 @@ public class VisitArchiveViewModel extends AndroidViewModel {
         return value != null && !value.equalsIgnoreCase("null") ? value : "";
     }
 
+    private Bitmap ImageFromBase64(String img) {
+        byte[] decodedString = Base64.decode(img, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+    }
 
     @Override
     protected void onCleared() {
