@@ -80,10 +80,7 @@ public class BlankFragment extends BaseFragment implements Common, MyNextVisitCl
 
     @Override
     public void ClientTask() {
-//        if (tasksArrayList.size() > 0)
-//            setFragment(ClientTasksFragment.newInstance(tasksArrayList));
-//        else
-//            Toast.makeText(getActivity(), "Data not found", Toast.LENGTH_SHORT).show();
+        setFragment(ClientTasksFragment.newInstance());
     }
 
     private void setFragment(Fragment fragment) {

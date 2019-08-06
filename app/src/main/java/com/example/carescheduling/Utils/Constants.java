@@ -19,6 +19,7 @@ public class Constants {
     public static String IS_USER_LOGIN = "is_user_login";
     public static String CURRENT_PASSWORD = "current_password";
     public static String CLIENT_ID = "client_id";
+    public static String CLIENT_TASK = "client_tasks";
     public static final int REQUEST_CAMERA = 1111;
     public static final int SELECT_FILE = 1112;
 }

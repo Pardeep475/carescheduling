@@ -49,14 +49,16 @@ public class ProfileAddress extends BaseFragment implements Common, ProfileAddre
     private ProfileAddressViewModel profileAddressViewModel;
     private String stringValue;
     private PersonAddressList profileBean;
+    ArrayList<PersonAddressList> personAddressList = new ArrayList();
     private List<AddressData> addressTypesList = new ArrayList<>();
 
     // TODO: Rename and change types and number of parameters
-    public static ProfileAddress newInstance(String value, PersonAddressList profileBean) {
+    public static ProfileAddress newInstance(String value, PersonAddressList profileBean, ArrayList<PersonAddressList> personAddressList) {
         ProfileAddress profileAddress = new ProfileAddress();
         Bundle bundle = new Bundle();
         bundle.putString(Constants.STRING_VALUE, value);
         bundle.putSerializable(Constants.PROFILE_DATA, profileBean);
+        bundle.putSerializable("PersonAddressList", personAddressList);
         profileAddress.setArguments(bundle);
         return profileAddress;
     }
@@ -67,6 +69,7 @@ public class ProfileAddress extends BaseFragment implements Common, ProfileAddre
         if (getArguments() != null) {
             stringValue = getArguments().getString(Constants.STRING_VALUE);
             profileBean = (PersonAddressList) getArguments().getSerializable(Constants.PROFILE_DATA);
+            personAddressList = (ArrayList<PersonAddressList>) getArguments().getSerializable("PersonAddressList");
         }
     }
 
@@ -252,6 +255,10 @@ public class ProfileAddress extends BaseFragment implements Common, ProfileAddre
     private void setDataRemote() {
         if (getActivity() != null && ConnectivityReceiver.isNetworkAvailable(getActivity())) {
             if (validation()) {
+                if (TypeNameAlreadyExist()) {
+                    showAToast("Address type name already taken please select other one");
+                    return;
+                }
                 showDialog();
                 profileAddressViewModel.EditAddress(getAddAddressBean()).observe(this, new Observer<Boolean>() {
                     @Override
@@ -276,6 +283,18 @@ public class ProfileAddress extends BaseFragment implements Common, ProfileAddre
 
     }
 
+    private boolean TypeNameAlreadyExist() {
+        if (personAddressList == null)
+            return false;
+        if (stringValue.equalsIgnoreCase((String) profileAddressBinding.spinnerAddressType.getSelectedItem()))
+            return false;
+        for (int i = 0; i < personAddressList.size(); i++) {
+            if (personAddressList.get(i).getPersonAddress().getAddressTypeName().equalsIgnoreCase((String) profileAddressBinding.spinnerAddressType.getSelectedItem())) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     private EditAdressBeanRetro getAddAddressBean() {
         EditAdressBeanRetro editAdressBeanRetro = new EditAdressBeanRetro();

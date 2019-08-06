@@ -24,6 +24,7 @@ import com.example.carescheduling.Ui.Profile.Adapter.CustomAdapter;
 import com.example.carescheduling.Ui.Profile.ViewModel.AddEmailViewModel;
 import com.example.carescheduling.Ui.Profile.bean.AddEmailBeanRetro;
 import com.example.carescheduling.Ui.Profile.bean.EditEmailBean;
+import com.example.carescheduling.Ui.Profile.bean.PersonEmailList;
 import com.example.carescheduling.Utils.ConnectivityReceiver;
 import com.example.carescheduling.Utils.Constants;
 import com.example.carescheduling.data.Local.DatabaseTable.EmailType;
@@ -36,15 +37,25 @@ import java.util.List;
 public class AddEmail extends BaseFragment implements Common {
     private AddEmailFragmentBinding editEmailBinding;
     private AddEmailViewModel editEmailViewModel;
+    private ArrayList<PersonEmailList> personEmailList;
 
-    public static AddEmail newInstance() {
-        return new AddEmail();
+    public static AddEmail newInstance(ArrayList<PersonEmailList> personEmailList) {
+        AddEmail editEmail = new AddEmail();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("PersonEmailList", personEmailList);
+        editEmail.setArguments(bundle);
+        return editEmail;
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            personEmailList = (ArrayList<PersonEmailList>) getArguments().getSerializable("PersonEmailList");
+        }
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -123,6 +134,10 @@ public class AddEmail extends BaseFragment implements Common {
     private void setDataRemote() {
         if (getActivity() != null && ConnectivityReceiver.isNetworkAvailable(getActivity())) {
             if (validation()) {
+                if (TypeNameAlreadyExist()) {
+                    showAToast("Email type name already taken please select other one");
+                    return;
+                }
                 showDialog();
                 editEmailViewModel.AddEmail(AddEmailRetro()).observe(this, new Observer<Boolean>() {
                     @Override
@@ -146,6 +161,18 @@ public class AddEmail extends BaseFragment implements Common {
         }
     }
 
+    private boolean TypeNameAlreadyExist() {
+        if (personEmailList == null)
+            return false;
+        for (int i = 0; i < personEmailList.size(); i++) {
+            if (personEmailList.get(i).getEmailTypeName().equalsIgnoreCase((String) editEmailBinding.spinnerEmailType.getSelectedItem())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
     private AddEmailBeanRetro AddEmailRetro() {
         AddEmailBeanRetro addEmailBeanRetro = new AddEmailBeanRetro();
         addEmailBeanRetro.setCustomerId(getSessionManager().getCustomerId());
@@ -157,7 +184,7 @@ public class AddEmail extends BaseFragment implements Common {
     }
 
     private boolean validation() {
-         if (editEmailBinding.spinnerEmailType.getSelectedItemPosition() <= 0) {
+        if (editEmailBinding.spinnerEmailType.getSelectedItemPosition() <= 0) {
             showAToast("Please select email type");
             return false;
         }

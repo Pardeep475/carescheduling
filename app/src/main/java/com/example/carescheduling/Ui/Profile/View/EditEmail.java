@@ -39,12 +39,14 @@ public class EditEmail extends BaseFragment implements Common {
     private String stringValue;
     private PersonEmailList profileBean;
     private EditEmailViewModel editEmailViewModel;
+    private ArrayList<PersonEmailList> personEmailList;
 
-    public static EditEmail newInstance(String value, PersonEmailList profileBean) {
+    public static EditEmail newInstance(String value, PersonEmailList profileBean, ArrayList<PersonEmailList> personEmailList) {
         EditEmail editEmail = new EditEmail();
         Bundle bundle = new Bundle();
         bundle.putString(Constants.STRING_VALUE, value);
         bundle.putSerializable(Constants.PROFILE_DATA, profileBean);
+        bundle.putSerializable("PersonEmailList", personEmailList);
         editEmail.setArguments(bundle);
         return editEmail;
     }
@@ -55,6 +57,7 @@ public class EditEmail extends BaseFragment implements Common {
         if (getArguments() != null) {
             stringValue = getArguments().getString(Constants.STRING_VALUE);
             profileBean = (PersonEmailList) getArguments().getSerializable(Constants.PROFILE_DATA);
+            personEmailList = (ArrayList<PersonEmailList>) getArguments().getSerializable("PersonEmailList");
         }
     }
 
@@ -89,9 +92,9 @@ public class EditEmail extends BaseFragment implements Common {
 
     private void setEditEmailData() {
         if (profileBean != null)
-        editEmailBinding.setPersonEmailList(profileBean);
+            editEmailBinding.setPersonEmailList(profileBean);
 
-        if (profileBean != null &&  profileBean.getIsDefaultEmail() != null)
+        if (profileBean != null && profileBean.getIsDefaultEmail() != null)
             editEmailBinding.rbDefaultEmail.setChecked(profileBean.getIsDefaultEmail());
     }
 
@@ -148,6 +151,10 @@ public class EditEmail extends BaseFragment implements Common {
     private void setDataRemote() {
         if (getActivity() != null && ConnectivityReceiver.isNetworkAvailable(getActivity())) {
             if (validation()) {
+                if (TypeNameAlreadyExist()) {
+                    showAToast("Email type name already taken please select other one");
+                    return;
+                }
                 showDialog();
                 editEmailViewModel.EditEmail(EditEmailRetro()).observe(this, new Observer<Boolean>() {
                     @Override
@@ -169,6 +176,19 @@ public class EditEmail extends BaseFragment implements Common {
         } else {
             Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private boolean TypeNameAlreadyExist() {
+        if (personEmailList == null)
+            return false;
+        if (stringValue.equalsIgnoreCase((String) editEmailBinding.spinnerEmailType.getSelectedItem()) )
+            return false;
+        for (int i = 0; i < personEmailList.size(); i++) {
+            if (personEmailList.get(i).getEmailTypeName().equalsIgnoreCase((String) editEmailBinding.spinnerEmailType.getSelectedItem())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private EditEmailRetroBean EditEmailRetro() {

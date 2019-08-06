@@ -45,12 +45,14 @@ public class EditPhoneNumber extends BaseFragment implements Common {
     private String stringValue;
     private PersonPhoneList profileBean;
     private EditPhoneNumberViewModel editPhoneNumberViewModel;
+    private ArrayList<PersonPhoneList> personPhoneList;
 
-    public static EditPhoneNumber newInstance(String value, PersonPhoneList profileBean) {
+    public static EditPhoneNumber newInstance(String value, PersonPhoneList profileBean, ArrayList<PersonPhoneList> personPhoneList) {
         EditPhoneNumber editPhoneNumber = new EditPhoneNumber();
         Bundle bundle = new Bundle();
         bundle.putString(Constants.STRING_VALUE, value);
         bundle.putSerializable(Constants.PROFILE_DATA, profileBean);
+        bundle.putSerializable("PersonPhoneList", personPhoneList);
         editPhoneNumber.setArguments(bundle);
         return editPhoneNumber;
     }
@@ -61,6 +63,7 @@ public class EditPhoneNumber extends BaseFragment implements Common {
         if (getArguments() != null) {
             stringValue = getArguments().getString(Constants.STRING_VALUE);
             profileBean = (PersonPhoneList) getArguments().getSerializable(Constants.PROFILE_DATA);
+            personPhoneList = (ArrayList<PersonPhoneList>) getArguments().getSerializable("PersonPhoneList");
         }
     }
 
@@ -85,7 +88,7 @@ public class EditPhoneNumber extends BaseFragment implements Common {
         if (profileBean.getCanNotCall() != null) {
             editPhoneNumberBinding.rbDoNotCall.setChecked((boolean) profileBean.getCanNotCall());
         }
-        if (profileBean != null &&  profileBean.getIsDefaultPhone() != null)
+        if (profileBean != null && profileBean.getIsDefaultPhone() != null)
             editPhoneNumberBinding.rbDefaultNumber.setChecked(profileBean.getIsDefaultPhone());
 
     }
@@ -181,6 +184,10 @@ public class EditPhoneNumber extends BaseFragment implements Common {
     private void setDataRemote() {
         if (getActivity() != null && ConnectivityReceiver.isNetworkAvailable(getActivity())) {
             if (validation()) {
+                if (TypeNameAlreadyExist()) {
+                    showAToast("Phone type name already taken please select other one");
+                    return;
+                }
                 showDialog();
                 editPhoneNumberViewModel.EditNumber(EditNumber()).observe(this, new Observer<Boolean>() {
                     @Override
@@ -205,7 +212,18 @@ public class EditPhoneNumber extends BaseFragment implements Common {
             Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
         }
     }
-
+    private boolean TypeNameAlreadyExist() {
+        if (personPhoneList == null)
+            return false;
+        if (stringValue.equalsIgnoreCase((String)  editPhoneNumberBinding.spinnerPhoneType.getSelectedItem()) )
+            return false;
+        for (int i = 0; i < personPhoneList.size(); i++) {
+            if (personPhoneList.get(i).getPhoneTypeName().equalsIgnoreCase((String) editPhoneNumberBinding.spinnerPhoneType.getSelectedItem())) {
+                return true;
+            }
+        }
+        return false;
+    }
     private EditNumberBeanRetro EditNumber() {
         EditNumberBeanRetro editPhoneNumberBean = new EditNumberBeanRetro();
         editPhoneNumberBean.setCustomerId(getSessionManager().getCustomerId());

@@ -25,6 +25,7 @@ import com.example.carescheduling.Ui.Profile.ViewModel.AddAddressViewModel;
 import com.example.carescheduling.Ui.Profile.bean.AddAddressBeanRetro;
 import com.example.carescheduling.Ui.Profile.bean.AddressByPostCode;
 import com.example.carescheduling.Ui.Profile.bean.AddressData;
+import com.example.carescheduling.Ui.Profile.bean.PersonAddressList;
 import com.example.carescheduling.Ui.Profile.bean.ProfileAddressBean;
 import com.example.carescheduling.Ui.Profile.presenter.ProfileAddressClick;
 import com.example.carescheduling.Utils.ConnectivityReceiver;
@@ -40,16 +41,23 @@ public class AddAddress extends BaseFragment implements Common, ProfileAddressCl
     private AddAddressFragmentBinding profileAddressBinding;
     private AddAddressViewModel profileAddressViewModel;
     private List<AddressData> addressTypesList = new ArrayList<>();
+    ArrayList<PersonAddressList> personAddressList = new ArrayList();
 
     // TODO: Rename and change types and number of parameters
-    public static AddAddress newInstance() {
-        return new AddAddress();
+    public static AddAddress newInstance(ArrayList<PersonAddressList> personAddressList) {
+        AddAddress profileAddress = new AddAddress();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("PersonAddressList", personAddressList);
+        profileAddress.setArguments(bundle);
+        return profileAddress;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        if (getArguments() != null) {
+            personAddressList = (ArrayList<PersonAddressList>) getArguments().getSerializable("PersonAddressList");
+        }
     }
 
     @Override
@@ -135,7 +143,7 @@ public class AddAddress extends BaseFragment implements Common, ProfileAddressCl
             showAToast("Select nationality");
             hideDialog();
             return;
-        }else if (TextUtils.isEmpty(profileAddressBinding.edtPostCode.getText().toString())){
+        } else if (TextUtils.isEmpty(profileAddressBinding.edtPostCode.getText().toString())) {
             showAToast("Select postal code");
             hideDialog();
             return;
@@ -143,63 +151,67 @@ public class AddAddress extends BaseFragment implements Common, ProfileAddressCl
 
         profileAddressViewModel.getAddressByPostCode(profileAddressBinding.spinnerNationality.getSelectedItem().toString(), profileAddressBinding.edtPostCode.getText().toString())
                 .observe(this, new Observer<AddressByPostCode>() {
-            @Override
-            public void onChanged(AddressByPostCode addressByPostCode) {
-                hideDialog();
-
-                profileAddressViewModel.FetchAddressSpinnerData(addressByPostCode).observe(AddAddress.this, new Observer<ArrayList<AddressData>>() {
                     @Override
-                    public void onChanged(ArrayList<AddressData> addressData) {
-                        addressTypesList = addressData;
-                        ArrayList<String> arrayList1 = new ArrayList<>();
-                        for (int i = 0; i < addressData.size(); i++) {
-                            arrayList1.add(addressData.get(i).getAddressType());
-                        }
-                        CustomAdapter adapter = new CustomAdapter(getActivity(),
-                                R.layout.item_spinner_sf, R.id.title, arrayList1);
-                        profileAddressBinding.spinnerAddress.setAdapter(adapter);
+                    public void onChanged(AddressByPostCode addressByPostCode) {
+                        hideDialog();
 
-
-                        profileAddressBinding.llMain.setVisibility(View.VISIBLE);
-
-                    }
-                });
-
-                profileAddressViewModel.FetchAddressSpinnerContent(addressByPostCode).observe(AddAddress.this, new Observer<ArrayList<ProfileAddressBean>>() {
-                    @Override
-                    public void onChanged(final ArrayList<ProfileAddressBean> profileAddressBeans) {
-                        profileAddressBinding.spinnerAddress.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        profileAddressViewModel.FetchAddressSpinnerData(addressByPostCode).observe(AddAddress.this, new Observer<ArrayList<AddressData>>() {
                             @Override
-                            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                                // your code here
-                                profileAddressBinding.setProfileAddressBean(profileAddressBeans.get(position));
-                                if (profileAddressBeans.get(position).getCountry() != null) {
-                                    CustomAdapter customAdapter = (CustomAdapter) profileAddressBinding.spinnerNationality.getAdapter();
-                                    String str = profileAddressBeans.get(position).getCountry();
-                                    String cap = str.substring(0, 1).toUpperCase() + str.substring(1);
-                                    int pos = customAdapter.getPosition(cap);
-                                    profileAddressBinding.spinnerNationality.setSelection(pos);
+                            public void onChanged(ArrayList<AddressData> addressData) {
+                                addressTypesList = addressData;
+                                ArrayList<String> arrayList1 = new ArrayList<>();
+                                for (int i = 0; i < addressData.size(); i++) {
+                                    arrayList1.add(addressData.get(i).getAddressType());
                                 }
-                            }
+                                CustomAdapter adapter = new CustomAdapter(getActivity(),
+                                        R.layout.item_spinner_sf, R.id.title, arrayList1);
+                                profileAddressBinding.spinnerAddress.setAdapter(adapter);
 
+
+                                profileAddressBinding.llMain.setVisibility(View.VISIBLE);
+
+                            }
+                        });
+
+                        profileAddressViewModel.FetchAddressSpinnerContent(addressByPostCode).observe(AddAddress.this, new Observer<ArrayList<ProfileAddressBean>>() {
                             @Override
-                            public void onNothingSelected(AdapterView<?> parentView) {
-                                // your code here
-                            }
+                            public void onChanged(final ArrayList<ProfileAddressBean> profileAddressBeans) {
+                                profileAddressBinding.spinnerAddress.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                    @Override
+                                    public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                                        // your code here
+                                        profileAddressBinding.setProfileAddressBean(profileAddressBeans.get(position));
+                                        if (profileAddressBeans.get(position).getCountry() != null) {
+                                            CustomAdapter customAdapter = (CustomAdapter) profileAddressBinding.spinnerNationality.getAdapter();
+                                            String str = profileAddressBeans.get(position).getCountry();
+                                            String cap = str.substring(0, 1).toUpperCase() + str.substring(1);
+                                            int pos = customAdapter.getPosition(cap);
+                                            profileAddressBinding.spinnerNationality.setSelection(pos);
+                                        }
+                                    }
 
+                                    @Override
+                                    public void onNothingSelected(AdapterView<?> parentView) {
+                                        // your code here
+                                    }
+
+                                });
+
+                            }
                         });
 
                     }
                 });
-
-            }
-        });
     }
 
 
     private void setDataRemote() {
         if (getActivity() != null && ConnectivityReceiver.isNetworkAvailable(getActivity())) {
             if (validation()) {
+                if (TypeNameAlreadyExist()) {
+                    showAToast("Address type name already taken please select other one");
+                    return;
+                }
                 showDialog();
                 profileAddressViewModel.AddAddress(getAddAddressBean()).observe(this, new Observer<Boolean>() {
                     @Override
@@ -224,7 +236,16 @@ public class AddAddress extends BaseFragment implements Common, ProfileAddressCl
 
     }
 
-
+    private boolean TypeNameAlreadyExist() {
+        if (personAddressList == null)
+            return false;
+        for (int i = 0; i < personAddressList.size(); i++) {
+            if (personAddressList.get(i).getPersonAddress().getAddressTypeName().equalsIgnoreCase((String)profileAddressBinding.spinnerAddressType.getSelectedItem())) {
+                return true;
+            }
+        }
+        return false;
+    }
     private AddAddressBeanRetro getAddAddressBean() {
         AddAddressBeanRetro addAddressBeanRetro = new AddAddressBeanRetro();
         addAddressBeanRetro.setAddressTypeName((String) profileAddressBinding.spinnerAddressType.getSelectedItem());

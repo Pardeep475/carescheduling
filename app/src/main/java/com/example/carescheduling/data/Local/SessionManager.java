@@ -65,4 +65,12 @@ public class SessionManager {
     public String getClientId() {
         return sharedPreferences.getString(Constants.CLIENT_ID, null);
     }
+
+    public void setClientTasks(String clientTasks) {
+        sharedPreferenceEditor.putString(Constants.CLIENT_TASK, clientTasks).commit();
+    }
+
+    public String getClientTasks() {
+        return sharedPreferences.getString(Constants.CLIENT_TASK, null);
+    }
 }

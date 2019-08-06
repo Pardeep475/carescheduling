@@ -389,7 +389,7 @@
                         android:layout_marginStart="@dimen/twenty_dp"
                         android:layout_weight=".7"
                         android:fontFamily="@font/rubik_light"
-                        android:text="Yes"
+                        android:text="@{editProfileInfoBean.disabaility}"
                         android:textSize="@dimen/sixteen_sp" />
 
                 </LinearLayout>

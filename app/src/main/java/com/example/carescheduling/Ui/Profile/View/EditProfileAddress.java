@@ -184,17 +184,17 @@ public class EditProfileAddress extends BaseFragment implements Common, EditProf
 
     @Override
     public void EditAddressClick() {
-        setFragment(AddAddress.newInstance());
+        setFragment(AddAddress.newInstance(profileResultBean.getPersonAddressList()));
     }
 
     @Override
     public void EditPhoneNumberClick() {
-        setFragment(AddPhoneNumber.newInstance());
+        setFragment(AddPhoneNumber.newInstance(profileResultBean.getPersonPhoneList()));
     }
 
     @Override
     public void EditEmailClick() {
-        setFragment(AddEmail.newInstance());
+        setFragment(AddEmail.newInstance(profileResultBean.getPersonEmailList()));
     }
 
     @Override
@@ -203,7 +203,7 @@ public class EditProfileAddress extends BaseFragment implements Common, EditProf
         if (!address.isEmpty()) {
             for (int i = 0; i < profileResultBean.getPersonAddressList().size(); i++) {
                 if (profileResultBean.getPersonAddressList().get(i).getPersonAddress().getAddressTypeName().equalsIgnoreCase(address)){
-                    setFragment(ProfileAddress.newInstance(address, profileResultBean.getPersonAddressList().get(i)));
+                    setFragment(ProfileAddress.newInstance(address, profileResultBean.getPersonAddressList().get(i),profileResultBean.getPersonAddressList()));
                     return;
                 }
             }
@@ -217,7 +217,7 @@ public class EditProfileAddress extends BaseFragment implements Common, EditProf
         if (!address.isEmpty()) {
             for (int i = 0; i < profileResultBean.getPersonPhoneList().size(); i++) {
                 if (profileResultBean.getPersonPhoneList().get(i).getPhoneTypeName().equalsIgnoreCase(address)){
-                    setFragment(EditPhoneNumber.newInstance(address, profileResultBean.getPersonPhoneList().get(i)));
+                    setFragment(EditPhoneNumber.newInstance(address, profileResultBean.getPersonPhoneList().get(i),profileResultBean.getPersonPhoneList()));
                     return;
                 }
             }
@@ -231,7 +231,7 @@ public class EditProfileAddress extends BaseFragment implements Common, EditProf
         if (!address.isEmpty()){
             for (int i = 0; i < profileResultBean.getPersonEmailList().size(); i++) {
                 if (profileResultBean.getPersonEmailList().get(i).getEmailTypeName().equalsIgnoreCase(address)){
-                    setFragment(EditEmail.newInstance(address,  profileResultBean.getPersonEmailList().get(i)));
+                    setFragment(EditEmail.newInstance(address,  profileResultBean.getPersonEmailList().get(i),profileResultBean.getPersonEmailList()));
                     return;
                 }
             }

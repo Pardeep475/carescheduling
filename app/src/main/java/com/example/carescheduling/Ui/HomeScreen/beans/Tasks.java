@@ -3,29 +3,54 @@ package com.example.carescheduling.Ui.HomeScreen.beans;
 import java.io.Serializable;
 
 public class Tasks implements Serializable {
-    private String title, shortTitle, description;
+    private String instruction, taskId, taskName, visitShiftName, visitTiming;
+    private boolean isCompleted;
 
-    public String getTitle() {
-        return title;
+    public String getInstruction() {
+        return instruction;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setInstruction(String instruction) {
+        this.instruction = instruction;
     }
 
-    public String getShortTitle() {
-        return shortTitle;
+    public String getTaskId() {
+        return taskId;
     }
 
-    public void setShortTitle(String shortTitle) {
-        this.shortTitle = shortTitle;
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
     }
 
-    public String getDescription() {
-        return description;
+    public String getTaskName() {
+        return taskName;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setTaskName(String taskName) {
+        this.taskName = taskName;
+    }
+
+    public String getVisitShiftName() {
+        return visitShiftName;
+    }
+
+    public void setVisitShiftName(String visitShiftName) {
+        this.visitShiftName = visitShiftName;
+    }
+
+    public String getVisitTiming() {
+        return visitTiming;
+    }
+
+    public void setVisitTiming(String visitTiming) {
+        this.visitTiming = visitTiming;
+    }
+
+    public boolean isCompleted() {
+        return isCompleted;
+    }
+
+    public void setCompleted(boolean completed) {
+        isCompleted = completed;
     }
 }

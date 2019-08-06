@@ -13,6 +13,7 @@ import com.example.carescheduling.Ui.HomeScreen.beans.ClientCarePlan;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientCareSummaryBean;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientDisabilityBean;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientInfoCarePlanRetro;
+import com.example.carescheduling.Ui.HomeScreen.beans.ClientTaskRetroBean;
 import com.example.carescheduling.Ui.HomeScreen.beans.VisitArchiveRetroBean;
 import com.example.carescheduling.Ui.LoginActivity.beans.LoginBeanRetro;
 import com.example.carescheduling.Ui.Profile.bean.AddAddressBeanRetro;
@@ -244,5 +245,9 @@ public interface ApiService {
     Observable<Response<JsonElement>> EditAddress(
             @Body EditAdressBeanRetro editAdressBeanRetro);
 
-
+    //    @GET("GetTodayClientTaskList/{customerId}/{branchId}/{clientId}")
+    @GET("GetTodayClientTaskList/EC38283E-BE96-4B38-A66B-89FE3C882D90/5F98AF4F-25DC-4AC8-B867-C5072C101011/5f98af4f-25dc-4ac8-b867-c5072c100000")
+    Observable<Response<ClientTaskRetroBean>> GetClientTask(/*@Path("customerId") String customerId,
+                                                            @Path("branchId") String branchId,
+                                                            @Path("clientId") String clientId*/);
 }

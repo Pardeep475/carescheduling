@@ -18,7 +18,9 @@ import com.example.carescheduling.Ui.Common.Common;
 import com.example.carescheduling.Ui.Common.CommonBean;
 import com.example.carescheduling.Ui.Profile.Adapter.CustomAdapter;
 import com.example.carescheduling.Ui.Profile.bean.AddPhoneNumberBeanRetro;
+import com.example.carescheduling.Ui.Profile.bean.PersonPhoneList;
 import com.example.carescheduling.Utils.ConnectivityReceiver;
+import com.example.carescheduling.Utils.Constants;
 import com.example.carescheduling.data.Local.DatabaseTable.CountryCode;
 import com.example.carescheduling.data.Local.DatabaseTable.PhoneType;
 
@@ -31,15 +33,22 @@ import com.example.carescheduling.databinding.AddPhoneNumberFragmentBinding;
 public class AddPhoneNumber extends BaseFragment implements Common {
     private AddPhoneNumberFragmentBinding editPhoneNumberBinding;
     private AddPhoneNumberViewModel editPhoneNumberViewModel;
+    private ArrayList<PersonPhoneList> personPhoneList;
 
-
-    public static AddPhoneNumber newInstance() {
-        return new AddPhoneNumber();
+    public static AddPhoneNumber newInstance(ArrayList<PersonPhoneList> personPhoneList) {
+        AddPhoneNumber editPhoneNumber = new AddPhoneNumber();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("PersonPhoneList", personPhoneList);
+        editPhoneNumber.setArguments(bundle);
+        return editPhoneNumber;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            personPhoneList = (ArrayList<PersonPhoneList>) getArguments().getSerializable("PersonPhoneList");
+        }
     }
 
     @Override
@@ -137,6 +146,10 @@ public class AddPhoneNumber extends BaseFragment implements Common {
     private void setDataRemote() {
         if (getActivity() != null && ConnectivityReceiver.isNetworkAvailable(getActivity())) {
             if (validation()) {
+                if (TypeNameAlreadyExist()) {
+                    showAToast("Phone type name already taken please select other one");
+                    return;
+                }
                 showDialog();
                 editPhoneNumberViewModel.AddPhone(AddNumber()).observe(this, new Observer<Boolean>() {
                     @Override
@@ -162,6 +175,17 @@ public class AddPhoneNumber extends BaseFragment implements Common {
         }
     }
 
+    private boolean TypeNameAlreadyExist() {
+        if (personPhoneList == null)
+            return false;
+        for (int i = 0; i < personPhoneList.size(); i++) {
+            if (personPhoneList.get(i).getPhoneTypeName().equalsIgnoreCase((String) editPhoneNumberBinding.spinnerPhoneType.getSelectedItem())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private AddPhoneNumberBeanRetro AddNumber() {
         AddPhoneNumberBeanRetro addPhoneNumberBeanRetro = new AddPhoneNumberBeanRetro();
         addPhoneNumberBeanRetro.setCustomerId(getSessionManager().getCustomerId());
@@ -170,7 +194,7 @@ public class AddPhoneNumber extends BaseFragment implements Common {
         addPhoneNumberBeanRetro.setPhoneNumber(editPhoneNumberBinding.edtNumber.getText().toString());
         addPhoneNumberBeanRetro.setPhoneTypeName((String) editPhoneNumberBinding.spinnerPhoneType.getSelectedItem());
         addPhoneNumberBeanRetro.setDefaultPhone(editPhoneNumberBinding.rbDefaultNumber.isChecked());
-        addPhoneNumberBeanRetro.setDefaultPhone(editPhoneNumberBinding.rbDoNotCall.isChecked());
+        addPhoneNumberBeanRetro.setCanNotCall(editPhoneNumberBinding.rbDoNotCall.isChecked());
         return addPhoneNumberBeanRetro;
     }
 
