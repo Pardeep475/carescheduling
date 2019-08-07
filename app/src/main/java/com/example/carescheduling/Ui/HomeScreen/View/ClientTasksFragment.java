@@ -157,9 +157,15 @@ public class ClientTasksFragment extends BaseFragment implements Common, IClient
 
     @Override
     public void itemTaskClick(int pos, Tasks tasks) {
-        tasks.setCompleted(true);
+        if (tasks.isCompleted()) {
+            tasks.setCompleted(false);
+            getItemArrayList().get(pos).setCompleted(false);
+        } else {
+            tasks.setCompleted(true);
+            getItemArrayList().get(pos).setCompleted(true);
+        }
         clientInfoDocumentsAdapter.notifyItemChanged(pos, tasks);
-        getItemArrayList().get(pos).setCompleted(true);
+
 //        clientInfoDocumentsAdapter.setData(tasksArrayList);
         getSessionManager().setClientTasks(gson.toJson(tasksArrayList));
 

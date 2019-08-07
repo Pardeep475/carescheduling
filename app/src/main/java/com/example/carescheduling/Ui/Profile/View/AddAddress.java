@@ -261,7 +261,7 @@ public class AddAddress extends BaseFragment implements Common, ProfileAddressCl
         if (profileAddressBinding.spinnerAddressType.getSelectedItemPosition() <= 0) {
             showAToast("please select address type");
             return false;
-        } else if (profileAddressBinding.spinnerAddress.getSelectedItemPosition() <= 0) {
+        } else if (profileAddressBinding.spinnerAddress.getSelectedItemPosition() < 0) {
             showAToast("please select address ");
             return false;
         }

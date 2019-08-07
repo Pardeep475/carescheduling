@@ -90,7 +90,7 @@ public class EditProfileInfoViewModel extends AndroidViewModel {
         EditProfileInfoBean editProfileInfoBean = new EditProfileInfoBean();
         if (data != null) {
             if (data.getDateOfBirth() != null)
-                editProfileInfoBean.setDateOfBirth("22-4-2019");
+                editProfileInfoBean.setDateOfBirth(checkIsNotNull(data.getDateOfBirth()));
             editProfileInfoBean.setFirstName(checkIsNotNull(data.getFirstName()));
             editProfileInfoBean.setMiddleName(checkIsNotNull(data.getMiddleName()));
             editProfileInfoBean.setSurName(checkIsNotNull(data.getSurName()));

@@ -105,12 +105,21 @@ public class EditProfileAddress extends BaseFragment implements Common, EditProf
                                     hideDialog();
                                     profileResultBean = editProfileInfoBean;
                                     if (profileResultBean != null && getView() != null) {
-                                        editProfileAddressBinding.setPersonAddressList(profileResultBean.getPersonAddressList().size());
-                                        editProfileAddressBinding.setPersonEmailList(profileResultBean.getPersonEmailList().size());
-                                        editProfileAddressBinding.setPersonPhoneList(profileResultBean.getPersonPhoneList().size());
-                                        addRadioButtonsAddress(getView(), profileResultBean.getPersonAddressList(), R.id.rb_address);
-                                        addRadioButtonsPhone(getView(), profileResultBean.getPersonPhoneList(), R.id.rb_phone);
-                                        addRadioButtonsEmail(getView(), profileResultBean.getPersonEmailList(), R.id.rb_email);
+                                        if (profileResultBean.getPersonAddressList() != null) {
+                                            editProfileAddressBinding.setPersonAddressList(profileResultBean.getPersonAddressList().size());
+                                            addRadioButtonsAddress(getView(), profileResultBean.getPersonAddressList(), R.id.rb_address);
+                                        } else
+                                            editProfileAddressBinding.setPersonAddressList(0);
+                                        if (profileResultBean.getPersonEmailList() != null) {
+                                            editProfileAddressBinding.setPersonEmailList(profileResultBean.getPersonEmailList().size());
+                                            addRadioButtonsPhone(getView(), profileResultBean.getPersonPhoneList(), R.id.rb_phone);
+                                        } else
+                                            editProfileAddressBinding.setPersonEmailList(0);
+                                        if (profileResultBean.getPersonPhoneList() != null) {
+                                            editProfileAddressBinding.setPersonPhoneList(profileResultBean.getPersonPhoneList().size());
+                                            addRadioButtonsEmail(getView(), profileResultBean.getPersonEmailList(), R.id.rb_email);
+                                        } else
+                                            editProfileAddressBinding.setPersonPhoneList(0);
                                     } else {
                                         editProfileAddressBinding.setPersonAddressList(0);
                                         editProfileAddressBinding.setPersonEmailList(0);
@@ -202,12 +211,12 @@ public class EditProfileAddress extends BaseFragment implements Common, EditProf
         String address = getRadioGroupText(editProfileAddressBinding.rbAddress);
         if (!address.isEmpty()) {
             for (int i = 0; i < profileResultBean.getPersonAddressList().size(); i++) {
-                if (profileResultBean.getPersonAddressList().get(i).getPersonAddress().getAddressTypeName().equalsIgnoreCase(address)){
-                    setFragment(ProfileAddress.newInstance(address, profileResultBean.getPersonAddressList().get(i),profileResultBean.getPersonAddressList()));
+                if (profileResultBean.getPersonAddressList().get(i).getPersonAddress().getAddressTypeName().equalsIgnoreCase(address)) {
+                    setFragment(ProfileAddress.newInstance(address, profileResultBean.getPersonAddressList().get(i), profileResultBean.getPersonAddressList()));
                     return;
                 }
             }
-        }else
+        } else
             Toast.makeText(getActivity(), "Please select above address type", Toast.LENGTH_SHORT).show();
     }
 
@@ -216,27 +225,26 @@ public class EditProfileAddress extends BaseFragment implements Common, EditProf
         String address = getRadioGroupText(editProfileAddressBinding.rbPhone);
         if (!address.isEmpty()) {
             for (int i = 0; i < profileResultBean.getPersonPhoneList().size(); i++) {
-                if (profileResultBean.getPersonPhoneList().get(i).getPhoneTypeName().equalsIgnoreCase(address)){
-                    setFragment(EditPhoneNumber.newInstance(address, profileResultBean.getPersonPhoneList().get(i),profileResultBean.getPersonPhoneList()));
+                if (profileResultBean.getPersonPhoneList().get(i).getPhoneTypeName().equalsIgnoreCase(address)) {
+                    setFragment(EditPhoneNumber.newInstance(address, profileResultBean.getPersonPhoneList().get(i), profileResultBean.getPersonPhoneList()));
                     return;
                 }
             }
-        }else
+        } else
             Toast.makeText(getActivity(), "Please select above phone type", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void UpdateEmailClick() {
         String address = getRadioGroupText(editProfileAddressBinding.rbEmail);
-        if (!address.isEmpty()){
+        if (!address.isEmpty()) {
             for (int i = 0; i < profileResultBean.getPersonEmailList().size(); i++) {
-                if (profileResultBean.getPersonEmailList().get(i).getEmailTypeName().equalsIgnoreCase(address)){
-                    setFragment(EditEmail.newInstance(address,  profileResultBean.getPersonEmailList().get(i),profileResultBean.getPersonEmailList()));
+                if (profileResultBean.getPersonEmailList().get(i).getEmailTypeName().equalsIgnoreCase(address)) {
+                    setFragment(EditEmail.newInstance(address, profileResultBean.getPersonEmailList().get(i), profileResultBean.getPersonEmailList()));
                     return;
                 }
             }
-        }
-        else
+        } else
             Toast.makeText(getActivity(), "Please select above email type", Toast.LENGTH_SHORT).show();
     }
 

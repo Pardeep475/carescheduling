@@ -6,6 +6,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="profileInfoBean"
             type="com.example.carescheduling.Ui.Profile.bean.EditProfileInfoBean" />
@@ -191,7 +193,10 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1.3"
                         android:background="@android:color/white"
+                        android:clickable="true"
                         android:drawableTint="@color/grey"
+                        android:editable="false"
+                        android:focusable="true"
                         android:fontFamily="@font/rubik_light"
                         android:onClick="@{(v)->editProfileInfoClick.DatePicker()}"
                         android:paddingStart="@dimen/ten_dp"
@@ -199,9 +204,6 @@
                         android:paddingEnd="@dimen/ten_dp"
                         android:paddingBottom="@dimen/ten_dp"
                         android:text="@{date}"
-                        android:clickable="true"
-                        android:editable="false"
-                        android:focusable="true"
                         android:textColor="@color/black"
                         app:drawableRightCompat="@drawable/ic_calendar" />
                 </LinearLayout>
@@ -342,7 +344,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/twenty_dp"
                     android:layout_marginEnd="@dimen/twenty_dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="@{profileInfoBean.disability ? View.VISIBLE :View.GONE}">
 
                     <TextView
                         android:layout_width="0dp"

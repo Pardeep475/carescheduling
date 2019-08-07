@@ -47,7 +47,7 @@ public class ClientTasksViewModel extends AndroidViewModel {
         final MutableLiveData<ArrayList<Tasks>> data = new MutableLiveData<>();
         try {
 
-            Disposable disposable = apiService.GetClientTask(/*customerId, branchId, clientId*/)
+            Disposable disposable = apiService.GetClientTask(customerId, branchId, clientId)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Consumer<Response<ClientTaskRetroBean>>() {

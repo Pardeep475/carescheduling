@@ -129,7 +129,7 @@ public class EditProfileAddressViewModel extends AndroidViewModel {
                     @Override
                     public void accept(Response<EditAddressAllData> loginBeanRetroResponse) throws Exception {
                         Log.e("LoginSuccess", "success");
-                        if (loginBeanRetroResponse.isSuccessful()) {
+                        if (loginBeanRetroResponse.isSuccessful() && loginBeanRetroResponse.body().getData() != null) {
                             data.setValue(loginBeanRetroResponse.body().getData());
                         } else {
                             data.setValue(null);
@@ -235,9 +235,6 @@ public class EditProfileAddressViewModel extends AndroidViewModel {
         compositeDisposable.add(disposable);
         return data;
     }
-
-
-
 
 
     private String checkIsNotNull(String value) {
