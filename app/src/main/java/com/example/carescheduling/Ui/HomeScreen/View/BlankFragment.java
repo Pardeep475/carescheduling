@@ -4,12 +4,19 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,10 +31,19 @@ import com.example.carescheduling.Ui.HomeScreen.ViewModel.BlankViewModel;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientBookingScreenModel;
 import com.example.carescheduling.Ui.HomeScreen.beans.Tasks;
 import com.example.carescheduling.Ui.HomeScreen.presenter.MyNextVisitClick;
+import com.example.carescheduling.Ui.Profile.View.EditProfileImage;
 import com.example.carescheduling.Utils.ConnectivityReceiver;
 import com.example.carescheduling.databinding.BlankFragmentBinding;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.DexterError;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.PermissionRequestErrorListener;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class BlankFragment extends BaseFragment implements Common, MyNextVisitClick {
 
@@ -81,6 +97,17 @@ public class BlankFragment extends BaseFragment implements Common, MyNextVisitCl
     @Override
     public void ClientTask() {
         setFragment(ClientTasksFragment.newInstance());
+    }
+
+    @Override
+    public void BarcodeClick() {
+        if (checkWriteExternalPermission())
+            setFragment(ScannerFragment.newInstance());
+    }
+
+    @Override
+    public void NfcClick() {
+
     }
 
     private void setFragment(Fragment fragment) {
@@ -145,5 +172,83 @@ public class BlankFragment extends BaseFragment implements Common, MyNextVisitCl
         blankFragmentBinding.sBlank.setVisibility(View.VISIBLE);
         blankFragmentBinding.rlNoDataFound.setVisibility(View.GONE);
     }
+
+
+    private boolean checkWriteExternalPermission() {
+        String p_read_ex = Manifest.permission.READ_EXTERNAL_STORAGE;
+        String p_write_external = android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+        String p_record_audio = Manifest.permission.CAMERA;
+        int res1 = getContext().checkCallingOrSelfPermission(p_read_ex);
+        int res2 = getContext().checkCallingOrSelfPermission(p_write_external);
+        int res3 = getContext().checkCallingOrSelfPermission(p_record_audio);
+        return (res1 == PackageManager.PERMISSION_GRANTED && res2 == PackageManager.PERMISSION_GRANTED && res3 == PackageManager.PERMISSION_GRANTED);
+    }
+
+    private void requestStoragePermission() {
+        Dexter.withActivity(getActivity())
+                .withPermissions(
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.CAMERA
+                )
+                .withListener(new MultiplePermissionsListener() {
+                    @Override
+                    public void onPermissionsChecked(MultiplePermissionsReport report) {
+                        // check if all permissions are granted
+                        if (report.areAllPermissionsGranted()) {
+                            setFragment(ScannerFragment.newInstance());
+                        } else
+                            requestStoragePermission();
+
+                        // check for permanent denial of any permission
+                        if (report.isAnyPermissionPermanentlyDenied()) {
+                            showSettingsDialog();
+                        }
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+                        token.continuePermissionRequest();
+                    }
+                }).
+                withErrorListener(new PermissionRequestErrorListener() {
+                    @Override
+                    public void onError(DexterError error) {
+
+                    }
+                })
+                .onSameThread()
+                .check();
+    }
+
+    private void showSettingsDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Need Permissions");
+        builder.setMessage("This app needs permission to use this feature. You can grant them in app settings.");
+        builder.setPositiveButton("GOTO SETTINGS", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+                openSettings();
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.show();
+
+    }
+
+    // navigating user to app settings
+    private void openSettings() {
+        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        Uri uri = Uri.fromParts("package", getActivity().getPackageName(), null);
+        intent.setData(uri);
+        startActivityForResult(intent, 101);
+    }
+
 
 }

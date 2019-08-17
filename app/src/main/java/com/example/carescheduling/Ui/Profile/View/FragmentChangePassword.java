@@ -126,8 +126,8 @@ public class FragmentChangePassword extends BaseFragment implements Common, Frag
                         @Override
                         public void onChanged(String aBoolean) {
                             hideDialog();
-                            if (!aBoolean.equalsIgnoreCase("false")) {
-                                Toast.makeText(getActivity(), "User name saved successfully", Toast.LENGTH_SHORT).show();
+                            if (aBoolean.equalsIgnoreCase("false")) {
+                                Toast.makeText(getActivity(), "User name is available", Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(getActivity(), "This user name is already exist", Toast.LENGTH_SHORT).show();
                             }

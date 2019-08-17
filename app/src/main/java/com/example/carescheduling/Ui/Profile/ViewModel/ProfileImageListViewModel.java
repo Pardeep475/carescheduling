@@ -143,6 +143,36 @@ public class ProfileImageListViewModel extends AndroidViewModel {
 
 
 
+    public LiveData<Boolean> UpdateUserImageRetro(DeleteImageRetro editProfileInfoBeanRetro) {
+        final MutableLiveData<Boolean> data = new MutableLiveData<>();
+
+        Disposable disposable = apiService.UpdateUserImage(editProfileInfoBeanRetro)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Response<JsonElement>>() {
+                    @Override
+                    public void accept(Response<JsonElement> loginBeanRetroResponse) throws Exception {
+                        Log.e("LoginSuccess", "success");
+                        if (loginBeanRetroResponse.isSuccessful()) {
+                            JSONObject jsonObject = new JSONObject(loginBeanRetroResponse.body().toString());
+                            boolean isSuccess = jsonObject.getBoolean("Success");
+                            data.setValue(isSuccess);
+                            if (jsonObject.getString("ResponseMessage") != null)
+                                Toast.makeText(context, jsonObject.getString("ResponseMessage"), Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        Log.e("LoginSuccess", "error" + throwable.toString());
+                        data.setValue(null);
+                    }
+                });
+        compositeDisposable.add(disposable);
+        return data;
+    }
+
     @Override
     protected void onCleared() {
         super.onCleared();

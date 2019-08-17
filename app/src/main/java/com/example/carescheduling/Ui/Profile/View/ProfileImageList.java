@@ -115,7 +115,7 @@ public class ProfileImageList extends BaseFragment implements Common, IDeleteCli
             }
         } catch (Exception e) {
             profileImageListBinding.rcvImages.hideShimmerAdapter();
-            
+
             showAToast(e.toString());
         }
 
@@ -135,20 +135,20 @@ public class ProfileImageList extends BaseFragment implements Common, IDeleteCli
 
     private void FetchProfileListImages() {
         try {
-           
+
             profileImageListViewModel.getProfileImages(getSessionManager().getPersonId()
                     , getSessionManager().getCustomerId(),
                     getSessionManager().getBranchId()).observe(this, new Observer<ArrayList<GetMyPicturesEditBeanRetro.DataList>>() {
                 @Override
                 public void onChanged(ArrayList<GetMyPicturesEditBeanRetro.DataList> profileImageRetro) {
                     if (profileImageRetro != null) {
-                        
+
                         setDataList(profileImageRetro);
                     }
                 }
             });
         } catch (Exception e) {
-            
+
             profileImageListBinding.rcvImages.hideShimmerAdapter();
             Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
         }
@@ -261,6 +261,59 @@ public class ProfileImageList extends BaseFragment implements Common, IDeleteCli
 
     @Override
     public void iDeleteImage(GetMyPicturesEditBeanRetro.DataList deleteImage) {
+        customDialog(deleteImage);
+    }
+
+
+    private void setFragment(Fragment fragment) {
+        if (getActivity() != null)
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fm_edit_container, fragment).addToBackStack(null).commitAllowingStateLoss();
+    }
+
+
+    public void customDialog(final GetMyPicturesEditBeanRetro.DataList deleteImage) {
+        if (getActivity() != null) {
+            dialog = new Dialog(getActivity());//,android.R.style.Theme_Translucent_NoTitleBar
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.setContentView(R.layout.custom_dialog_profile);
+            Button profile_dialog_gallery = (Button) dialog.findViewById(R.id.profile_dialog_gallery);
+            Button profile_dialog_camera = (Button) dialog.findViewById(R.id.profile_dialog_camera);
+            Button profile_dialog_cancel = (Button) dialog.findViewById(R.id.profile_dialog_cancel);
+
+            profile_dialog_gallery.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    UpdateUserImageRetro(deleteImage);
+                    dialog.dismiss();
+                }
+            });
+            profile_dialog_camera.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    deletePhoto(deleteImage);
+                    dialog.dismiss();
+                }
+            });
+            profile_dialog_cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
+            Window windo = dialog.getWindow();
+            if (windo != null) {
+                windo.setLayout(WindowManager.LayoutParams.FILL_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+                windo.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                WindowManager.LayoutParams wlp = windo.getAttributes();
+                wlp.gravity = Gravity.BOTTOM;
+                windo.setAttributes(wlp);
+            }
+            dialog.show();
+        }
+    }
+
+    private void deletePhoto(GetMyPicturesEditBeanRetro.DataList deleteImage) {
         DeleteImageRetro deleteImageRetro = new DeleteImageRetro();
         deleteImageRetro.setDefault(deleteImage.getIsDefault());
         deleteImageRetro.setPersonId(deleteImage.getPersonId());
@@ -268,12 +321,12 @@ public class ProfileImageList extends BaseFragment implements Common, IDeleteCli
 
 
         try {
-            
+
             if (getActivity() != null && ConnectivityReceiver.isNetworkAvailable(getActivity())) {
                 profileImageListViewModel.DeleteImage(deleteImageRetro).observe(this, new Observer<Boolean>() {
                     @Override
                     public void onChanged(Boolean aBoolean) {
-                        
+
                         if (aBoolean != null) {
                             if (aBoolean) {
                                 // on back press
@@ -285,23 +338,52 @@ public class ProfileImageList extends BaseFragment implements Common, IDeleteCli
                     }
                 });
             } else {
-                
+
                 profileImageListBinding.rcvImages.hideShimmerAdapter();
                 Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
             profileImageListBinding.rcvImages.hideShimmerAdapter();
-            
+
             showAToast(e.toString());
         }
-
     }
 
 
-    private void setFragment(Fragment fragment) {
-        if (getActivity() != null)
-            getActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fm_edit_container, fragment).addToBackStack(null).commitAllowingStateLoss();
+    private void UpdateUserImageRetro(GetMyPicturesEditBeanRetro.DataList deleteImage) {
+        DeleteImageRetro deleteImageRetro = new DeleteImageRetro();
+        deleteImageRetro.setDefault(true);
+        deleteImageRetro.setPersonId(deleteImage.getPersonId());
+        deleteImageRetro.setImageId(deleteImage.getImageId());
+
+
+        try {
+
+            if (getActivity() != null && ConnectivityReceiver.isNetworkAvailable(getActivity())) {
+                profileImageListViewModel.UpdateUserImageRetro(deleteImageRetro).observe(this, new Observer<Boolean>() {
+                    @Override
+                    public void onChanged(Boolean aBoolean) {
+
+                        if (aBoolean != null) {
+                            if (aBoolean) {
+                                // on back press
+                                if (getActivity() != null)
+                                    profileImageListBinding.rcvImages.showShimmerAdapter();
+                                FetchProfileListImages();
+                            }
+                        }
+                    }
+                });
+            } else {
+
+                profileImageListBinding.rcvImages.hideShimmerAdapter();
+                Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            profileImageListBinding.rcvImages.hideShimmerAdapter();
+
+            showAToast(e.toString());
+        }
     }
 
 

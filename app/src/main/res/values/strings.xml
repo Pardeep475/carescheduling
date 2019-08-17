@@ -151,6 +151,11 @@
     <string name="set_as_default">Set as default</string>
     <string name="phone_number">Phone Number</string>
     <string name="booking_date">Booking Date:</string>
+    <string name="edit_your_image">Edit Your Image</string>
+    <string name="delete">Delete</string>
+    <string name="make_default">Make Default</string>
+    <string name="this_barcode_belongs_to">This barcode belongs to :</string>
+    <string name="registerred_time_and_date_is">Registerred time and date is :</string>
 
     <string-array name="home_array">
         <item>My Next Visit</item>

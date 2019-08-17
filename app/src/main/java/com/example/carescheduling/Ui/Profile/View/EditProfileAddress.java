@@ -108,18 +108,24 @@ public class EditProfileAddress extends BaseFragment implements Common, EditProf
                                         if (profileResultBean.getPersonAddressList() != null) {
                                             editProfileAddressBinding.setPersonAddressList(profileResultBean.getPersonAddressList().size());
                                             addRadioButtonsAddress(getView(), profileResultBean.getPersonAddressList(), R.id.rb_address);
-                                        } else
+                                        } else {
                                             editProfileAddressBinding.setPersonAddressList(0);
+                                            addRadioButtonsAddress(getView(), profileResultBean.getPersonAddressList(), R.id.rb_address);
+                                        }
                                         if (profileResultBean.getPersonEmailList() != null) {
                                             editProfileAddressBinding.setPersonEmailList(profileResultBean.getPersonEmailList().size());
                                             addRadioButtonsPhone(getView(), profileResultBean.getPersonPhoneList(), R.id.rb_phone);
-                                        } else
+                                        } else {
                                             editProfileAddressBinding.setPersonEmailList(0);
+                                            addRadioButtonsPhone(getView(), profileResultBean.getPersonPhoneList(), R.id.rb_phone);
+                                        }
                                         if (profileResultBean.getPersonPhoneList() != null) {
                                             editProfileAddressBinding.setPersonPhoneList(profileResultBean.getPersonPhoneList().size());
                                             addRadioButtonsEmail(getView(), profileResultBean.getPersonEmailList(), R.id.rb_email);
-                                        } else
+                                        } else {
                                             editProfileAddressBinding.setPersonPhoneList(0);
+                                            addRadioButtonsEmail(getView(), profileResultBean.getPersonEmailList(), R.id.rb_email);
+                                        }
                                     } else {
                                         editProfileAddressBinding.setPersonAddressList(0);
                                         editProfileAddressBinding.setPersonEmailList(0);
@@ -145,13 +151,14 @@ public class EditProfileAddress extends BaseFragment implements Common, EditProf
         RadioGroup ll = view.findViewById(id);
         ll.removeAllViews();
         ll.setOrientation(LinearLayout.VERTICAL);
-
-        for (int i = 0; i < arrayList.size(); i++) {
-            RadioButton rdbtn = new RadioButton(getActivity());
-            rdbtn.setId(View.generateViewId());
-            rdbtn.setText(arrayList.get(i).getPersonAddress().getAddressTypeName());
-            rdbtn.setChecked(arrayList.get(i).getPersonAddress().getIsDefaultAddress());
-            ll.addView(rdbtn);
+        if (arrayList != null) {
+            for (int i = 0; i < arrayList.size(); i++) {
+                RadioButton rdbtn = new RadioButton(getActivity());
+                rdbtn.setId(View.generateViewId());
+                rdbtn.setText(arrayList.get(i).getPersonAddress().getAddressTypeName());
+                rdbtn.setChecked(arrayList.get(i).getPersonAddress().getIsDefaultAddress());
+                ll.addView(rdbtn);
+            }
         }
 //        ((ViewGroup) view.findViewById(id)).addView(ll);
 
@@ -162,13 +169,14 @@ public class EditProfileAddress extends BaseFragment implements Common, EditProf
         RadioGroup ll = view.findViewById(id);
         ll.removeAllViews();
         ll.setOrientation(LinearLayout.VERTICAL);
-
-        for (int i = 0; i < arrayList.size(); i++) {
-            RadioButton rdbtn = new RadioButton(getActivity());
-            rdbtn.setId(View.generateViewId());
-            rdbtn.setText(arrayList.get(i).getPhoneTypeName());
-            rdbtn.setChecked(arrayList.get(i).getIsDefaultPhone());
-            ll.addView(rdbtn);
+        if (arrayList != null) {
+            for (int i = 0; i < arrayList.size(); i++) {
+                RadioButton rdbtn = new RadioButton(getActivity());
+                rdbtn.setId(View.generateViewId());
+                rdbtn.setText(arrayList.get(i).getPhoneTypeName());
+                rdbtn.setChecked(arrayList.get(i).getIsDefaultPhone());
+                ll.addView(rdbtn);
+            }
         }
 //        ((ViewGroup) view.findViewById(id)).addView(ll);
 
@@ -178,13 +186,14 @@ public class EditProfileAddress extends BaseFragment implements Common, EditProf
         RadioGroup ll = view.findViewById(id);
         ll.removeAllViews();
         ll.setOrientation(LinearLayout.VERTICAL);
-
-        for (int i = 0; i < arrayList.size(); i++) {
-            RadioButton rdbtn = new RadioButton(getActivity());
-            rdbtn.setId(View.generateViewId());
-            rdbtn.setText(arrayList.get(i).getEmailTypeName());
-            rdbtn.setChecked(arrayList.get(i).getIsDefaultEmail());
-            ll.addView(rdbtn);
+        if (arrayList != null) {
+            for (int i = 0; i < arrayList.size(); i++) {
+                RadioButton rdbtn = new RadioButton(getActivity());
+                rdbtn.setId(View.generateViewId());
+                rdbtn.setText(arrayList.get(i).getEmailTypeName());
+                rdbtn.setChecked(arrayList.get(i).getIsDefaultEmail());
+                ll.addView(rdbtn);
+            }
         }
 //        ((ViewGroup) view.findViewById(id)).addView(ll);
 

@@ -28,18 +28,22 @@
         <activity android:name=".Ui.BarCodeScannerActivity">
 
         </activity>
-        <activity android:name=".Ui.Profile.View.EditProfile" />
+        <activity android:name=".Ui.Profile.View.EditProfile"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Ui.Dashboard.view.Dashboard"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_dashboard" />
-        <activity android:name=".Ui.Splash.View.SplashActivity">
+        <activity android:name=".Ui.Splash.View.SplashActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Ui.LoginActivity.View.LoginActivity" />
+        <activity android:name=".Ui.LoginActivity.View.LoginActivity"
+            android:screenOrientation="portrait"/>
 
         <provider
             android:name="androidx.core.content.FileProvider"

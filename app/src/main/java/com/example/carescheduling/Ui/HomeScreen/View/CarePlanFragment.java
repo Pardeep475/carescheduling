@@ -38,7 +38,7 @@ public class CarePlanFragment extends BaseFragment implements Common, CarePlanAd
     private CarePlanViewModal carePlanViewModal;
     private ArrayList<ClientInfoCarePlanRetro.DataList> dataListArrayList;
     private int startPosition = 0;
-    private int endPosition = 5;
+    private int endPosition = 25;
 
     public static CarePlanFragment newInstance() {
         return new CarePlanFragment();
@@ -212,9 +212,9 @@ public class CarePlanFragment extends BaseFragment implements Common, CarePlanAd
 
         // if diff is zero, then the bottom has been reached
         if (diff == 0) {
-            if (dataListArrayList.size() > (endPosition + 5)) {
+            if (dataListArrayList.size() > (endPosition + 25)) {
                 startPosition = endPosition;
-                endPosition = endPosition +5;
+                endPosition = endPosition +25;
                 setLayoutDynamic(clientInfoCarePlanFragmentBinding.llCarePlan, dataListArrayList);
             } else {
                 startPosition = endPosition;

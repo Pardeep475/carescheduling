@@ -8,4 +8,6 @@ public interface MyNextVisitClick {
     void moreClientInfoClick();
 
     void ClientTask();
+    void BarcodeClick();
+    void NfcClick();
 }

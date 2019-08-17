@@ -58,10 +58,11 @@ public class ProfileImageListAdapter extends RecyclerView.Adapter<ProfileImageLi
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
         itemProfileImageListBinding.icon.setImageBitmap(ImageFromBase64(arrayList.get(position).getImageHexString()));
         getScreenWidth(itemProfileImageListBinding.icon);
-        itemProfileImageListBinding.txtDelete.setOnClickListener(new View.OnClickListener() {
+        itemProfileImageListBinding.rlMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                customDialog(arrayList.get(position));
+//                customDialog(arrayList.get(position));
+                iDeleteClick.iDeleteImage(arrayList.get(position));
             }
         });
     }

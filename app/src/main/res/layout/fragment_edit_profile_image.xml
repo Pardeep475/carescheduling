@@ -48,7 +48,7 @@
             android:src="@drawable/user_placeholder" />
 
 
-        <RadioButton
+        <CheckBox
             android:id="@+id/rb_is_default"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

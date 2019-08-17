@@ -244,6 +244,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/five_dp"
                         android:layout_weight="1"
+                        android:onClick="@{(v)->myNextVisitClick.BarcodeClick()}"
                         android:background="@color/blue"
                         android:fontFamily="@font/rubik_medium"
                         android:text="@string/barcode"
@@ -255,6 +256,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@color/blue"
+                        android:onClick="@{(v)->myNextVisitClick.NfcClick()}"
                         android:fontFamily="@font/rubik_medium"
                         android:text="@string/read_nfc"
                         android:textColor="@color/white" />

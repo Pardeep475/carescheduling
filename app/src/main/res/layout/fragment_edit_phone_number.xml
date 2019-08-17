@@ -112,7 +112,7 @@
             android:text="@{personPhoneList.getPhoneNumber()}" />
 
 
-        <RadioButton
+        <CheckBox
             android:id="@+id/rb_default_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -124,7 +124,7 @@
             android:text="@string/set_as_my_default_phone"
             android:textColor="#5F5F5F" />
 
-        <RadioButton
+        <CheckBox
             android:id="@+id/rb_do_not_call"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

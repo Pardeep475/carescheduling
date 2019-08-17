@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="commonData"
+            type="com.example.carescheduling.Ui.Common.CommonBean" />
+
+        <variable
+            name="commonClick"
+            type="com.example.carescheduling.Ui.Common.Common" />
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        tools:context=".Ui.HomeScreen.View.ArrivalAndDepartureFragment">
+
+
+        <include
+            android:id="@+id/rl_tool"
+            layout="@layout/toolbar_layout"
+            bind:commonClick="@{commonClick}"
+            bind:commonData="@{commonData}" />
+
+        <ImageView
+            android:id="@+id/img_barcode"
+            android:layout_width="@dimen/one_fifty_dp"
+            android:layout_height="@dimen/one_fifty_dp"
+            android:layout_below="@+id/rl_tool"
+            android:src="@drawable/bar_code" />
+
+        <RelativeLayout
+            android:id="@+id/rl_client_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rl_tool"
+            android:layout_toEndOf="@+id/img_barcode">
+
+            <TextView
+                android:id="@+id/txt_belongs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/sixteen_dp"
+                android:layout_marginEnd="@dimen/ten_dp"
+                android:fontFamily="@font/rubik_light"
+                android:text="@string/this_barcode_belongs_to"
+                android:textColor="@color/black"
+                android:textSize="@dimen/twenty_sp" />
+
+            <TextView
+                android:id="@+id/txt_client_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_belongs"
+                android:layout_marginTop="@dimen/ten_dp"
+                android:layout_marginEnd="@dimen/ten_dp"
+                android:fontFamily="@font/rubik_light"
+                android:text="Mr. John smith"
+                android:textSize="@dimen/sixteen_sp" />
+
+            <TextView
+                android:id="@+id/txt_client_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_client_name"
+                android:layout_marginTop="@dimen/ten_dp"
+                android:layout_marginEnd="@dimen/ten_dp"
+                android:fontFamily="@font/rubik_light"
+                android:text="1234567890"
+                android:textSize="@dimen/sixteen_sp" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/rl_timing"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/img_barcode"
+            android:layout_marginStart="@dimen/twenty_dp"
+            android:layout_marginEnd="@dimen/twenty_dp">
+
+            <TextView
+                android:id="@+id/txt_register"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/sixteen_dp"
+                android:fontFamily="@font/rubik_light"
+                android:text="@string/registerred_time_and_date_is"
+                android:textColor="@color/black"
+                android:textSize="@dimen/twenty_sp" />
+
+            <TextView
+                android:id="@+id/txt_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_register"
+                android:layout_marginTop="@dimen/ten_dp"
+                android:fontFamily="@font/rubik_light"
+                android:text="Monday 14 of July 2016 02:34"
+                android:textSize="@dimen/twenty_sp" />
+
+            <TextView
+                android:id="@+id/txt_arrival"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_time"
+                android:layout_marginTop="@dimen/ten_dp"
+                android:fontFamily="@font/rubik_light"
+                android:text="Do you wish to register this as arrival or departure time?"
+                android:textSize="@dimen/twenty_sp" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:paddingTop="@dimen/ten_dp"
+                android:paddingBottom="@dimen/ten_dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:background="@color/dark_blue"
+                android:textColor="@color/white"
+                android:layout_marginTop="@dimen/ten_dp"
+                android:fontFamily="@font/rubik_light"
+                android:text="Arrival"
+                android:textSize="@dimen/twenty_sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ten_dp"
+                android:gravity="center"
+                android:background="@color/red"
+                android:textColor="@color/white"
+                android:paddingTop="@dimen/ten_dp"
+                android:paddingBottom="@dimen/ten_dp"
+                android:fontFamily="@font/rubik_light"
+                android:text="Departure"
+                android:textSize="@dimen/twenty_sp" />
+
+
+        </LinearLayout>
+    </RelativeLayout>
+</layout>

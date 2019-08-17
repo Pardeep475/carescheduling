@@ -1,44 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-
-    android:background="@android:color/transparent"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:orientation="vertical">
 
     <Button
 
         android:id="@+id/profile_dialog_gallery"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/profile_dialog_background"
+        android:fontFamily="@font/rubik_medium"
         android:paddingTop="@dimen/twenty_dp"
         android:paddingBottom="@dimen/twenty_dp"
-        android:text="@string/take_picture_from_gallery"
-        android:layout_width="match_parent"
+        android:text="@string/make_default"
         android:textAllCaps="false"
-        android:fontFamily="@font/rubik_medium"
-        android:background="@drawable/profile_dialog_background"
-        android:layout_height="wrap_content" />
+        android:textColor="@color/blue" />
 
     <Button
         android:id="@+id/profile_dialog_camera"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/five_dp"
+        android:background="@drawable/profile_dialog_background"
+        android:fontFamily="@font/rubik_medium"
         android:paddingTop="@dimen/twenty_dp"
         android:paddingBottom="@dimen/twenty_dp"
-        android:fontFamily="@font/rubik_medium"
-        android:background="@drawable/profile_dialog_background"
-        android:text="@string/take_picture_from_camera"
-        android:layout_width="match_parent"
+        android:text="@string/delete"
         android:textAllCaps="false"
-        android:layout_marginTop="@dimen/five_dp"
-        android:layout_height="wrap_content" />
+        android:textColor="@color/red" />
 
     <Button
         android:id="@+id/profile_dialog_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/twenty_five_dp"
+        android:background="@drawable/profile_dialog_background"
+        android:fontFamily="@font/rubik_medium"
         android:paddingTop="@dimen/twenty_dp"
         android:paddingBottom="@dimen/twenty_dp"
         android:text="@string/cancel"
-        android:textAllCaps="false"
-        android:fontFamily="@font/rubik_medium"
-        android:layout_marginTop="@dimen/twenty_five_dp"
-        android:layout_width="match_parent"
-        android:background="@drawable/profile_dialog_background"
-        android:layout_height="wrap_content" />
+        android:textAllCaps="false" />
 </LinearLayout>
