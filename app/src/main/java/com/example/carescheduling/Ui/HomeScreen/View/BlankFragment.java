@@ -103,6 +103,8 @@ public class BlankFragment extends BaseFragment implements Common, MyNextVisitCl
     public void BarcodeClick() {
         if (checkWriteExternalPermission())
             setFragment(ScannerFragment.newInstance());
+        else
+            requestStoragePermission();
     }
 
     @Override
@@ -140,6 +142,7 @@ public class BlankFragment extends BaseFragment implements Common, MyNextVisitCl
 //                            hideDialog();
                             if (clientBookingListModel != null) {
                                 clientBookingModel = clientBookingListModel;
+                                getSessionManager().setBookingId(clientBookingModel.getBookingId());
                                 blankFragmentBinding.setClientBookingScreenModel(clientBookingListModel);
                                 setDataOriginal();
                             } else {

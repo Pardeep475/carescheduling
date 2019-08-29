@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,13 +25,23 @@ import com.example.carescheduling.Ui.Dashboard.Adapter.HomeScreenAdapter;
 import com.example.carescheduling.Ui.Dashboard.ViewModel.HomeFViewModel;
 import com.example.carescheduling.Ui.Dashboard.beans.ClientBookingListModel;
 
+import com.example.carescheduling.Ui.Dashboard.beans.ProfileResultBean;
 import com.example.carescheduling.Ui.Dashboard.presenter.HomeScreenOnClick;
 import com.example.carescheduling.Ui.Dashboard.presenter.ProfileClickHandler;
 import com.example.carescheduling.Ui.HomeScreen.View.BlankFragment;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientCarePlan;
 import com.example.carescheduling.Ui.LoginActivity.View.LoginActivity;
 import com.example.carescheduling.Ui.Profile.View.EditProfile;
+import com.example.carescheduling.Ui.Profile.bean.EditAllAddressData;
+import com.example.carescheduling.Ui.Profile.bean.EditProfileInfoBean;
+import com.example.carescheduling.Ui.Profile.bean.FragmentChangePasswordBean;
 import com.example.carescheduling.Utils.ConnectivityReceiver;
+import com.example.carescheduling.data.Local.AppDataBase;
+import com.example.carescheduling.data.Local.DatabaseInitializer;
+import com.example.carescheduling.data.Local.DatabaseTable.AddressAllData;
+import com.example.carescheduling.data.Local.DatabaseTable.ProfileInfo;
+import com.example.carescheduling.data.Local.DatabaseTable.ProfileMainData;
+import com.example.carescheduling.data.Local.DatabaseTable.UserInfo;
 import com.example.carescheduling.databinding.FragmentHomeBinding;
 
 public class HomeF extends BaseFragment implements Common, HomeScreenOnClick {
@@ -72,6 +83,39 @@ public class HomeF extends BaseFragment implements Common, HomeScreenOnClick {
         HomeScreenAdapter homeScreenAdapter = new HomeScreenAdapter(getActivity(), this, some_array);
         fragmentHomeBinding.rcvHome.setLayoutManager(new LinearLayoutManager(getActivity()));
         fragmentHomeBinding.rcvHome.setAdapter(homeScreenAdapter);
+        getProfileLocalData();
+    }
+
+
+    private void getProfileLocalData() {
+//        AppDataBase.getAppDatabase(getActivity()).profileDao().getAllProfileMainData().observe(this, new Observer<ProfileMainData>() {
+//            @Override
+//            public void onChanged(ProfileMainData profileMainData) {
+//                if (profileMainData != null)
+//                    Log.e("getting_profile_data", profileMainData.getEmail());
+//            }
+//        });
+//        AppDataBase.getAppDatabase(getActivity()).profileDao().getAllProfileInfo().observe(this, new Observer<ProfileInfo>() {
+//            @Override
+//            public void onChanged(ProfileInfo profileInfo) {
+//                if (profileInfo != null)
+//                    Log.e("getting_profile_data", profileInfo.getFirstName());
+//            }
+//        });
+//        AppDataBase.getAppDatabase(getActivity()).profileDao().getAllAddressAllData().observe(this, new Observer<AddressAllData>() {
+//            @Override
+//            public void onChanged(AddressAllData addressAllData) {
+//                if (addressAllData != null)
+//                    Log.e("getting_profile_data", addressAllData.getPersonAddressList().size() + " ");
+//            }
+//        });
+//        AppDataBase.getAppDatabase(getActivity()).profileDao().getAllUserInfo().observe(this, new Observer<UserInfo>() {
+//            @Override
+//            public void onChanged(UserInfo userInfo) {
+//                if (userInfo != null)
+//                    Log.e("getting_profile_data", userInfo.getPasswordQuestion());
+//            }
+//        });
     }
 
 

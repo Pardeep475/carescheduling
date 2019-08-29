@@ -5,9 +5,6 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
-import com.example.carescheduling.Ui.Profile.View.EditEmail;
-import com.example.carescheduling.Ui.Profile.bean.EditEmailBean;
 import com.example.carescheduling.Ui.Profile.bean.EditEmailRetroBean;
 import com.example.carescheduling.data.Local.AppDataBase;
 import com.example.carescheduling.data.Local.DatabaseInitializer;

@@ -7,10 +7,6 @@
     <data>
 
         <variable
-            name="profileResultBean"
-            type="com.example.carescheduling.Ui.Dashboard.beans.ProfileBean" />
-
-        <variable
             name="commonData"
             type="com.example.carescheduling.Ui.Common.CommonBean" />
 

@@ -1,4 +1,4 @@
-package com.example.carescheduling.Ui.Dashboard.beans;
+package com.example.carescheduling.data.Local.DatabaseTable;
 
 import android.graphics.Bitmap;
 
@@ -7,22 +7,23 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-//@Entity(tableName = "ProfileResultBean")
-public class ProfileResultBean {
-//    @PrimaryKey(autoGenerate = true)
-//    @ColumnInfo(name = "id")
-//    @NonNull
-//    private int id;
-    private String userName, address, telephone, email, mobile, defaultImageString;
-    private Bitmap imgUrl;
-
-    public Bitmap getImgUrl() {
-        return imgUrl;
-    }
-
-    public void setImgUrl(Bitmap imgUrl) {
-        this.imgUrl = imgUrl;
-    }
+@Entity(tableName = "ProfileMainData")
+public class ProfileMainData {
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
+    private int id;
+    @ColumnInfo(name = "userName")
+    private String userName;
+    @ColumnInfo(name = "address")
+    private String address;
+    @ColumnInfo(name = "telephone")
+    private String telephone;
+    @ColumnInfo(name = "email")
+    private String email;
+    @ColumnInfo(name = "mobile")
+    private String mobile;
+    @ColumnInfo(name = "defaultImageString")
+    private String defaultImageString;
 
     public String getUserName() {
         return userName;

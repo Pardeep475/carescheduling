@@ -1,35 +1,24 @@
 package com.example.carescheduling.Ui.Profile.View;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.loader.content.CursorLoader;
 import androidx.recyclerview.widget.GridLayoutManager;
 
-import android.provider.DocumentsContract;
-import android.provider.MediaStore;
 import android.provider.Settings;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,23 +33,12 @@ import com.example.carescheduling.Ui.Base.BaseFragment;
 import com.example.carescheduling.Ui.Common.Common;
 import com.example.carescheduling.Ui.Common.CommonBean;
 import com.example.carescheduling.Ui.Common.SpacesItemDecoration;
-import com.example.carescheduling.Ui.Dashboard.beans.PersonImage;
-import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
-import com.example.carescheduling.Ui.Dashboard.beans.ProfileResultBean;
-import com.example.carescheduling.Ui.Dashboard.view.Dashboard;
 import com.example.carescheduling.Ui.Profile.Adapter.ProfileImageListAdapter;
 import com.example.carescheduling.Ui.Profile.ViewModel.ProfileImageListViewModel;
-import com.example.carescheduling.Ui.Profile.bean.AddImageBeanRetro;
-import com.example.carescheduling.Ui.Profile.bean.DataList;
 import com.example.carescheduling.Ui.Profile.bean.DeleteImageRetro;
 import com.example.carescheduling.Ui.Profile.bean.GetMyPicturesEditBeanRetro;
-import com.example.carescheduling.Ui.Profile.bean.Image;
-import com.example.carescheduling.Ui.Profile.bean.ProfileImageRetro;
-import com.example.carescheduling.Ui.Profile.presenter.EditEmailClick;
 import com.example.carescheduling.Ui.Profile.presenter.IDeleteClick;
-import com.example.carescheduling.Ui.Profile.presenter.ProfileImageListClick;
 import com.example.carescheduling.Utils.ConnectivityReceiver;
-import com.example.carescheduling.Utils.Constants;
 import com.example.carescheduling.databinding.FragmentProfileImageListBinding;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
@@ -70,8 +48,6 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.PermissionRequestErrorListener;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
-import java.io.ByteArrayOutputStream;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 

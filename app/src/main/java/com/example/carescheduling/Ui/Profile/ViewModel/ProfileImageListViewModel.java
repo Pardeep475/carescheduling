@@ -8,15 +8,10 @@ import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
-import com.example.carescheduling.Ui.Profile.bean.AddImageBeanRetro;
-import com.example.carescheduling.Ui.Profile.bean.DataList;
 import com.example.carescheduling.Ui.Profile.bean.DeleteImageRetro;
-import com.example.carescheduling.Ui.Profile.bean.EditProfileInfoBeanRetro;
 import com.example.carescheduling.Ui.Profile.bean.GetMyPicturesEditBeanRetro;
 import com.example.carescheduling.Ui.Profile.bean.ProfileImageList;
 import com.example.carescheduling.Ui.Profile.bean.ProfileImageRetro;
-import com.example.carescheduling.data.Local.DatabaseTable.PersonLanguage;
 import com.example.carescheduling.data.Network.ApiClient;
 import com.example.carescheduling.data.Network.ApiService;
 import com.google.gson.JsonElement;
@@ -24,9 +19,7 @@ import com.google.gson.JsonElement;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;

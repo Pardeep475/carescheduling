@@ -1,18 +1,44 @@
-package com.example.carescheduling.Ui.Profile.bean;
+package com.example.carescheduling.data.Local.DatabaseTable;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-//@Entity(tableName = "EditProfileInfoBean")
-public class EditProfileInfoBean {
-//    @PrimaryKey(autoGenerate = true)
-//    @ColumnInfo(name = "id")
-//    @NonNull
-//    private int id;
-    private String firstName, middleName, surName, maidenName, dateOfBirth, gender, prefix,
-            language, maritalStatus, ethnicity, religion, sexuality, nationality,disabaility;
+@Entity(tableName = "ProfileInfo")
+public class ProfileInfo {
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
+    private int id;
+    @ColumnInfo(name = "firstName")
+    private String firstName;
+    @ColumnInfo(name = "middleName")
+    private String middleName;
+    @ColumnInfo(name = "surName")
+    private String surName;
+    @ColumnInfo(name = "maidenName")
+    private String maidenName;
+    @ColumnInfo(name = "dateOfBirth")
+    private String  dateOfBirth;
+    @ColumnInfo(name = "gender")
+    private String gender;
+    @ColumnInfo(name = "prefix")
+    private String prefix;
+    @ColumnInfo(name = "language")
+    private String language;
+    @ColumnInfo(name = "maritalStatus")
+    private String maritalStatus;
+    @ColumnInfo(name = "ethnicity")
+    private String ethnicity;
+    @ColumnInfo(name = "religion")
+    private String religion;
+    @ColumnInfo(name = "sexuality")
+    private String sexuality;
+    @ColumnInfo(name = "nationality")
+    private String nationality;
+    @ColumnInfo(name = "disabaility")
+    private String disabaility;
+    @ColumnInfo(name = "disability")
     private boolean disability;
 
 

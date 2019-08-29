@@ -7,126 +7,153 @@ import java.util.ArrayList;
 
 public class LoginBeanRetro implements Serializable {
 
+    private Object DataList;
 
-    @SerializedName("Data")
-    private Data data;
-    @SerializedName("ResponseMessage")
-    private String message;
-    @SerializedName("Success")
-    private boolean success;
+    private Data Data;
 
-    public void setData(Data data) {
-        this.data = data;
+    private String ResponseMessage;
+
+    private Object Exception;
+
+    private boolean Success;
+
+    public Object getDataList ()
+    {
+        return DataList;
     }
 
-    public Data getData() {
-        return data;
+    public void setDataList (Object DataList)
+    {
+        this.DataList = DataList;
     }
 
-    public String getMessage() {
-        return message;
+    public Data getData ()
+    {
+        return Data;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setData (Data Data)
+    {
+        this.Data = Data;
     }
 
-    public boolean isSuccess() {
-        return success;
+    public String getResponseMessage ()
+    {
+        return ResponseMessage;
     }
 
-    public void setSuccess(boolean success) {
-        this.success = success;
+    public void setResponseMessage (String ResponseMessage)
+    {
+        this.ResponseMessage = ResponseMessage;
+    }
+
+    public Object getException ()
+    {
+        return Exception;
+    }
+
+    public void setException (Object Exception)
+    {
+        this.Exception = Exception;
+    }
+
+    public boolean getSuccess ()
+    {
+        return Success;
+    }
+
+    public void setSuccess (boolean Success)
+    {
+        this.Success = Success;
     }
 
     public class Data implements Serializable {
-        @SerializedName("BranchId")
-        private String branchId;
-        @SerializedName("BranchList")
-        private ArrayList<BranchList> branchList;
-        @SerializedName("UserPersons")
-        private ArrayList<UserPersons> userPersons;
+        private String UserName;
 
-        public String getBranchId() {
-            return branchId;
+        private String PersonId;
+
+        private ArrayList<BranchList> BranchList;
+
+        private String CustomerId;
+
+        private String CreateDate;
+
+        public String getUserName ()
+        {
+            return UserName;
         }
 
-        public void setBranchId(String branchId) {
-            this.branchId = branchId;
+        public void setUserName (String UserName)
+        {
+            this.UserName = UserName;
         }
 
-        public ArrayList<BranchList> getBranchList() {
-            return branchList;
+        public String getPersonId ()
+        {
+            return PersonId;
         }
 
-        public void setBranchList(ArrayList<BranchList> branchList) {
-            this.branchList = branchList;
+        public void setPersonId (String PersonId)
+        {
+            this.PersonId = PersonId;
         }
 
-        public ArrayList<UserPersons> getUserPersons() {
-            return userPersons;
+        public ArrayList<BranchList> getBranchList ()
+        {
+            return BranchList;
         }
 
-        public void setUserPersons(ArrayList<UserPersons> userPersons) {
-            this.userPersons = userPersons;
+        public void setBranchList (ArrayList<BranchList> BranchList)
+        {
+            this.BranchList = BranchList;
+        }
+
+        public String getCustomerId ()
+        {
+            return CustomerId;
+        }
+
+        public void setCustomerId (String CustomerId)
+        {
+            this.CustomerId = CustomerId;
+        }
+
+        public String getCreateDate ()
+        {
+            return CreateDate;
+        }
+
+        public void setCreateDate (String CreateDate)
+        {
+            this.CreateDate = CreateDate;
         }
     }
 
     public class BranchList implements Serializable {
-        @SerializedName("BranchName")
-        private String branchName;
-        @SerializedName("BranchId")
-        private String branchId;
-        @SerializedName("CustomerId")
-        private String customerId;
+        private String BranchId;
 
-        public String getBranchName() {
-            return branchName;
+        private String BranchName;
+
+        public String getBranchId ()
+        {
+            return BranchId;
         }
 
-        public void setBranchName(String branchName) {
-            this.branchName = branchName;
+        public void setBranchId (String BranchId)
+        {
+            this.BranchId = BranchId;
         }
 
-        public String getBranchId() {
-            return branchId;
+        public String getBranchName ()
+        {
+            return BranchName;
         }
 
-        public void setBranchId(String branchId) {
-            this.branchId = branchId;
-        }
-        public String getCustomerId() {
-            return customerId;
+        public void setBranchName (String BranchName)
+        {
+            this.BranchName = BranchName;
         }
 
-        public void setCustomerId(String customerId) {
-            this.customerId = customerId;
-        }
     }
 
-    public class UserPersons implements Serializable {
-        @SerializedName("User")
-        private User user;
-
-        public User getUser() {
-            return user;
-        }
-
-        public void setUser(User user) {
-            this.user = user;
-        }
-    }
-
-    public class User implements Serializable {
-        @SerializedName("PersonId")
-        private String personId;
-
-        public String getPersonId() {
-            return personId;
-        }
-
-        public void setPersonId(String personId) {
-            this.personId = personId;
-        }
-    }
 }

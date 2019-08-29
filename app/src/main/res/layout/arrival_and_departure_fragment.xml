@@ -4,7 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+<variable
+    name="iArrivalAndDepartureClick"
+    type="com.example.carescheduling.Ui.HomeScreen.presenter.IArrivalAndDepartureClick"
+    />
         <variable
             name="commonData"
             type="com.example.carescheduling.Ui.Common.CommonBean" />
@@ -125,10 +128,12 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:paddingTop="@dimen/ten_dp"
-                android:paddingBottom="@dimen/ten_dp"
+                android:paddingTop="@dimen/fiften_dp"
+                android:paddingBottom="@dimen/fiften_dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:id="@+id/btn_arrival"
+                android:onClick="@{(v)->iArrivalAndDepartureClick.arrivalClick()}"
                 android:background="@color/dark_blue"
                 android:textColor="@color/white"
                 android:layout_marginTop="@dimen/ten_dp"
@@ -142,10 +147,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/ten_dp"
                 android:gravity="center"
+                android:id="@+id/btn_departure"
                 android:background="@color/red"
+                android:onClick="@{(v)->iArrivalAndDepartureClick.departureClick()}"
                 android:textColor="@color/white"
-                android:paddingTop="@dimen/ten_dp"
-                android:paddingBottom="@dimen/ten_dp"
+                android:paddingTop="@dimen/fiften_dp"
+                android:paddingBottom="@dimen/fiften_dp"
                 android:fontFamily="@font/rubik_light"
                 android:text="Departure"
                 android:textSize="@dimen/twenty_sp" />

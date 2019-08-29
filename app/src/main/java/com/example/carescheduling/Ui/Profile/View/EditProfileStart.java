@@ -11,7 +11,6 @@ import com.example.carescheduling.Ui.Common.CommonBean;
 import com.example.carescheduling.Ui.Profile.presenter.EditProfileStartClick;
 import com.example.carescheduling.databinding.EditProfileStartBinding;
 
-import java.io.Serializable;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class ClientBookingScreenModel implements Serializable {
-    private String name, date, time, address, telephone, discreption;
+    private String name, date, time, address, telephone, discreption,bookingId;
     private Bitmap image;
 
 
@@ -64,5 +64,14 @@ public class ClientBookingScreenModel implements Serializable {
 
     public void setDiscreption(String discreption) {
         this.discreption = discreption;
+    }
+
+
+    public String getBookingId() {
+        return bookingId;
+    }
+
+    public void setBookingId(String bookingId) {
+        this.bookingId = bookingId;
     }
 }

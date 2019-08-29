@@ -5,9 +5,7 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
 import com.example.carescheduling.Ui.Profile.bean.AddPhoneNumberBeanRetro;
-import com.example.carescheduling.Ui.Profile.bean.EditPhoneNumberBean;
 import com.example.carescheduling.data.Local.AppDataBase;
 import com.example.carescheduling.data.Local.DatabaseInitializer;
 import com.example.carescheduling.data.Local.DatabaseTable.CountryCode;
@@ -24,7 +22,6 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;

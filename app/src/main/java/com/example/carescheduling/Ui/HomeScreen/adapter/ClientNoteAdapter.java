@@ -10,7 +10,6 @@ import com.example.carescheduling.Ui.HomeScreen.beans.ClientCareNoteBean;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientNoteAdapterBean;
 import com.example.carescheduling.Ui.HomeScreen.presenter.MoreInfoClick;
 import com.example.carescheduling.databinding.ItemClientInfoDocumentBinding;
-import com.example.carescheduling.databinding.ItemsClientInfoDisabilitiesBinding;
 
 import java.util.ArrayList;
 

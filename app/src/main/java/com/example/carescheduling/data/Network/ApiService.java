@@ -3,8 +3,6 @@ package com.example.carescheduling.data.Network;
 import com.example.carescheduling.Ui.Dashboard.beans.ClientBookingListModel;
 import com.example.carescheduling.Ui.Dashboard.beans.EditMyProfile;
 import com.example.carescheduling.Ui.Dashboard.beans.GetMyProfileHome;
-import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
-import com.example.carescheduling.Ui.HomeScreen.beans.ArrivalBean;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientCareContactsBean;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientCareDocumentBean;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientCareMedicalBean;
@@ -29,7 +27,6 @@ import com.example.carescheduling.Ui.Profile.bean.AddImageBeanRetro;
 import com.example.carescheduling.Ui.Profile.bean.AddPhoneNumberBeanRetro;
 import com.example.carescheduling.Ui.Profile.bean.AddressByPostCode;
 import com.example.carescheduling.Ui.Profile.bean.ChangePasswordBeanRetro;
-import com.example.carescheduling.Ui.Profile.bean.DataList;
 import com.example.carescheduling.Ui.Profile.bean.DeleteImageRetro;
 import com.example.carescheduling.Ui.Profile.bean.EditAddressAllData;
 import com.example.carescheduling.Ui.Profile.bean.EditAdressBeanRetro;
@@ -43,17 +40,16 @@ import com.example.carescheduling.Ui.Profile.bean.GetMyProfileEdit;
 import com.example.carescheduling.Ui.Profile.bean.PersonAddressList;
 import com.example.carescheduling.Ui.Profile.bean.PersonEmailList;
 import com.example.carescheduling.Ui.Profile.bean.PersonPhoneList;
+import com.example.carescheduling.Ui.Profile.bean.ProfileAllData;
 import com.example.carescheduling.Ui.Profile.bean.ProfileImageRetro;
 import com.example.carescheduling.Ui.Profile.bean.UserViewModel;
 import com.google.gson.JsonElement;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import io.reactivex.Observable;
 import retrofit2.Response;
 import retrofit2.http.Body;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -66,9 +62,9 @@ public interface ApiService {
     @GET("AuthenticateUser/{userEmail}/{userPassword}/{branch_id}")
     Observable<Response<JsonElement>> getClientDetail(@Path("userEmail") String userEmail, @Path("userPassword") String userPassword, @Path("branch_id") String branchId);
 
-    //    @GET("GetMyProfile/{person_id}/{customer_id}/{branch_id}")
-    @GET("GetMyProfileWithoutPersonImages/{person_id}/{customer_id}/{branch_id}")
-    Observable<Response<ProfileBean>> getProfile(@Path("person_id") String PersonId, @Path("customer_id") String CustomerId, @Path("branch_id") String BranchId);
+    // http://mobile.rota.services/CssMobileRestfulService.svc/GetMyProfileAllData/EC38283E-BE96-4B38-A66B-89FE3C882D90/5F98AF4F-25DC-4AC8-B867-C5072C100000/5F98AF4F-25DC-4AC8-B867-C5072C101011/""
+    @GET("GetMyProfileAllData/{person_id}/{customer_id}/{branch_id}/{ImageSize}")
+    Observable<Response<ProfileAllData>> getProfileAllData(@Path("person_id") String PersonId, @Path("customer_id") String CustomerId, @Path("branch_id") String BranchId,@Path("ImageSize") String ImageSize);
 
     @GET("GetProfileImage/{person_id}/{branch_id}/{customer_id}/Small")
     Observable<Response<ProfileImageRetro>> getProfileImages(@Path("person_id") String PersonId, @Path("customer_id") String CustomerId, @Path("branch_id") String BranchId);
@@ -89,9 +85,6 @@ public interface ApiService {
                                                     @Path("person_id") String PersonId,
                                                     @Path("branch_id") String BranchId);
 
-    @POST("EditMyProfile")
-    Observable<Response<ProfileBean>> editMyProfilePost(@Body ProfileBean.Data profileBean);
-
 
     @POST("EditUser")
     Observable<Response<JsonElement>> EditMyUserWithOutUserName(@Body EditUserWithoutUserNameRetro profileBean);
@@ -104,9 +97,6 @@ public interface ApiService {
 
 //http://mobile.rota.services/CssMobileRestfulService.svc/ResetUserPassword
 //    http://mobile.rota.services/CssMobileRestfulService.svc/EditProfileImages
-
-    @POST("EditProfileImages")
-    Observable<Response<ProfileImageRetro>> EditMyImages(@Body ProfileBean.Data profileImageRetro);
 
     //    "GetNextVisitClientBookingList/{employeeId}/{branchId}/{customerId}"
     @GET("GetNextVisitClientBookingList/{employeeId}/{branchId}/{customerId}")
@@ -252,7 +242,7 @@ public interface ApiService {
     Observable<Response<JsonElement>> EditAddress(
             @Body EditAdressBeanRetro editAdressBeanRetro);
 
-        @GET("GetTodayClientTaskList/{clientId}/{branchId}/{customerId}")
+    @GET("GetTodayClientTaskList/{clientId}/{branchId}/{customerId}")
 //    @GET("GetTodayClientTaskList/EC38283E-BE96-4B38-A66B-89FE3C882D90/5F98AF4F-25DC-4AC8-B867-C5072C101011/5f98af4f-25dc-4ac8-b867-c5072c100000")
     Observable<Response<ClientTaskRetroBean>> GetClientTask(@Path("customerId") String customerId,
                                                             @Path("branchId") String branchId,
@@ -271,8 +261,8 @@ public interface ApiService {
             @Body MatchingClientBarcodeForLoginRetro matchingClientNFCForLoginRetro);
 
     @POST("EmployeeClientVisitForArrival")
-    Observable<Response<ArrivalBean>> EmployeeClientVisitForArrival(
-            @Body EmployeeClientVisitForArrivalRetro employeeClientVisitForArrivalRetro);
+    Observable<Response<JsonElement>> EmployeeClientVisitForArrival(
+            @Body ArrayList<EmployeeClientVisitForArrivalRetro> employeeClientVisitForArrivalRetro);
 
     @POST("EmployeeClientVisitForDeparture")
     Observable<Response<JsonElement>> EmployeeClientVisitForDepartureManual(

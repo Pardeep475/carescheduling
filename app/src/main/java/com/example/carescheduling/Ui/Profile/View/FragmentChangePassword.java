@@ -18,25 +18,19 @@ import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseFragment;
 import com.example.carescheduling.Ui.Common.Common;
 import com.example.carescheduling.Ui.Common.CommonBean;
-import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
-import com.example.carescheduling.Ui.Dashboard.beans.ProfileResultBean;
 import com.example.carescheduling.Ui.Profile.ViewModel.FragmentChangePasswordViewModel;
 import com.example.carescheduling.Ui.Profile.bean.EditUserWithUserNameRetro;
 import com.example.carescheduling.Ui.Profile.bean.EditUserWithoutUserNameRetro;
 import com.example.carescheduling.Ui.Profile.bean.FragmentChangePasswordBean;
 import com.example.carescheduling.Ui.Profile.bean.UserViewModel;
-import com.example.carescheduling.Ui.Profile.presenter.EditEmailClick;
 import com.example.carescheduling.Ui.Profile.presenter.FragmentChangePasswordClick;
 import com.example.carescheduling.Utils.ConnectivityReceiver;
 import com.example.carescheduling.Utils.Constants;
 import com.example.carescheduling.data.Local.SessionManager;
 import com.example.carescheduling.databinding.FragmentChangePasswordBinding;
 
-import java.io.Serializable;
-
 public class FragmentChangePassword extends BaseFragment implements Common, FragmentChangePasswordClick {
     private FragmentChangePasswordBinding fragmentChangePasswordBinding;
-    private ProfileBean profileResultBean;
     private FragmentChangePasswordViewModel fragmentChangePasswordViewModel;
     private SessionManager sessionManager;
     private UserViewModel userModel;
@@ -49,9 +43,7 @@ public class FragmentChangePassword extends BaseFragment implements Common, Frag
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            profileResultBean = (ProfileBean) getArguments().getSerializable(Constants.PROFILE_DATA);
-        }
+
     }
 
     @Override

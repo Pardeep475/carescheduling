@@ -37,11 +37,14 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Dashboard extends BaseActivity {
@@ -80,7 +83,12 @@ public class Dashboard extends BaseActivity {
         setFragment(SettingF.newInstance());
 
         getDefaultData();
+
     }
+
+    //                android:text="Monday 14 of July 2016 02:34"
+
+
 
     private void getDefaultData() {
         if (ConnectivityReceiver.isNetworkAvailable(this)) {
@@ -112,61 +120,61 @@ public class Dashboard extends BaseActivity {
     }
 
     private void parseData(EditMyProfile myProfile) {
-        if (myProfile != null && myProfile.getData() != null && myProfile.getData().getCustomer() != null) {
+        if (myProfile != null && myProfile.getData() != null && myProfile.getData() != null) {
 //            gender data
-            if (myProfile.getData().getCustomer().getCustomerGender() != null && myProfile.getData().getCustomer().getCustomerGender().size() > 0) {
-                GenderData(myProfile.getData().getCustomer().getCustomerGender());
+            if (myProfile.getData().getCustomerGender() != null && myProfile.getData().getCustomerGender().size() > 0) {
+                GenderData(myProfile.getData().getCustomerGender());
             }
 //            prefix
-            if (myProfile.getData().getCustomer().getCustomerPrefix() != null && myProfile.getData().getCustomer().getCustomerPrefix().size() > 0) {
-                PrefixData(myProfile.getData().getCustomer().getCustomerPrefix());
+            if (myProfile.getData().getCustomerPrefix() != null && myProfile.getData().getCustomerPrefix().size() > 0) {
+                PrefixData(myProfile.getData().getCustomerPrefix());
             }
 //            language
-            if (myProfile.getData().getCustomer().getCustomerLanguage() != null && myProfile.getData().getCustomer().getCustomerLanguage().size() > 0) {
-                LanguageData(myProfile.getData().getCustomer().getCustomerLanguage());
+            if (myProfile.getData().getCustomerLanguage() != null && myProfile.getData().getCustomerLanguage().size() > 0) {
+                LanguageData(myProfile.getData().getCustomerLanguage());
             }
             //            Marital Status
-            if (myProfile.getData().getCustomer().getCustomerMaritalStatusType() != null && myProfile.getData().getCustomer().getCustomerMaritalStatusType().size() > 0) {
-                MaritalStatusData(myProfile.getData().getCustomer().getCustomerMaritalStatusType());
+            if (myProfile.getData().getCustomerMaritalStatusType() != null && myProfile.getData().getCustomerMaritalStatusType().size() > 0) {
+                MaritalStatusData(myProfile.getData().getCustomerMaritalStatusType());
             }
             //            CustomerEthnicityType
-            if (myProfile.getData().getCustomer().getCustomerEthnicityType() != null && myProfile.getData().getCustomer().getCustomerEthnicityType().size() > 0) {
-                EthnicityData(myProfile.getData().getCustomer().getCustomerEthnicityType());
+            if (myProfile.getData().getCustomerEthnicityType() != null && myProfile.getData().getCustomerEthnicityType().size() > 0) {
+                EthnicityData(myProfile.getData().getCustomerEthnicityType());
             }
             // disability type
-            if (myProfile.getData().getCustomer().getCustomerDisabilityType() != null && myProfile.getData().getCustomer().getCustomerDisabilityType().size() > 0) {
-                CustomerDisabilityType(myProfile.getData().getCustomer().getCustomerDisabilityType());
+            if (myProfile.getData().getCustomerDisabilityType() != null && myProfile.getData().getCustomerDisabilityType().size() > 0) {
+                CustomerDisabilityType(myProfile.getData().getCustomerDisabilityType());
             }
             // Sexuality type
-            if (myProfile.getData().getCustomer().getCustomerSexualityType() != null && myProfile.getData().getCustomer().getCustomerSexualityType().size() > 0) {
-                CustomerSexualityType(myProfile.getData().getCustomer().getCustomerSexualityType());
+            if (myProfile.getData().getCustomerSexualityType() != null && myProfile.getData().getCustomerSexualityType().size() > 0) {
+                CustomerSexualityType(myProfile.getData().getCustomerSexualityType());
             }
             // countryCode type
-            if (myProfile.getData().getCustomer().getCustomerTelephoneCountryPrefix() != null && myProfile.getData().getCustomer().getCustomerTelephoneCountryPrefix().size() > 0) {
-                CustomerCountryCode(myProfile.getData().getCustomer().getCustomerTelephoneCountryPrefix());
+            if (myProfile.getData().getCustomerTelephoneCountryPrefix() != null && myProfile.getData().getCustomerTelephoneCountryPrefix().size() > 0) {
+                CustomerCountryCode(myProfile.getData().getCustomerTelephoneCountryPrefix());
             }
 
 //            Religion
-            if (myProfile.getData().getCustomer().getCustomerReligionType() != null && myProfile.getData().getCustomer().getCustomerReligionType().size() > 0) {
-                ReligionData(myProfile.getData().getCustomer().getCustomerReligionType());
+            if (myProfile.getData().getCustomerReligionType() != null && myProfile.getData().getCustomerReligionType().size() > 0) {
+                ReligionData(myProfile.getData().getCustomerReligionType());
             }
             //            Nationality
-            if (myProfile.getData().getCustomer().getCustomerCountry() != null && myProfile.getData().getCustomer().getCustomerCountry().size() > 0) {
-                NationalityData(myProfile.getData().getCustomer().getCustomerCountry());
+            if (myProfile.getData().getCustomerCountry() != null && myProfile.getData().getCustomerCountry().size() > 0) {
+                NationalityData(myProfile.getData().getCustomerCountry());
             }
 
             //            AddressType
-            if (myProfile.getData().getCustomer().getCustomerAddressType() != null && myProfile.getData().getCustomer().getCustomerAddressType().size() > 0) {
-                AddressTypeData(myProfile.getData().getCustomer().getCustomerAddressType());
+            if (myProfile.getData().getCustomerAddressType() != null && myProfile.getData().getCustomerAddressType().size() > 0) {
+                AddressTypeData(myProfile.getData().getCustomerAddressType());
             }
 
             //            Phone Data
-            if (myProfile.getData().getCustomer().getCustomerPhoneType() != null && myProfile.getData().getCustomer().getCustomerPhoneType().size() > 0) {
-                PhoneTypeData(myProfile.getData().getCustomer().getCustomerPhoneType());
+            if (myProfile.getData().getCustomerPhoneType() != null && myProfile.getData().getCustomerPhoneType().size() > 0) {
+                PhoneTypeData(myProfile.getData().getCustomerPhoneType());
             }
             //            Email Type
-            if (myProfile.getData().getCustomer().getCustomerEmailType() != null && myProfile.getData().getCustomer().getCustomerEmailType().size() > 0) {
-                EmailTypeData(myProfile.getData().getCustomer().getCustomerEmailType());
+            if (myProfile.getData().getCustomerEmailType() != null && myProfile.getData().getCustomerEmailType().size() > 0) {
+                EmailTypeData(myProfile.getData().getCustomerEmailType());
             }
         }
     }

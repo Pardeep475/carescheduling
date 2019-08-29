@@ -1,6 +1,5 @@
 package com.example.carescheduling.Ui.Profile.View;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
@@ -17,15 +16,10 @@ import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseFragment;
 import com.example.carescheduling.Ui.Common.Common;
 import com.example.carescheduling.Ui.Common.CommonBean;
-import com.example.carescheduling.Ui.Dashboard.beans.PersonEmail;
-import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
-import com.example.carescheduling.Ui.Dashboard.view.Dashboard;
 import com.example.carescheduling.Ui.Profile.Adapter.CustomAdapter;
 import com.example.carescheduling.Ui.Profile.ViewModel.EditEmailViewModel;
-import com.example.carescheduling.Ui.Profile.bean.EditEmailBean;
 import com.example.carescheduling.Ui.Profile.bean.EditEmailRetroBean;
 import com.example.carescheduling.Ui.Profile.bean.PersonEmailList;
-import com.example.carescheduling.Ui.Profile.presenter.EditEmailClick;
 import com.example.carescheduling.Utils.ConnectivityReceiver;
 import com.example.carescheduling.Utils.Constants;
 import com.example.carescheduling.data.Local.DatabaseTable.EmailType;

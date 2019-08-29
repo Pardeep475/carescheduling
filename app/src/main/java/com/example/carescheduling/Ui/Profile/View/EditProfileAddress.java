@@ -1,8 +1,6 @@
 package com.example.carescheduling.Ui.Profile.View;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -11,7 +9,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,28 +21,22 @@ import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseFragment;
 import com.example.carescheduling.Ui.Common.Common;
 import com.example.carescheduling.Ui.Common.CommonBean;
-import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
-import com.example.carescheduling.Ui.Dashboard.beans.ProfileResultBean;
 import com.example.carescheduling.Ui.Dashboard.view.Dashboard;
 import com.example.carescheduling.Ui.Profile.ViewModel.EditProfileAddressViewModel;
-import com.example.carescheduling.Ui.Profile.bean.EditAddressAllData;
-import com.example.carescheduling.Ui.Profile.bean.EditProfileAddressBean;
-import com.example.carescheduling.Ui.Profile.bean.EditProfileInfoBean;
+import com.example.carescheduling.Ui.Profile.bean.EditAllAddressData;
 import com.example.carescheduling.Ui.Profile.bean.PersonAddressList;
 import com.example.carescheduling.Ui.Profile.bean.PersonEmailList;
 import com.example.carescheduling.Ui.Profile.bean.PersonPhoneList;
 import com.example.carescheduling.Ui.Profile.presenter.EditProfileAddressClick;
 import com.example.carescheduling.Utils.ConnectivityReceiver;
-import com.example.carescheduling.Utils.Constants;
 import com.example.carescheduling.databinding.FragmentEditProfileAddressBinding;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 public class EditProfileAddress extends BaseFragment implements Common, EditProfileAddressClick {
 
     private FragmentEditProfileAddressBinding editProfileAddressBinding;
-    private EditAddressAllData.Data profileResultBean;
+    private EditAllAddressData profileResultBean;
     private EditProfileAddressViewModel editProfileAddressViewModel;
 
     public static EditProfileAddress newInstance() {
@@ -99,9 +90,9 @@ public class EditProfileAddress extends BaseFragment implements Common, EditProf
                 showDialog();
                 try {
                     editProfileAddressViewModel.GetMyAddressEdit(getSessionManager().getPersonId(), getSessionManager().getCustomerId(), getSessionManager().getBranchId())
-                            .observe(this, new Observer<EditAddressAllData.Data>() {
+                            .observe(this, new Observer<EditAllAddressData>() {
                                 @Override
-                                public void onChanged(EditAddressAllData.Data editProfileInfoBean) {
+                                public void onChanged(EditAllAddressData editProfileInfoBean) {
                                     hideDialog();
                                     profileResultBean = editProfileInfoBean;
                                     if (profileResultBean != null && getView() != null) {
@@ -395,26 +386,6 @@ public class EditProfileAddress extends BaseFragment implements Common, EditProf
     }
 
 
-    private void sendRemoteData(ProfileBean profileBean) {
-        showDialog();
-        editProfileAddressViewModel.getEditProfilePost(profileBean.getData()).observe(this, new Observer<ProfileBean>() {
-            @Override
-            public void onChanged(ProfileBean profileBean) {
-                hideDialog();
-                if (profileBean != null) {
-                    if (profileBean.getSuccess()) {
-                        Toast.makeText(getActivity(), (String) profileBean.getResponseMessage(), Toast.LENGTH_SHORT).show();
-                        openDashboardActivity();
-                    } else {
-                        Toast.makeText(getActivity(), (String) profileBean.getResponseMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        });
-    }
 
 
     private void setFragment(Fragment fragment) {

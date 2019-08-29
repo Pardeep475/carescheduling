@@ -17,18 +17,13 @@ import com.example.carescheduling.Ui.Base.BaseFragment;
 import com.example.carescheduling.Ui.Common.Common;
 import com.example.carescheduling.Ui.Common.CommonBean;
 import com.example.carescheduling.Ui.Dashboard.ViewModel.ProfileResultViewModel;
-import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
 import com.example.carescheduling.Ui.Dashboard.beans.ProfileResultBean;
 import com.example.carescheduling.Ui.Dashboard.presenter.EditProfileClickHandler;
-import com.example.carescheduling.Ui.Dashboard.presenter.ProfileClickHandler;
 import com.example.carescheduling.Ui.LoginActivity.View.LoginActivity;
 import com.example.carescheduling.Ui.Profile.View.EditProfile;
 import com.example.carescheduling.Utils.ConnectivityReceiver;
-import com.example.carescheduling.Utils.Constants;
 import com.example.carescheduling.data.Local.SessionManager;
 import com.example.carescheduling.databinding.FragmentProfileResultBinding;
-
-import java.io.Serializable;
 
 public class ProfileResult extends BaseFragment implements Common, EditProfileClickHandler {
 

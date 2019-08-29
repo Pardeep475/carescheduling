@@ -11,11 +11,9 @@ import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Dashboard.beans.GetMyProfileHome;
 import com.example.carescheduling.Ui.Dashboard.beans.PersonAddress_;
 import com.example.carescheduling.Ui.Dashboard.beans.PersonImage;
-import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
 import com.example.carescheduling.Ui.Dashboard.beans.ProfileResultBean;
 import com.example.carescheduling.data.Network.ApiClient;
 import com.example.carescheduling.data.Network.ApiService;
-import com.google.gson.JsonElement;
 
 import java.util.List;
 
@@ -43,120 +41,120 @@ public class ProfileResultViewModel extends AndroidViewModel {
         compositeDisposable = new CompositeDisposable();
     }
 
-    public LiveData<ProfileResultBean> getProfileData(ProfileBean profileBean) {
-        MutableLiveData<ProfileResultBean> profileResultBeanMutableLiveData = new MutableLiveData<>();
-        ProfileResultBean profileResultBean = new ProfileResultBean();
-        String personEmail = null;
-        String personTelephone = null;
-        String personMobile = null;
-        String personUserName = null;
-        String personAddress = null;
-        Bitmap imgBitMap = null;
-
-        if (profileBean.getData().getPerson() != null) {
-
-            //            get Address
-            String imgId = null;
-            if (profileBean.getData().getPerson().getPersonImage().size() == 1) {
-                imgId = profileBean.getData().getPerson().getPersonImage().get(0).getImageId();
-            } else if (profileBean.getData().getPerson().getPersonImage().size() > 1) {
-                for (int i = 0; i < profileBean.getData().getPerson().getPersonImage().size(); i++) {
-                    if (profileBean.getData().getPerson().getPersonImage().get(i).isDefault()) {
-                        imgId = profileBean.getData().getPerson().getPersonImage().get(i).getImageId();
-                    }
-                }
-            } else if (profileBean.getData().getPerson().getPersonImage().size() > 0) {
-                imgId = profileBean.getData().getPerson().getPersonImage().get(0).getImageId();
-            }
-
-            if (imgId != null) {
-                String img = PersonImage(profileBean.getData().getPersonImage(), imgId);
-                if (img != null) {
-                    imgBitMap = ImageFromBase64(img);
-                }
-            }
-
-//      get person email
-            if (profileBean.getData().getPerson().getPersonEmail().size() == 1) {
-                personEmail = checkIsNotNull(profileBean.getData().getPerson().getPersonEmail().get(0).getEmailAddress());
-            } else if (profileBean.getData().getPerson().getPersonEmail().size() > 1) {
-                for (int i = 0; i < profileBean.getData().getPerson().getPersonEmail().size(); i++) {
-                    if (profileBean.getData().getPerson().getPersonEmail().get(i).getIsDefaultEmail())
-                        personEmail = checkIsNotNull(profileBean.getData().getPerson().getPersonEmail().get(i).getEmailAddress());
-                }
-            } else if (profileBean.getData().getPerson().getPersonEmail().size() > 0) {
-                personEmail = checkIsNotNull(profileBean.getData().getPerson().getPersonEmail().get(0).getEmailAddress());
-            }
-
-
-//      get person number
-            if (profileBean.getData().getPerson().getPersonPhone().size() == 1) {
-
-                personMobile = "+" + profileBean.getData().getPerson().getPersonPhone().get(0).getCountryTelephonePrefix() + " " +
-                        profileBean.getData().getPerson().getPersonPhone().get(0).getPhoneNumber();
-                personTelephone = profileBean.getData().getPerson().getPersonPhone().get(0).getPhoneTypeName() + ":";
-            } else if (profileBean.getData().getPerson().getPersonPhone().size() > 1) {
-                for (int i = 0; i < profileBean.getData().getPerson().getPersonPhone().size(); i++) {
-                    if (profileBean.getData().getPerson().getPersonPhone().get(i).getIsDefaultPhone()) {
-                        personMobile = "+" + profileBean.getData().getPerson().getPersonPhone().get(0).getCountryTelephonePrefix() + " " +
-                                profileBean.getData().getPerson().getPersonPhone().get(0).getPhoneNumber();
-                        personTelephone = profileBean.getData().getPerson().getPersonPhone().get(0).getPhoneTypeName() + ":";
-                    }
-                }
-            } else if (profileBean.getData().getPerson().getPersonPhone().size() > 0) {
-                personMobile = "+" + profileBean.getData().getPerson().getPersonPhone().get(0).getCountryTelephonePrefix() + " " +
-                        profileBean.getData().getPerson().getPersonPhone().get(0).getPhoneNumber();
-                personTelephone = profileBean.getData().getPerson().getPersonPhone().get(0).getPhoneTypeName() + ":";
-            }
-
-//           get user name
-            personUserName = checkIsNotNull(profileBean.getData().getPerson().getFirstName())
-                    + " " + checkIsNotNull(profileBean.getData().getPerson().getMaidenName())
-                    + " " + checkIsNotNull(profileBean.getData().getPerson().getSurName());
-
-//            get Address
-            int addressId = -1;
-            if (profileBean.getData().getPerson().getPersonAddress().size() == 1) {
-                addressId = profileBean.getData().getPerson().getPersonAddress().get(0).getAddressId();
-            } else if (profileBean.getData().getPerson().getPersonAddress().size() > 1) {
-                for (int i = 0; i < profileBean.getData().getPerson().getPersonAddress().size(); i++) {
-                    if (profileBean.getData().getPerson().getPersonAddress().get(i).getIsDefaultAddress()) {
-                        addressId = profileBean.getData().getPerson().getPersonAddress().get(i).getAddressId();
-                    }
-                }
-            } else if (profileBean.getData().getPerson().getPersonAddress().size() > 0) {
-                addressId = profileBean.getData().getPerson().getPersonAddress().get(0).getAddressId();
-            }
-            if (addressId != -1) {
-                personAddress = PersonAddress(profileBean.getData().getPersonAddresses(), addressId);
-            }
-
-
-            profileResultBean.setEmail(personEmail != null ? personEmail : context.getString(R.string.no_data_available));
-            profileResultBean.setTelephone(personTelephone != null ? personTelephone : context.getString(R.string.no_data_available));
-            profileResultBean.setMobile(personMobile != null ? personMobile : context.getString(R.string.no_data_available));
-            profileResultBean.setUserName(personUserName != null &&
-                    !personUserName.equalsIgnoreCase("null")
-                    && !personUserName.equalsIgnoreCase("") ? personUserName : context.getString(R.string.no_data_available));
-            profileResultBean.setAddress(personAddress != null &&
-                    !personAddress.equalsIgnoreCase("null")
-                    && !personAddress.equalsIgnoreCase("") ? personAddress : context.getString(R.string.no_data_available));
-            profileResultBean.setImgUrl(imgBitMap);
-            profileResultBeanMutableLiveData.setValue(profileResultBean);
-
-        }
-//        Organisation Name
-//        Building Number
-//        Building Name
-//        Sub Building Name
-//        Street Address
-//        Town
-//                County
-//        Postal code
-//        Country
-
-        return profileResultBeanMutableLiveData;
-    }
+//    public LiveData<ProfileResultBean> getProfileData(ProfileBean profileBean) {
+//        MutableLiveData<ProfileResultBean> profileResultBeanMutableLiveData = new MutableLiveData<>();
+//        ProfileResultBean profileResultBean = new ProfileResultBean();
+//        String personEmail = null;
+//        String personTelephone = null;
+//        String personMobile = null;
+//        String personUserName = null;
+//        String personAddress = null;
+//        Bitmap imgBitMap = null;
+//
+//        if (profileBean.getData().getPerson() != null) {
+//
+//            //            get Address
+//            String imgId = null;
+//            if (profileBean.getData().getPerson().getPersonImage().size() == 1) {
+//                imgId = profileBean.getData().getPerson().getPersonImage().get(0).getImageId();
+//            } else if (profileBean.getData().getPerson().getPersonImage().size() > 1) {
+//                for (int i = 0; i < profileBean.getData().getPerson().getPersonImage().size(); i++) {
+//                    if (profileBean.getData().getPerson().getPersonImage().get(i).isDefault()) {
+//                        imgId = profileBean.getData().getPerson().getPersonImage().get(i).getImageId();
+//                    }
+//                }
+//            } else if (profileBean.getData().getPerson().getPersonImage().size() > 0) {
+//                imgId = profileBean.getData().getPerson().getPersonImage().get(0).getImageId();
+//            }
+//
+//            if (imgId != null) {
+//                String img = PersonImage(profileBean.getData().getPersonImage(), imgId);
+//                if (img != null) {
+//                    imgBitMap = ImageFromBase64(img);
+//                }
+//            }
+//
+////      get person email
+//            if (profileBean.getData().getPerson().getPersonEmail().size() == 1) {
+//                personEmail = checkIsNotNull(profileBean.getData().getPerson().getPersonEmail().get(0).getEmailAddress());
+//            } else if (profileBean.getData().getPerson().getPersonEmail().size() > 1) {
+//                for (int i = 0; i < profileBean.getData().getPerson().getPersonEmail().size(); i++) {
+//                    if (profileBean.getData().getPerson().getPersonEmail().get(i).getIsDefaultEmail())
+//                        personEmail = checkIsNotNull(profileBean.getData().getPerson().getPersonEmail().get(i).getEmailAddress());
+//                }
+//            } else if (profileBean.getData().getPerson().getPersonEmail().size() > 0) {
+//                personEmail = checkIsNotNull(profileBean.getData().getPerson().getPersonEmail().get(0).getEmailAddress());
+//            }
+//
+//
+////      get person number
+//            if (profileBean.getData().getPerson().getPersonPhone().size() == 1) {
+//
+//                personMobile = "+" + profileBean.getData().getPerson().getPersonPhone().get(0).getCountryTelephonePrefix() + " " +
+//                        profileBean.getData().getPerson().getPersonPhone().get(0).getPhoneNumber();
+//                personTelephone = profileBean.getData().getPerson().getPersonPhone().get(0).getPhoneTypeName() + ":";
+//            } else if (profileBean.getData().getPerson().getPersonPhone().size() > 1) {
+//                for (int i = 0; i < profileBean.getData().getPerson().getPersonPhone().size(); i++) {
+//                    if (profileBean.getData().getPerson().getPersonPhone().get(i).getIsDefaultPhone()) {
+//                        personMobile = "+" + profileBean.getData().getPerson().getPersonPhone().get(0).getCountryTelephonePrefix() + " " +
+//                                profileBean.getData().getPerson().getPersonPhone().get(0).getPhoneNumber();
+//                        personTelephone = profileBean.getData().getPerson().getPersonPhone().get(0).getPhoneTypeName() + ":";
+//                    }
+//                }
+//            } else if (profileBean.getData().getPerson().getPersonPhone().size() > 0) {
+//                personMobile = "+" + profileBean.getData().getPerson().getPersonPhone().get(0).getCountryTelephonePrefix() + " " +
+//                        profileBean.getData().getPerson().getPersonPhone().get(0).getPhoneNumber();
+//                personTelephone = profileBean.getData().getPerson().getPersonPhone().get(0).getPhoneTypeName() + ":";
+//            }
+//
+////           get user name
+//            personUserName = checkIsNotNull(profileBean.getData().getPerson().getFirstName())
+//                    + " " + checkIsNotNull(profileBean.getData().getPerson().getMaidenName())
+//                    + " " + checkIsNotNull(profileBean.getData().getPerson().getSurName());
+//
+////            get Address
+//            int addressId = -1;
+//            if (profileBean.getData().getPerson().getPersonAddress().size() == 1) {
+//                addressId = profileBean.getData().getPerson().getPersonAddress().get(0).getAddressId();
+//            } else if (profileBean.getData().getPerson().getPersonAddress().size() > 1) {
+//                for (int i = 0; i < profileBean.getData().getPerson().getPersonAddress().size(); i++) {
+//                    if (profileBean.getData().getPerson().getPersonAddress().get(i).getIsDefaultAddress()) {
+//                        addressId = profileBean.getData().getPerson().getPersonAddress().get(i).getAddressId();
+//                    }
+//                }
+//            } else if (profileBean.getData().getPerson().getPersonAddress().size() > 0) {
+//                addressId = profileBean.getData().getPerson().getPersonAddress().get(0).getAddressId();
+//            }
+//            if (addressId != -1) {
+//                personAddress = PersonAddress(profileBean.getData().getPersonAddresses(), addressId);
+//            }
+//
+//
+//            profileResultBean.setEmail(personEmail != null ? personEmail : context.getString(R.string.no_data_available));
+//            profileResultBean.setTelephone(personTelephone != null ? personTelephone : context.getString(R.string.no_data_available));
+//            profileResultBean.setMobile(personMobile != null ? personMobile : context.getString(R.string.no_data_available));
+//            profileResultBean.setUserName(personUserName != null &&
+//                    !personUserName.equalsIgnoreCase("null")
+//                    && !personUserName.equalsIgnoreCase("") ? personUserName : context.getString(R.string.no_data_available));
+//            profileResultBean.setAddress(personAddress != null &&
+//                    !personAddress.equalsIgnoreCase("null")
+//                    && !personAddress.equalsIgnoreCase("") ? personAddress : context.getString(R.string.no_data_available));
+//            profileResultBean.setImgUrl(imgBitMap);
+//            profileResultBeanMutableLiveData.setValue(profileResultBean);
+//
+//        }
+////        Organisation Name
+////        Building Number
+////        Building Name
+////        Sub Building Name
+////        Street Address
+////        Town
+////                County
+////        Postal code
+////        Country
+//
+//        return profileResultBeanMutableLiveData;
+//    }
 
     private String PersonImage(List<PersonImage> personImage, String imgId) {
         String personImageBase = null;

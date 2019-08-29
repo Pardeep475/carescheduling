@@ -16,6 +16,8 @@ public class Constants {
     public static String PERSON_ID = "PersonId";
     public static String CUSTOMER_ID = "CustomerId";
     public static String BRANCH_ID = "BranchId";
+    public static String BOOKING_ID = "booking_id";
+    public static String CLIENT_VISIT_ID = "client_visit_id";
     public static String IS_USER_LOGIN = "is_user_login";
     public static String CURRENT_PASSWORD = "current_password";
     public static String CLIENT_ID = "client_id";

@@ -73,4 +73,20 @@ public class SessionManager {
     public String getClientTasks() {
         return sharedPreferences.getString(Constants.CLIENT_TASK, null);
     }
+
+    public void setBookingId(String bookingId) {
+        sharedPreferenceEditor.putString(Constants.BOOKING_ID, bookingId).commit();
+    }
+
+    public String getBookingId() {
+        return sharedPreferences.getString(Constants.BOOKING_ID, null);
+    }
+
+    public void setClientVisitId(String barcodeId) {
+        sharedPreferenceEditor.putString(Constants.CLIENT_VISIT_ID, barcodeId).commit();
+    }
+
+    public String getClientVisitId() {
+        return sharedPreferences.getString(Constants.CLIENT_VISIT_ID, null);
+    }
 }

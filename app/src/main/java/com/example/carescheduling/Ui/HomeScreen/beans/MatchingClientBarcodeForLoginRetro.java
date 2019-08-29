@@ -1,7 +1,7 @@
 package com.example.carescheduling.Ui.HomeScreen.beans;
 
 public class MatchingClientBarcodeForLoginRetro {
-    private String 	ClientPersonId,BarcodeId,BarcodeInfoString,CustomerId,BranchId,EmployeePersonId;
+    private String 	ClientPersonId,BarcodeInfoString,CustomerId,BranchId,EmployeePersonId;
 
     public String getClientPersonId() {
         return ClientPersonId;
@@ -11,13 +11,6 @@ public class MatchingClientBarcodeForLoginRetro {
         ClientPersonId = clientPersonId;
     }
 
-    public String getBarcodeId() {
-        return BarcodeId;
-    }
-
-    public void setBarcodeId(String barcodeId) {
-        BarcodeId = barcodeId;
-    }
 
     public String getBarcodeInfoString() {
         return BarcodeInfoString;

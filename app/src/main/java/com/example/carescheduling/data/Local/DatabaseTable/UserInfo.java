@@ -1,17 +1,20 @@
-package com.example.carescheduling.Ui.Profile.bean;
+package com.example.carescheduling.data.Local.DatabaseTable;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-
-//@Entity(tableName = "FragmentChangePasswordBean")
-public class FragmentChangePasswordBean {
-//    @PrimaryKey(autoGenerate = true)
-//    @ColumnInfo(name = "id")
-//    @NonNull
-//    private int id;
-    private String userName, passwordQuestion, passwordAns;
+@Entity(tableName = "user_info")
+public class UserInfo {
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "user_info_id")
+    private int id;
+    @ColumnInfo(name = "user_name")
+    private String userName;
+    @ColumnInfo(name = "password_question")
+    private String  passwordQuestion;
+    @ColumnInfo(name = "password_ans")
+    private String passwordAns;
 
     public String getUserName() {
         return userName;

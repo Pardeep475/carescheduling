@@ -3,9 +3,10 @@ package com.example.carescheduling.Ui.HomeScreen.beans;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 
 
-public class ScanBean {
+public class ScanBean implements Serializable {
 
     @SerializedName("Data")
     @Expose
@@ -62,7 +63,7 @@ public class ScanBean {
     public void setSuccess(Boolean success) {
         this.success = success;
     }
-    public class Data {
+    public class Data implements Serializable{
 
         @SerializedName("BarcodeId")
         @Expose

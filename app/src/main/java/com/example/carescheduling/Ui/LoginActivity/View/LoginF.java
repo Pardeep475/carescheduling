@@ -111,7 +111,7 @@ public class LoginF extends BaseFragment implements LoginPresenter {
             public void onChanged(LoginBeanRetro loginBeanRetro) {
                 hideDialog();
                 Log.e("LoginSuccess", "liveData");
-                if (loginBeanRetro != null && loginBeanRetro.isSuccess()) {
+                if (loginBeanRetro != null && loginBeanRetro.getSuccess()) {
                     if (loginBeanRetro.getData().getBranchList().size() > 0) {
                         getSessionManager().setCurrentPassword(fragmentLoginBinding.edtPassword.getText().toString());
                         goToLoginFSecond(userEmail, userPassword, loginBeanRetro.getData());
@@ -120,7 +120,7 @@ public class LoginF extends BaseFragment implements LoginPresenter {
                     }
                 } else {
                     if (loginBeanRetro != null)
-                        Toast.makeText(getActivity(), loginBeanRetro.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), loginBeanRetro.getResponseMessage(), Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -142,7 +142,9 @@ public class LoginF extends BaseFragment implements LoginPresenter {
     }
 
     private void goToLoginFSecond(String email, String userPassword, LoginBeanRetro.Data data) {
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.rl_main_login, LoginFSecond.newInstance(email, userPassword, data)).commitAllowingStateLoss();
+        if (getActivity() != null) {
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.rl_main_login, LoginFSecond.newInstance(email, userPassword, data)).commitAllowingStateLoss();
+        }
     }
 }

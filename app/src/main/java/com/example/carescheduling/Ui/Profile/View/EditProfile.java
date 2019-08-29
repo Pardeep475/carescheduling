@@ -7,16 +7,12 @@ import androidx.fragment.app.Fragment;
 import android.os.Bundle;
 
 import com.example.carescheduling.R;
-import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
-import com.example.carescheduling.Ui.Dashboard.beans.ProfileResultBean;
 import com.example.carescheduling.Ui.HomeScreen.View.BlankFragment;
 import com.example.carescheduling.Ui.HomeScreen.View.DirectionsFragment;
 import com.example.carescheduling.Ui.HomeScreen.View.HoursAndExspenses;
 import com.example.carescheduling.Ui.HomeScreen.View.MyTimeFragment;
 import com.example.carescheduling.Ui.HomeScreen.View.TodaysVisitFragment;
 import com.example.carescheduling.Ui.HomeScreen.View.VisitArchiveFragment;
-import com.example.carescheduling.Utils.Constants;
-import com.example.carescheduling.Utils.Utils;
 import com.example.carescheduling.databinding.ActivityEditProfileBinding;
 
 public class EditProfile extends AppCompatActivity {

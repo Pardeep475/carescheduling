@@ -1,12 +1,8 @@
 package com.example.carescheduling.Ui.Profile.View;
 
-import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -20,21 +16,14 @@ import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseFragment;
 import com.example.carescheduling.Ui.Common.Common;
 import com.example.carescheduling.Ui.Common.CommonBean;
-import com.example.carescheduling.Ui.Dashboard.beans.PersonPhone;
-import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
-import com.example.carescheduling.Ui.Dashboard.view.Dashboard;
 import com.example.carescheduling.Ui.Profile.Adapter.CustomAdapter;
 import com.example.carescheduling.Ui.Profile.ViewModel.EditPhoneNumberViewModel;
 import com.example.carescheduling.Ui.Profile.bean.EditNumberBeanRetro;
-import com.example.carescheduling.Ui.Profile.bean.EditPhoneNumberBean;
 import com.example.carescheduling.Ui.Profile.bean.PersonPhoneList;
-import com.example.carescheduling.Ui.Profile.presenter.EditEmailClick;
 import com.example.carescheduling.Utils.ConnectivityReceiver;
 import com.example.carescheduling.Utils.Constants;
 import com.example.carescheduling.data.Local.DatabaseTable.CountryCode;
-import com.example.carescheduling.data.Local.DatabaseTable.Nationality;
 import com.example.carescheduling.data.Local.DatabaseTable.PhoneType;
-import com.example.carescheduling.data.Local.SessionManager;
 import com.example.carescheduling.databinding.FragmentEditPhoneNumberBinding;
 
 import java.util.ArrayList;

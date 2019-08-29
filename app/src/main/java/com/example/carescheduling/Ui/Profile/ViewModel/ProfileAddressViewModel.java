@@ -5,7 +5,6 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
 import com.example.carescheduling.Ui.Profile.bean.AddressByPostCode;
 import com.example.carescheduling.Ui.Profile.bean.AddressData;
 import com.example.carescheduling.Ui.Profile.bean.EditAdressBeanRetro;
@@ -53,25 +52,6 @@ public class ProfileAddressViewModel extends AndroidViewModel {
 
     public LiveData<List<AddressType>> getAddressType() {
         return DatabaseInitializer.loadAddressType(AppDataBase.getAppDatabase(context));
-    }
-
-    public LiveData<ProfileAddressBean> getProfileAddressBean(String value, ProfileBean profileBean) {
-        MutableLiveData<ProfileAddressBean> profileAddressBeanMutableLiveData = new MutableLiveData<>();
-        ProfileAddressBean profileAddressBean = new ProfileAddressBean();
-        if (profileBean != null && profileBean.getData() != null) {
-            for (int i = 0; i < profileBean.getData().getPersonAddresses().size(); i++) {
-                if (value.equalsIgnoreCase(profileBean.getData().getPersonAddresses().get(i).getAddressTypeName())) {
-                    profileAddressBean.setPostCode(checkIsNotNull(profileBean.getData().getPersonAddresses().get(i).getAddress().getPostCodeName()));
-                    profileAddressBean.setStreetName(checkIsNotNull(profileBean.getData().getPersonAddresses().get(i).getAddress().getStreetName()));
-                    profileAddressBean.setCountry(checkIsNotNull(profileBean.getData().getPersonAddresses().get(i).getAddress().getCountryName()));
-                    profileAddressBean.setHouseName(checkIsNotNull(profileBean.getData().getPersonAddresses().get(i).getAddress().getBuildingName()));
-                    profileAddressBean.setHouseNumber(checkIsNotNull(profileBean.getData().getPersonAddresses().get(i).getAddress().getBuildingNumber()));
-                    profileAddressBean.setTown(checkIsNotNull(profileBean.getData().getPersonAddresses().get(i).getCountryPostCode().getPostTownName()));
-                }
-            }
-            profileAddressBeanMutableLiveData.setValue(profileAddressBean);
-        }
-        return profileAddressBeanMutableLiveData;
     }
 
     private String checkIsNotNull(String value) {
@@ -151,32 +131,7 @@ public class ProfileAddressViewModel extends AndroidViewModel {
 
 
 
-    public LiveData<ProfileBean> getEditProfilePost(ProfileBean.Data profileBean) {
-        final MutableLiveData<ProfileBean> data = new MutableLiveData<>();
 
-        Disposable disposable = apiService.editMyProfilePost(profileBean)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<Response<ProfileBean>>() {
-                    @Override
-                    public void accept(Response<ProfileBean> loginBeanRetroResponse) throws Exception {
-                        Log.e("LoginSuccess", "success");
-                        if (loginBeanRetroResponse.isSuccessful()) {
-                            data.setValue(loginBeanRetroResponse.body());
-                        } else {
-                            data.setValue(null);
-                        }
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        Log.e("LoginSuccess", "error" + throwable.toString());
-                        data.setValue(null);
-                    }
-                });
-        compositeDisposable.add(disposable);
-        return data;
-    }
 
     public LiveData<Boolean> EditAddress(EditAdressBeanRetro editAdressBeanRetro) {
         final MutableLiveData<Boolean> data = new MutableLiveData<>();

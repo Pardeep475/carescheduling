@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import com.example.carescheduling.Ui.LoginActivity.ViewModal.LoginViewModalSF;
 import com.example.carescheduling.Ui.LoginActivity.beans.LoginBeanRetro;
 import com.example.carescheduling.Ui.LoginActivity.presenter.LoginFSecondPresenter;
 //import com.example.carescheduling.databinding.FragmentLoginFsecondBinding;
+import com.example.carescheduling.Ui.Profile.bean.ProfileAllData;
 import com.example.carescheduling.Utils.ConnectivityReceiver;
 import com.google.gson.JsonElement;
 
@@ -38,7 +40,7 @@ public class LoginFSecond extends BaseFragment implements View.OnClickListener {
     // TODO: Rename and change types of parameters
     private String userEmail, userPassword;
     private ArrayList<LoginBeanRetro.BranchList> branchList;
-    private String personId, branchId;
+    private String personId, branchId, customerId;
     // TODO: data binding
 //    private FragmentLoginFsecondBinding loginFSecondBinding;
     // TODO: view modal
@@ -67,9 +69,12 @@ public class LoginFSecond extends BaseFragment implements View.OnClickListener {
             userEmail = getArguments().getString(USER_EMAIL);
             userPassword = getArguments().getString(USER_PASSWORD);
             LoginBeanRetro.Data data = (LoginBeanRetro.Data) getArguments().getSerializable(DATA);
-            branchList = data.getBranchList();
-            personId = data.getUserPersons().get(0).getUser().getPersonId();
-            branchId = data.getBranchId();
+            if (data != null) {
+                if (data.getBranchList() != null)
+                    branchList = data.getBranchList();
+                personId = data.getPersonId();
+                customerId = data.getCustomerId();
+            }
         }
     }
 
@@ -98,13 +103,6 @@ public class LoginFSecond extends BaseFragment implements View.OnClickListener {
         appCompatSpinner = view.findViewById(R.id.spinner_login_sf);
         appCompatSpinner.setAdapter(adapter);
         view.findViewById(R.id.btn_continue).setOnClickListener(this);
-    }
-
-
-    private void goToDashboard() {
-        Intent intent = new Intent(getActivity(), Dashboard.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
     }
 
 
@@ -138,11 +136,35 @@ public class LoginFSecond extends BaseFragment implements View.OnClickListener {
                         hideDialog();
                         sessionManager.setBranchId(branchList.get(appCompatSpinner.getSelectedItemPosition()).getBranchId());
                         sessionManager.setPersonId(personId);
-                        sessionManager.setCustomerId(branchList.get(appCompatSpinner.getSelectedItemPosition()).getCustomerId());
+                        sessionManager.setCustomerId(customerId);
                         sessionManager.setUserLogin(true);
-                        goToDashboard();
+                        setAllProfileData();
+
                     }
                 });
 
     }
+
+    private void setAllProfileData() {
+        showDialog();
+
+        loginViewModalSF.getPersonAllData(sessionManager.getPersonId(), sessionManager.getCustomerId()
+                , sessionManager.getBranchId(), "Small").observe(this, new Observer<ProfileAllData>() {
+            @Override
+            public void onChanged(ProfileAllData profileAllData) {
+                hideDialog();
+                if (profileAllData != null && getActivity() != null) {
+                    loginViewModalSF.setDefaultData(getActivity(), profileAllData);
+
+                }
+            }
+        });
+    }
+
+    /*db.profileDao().getAllEditAllAddressData().observe((LifecycleOwner) activity, new Observer<EditAllAddressData>() {
+            @Override
+            public void onChanged(EditAllAddressData editAllAddressData) {
+                editAllAddressDataFinal[0] = editAllAddressData;
+            }
+        });*/
 }

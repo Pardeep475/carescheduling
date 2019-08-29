@@ -1,6 +1,5 @@
 package com.example.carescheduling.Ui.Profile.View;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
@@ -18,12 +17,6 @@ import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseFragment;
 import com.example.carescheduling.Ui.Common.Common;
 import com.example.carescheduling.Ui.Common.CommonBean;
-import com.example.carescheduling.Ui.Dashboard.beans.Address;
-import com.example.carescheduling.Ui.Dashboard.beans.CountryPostCode;
-import com.example.carescheduling.Ui.Dashboard.beans.PersonAddress;
-import com.example.carescheduling.Ui.Dashboard.beans.PersonAddress_;
-import com.example.carescheduling.Ui.Dashboard.beans.ProfileBean;
-import com.example.carescheduling.Ui.Dashboard.view.Dashboard;
 import com.example.carescheduling.Ui.Profile.Adapter.CustomAdapter;
 import com.example.carescheduling.Ui.Profile.ViewModel.ProfileAddressViewModel;
 import com.example.carescheduling.Ui.Profile.bean.AddressByPostCode;
@@ -31,8 +24,6 @@ import com.example.carescheduling.Ui.Profile.bean.AddressData;
 import com.example.carescheduling.Ui.Profile.bean.EditAdressBeanRetro;
 import com.example.carescheduling.Ui.Profile.bean.PersonAddressList;
 import com.example.carescheduling.Ui.Profile.bean.ProfileAddressBean;
-import com.example.carescheduling.Ui.Profile.bean.UserViewModel;
-import com.example.carescheduling.Ui.Profile.presenter.EditEmailClick;
 import com.example.carescheduling.Ui.Profile.presenter.ProfileAddressClick;
 import com.example.carescheduling.Utils.ConnectivityReceiver;
 import com.example.carescheduling.Utils.Constants;

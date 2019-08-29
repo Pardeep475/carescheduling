@@ -85,6 +85,7 @@ public class BlankViewModel extends AndroidViewModel {
             clientBookingScreenModel.setImage(ImageFromBase64(data.getImageHexString()));
         clientBookingScreenModel.setAddress(checkIsNotNull(data.getPersonAddress()));
         clientBookingScreenModel.setTelephone(checkIsNotNull(data.getClientPhoneNumber()));
+        clientBookingScreenModel.setBookingId(checkIsNotNull(data.getClientBookingId()));
 
         return clientBookingScreenModel;
     }
