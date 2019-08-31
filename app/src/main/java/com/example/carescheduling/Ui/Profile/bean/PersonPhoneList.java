@@ -5,11 +5,20 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class PersonPhoneList implements Serializable {
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
+@Entity
+public class PersonPhoneList implements Serializable {
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
+    @NonNull
+    private int id;
     @SerializedName("CanNotCall")
     @Expose
-    private Object canNotCall;
+    private boolean canNotCall;
     @SerializedName("CountryTelephonePrefix")
     @Expose
     private String countryTelephonePrefix;
@@ -29,11 +38,11 @@ public class PersonPhoneList implements Serializable {
     @Expose
     private String phoneTypeName;
 
-    public Object getCanNotCall() {
+    public boolean getCanNotCall() {
         return canNotCall;
     }
 
-    public void setCanNotCall(Object canNotCall) {
+    public void setCanNotCall(boolean canNotCall) {
         this.canNotCall = canNotCall;
     }
 
@@ -83,6 +92,13 @@ public class PersonPhoneList implements Serializable {
 
     public void setPhoneTypeName(String phoneTypeName) {
         this.phoneTypeName = phoneTypeName;
+    }
+
+    public int getId() {
+        return id; }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
 }

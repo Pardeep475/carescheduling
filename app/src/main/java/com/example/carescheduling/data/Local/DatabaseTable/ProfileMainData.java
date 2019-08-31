@@ -1,7 +1,5 @@
 package com.example.carescheduling.data.Local.DatabaseTable;
 
-import android.graphics.Bitmap;
-
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -11,18 +9,19 @@ import androidx.room.PrimaryKey;
 public class ProfileMainData {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
+    @NonNull
     private int id;
-    @ColumnInfo(name = "userName")
+    @ColumnInfo(name = "userName_main")
     private String userName;
-    @ColumnInfo(name = "address")
+    @ColumnInfo(name = "address_main")
     private String address;
-    @ColumnInfo(name = "telephone")
+    @ColumnInfo(name = "telephone_main")
     private String telephone;
-    @ColumnInfo(name = "email")
+    @ColumnInfo(name = "email_main")
     private String email;
-    @ColumnInfo(name = "mobile")
+    @ColumnInfo(name = "mobile_main")
     private String mobile;
-    @ColumnInfo(name = "defaultImageString")
+    @ColumnInfo(name = "defaultImageString_main")
     private String defaultImageString;
 
     public String getUserName() {
@@ -31,6 +30,14 @@ public class ProfileMainData {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getTelephone() {
@@ -57,19 +64,19 @@ public class ProfileMainData {
         this.mobile = mobile;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
     public String getDefaultImageString() {
         return defaultImageString;
     }
 
     public void setDefaultImageString(String defaultImageString) {
         this.defaultImageString = defaultImageString;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

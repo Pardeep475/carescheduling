@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,10 +23,15 @@ import com.example.carescheduling.Ui.Profile.ViewModel.FragmentChangePasswordVie
 import com.example.carescheduling.Ui.Profile.bean.EditUserWithUserNameRetro;
 import com.example.carescheduling.Ui.Profile.bean.EditUserWithoutUserNameRetro;
 import com.example.carescheduling.Ui.Profile.bean.FragmentChangePasswordBean;
+import com.example.carescheduling.Ui.Profile.bean.ProfileAllData;
 import com.example.carescheduling.Ui.Profile.bean.UserViewModel;
 import com.example.carescheduling.Ui.Profile.presenter.FragmentChangePasswordClick;
 import com.example.carescheduling.Utils.ConnectivityReceiver;
 import com.example.carescheduling.Utils.Constants;
+import com.example.carescheduling.data.Local.AppDataBase;
+import com.example.carescheduling.data.Local.DatabaseInitializer;
+import com.example.carescheduling.data.Local.DatabaseTable.ProfileInfo;
+import com.example.carescheduling.data.Local.DatabaseTable.UserInfo;
 import com.example.carescheduling.data.Local.SessionManager;
 import com.example.carescheduling.databinding.FragmentChangePasswordBinding;
 
@@ -85,12 +91,36 @@ public class FragmentChangePassword extends BaseFragment implements Common, Frag
                 if (ConnectivityReceiver.isNetworkAvailable(getActivity())) {
                     GetUserInfo();
                 } else {
-                    Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
+                    setDataFromLocal();
                 }
             } catch (Exception e) {
                 setNoDataFound();
             }
         }
+    }
+
+    private void setDataFromLocal() {
+        AppDataBase.getAppDatabase(getActivity()).profileDao().getAllUserInfo().observe(this, new Observer<UserInfo>() {
+            @Override
+            public void onChanged(UserInfo profileInfo) {
+                if (profileInfo != null) {
+
+                        FragmentChangePasswordBean fragmentChangePasswordBean = new FragmentChangePasswordBean();
+                        String userName = profileInfo.getUserName();
+                        String passwordAns = (String) profileInfo.getPasswordAns();
+                        String passwordQus = (String) profileInfo.getPasswordQuestion();
+                        fragmentChangePasswordBean.setPasswordAns(passwordAns != null ? passwordAns : "");
+                        fragmentChangePasswordBean.setUserName(userName != null ? userName : "");
+                        fragmentChangePasswordBean.setPasswordQuestion(passwordQus != null ? passwordQus : "");
+                        fragmentChangePasswordBinding.setFragmentChangePasswordBean(fragmentChangePasswordBean);
+                        setDataOriginal();
+
+                } else {
+                    Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
+                    setNoDataFound();
+                }
+            }
+        });
     }
 
     @Override
@@ -162,7 +192,7 @@ public class FragmentChangePassword extends BaseFragment implements Common, Frag
                             fragmentChangePasswordBean.setPasswordAns(passwordAns != null ? passwordAns : "");
                             fragmentChangePasswordBean.setUserName(userName != null ? userName : "");
                             fragmentChangePasswordBean.setPasswordQuestion(passwordQus != null ? passwordQus : "");
-
+                            setMyUserInfo(fragmentChangePasswordBean);
                             fragmentChangePasswordBinding.setFragmentChangePasswordBean(fragmentChangePasswordBean);
                             setDataOriginal();
                         } else {
@@ -170,6 +200,14 @@ public class FragmentChangePassword extends BaseFragment implements Common, Frag
                         }
                     }
                 });
+    }
+
+    private void setMyUserInfo(FragmentChangePasswordBean profileAllData) {
+        UserInfo fragmentChangePasswordBean = new UserInfo();
+        fragmentChangePasswordBean.setPasswordQuestion(profileAllData.getPasswordQuestion());
+        fragmentChangePasswordBean.setUserName(profileAllData.getUserName());
+        fragmentChangePasswordBean.setPasswordAns(profileAllData.getPasswordAns());
+        DatabaseInitializer.populateAsyncUserInfo(AppDataBase.getAppDatabase(getActivity()), fragmentChangePasswordBean);
     }
 
     private void setNoDataFound() {

@@ -4,9 +4,14 @@ import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.example.carescheduling.Ui.Dashboard.beans.ProfileResultBean;
+import com.example.carescheduling.Ui.Dashboard.view.Dashboard;
+import com.example.carescheduling.Ui.Profile.View.EditProfile;
 import com.example.carescheduling.Ui.Profile.bean.EditProfileInfoBean;
 import com.example.carescheduling.Ui.Profile.bean.EditProfileInfoBeanRetro;
 import com.example.carescheduling.Ui.Profile.bean.GetMyProfileEdit;
+import com.example.carescheduling.Ui.Profile.bean.ProfileAllData;
 import com.example.carescheduling.data.Local.AppDataBase;
 import com.example.carescheduling.data.Local.DatabaseInitializer;
 import com.example.carescheduling.data.Local.DatabaseTable.DisabilityType;
@@ -16,6 +21,8 @@ import com.example.carescheduling.data.Local.DatabaseTable.MaritialStatus;
 import com.example.carescheduling.data.Local.DatabaseTable.Nationality;
 import com.example.carescheduling.data.Local.DatabaseTable.PersonLanguage;
 import com.example.carescheduling.data.Local.DatabaseTable.Prefix;
+import com.example.carescheduling.data.Local.DatabaseTable.ProfileInfo;
+import com.example.carescheduling.data.Local.DatabaseTable.ProfileMainData;
 import com.example.carescheduling.data.Local.DatabaseTable.Religion;
 import com.example.carescheduling.data.Local.DatabaseTable.SexualityType;
 import com.example.carescheduling.data.Network.ApiClient;
@@ -34,6 +41,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -82,8 +90,10 @@ public class EditProfileInfoViewModel extends AndroidViewModel {
     }
 
     private EditProfileInfoBean getEditProfile(GetMyProfileEdit.Data data) {
+
         EditProfileInfoBean editProfileInfoBean = new EditProfileInfoBean();
         if (data != null) {
+            EditProfileInfoSaveLocal(data);
             if (data.getDateOfBirth() != null)
                 editProfileInfoBean.setDateOfBirth(checkIsNotNull(data.getDateOfBirth()));
             editProfileInfoBean.setFirstName(checkIsNotNull(data.getFirstName()));
@@ -103,6 +113,70 @@ public class EditProfileInfoViewModel extends AndroidViewModel {
         }
         return editProfileInfoBean;
     }
+
+    private void EditProfileInfoSaveLocal(GetMyProfileEdit.Data data ) {
+        ProfileInfo editProfileInfoBean = new ProfileInfo();
+        editProfileInfoBean.setFirstName(checkIsNotNull(data.getFirstName()));
+        editProfileInfoBean.setMiddleName(checkIsNotNull(data.getMiddleName()));
+        editProfileInfoBean.setSurName(checkIsNotNull(data.getSurName()));
+        editProfileInfoBean.setMaidenName(checkIsNotNull(data.getMaidenName()));
+        editProfileInfoBean.setDateOfBirth(checkIsNotNull(data.getDateOfBirth()));
+        editProfileInfoBean.setGender(checkIsNotNull(data.getGenderTypeName()));
+        editProfileInfoBean.setPrefix(checkIsNotNull(data.getPrefixTypeName()));
+        editProfileInfoBean.setLanguage(checkIsNotNull(data.getLanguageName()));
+        editProfileInfoBean.setMaritalStatus(checkIsNotNull(data.getMaritialStatusName()));
+        editProfileInfoBean.setEthnicity(checkIsNotNull(data.getEthnicityTypeName()));
+        editProfileInfoBean.setReligion(checkIsNotNull(data.getReligionTypeName()));
+        editProfileInfoBean.setSexuality(checkIsNotNull(data.getSexualityTypeName()));
+        editProfileInfoBean.setNationality(checkIsNotNull(data.getNationality()));
+        editProfileInfoBean.setDisabaility(checkIsNotNull(data.getDisabilityTypeName()));
+        if (data.getIsDisability() != null)
+            editProfileInfoBean.setDisability(data.getIsDisability());
+
+        DatabaseInitializer.populateAsyncProfileInfo(AppDataBase.getAppDatabase(getApplication()), editProfileInfoBean);
+    }
+
+
+    public LiveData<EditProfileInfoBean> getDataFromLocal(Context activity){
+        final MutableLiveData<EditProfileInfoBean> data = new MutableLiveData<>();
+        AppDataBase.getAppDatabase(context).profileDao().getAllProfileInfo().observe(((EditProfile) activity), new Observer<ProfileInfo>() {
+            @Override
+            public void onChanged(ProfileInfo profileInfo) {
+                if (profileInfo != null) {
+                    Log.e("getting_profile_data", profileInfo.getDateOfBirth());
+                    data.setValue(getPersonInfoFullDataFromLocal(profileInfo));
+                }
+            }
+        });
+
+        return data;
+    }
+
+
+    private EditProfileInfoBean getPersonInfoFullDataFromLocal(ProfileInfo data) {
+
+        EditProfileInfoBean editProfileInfoBean = new EditProfileInfoBean();
+        if (data != null) {
+            if (data.getDateOfBirth() != null)
+                editProfileInfoBean.setDateOfBirth(checkIsNotNull(data.getDateOfBirth()));
+            editProfileInfoBean.setFirstName(checkIsNotNull(data.getFirstName()));
+            editProfileInfoBean.setMiddleName(checkIsNotNull(data.getMiddleName()));
+            editProfileInfoBean.setSurName(checkIsNotNull(data.getSurName()));
+            editProfileInfoBean.setMaidenName(checkIsNotNull(data.getFirstName()));
+            editProfileInfoBean.setGender(checkIsNotNull(data.getGender()));
+            editProfileInfoBean.setPrefix(checkIsNotNull(data.getPrefix()));
+            editProfileInfoBean.setLanguage(checkIsNotNull(data.getLanguage()));
+            editProfileInfoBean.setMaritalStatus(checkIsNotNull(data.getMaritalStatus()));
+            editProfileInfoBean.setEthnicity(checkIsNotNull(data.getEthnicity()));
+            editProfileInfoBean.setReligion(checkIsNotNull(data.getReligion()));
+            editProfileInfoBean.setSexuality(checkIsNotNull(data.getSexuality()));
+            editProfileInfoBean.setNationality(checkIsNotNull(data.getNationality()));
+            editProfileInfoBean.setDisability(data.isDisability());
+            editProfileInfoBean.setDisabaility(data.getDisabaility());
+        }
+        return editProfileInfoBean;
+    }
+
 
 
     public LiveData<Boolean> UpdateProfile(EditProfileInfoBeanRetro editProfileInfoBeanRetro) {

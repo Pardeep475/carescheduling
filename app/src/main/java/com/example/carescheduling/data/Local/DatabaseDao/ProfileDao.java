@@ -83,24 +83,23 @@ public interface ProfileDao {
     //   Get All  EmailType
     @Query("SELECT * FROM EmailType")
     List<EmailType> getAllEmailType();
-/*
-//    //   Get All  ProfileResultBean
+
+    //    //   Get All  ProfileResultBean
     @Query("SELECT * FROM ProfileMainData")
     LiveData<ProfileMainData> getAllProfileMainData();
-
 
 //    //   Get All  EditProfileInfoBean
     @Query("SELECT * FROM ProfileInfo")
     LiveData<ProfileInfo> getAllProfileInfo();
 
 
-//    //   Get All  EditAllAddressData
-    @Query("SELECT * FROM AddressAllData")
-    LiveData<AddressAllData> getAllAddressAllData();
+////    //   Get All  EditAllAddressData
+//    @Query("SELECT * FROM AddressAllData")
+//    LiveData<AddressAllData> getAllAddressAllData();
 
 //    //   Get All   FragmentChangePasswordBean
-    @Query("SELECT * FROM UserInfo")
-    LiveData<UserInfo> getAllUserInfo();*/
+    @Query("SELECT * FROM user_info")
+    LiveData<UserInfo> getAllUserInfo();
 
 //    @Query("SELECT * FROM user where first_name LIKE  :firstName AND last_name LIKE :lastName")
 //    User findByName(String firstName, String lastName);
@@ -157,7 +156,7 @@ public interface ProfileDao {
     @Query("SELECT COUNT(*) from EmailType")
     int countEmailType();
 
-   /* //   Get All  ProfileResultBean
+   //   Get All  ProfileResultBean
     @Query("SELECT COUNT(*)  FROM ProfileInfo")
     int countProfileInfo();
 
@@ -166,12 +165,12 @@ public interface ProfileDao {
     int countProfileMainData();
 
     //   Get All  EditAllAddressData
-    @Query("SELECT COUNT(*)  FROM AddressAllData")
-    int countAddressAllData();
+//    @Query("SELECT COUNT(*)  FROM AddressAllData")
+//    int countAddressAllData();
 
 //       Get All  FragmentChangePasswordBean
-    @Query("SELECT COUNT(*)  FROM UserInfo")
-    int countUserInfo();*/
+    @Query("SELECT COUNT(*)  FROM user_info")
+    int countUserInfo();
 
 
     //    insert all Languages
@@ -226,17 +225,17 @@ public interface ProfileDao {
     @Insert
     void insertAllEmailType(EmailType... personLanguages);
 
-/*//    insert All  ProfileResultBean
+//    insert All  ProfileResultBean
     @Insert
     void insertProfileInfo(ProfileInfo profileResultBean);
     //   insert All  EditProfileInfoBean
     @Insert
     void insertProfileMainData(ProfileMainData editProfileInfoBean);
 
+//    @Insert
+//    void insertAddressAllData(AddressAllData editAllAddressData);
     @Insert
-    void insertAddressAllData(AddressAllData editAllAddressData);
-    @Insert
-    void insertUserInfo(UserInfo editAllAddressData);*/
+    void insertUserInfo(UserInfo editAllAddressData);
 
 
     @Delete
@@ -293,7 +292,7 @@ public interface ProfileDao {
     // delete all EmailType
     @Query("DELETE  FROM EmailType")
     public void deleteAllEmailType();
-/*
+
 //    //   Get All  ProfileResultBean
     @Query("DELETE  FROM ProfileInfo")
     public void deleteProfileInfo();
@@ -303,11 +302,11 @@ public interface ProfileDao {
     public void deleteProfileMainData();
 
     //   Get All  EditAllAddressData
-    @Query("DELETE  FROM AddressAllData")
-    public void deleteAddressAllData();
+//    @Query("DELETE  FROM AddressAllData")
+//    public void deleteAddressAllData();
 
     //   Get All  FragmentChangePasswordBean
-    @Query("DELETE  FROM UserInfo")
-    public void deleteUserInfo();*/
+    @Query("DELETE  FROM user_info")
+    public void deleteUserInfo();
 
 }

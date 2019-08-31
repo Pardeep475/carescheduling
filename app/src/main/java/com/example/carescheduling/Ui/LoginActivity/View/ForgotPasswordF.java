@@ -15,7 +15,7 @@ import com.example.carescheduling.R;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link ForgotPasswordF.OnFragmentInteractionListener} interface
+ * {@link OnFragmentInteractionListener} interface
  * to handle interaction events.
  * Use the {@link ForgotPasswordF#newInstance} factory method to
  * create an instance of this fragment.

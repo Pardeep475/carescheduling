@@ -33,7 +33,7 @@
             android:name=".Ui.Dashboard.view.Dashboard"
             android:screenOrientation="portrait"
             android:label="@string/title_activity_dashboard" />
-        <activity android:name=".Ui.Splash.View.SplashActivity"
+        <activity android:name=".Splash.View.SplashActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

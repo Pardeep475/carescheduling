@@ -1,4 +1,4 @@
-package com.example.carescheduling.Ui.Splash.ViewModal;
+package com.example.carescheduling.Splash.ViewModal;
 
 import android.app.Application;
 

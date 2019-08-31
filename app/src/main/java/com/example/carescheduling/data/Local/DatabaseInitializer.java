@@ -128,63 +128,63 @@ public class DatabaseInitializer {
         task.execute();
     }
 
-////    //   ProfileResultBean
-//    public static void populateAsyncProfileMainData(@NonNull final AppDataBase db, ProfileMainData list) {
-//        PopulateDbAsyncProfileMainData task = new PopulateDbAsyncProfileMainData(db, list);
-//        task.execute();
-//    }
-//
-//    //   ProfileMainData
-//    public static void populateAsyncProfileInfo(@NonNull final AppDataBase db, ProfileInfo list) {
-//        PopulateDbAsyncProfileInfo task = new PopulateDbAsyncProfileInfo(db, list);
-//        task.execute();
-//    }
-//
-//    //   UserInfo
-//    public static void populateAsyncUserInfo(@NonNull final AppDataBase db, UserInfo list) {
-//        PopulateDbAsyncUserInfo task = new PopulateDbAsyncUserInfo(db, list);
-//        task.execute();
-//    }
-//
-////       AddressAllData
+//    //   ProfileResultBean
+    public static void populateAsyncProfileMainData(@NonNull final AppDataBase db, ProfileMainData list) {
+        PopulateDbAsyncProfileMainData task = new PopulateDbAsyncProfileMainData(db, list);
+        task.execute();
+    }
+
+    //   ProfileMainData
+    public static void populateAsyncProfileInfo(@NonNull final AppDataBase db, ProfileInfo list) {
+        PopulateDbAsyncProfileInfo task = new PopulateDbAsyncProfileInfo(db, list);
+        task.execute();
+    }
+
+    //   UserInfo
+    public static void populateAsyncUserInfo(@NonNull final AppDataBase db, UserInfo list) {
+        PopulateDbAsyncUserInfo task = new PopulateDbAsyncUserInfo(db, list);
+        task.execute();
+    }
+
+//       AddressAllData
 //    public static void populateAsyncAddressAllData(@NonNull final AppDataBase db, AddressAllData list) {
 //        PopulateDbAsyncAddressAllData task = new PopulateDbAsyncAddressAllData(db, list);
 //        task.execute();
 //    }
-//
-////     UserInfo
-//    private static class PopulateDbAsyncUserInfo extends AsyncTask<Void, Void, Void> {
-//
-//        private final AppDataBase mDb;
-//        private UserInfo list;
-//
-//        PopulateDbAsyncUserInfo(AppDataBase db, UserInfo list) {
-//            mDb = db;
-//            this.list = list;
-//        }
-//
-//        @Override
-//        protected Void doInBackground(final Void... params) {
-//            populateWithUserInfoData(mDb, list);
-//            return null;
-//        }
-//
-//    }
-//
-//    private static void populateWithUserInfoData(AppDataBase db, UserInfo list) {
-//        int userList = db.profileDao().countUserInfo();
-//        if (userList >= 0)
-//            db.profileDao().deleteUserInfo();
-//
-//        addUserInfo(db, list);
-//        Log.d(DatabaseInitializer.TAG, "Language Count: " + db.profileDao().getAllLanguages());
-//    }
-//
-//    private static void addUserInfo(final AppDataBase db, UserInfo user) {
-//        db.profileDao().insertUserInfo(user);
-//    }
 
-//    // AddressAllData
+//     UserInfo
+    private static class PopulateDbAsyncUserInfo extends AsyncTask<Void, Void, Void> {
+
+        private final AppDataBase mDb;
+        private UserInfo list;
+
+        PopulateDbAsyncUserInfo(AppDataBase db, UserInfo list) {
+            mDb = db;
+            this.list = list;
+        }
+
+        @Override
+        protected Void doInBackground(final Void... params) {
+            populateWithUserInfoData(mDb, list);
+            return null;
+        }
+
+    }
+
+    private static void populateWithUserInfoData(AppDataBase db, UserInfo list) {
+        int userList = db.profileDao().countUserInfo();
+        if (userList >= 0)
+            db.profileDao().deleteUserInfo();
+
+        addUserInfo(db, list);
+        Log.d(DatabaseInitializer.TAG, "Language Count: " + db.profileDao().getAllLanguages());
+    }
+
+    private static void addUserInfo(final AppDataBase db, UserInfo user) {
+        db.profileDao().insertUserInfo(user);
+    }
+
+    // AddressAllData
 //    private static class PopulateDbAsyncAddressAllData extends AsyncTask<Void, Void, Void> {
 //
 //        private final AppDataBase mDb;
@@ -202,7 +202,7 @@ public class DatabaseInitializer {
 //        }
 //
 //    }
-//
+
 //    private static void populateWithAddressAllDataData(AppDataBase db, AddressAllData list) {
 //        int userList = db.profileDao().countAddressAllData();
 //        if (userList >= 0)
@@ -215,71 +215,71 @@ public class DatabaseInitializer {
 //    private static void addAddressAllData(final AppDataBase db, AddressAllData user) {
 //        db.profileDao().insertAddressAllData(user);
 //    }
-//
-//
-////     ProfileInfo
-//    private static class PopulateDbAsyncProfileInfo extends AsyncTask<Void, Void, Void> {
-//
-//        private final AppDataBase mDb;
-//        private ProfileInfo list;
-//
-//        PopulateDbAsyncProfileInfo(AppDataBase db, ProfileInfo list) {
-//            mDb = db;
-//            this.list = list;
-//        }
-//
-//        @Override
-//        protected Void doInBackground(final Void... params) {
-//            populateWithProfileInfoData(mDb, list);
-//            return null;
-//        }
-//
-//    }
-//
-//    private static void populateWithProfileInfoData(AppDataBase db, ProfileInfo list) {
-//        int userList = db.profileDao().countProfileInfo();
-//        if (userList >= 0)
-//            db.profileDao().deleteProfileInfo();
-//
-//        addProfileInfo(db, list);
-//        Log.d(DatabaseInitializer.TAG, "Language Count: " + db.profileDao().getAllLanguages());
-//    }
-//
-//    private static void addProfileInfo(final AppDataBase db, ProfileInfo user) {
-//        db.profileDao().insertProfileInfo(user);
-//    }
-//
-////     ProfileMainData
-//    private static class PopulateDbAsyncProfileMainData extends AsyncTask<Void, Void, Void> {
-//
-//        private final AppDataBase mDb;
-//        private ProfileMainData list;
-//
-//        PopulateDbAsyncProfileMainData(AppDataBase db, ProfileMainData list) {
-//            mDb = db;
-//            this.list = list;
-//        }
-//
-//        @Override
-//        protected Void doInBackground(final Void... params) {
-//            populateWithProfileMainDataData(mDb, list);
-//            return null;
-//        }
-//
-//    }
-//
-//    private static void populateWithProfileMainDataData(AppDataBase db, ProfileMainData list) {
-//        int userList = db.profileDao().countProfileMainData();
-//        if (userList >= 0)
-//            db.profileDao().deleteProfileMainData();
-//
-//        addProfileMainData(db, list);
-//        Log.d(DatabaseInitializer.TAG, "Language Count: " + db.profileDao().getAllLanguages());
-//    }
-//
-//    private static void addProfileMainData(final AppDataBase db, ProfileMainData user) {
-//        db.profileDao().insertProfileMainData(user);
-//    }
+
+
+//     ProfileInfo
+    private static class PopulateDbAsyncProfileInfo extends AsyncTask<Void, Void, Void> {
+
+        private final AppDataBase mDb;
+        private ProfileInfo list;
+
+        PopulateDbAsyncProfileInfo(AppDataBase db, ProfileInfo list) {
+            mDb = db;
+            this.list = list;
+        }
+
+        @Override
+        protected Void doInBackground(final Void... params) {
+            populateWithProfileInfoData(mDb, list);
+            return null;
+        }
+
+    }
+
+    private static void populateWithProfileInfoData(AppDataBase db, ProfileInfo list) {
+        int userList = db.profileDao().countProfileInfo();
+        if (userList >= 0)
+            db.profileDao().deleteProfileInfo();
+
+        addProfileInfo(db, list);
+        Log.d(DatabaseInitializer.TAG, "Language Count: " + db.profileDao().getAllLanguages());
+    }
+
+    private static void addProfileInfo(final AppDataBase db, ProfileInfo user) {
+        db.profileDao().insertProfileInfo(user);
+    }
+
+//     ProfileMainData
+    private static class PopulateDbAsyncProfileMainData extends AsyncTask<Void, Void, Void> {
+
+        private final AppDataBase mDb;
+        private ProfileMainData list;
+
+        PopulateDbAsyncProfileMainData(AppDataBase db, ProfileMainData list) {
+            mDb = db;
+            this.list = list;
+        }
+
+        @Override
+        protected Void doInBackground(final Void... params) {
+            populateWithProfileMainDataData(mDb, list);
+            return null;
+        }
+
+    }
+
+    private static void populateWithProfileMainDataData(AppDataBase db, ProfileMainData list) {
+        int userList = db.profileDao().countProfileMainData();
+        if (userList >= 0)
+            db.profileDao().deleteProfileMainData();
+
+        addProfileMainData(db, list);
+        Log.d(DatabaseInitializer.TAG, "Language Count: " + db.profileDao().getAllLanguages());
+    }
+
+    private static void addProfileMainData(final AppDataBase db, ProfileMainData user) {
+        db.profileDao().insertProfileMainData(user);
+    }
 
     //language
     private static class PopulateDbAsyncLanguage extends AsyncTask<Void, Void, Void> {

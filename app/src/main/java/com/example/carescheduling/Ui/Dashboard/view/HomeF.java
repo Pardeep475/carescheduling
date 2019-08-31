@@ -88,20 +88,20 @@ public class HomeF extends BaseFragment implements Common, HomeScreenOnClick {
 
 
     private void getProfileLocalData() {
-//        AppDataBase.getAppDatabase(getActivity()).profileDao().getAllProfileMainData().observe(this, new Observer<ProfileMainData>() {
-//            @Override
-//            public void onChanged(ProfileMainData profileMainData) {
-//                if (profileMainData != null)
-//                    Log.e("getting_profile_data", profileMainData.getEmail());
-//            }
-//        });
-//        AppDataBase.getAppDatabase(getActivity()).profileDao().getAllProfileInfo().observe(this, new Observer<ProfileInfo>() {
-//            @Override
-//            public void onChanged(ProfileInfo profileInfo) {
-//                if (profileInfo != null)
-//                    Log.e("getting_profile_data", profileInfo.getFirstName());
-//            }
-//        });
+        AppDataBase.getAppDatabase(getActivity()).profileDao().getAllProfileMainData().observe(this, new Observer<ProfileMainData>() {
+            @Override
+            public void onChanged(ProfileMainData profileMainData) {
+                if (profileMainData != null)
+                    Log.e("getting_profile_data", profileMainData.getEmail());
+            }
+        });
+        AppDataBase.getAppDatabase(getActivity()).profileDao().getAllProfileInfo().observe(this, new Observer<ProfileInfo>() {
+            @Override
+            public void onChanged(ProfileInfo profileInfo) {
+                if (profileInfo != null)
+                    Log.e("getting_profile_data", profileInfo.getFirstName());
+            }
+        });
 //        AppDataBase.getAppDatabase(getActivity()).profileDao().getAllAddressAllData().observe(this, new Observer<AddressAllData>() {
 //            @Override
 //            public void onChanged(AddressAllData addressAllData) {
@@ -109,13 +109,13 @@ public class HomeF extends BaseFragment implements Common, HomeScreenOnClick {
 //                    Log.e("getting_profile_data", addressAllData.getPersonAddressList().size() + " ");
 //            }
 //        });
-//        AppDataBase.getAppDatabase(getActivity()).profileDao().getAllUserInfo().observe(this, new Observer<UserInfo>() {
-//            @Override
-//            public void onChanged(UserInfo userInfo) {
-//                if (userInfo != null)
-//                    Log.e("getting_profile_data", userInfo.getPasswordQuestion());
-//            }
-//        });
+        AppDataBase.getAppDatabase(getActivity()).profileDao().getAllUserInfo().observe(this, new Observer<UserInfo>() {
+            @Override
+            public void onChanged(UserInfo userInfo) {
+                if (userInfo != null)
+                    Log.e("getting_profile_data", userInfo.getPasswordQuestion());
+            }
+        });
     }
 
 

@@ -39,4 +39,12 @@ public class UserInfo {
     public void setPasswordAns(String passwordAns) {
         this.passwordAns = passwordAns;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

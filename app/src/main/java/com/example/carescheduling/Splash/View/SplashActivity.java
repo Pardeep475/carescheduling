@@ -1,4 +1,4 @@
-package com.example.carescheduling.Ui.Splash.View;
+package com.example.carescheduling.Splash.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
@@ -16,6 +15,7 @@ import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseActivity;
 import com.example.carescheduling.Ui.Dashboard.view.Dashboard;
 import com.example.carescheduling.Ui.LoginActivity.View.LoginActivity;
+import com.example.carescheduling.data.Local.SessionManager;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -25,6 +25,7 @@ import java.util.regex.Pattern;
 
 public class SplashActivity extends BaseActivity {
     private Handler myHandler = new Handler();
+    private SessionManager sessionManager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

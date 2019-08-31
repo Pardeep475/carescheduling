@@ -7,6 +7,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +22,11 @@ import com.example.carescheduling.Ui.Dashboard.beans.ProfileResultBean;
 import com.example.carescheduling.Ui.Dashboard.presenter.EditProfileClickHandler;
 import com.example.carescheduling.Ui.LoginActivity.View.LoginActivity;
 import com.example.carescheduling.Ui.Profile.View.EditProfile;
+import com.example.carescheduling.Ui.Profile.bean.ProfileAllData;
 import com.example.carescheduling.Utils.ConnectivityReceiver;
+import com.example.carescheduling.data.Local.AppDataBase;
+import com.example.carescheduling.data.Local.DatabaseInitializer;
+import com.example.carescheduling.data.Local.DatabaseTable.ProfileMainData;
 import com.example.carescheduling.data.Local.SessionManager;
 import com.example.carescheduling.databinding.FragmentProfileResultBinding;
 
@@ -101,10 +106,24 @@ public class ProfileResult extends BaseFragment implements Common, EditProfileCl
                     hideDialog();
                 }
             } else {
-                Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
+                profileResultViewModel.getDataFromLocal(getActivity()).observe(this, new Observer<ProfileResultBean>() {
+                    @Override
+                    public void onChanged(ProfileResultBean profileResultBean) {
+                        if (profileResultBean != null) {
+                            fragmentProfileResultBinding.setProfileEditBean(profileResultBean);
+                            setDataOriginal();
+                        } else {
+                            Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
+                            setNoDataFound();
+                        }
+                    }
+                });
+
             }
         }
     }
+
+
 
     private void setNoDataFound() {
         fragmentProfileResultBinding.slDemo.stopShimmerAnimation();

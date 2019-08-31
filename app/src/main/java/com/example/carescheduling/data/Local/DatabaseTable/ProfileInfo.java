@@ -161,4 +161,12 @@ public class ProfileInfo {
     public void setDisability(boolean disability) {
         this.disability = disability;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

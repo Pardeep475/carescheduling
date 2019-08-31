@@ -5,8 +5,16 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+@Entity
 public class PersonEmailList implements Serializable {
-
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
+    @NonNull
+    private int id;
     @SerializedName("CustomerId")
     @Expose
     private String customerId;
@@ -62,5 +70,14 @@ public class PersonEmailList implements Serializable {
     public void setPersonId(String personId) {
         this.personId = personId;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
 
 }

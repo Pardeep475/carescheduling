@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.provider.ContactsContract;
 import android.util.Base64;
 import android.util.Log;
 
@@ -12,6 +13,12 @@ import com.example.carescheduling.Ui.Dashboard.beans.GetMyProfileHome;
 import com.example.carescheduling.Ui.Dashboard.beans.PersonAddress_;
 import com.example.carescheduling.Ui.Dashboard.beans.PersonImage;
 import com.example.carescheduling.Ui.Dashboard.beans.ProfileResultBean;
+import com.example.carescheduling.Ui.Dashboard.view.Dashboard;
+import com.example.carescheduling.Ui.Profile.View.EditProfile;
+import com.example.carescheduling.Ui.Profile.bean.ProfileAllData;
+import com.example.carescheduling.data.Local.AppDataBase;
+import com.example.carescheduling.data.Local.DatabaseInitializer;
+import com.example.carescheduling.data.Local.DatabaseTable.ProfileMainData;
 import com.example.carescheduling.data.Network.ApiClient;
 import com.example.carescheduling.data.Network.ApiService;
 
@@ -21,6 +28,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -203,7 +211,9 @@ public class ProfileResultViewModel extends AndroidViewModel {
                     @Override
                     public void accept(Response<GetMyProfileHome> loginBeanRetroResponse) throws Exception {
                         Log.e("LoginSuccess", "success");
-                        if (loginBeanRetroResponse.isSuccessful()) {
+                        if (loginBeanRetroResponse.isSuccessful()
+                                && loginBeanRetroResponse.body()!= null
+                                && loginBeanRetroResponse.body().getData() != null) {
                             data.setValue(getPersonFullData(loginBeanRetroResponse.body().getData()));
                         } else {
                             data.setValue(null);
@@ -222,6 +232,7 @@ public class ProfileResultViewModel extends AndroidViewModel {
 
 
     private ProfileResultBean getPersonFullData(GetMyProfileHome.Data data) {
+        mainFrontData(data);
         ProfileResultBean profileResultBean = new ProfileResultBean();
         profileResultBean.setUserName(checkIsNotNull(data.getPersonName()));
         profileResultBean.setAddress(checkIsNotNull(data.getPersonAddress()));
@@ -231,6 +242,56 @@ public class ProfileResultViewModel extends AndroidViewModel {
             profileResultBean.setImgUrl(ImageFromBase64(data.getPersonImage()));
 
         return profileResultBean;
+    }
+
+
+    private void mainFrontData(GetMyProfileHome.Data data) {
+        //person profile main data
+        ProfileMainData profileResultBean = new ProfileMainData();
+        profileResultBean.setUserName(checkIsNotNull(data.getPersonName()));
+        profileResultBean.setMobile(checkIsNotNull(data.getPersonPhoneNumber()));
+        profileResultBean.setEmail(checkIsNotNull(data.getPersonEmailAddress()));
+//        profileResultBean.setTelephone(checkIsNotNull(profileAllData.getData().getFirstName()));
+        profileResultBean.setAddress(checkIsNotNull(data.getPersonAddress()));
+        if (data.getPersonImage() != null && !data.getPersonImage().equalsIgnoreCase("null") && !data.getPersonImage().equalsIgnoreCase(""))
+            profileResultBean.setDefaultImageString(data.getPersonImage());
+//        profileResultBean.setImgUrl(checkIsNotNull(profileAllData.getData().getFirstName()));
+        DatabaseInitializer.populateAsyncProfileMainData(AppDataBase.getAppDatabase(getApplication()), profileResultBean);
+    }
+
+
+    public LiveData<ProfileResultBean> getDataFromLocal(Context activity){
+        final MutableLiveData<ProfileResultBean> data = new MutableLiveData<>();
+
+        AppDataBase.getAppDatabase(context).profileDao().getAllProfileMainData()
+                .observe(((Dashboard)activity), new Observer<ProfileMainData>() {
+            @Override
+            public void onChanged(ProfileMainData profileMainData) {
+                if (profileMainData != null) {
+                    Log.e("getting_profile_data", profileMainData.getEmail());
+                   data.setValue(getPersonFullDataFromLocal(profileMainData));
+                }
+            }
+        });
+        return data;
+    }
+
+
+    private ProfileResultBean getPersonFullDataFromLocal(ProfileMainData profileMainData) {
+        ProfileResultBean profileResultBean = new ProfileResultBean();
+        profileResultBean.setUserName(checkIsNotNull(profileMainData.getUserName()));
+        profileResultBean.setAddress(checkIsNotNull(profileMainData.getAddress()));
+        profileResultBean.setMobile(checkIsNotNull(profileMainData.getMobile()));
+        profileResultBean.setEmail(checkIsNotNull(profileMainData.getEmail()));
+        if (profileMainData.getDefaultImageString() != null && !profileMainData.getDefaultImageString().equalsIgnoreCase("null") && !profileMainData.getDefaultImageString().equalsIgnoreCase(""))
+            profileResultBean.setImgUrl(ImageFromBase64(profileMainData.getDefaultImageString()));
+
+        return profileResultBean;
+    }
+
+
+    private String checkIsNotNullWithOutNA(String value) {
+        return value != null && !value.equalsIgnoreCase("null") ? value : "";
     }
 
     @Override

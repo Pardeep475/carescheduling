@@ -101,9 +101,9 @@ public class LoginViewModalSF extends AndroidViewModel {
 
 
     public void setDefaultData(Context context,ProfileAllData profileAllData) {
-//        mainFrontData(profileAllData);
-//        EditProfileInfo(profileAllData);
-//        setMyUserInfo(profileAllData);
+        mainFrontData(profileAllData);
+        EditProfileInfo(profileAllData);
+        setMyUserInfo(profileAllData);
 //        EditALLAddressData(profileAllData);
 
         goToDashboard(context);
@@ -113,49 +113,49 @@ public class LoginViewModalSF extends AndroidViewModel {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         context.startActivity(intent);
     }
-//    private void mainFrontData(ProfileAllData profileAllData) {
-//        //person profile main data
-//        ProfileMainData profileResultBean = new ProfileMainData();
-//        profileResultBean.setUserName(checkIsNotNull(profileAllData.getData().getPersonName()));
-//        profileResultBean.setMobile(checkIsNotNull(profileAllData.getData().getPersonDefaultPhoneNumber()));
-//        profileResultBean.setEmail(checkIsNotNull(profileAllData.getData().getPersonDefaultEmailAddress()));
-////        profileResultBean.setTelephone(checkIsNotNull(profileAllData.getData().getFirstName()));
-//        profileResultBean.setAddress(checkIsNotNull(profileAllData.getData().getPersonDefaultAddress()));
-//        if (!checkIsNotNullWithOutNA(profileAllData.getData().getPersonDefaultImage()).isEmpty())
-//            profileResultBean.setDefaultImageString(checkIsNotNull(profileAllData.getData().getPersonDefaultImage()));
-////        profileResultBean.setImgUrl(checkIsNotNull(profileAllData.getData().getFirstName()));
-//        DatabaseInitializer.populateAsyncProfileMainData(AppDataBase.getAppDatabase(getApplication()), profileResultBean);
-//    }
-//
-//    private void EditProfileInfo(ProfileAllData profileAllData) {
-//        ProfileInfo editProfileInfoBean = new ProfileInfo();
-//        editProfileInfoBean.setFirstName(checkIsNotNull(profileAllData.getData().getFirstName()));
-//        editProfileInfoBean.setMiddleName(checkIsNotNull(profileAllData.getData().getMiddleName()));
-//        editProfileInfoBean.setSurName(checkIsNotNull(profileAllData.getData().getSurname()));
-//        editProfileInfoBean.setMaidenName(checkIsNotNull(profileAllData.getData().getMaidenName()));
-//        editProfileInfoBean.setDateOfBirth(checkIsNotNull(profileAllData.getData().getDateOfBirth()));
-//        editProfileInfoBean.setGender(checkIsNotNull(profileAllData.getData().getGenderTypeName()));
-//        editProfileInfoBean.setPrefix(checkIsNotNull(profileAllData.getData().getPrefixTypeName()));
-//        editProfileInfoBean.setLanguage(checkIsNotNull(profileAllData.getData().getLanguageName()));
-//        editProfileInfoBean.setMaritalStatus(checkIsNotNull(profileAllData.getData().getMaritialStatus()));
-//        editProfileInfoBean.setEthnicity(checkIsNotNull(profileAllData.getData().getEthnicity()));
-//        editProfileInfoBean.setReligion(checkIsNotNull(profileAllData.getData().getReligion()));
-//        editProfileInfoBean.setSexuality(checkIsNotNull(profileAllData.getData().getSexuality()));
-//        editProfileInfoBean.setNationality(checkIsNotNull(profileAllData.getData().getNationality()));
-//        editProfileInfoBean.setDisabaility(checkIsNotNull(profileAllData.getData().getDisability()));
-//        if (profileAllData.getData().getIsDisability() != null)
-//            editProfileInfoBean.setDisability(profileAllData.getData().getIsDisability());
-//
-//        DatabaseInitializer.populateAsyncProfileInfo(AppDataBase.getAppDatabase(getApplication()), editProfileInfoBean);
-//    }
-//
-//    private void setMyUserInfo(ProfileAllData profileAllData) {
-//        UserInfo fragmentChangePasswordBean = new UserInfo();
-//        fragmentChangePasswordBean.setPasswordQuestion(checkIsNotNull(profileAllData.getData().getPasswordQuestion()));
-//        fragmentChangePasswordBean.setUserName(checkIsNotNull(profileAllData.getData().getUserName()));
-//        fragmentChangePasswordBean.setPasswordAns(checkIsNotNull(profileAllData.getData().getPasswordQuestionAnswer()));
-//        DatabaseInitializer.populateAsyncUserInfo(AppDataBase.getAppDatabase(getApplication()), fragmentChangePasswordBean);
-//    }
+    private void mainFrontData(ProfileAllData profileAllData) {
+        //person profile main data
+        ProfileMainData profileResultBean = new ProfileMainData();
+        profileResultBean.setUserName(checkIsNotNull(profileAllData.getData().getPersonName()));
+        profileResultBean.setMobile(checkIsNotNull(profileAllData.getData().getPersonDefaultPhoneNumber()));
+        profileResultBean.setEmail(checkIsNotNull(profileAllData.getData().getPersonDefaultEmailAddress()));
+//        profileResultBean.setTelephone(checkIsNotNull(profileAllData.getData().getFirstName()));
+        profileResultBean.setAddress(checkIsNotNull(profileAllData.getData().getPersonDefaultAddress()));
+        if (!checkIsNotNullWithOutNA(profileAllData.getData().getPersonDefaultImage()).isEmpty())
+            profileResultBean.setDefaultImageString(checkIsNotNull(profileAllData.getData().getPersonDefaultImage()));
+//        profileResultBean.setImgUrl(checkIsNotNull(profileAllData.getData().getFirstName()));
+        DatabaseInitializer.populateAsyncProfileMainData(AppDataBase.getAppDatabase(getApplication()), profileResultBean);
+    }
+
+    private void EditProfileInfo(ProfileAllData profileAllData) {
+        ProfileInfo editProfileInfoBean = new ProfileInfo();
+        editProfileInfoBean.setFirstName(checkIsNotNull(profileAllData.getData().getFirstName()));
+        editProfileInfoBean.setMiddleName(checkIsNotNull(profileAllData.getData().getMiddleName()));
+        editProfileInfoBean.setSurName(checkIsNotNull(profileAllData.getData().getSurname()));
+        editProfileInfoBean.setMaidenName(checkIsNotNull(profileAllData.getData().getMaidenName()));
+        editProfileInfoBean.setDateOfBirth(checkIsNotNull(profileAllData.getData().getDateOfBirth()));
+        editProfileInfoBean.setGender(checkIsNotNull(profileAllData.getData().getGenderTypeName()));
+        editProfileInfoBean.setPrefix(checkIsNotNull(profileAllData.getData().getPrefixTypeName()));
+        editProfileInfoBean.setLanguage(checkIsNotNull(profileAllData.getData().getLanguageName()));
+        editProfileInfoBean.setMaritalStatus(checkIsNotNull(profileAllData.getData().getMaritialStatus()));
+        editProfileInfoBean.setEthnicity(checkIsNotNull(profileAllData.getData().getEthnicity()));
+        editProfileInfoBean.setReligion(checkIsNotNull(profileAllData.getData().getReligion()));
+        editProfileInfoBean.setSexuality(checkIsNotNull(profileAllData.getData().getSexuality()));
+        editProfileInfoBean.setNationality(checkIsNotNull(profileAllData.getData().getNationality()));
+        editProfileInfoBean.setDisabaility(checkIsNotNull(profileAllData.getData().getDisability()));
+        if (profileAllData.getData().getIsDisability() != null)
+            editProfileInfoBean.setDisability(profileAllData.getData().getIsDisability());
+
+        DatabaseInitializer.populateAsyncProfileInfo(AppDataBase.getAppDatabase(getApplication()), editProfileInfoBean);
+    }
+
+    private void setMyUserInfo(ProfileAllData profileAllData) {
+        UserInfo fragmentChangePasswordBean = new UserInfo();
+        fragmentChangePasswordBean.setPasswordQuestion(checkIsNotNull(profileAllData.getData().getPasswordQuestion()));
+        fragmentChangePasswordBean.setUserName(checkIsNotNull(profileAllData.getData().getUserName()));
+        fragmentChangePasswordBean.setPasswordAns(checkIsNotNull(profileAllData.getData().getPasswordQuestionAnswer()));
+        DatabaseInitializer.populateAsyncUserInfo(AppDataBase.getAppDatabase(getApplication()), fragmentChangePasswordBean);
+    }
 
 //    private void EditALLAddressData(ProfileAllData profileAllData) {
 //        AddressAllData editAllAddressData = new AddressAllData();

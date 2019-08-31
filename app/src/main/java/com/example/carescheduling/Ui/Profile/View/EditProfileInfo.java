@@ -101,6 +101,7 @@ public class EditProfileInfo extends BaseFragment implements Common, EditProfile
     }
 
     private void setProfileInfoBeanData() {
+        setSpinnerData();
         if (getActivity() != null) {
             if (ConnectivityReceiver.isNetworkAvailable(getActivity())) {
                 showDialog();
@@ -115,18 +116,30 @@ public class EditProfileInfo extends BaseFragment implements Common, EditProfile
                                         fragmentEditProfileInfoBinding.setDate(editProfileInfoBean.getDateOfBirth());
                                         fragmentEditProfileInfoBinding.setProfileInfoBean(editProfileInfoBean);
                                     }
-                                    setSpinnerData();
+
                                 }
                             });
 
                 } catch (Exception e) {
                     hideDialog();
                     Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
-                    setSpinnerData();
+//                    setSpinnerData();
                 }
             } else {
-                Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
-                setSpinnerData();
+
+//                setSpinnerData();
+                editProfileInfoViewModel.getDataFromLocal(getActivity()).observe(this, new Observer<EditProfileInfoBean>() {
+                    @Override
+                    public void onChanged(EditProfileInfoBean editProfileInfoBean) {
+                        editProfileBean = editProfileInfoBean;
+                        if (editProfileInfoBean != null) {
+                            fragmentEditProfileInfoBinding.setDate(editProfileInfoBean.getDateOfBirth());
+                            fragmentEditProfileInfoBinding.setProfileInfoBean(editProfileInfoBean);
+                        } else {
+                            Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
             }
         }
     }

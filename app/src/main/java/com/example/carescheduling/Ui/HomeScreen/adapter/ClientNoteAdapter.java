@@ -29,7 +29,7 @@ public class ClientNoteAdapter extends RecyclerView.Adapter<ClientNoteAdapter.My
 
     @NonNull
     @Override
-    public ClientNoteAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         itemClientInfoDocumentBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_client_info_document, parent, false);
         return new MyViewHolder(itemClientInfoDocumentBinding);
     }

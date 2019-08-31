@@ -145,7 +145,7 @@ public class ProfileImageList extends BaseFragment implements Common, IDeleteCli
 
     private boolean checkWriteExternalPermission() {
         String p_read_ex = Manifest.permission.READ_EXTERNAL_STORAGE;
-        String p_write_external = android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+        String p_write_external = Manifest.permission.WRITE_EXTERNAL_STORAGE;
         String p_record_audio = Manifest.permission.CAMERA;
         int res1 = getContext().checkCallingOrSelfPermission(p_read_ex);
         int res2 = getContext().checkCallingOrSelfPermission(p_write_external);

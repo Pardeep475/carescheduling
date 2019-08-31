@@ -74,9 +74,7 @@ public class EditPhoneNumber extends BaseFragment implements Common {
         setCodePrefix();
         setPhoneType();
         setEditPhoneNumber();
-        if (profileBean.getCanNotCall() != null) {
             editPhoneNumberBinding.rbDoNotCall.setChecked((boolean) profileBean.getCanNotCall());
-        }
         if (profileBean != null && profileBean.getIsDefaultPhone() != null)
             editPhoneNumberBinding.rbDefaultNumber.setChecked(profileBean.getIsDefaultPhone());
 

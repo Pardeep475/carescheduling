@@ -1,4 +1,4 @@
-package com.example.carescheduling.Ui;
+package com.example.carescheduling;
 
 import androidx.appcompat.app.AppCompatActivity;
 import info.androidhive.barcode.BarcodeReader;
