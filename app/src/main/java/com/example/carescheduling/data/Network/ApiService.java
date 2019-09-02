@@ -37,6 +37,7 @@ import com.example.carescheduling.Ui.Profile.bean.EditUserWithUserNameRetro;
 import com.example.carescheduling.Ui.Profile.bean.EditUserWithoutUserNameRetro;
 import com.example.carescheduling.Ui.Profile.bean.GetMyPicturesEditBeanRetro;
 import com.example.carescheduling.Ui.Profile.bean.GetMyProfileEdit;
+import com.example.carescheduling.Ui.Profile.bean.PersonAddress;
 import com.example.carescheduling.Ui.Profile.bean.PersonAddressList;
 import com.example.carescheduling.Ui.Profile.bean.PersonEmailList;
 import com.example.carescheduling.Ui.Profile.bean.PersonPhoneList;
@@ -197,7 +198,7 @@ public interface ApiService {
 
     @POST("DeleteAddress")
     Observable<Response<JsonElement>> DeleteAddress(
-            @Body PersonAddressList.PersonAddress personAddressList);
+            @Body PersonAddress personAddressList);
 
     @POST("DeleteEmail")
     Observable<Response<JsonElement>> DeleteEmail(

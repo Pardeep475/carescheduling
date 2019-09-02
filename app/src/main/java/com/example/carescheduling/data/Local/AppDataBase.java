@@ -2,10 +2,10 @@ package com.example.carescheduling.data.Local;
 
 import android.content.Context;
 
+import com.example.carescheduling.Ui.Profile.bean.ImageDataBean;
 import com.example.carescheduling.Ui.Profile.bean.PersonEmailList;
 import com.example.carescheduling.Ui.Profile.bean.PersonPhoneList;
 import com.example.carescheduling.data.Local.DatabaseDao.ProfileDao;
-import com.example.carescheduling.data.Local.DatabaseTable.AddressAllData;
 import com.example.carescheduling.data.Local.DatabaseTable.AddressType;
 import com.example.carescheduling.data.Local.DatabaseTable.CountryCode;
 import com.example.carescheduling.data.Local.DatabaseTable.DisabilityType;
@@ -27,8 +27,6 @@ import com.example.carescheduling.data.Local.DatabaseTable.UserInfo;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
-import androidx.room.migration.Migration;
-import androidx.sqlite.db.SupportSQLiteDatabase;
 
 /*AddressAllData.class
  */
@@ -36,7 +34,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
         , Nationality.class, Prefix.class, Religion.class, DisabilityType.class, SexualityType.class
         , CountryCode.class, PhoneType.class, AddressType.class, EmailType.class, ProfileMainData.class
         , UserInfo.class, PersonEmailList.class, PersonPhoneList.class, ProfileInfo.class, PersonAllAddressEntity.class
-}, version = 1, exportSchema = false)
+        , ImageDataBean.class}, version = 2, exportSchema = false)
 public abstract class AppDataBase extends RoomDatabase {
 
     private static AppDataBase INSTANCE;

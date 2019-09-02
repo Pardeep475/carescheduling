@@ -27,10 +27,13 @@ import com.example.carescheduling.Ui.Profile.Adapter.CustomAdapter;
 import com.example.carescheduling.Ui.Profile.ViewModel.EditProfileInfoViewModel;
 import com.example.carescheduling.Ui.Profile.bean.EditProfileInfoBean;
 import com.example.carescheduling.Ui.Profile.bean.EditProfileInfoBeanRetro;
+import com.example.carescheduling.Ui.Profile.bean.ProfileAllData;
 import com.example.carescheduling.Ui.Profile.presenter.EditEmailClick;
 import com.example.carescheduling.Ui.Profile.presenter.EditProfileInfoClick;
 import com.example.carescheduling.Utils.ConnectivityReceiver;
 import com.example.carescheduling.Utils.Constants;
+import com.example.carescheduling.data.Local.AppDataBase;
+import com.example.carescheduling.data.Local.DatabaseInitializer;
 import com.example.carescheduling.data.Local.DatabaseTable.DisabilityType;
 import com.example.carescheduling.data.Local.DatabaseTable.Ethnicity;
 import com.example.carescheduling.data.Local.DatabaseTable.Gender;
@@ -38,6 +41,7 @@ import com.example.carescheduling.data.Local.DatabaseTable.MaritialStatus;
 import com.example.carescheduling.data.Local.DatabaseTable.Nationality;
 import com.example.carescheduling.data.Local.DatabaseTable.PersonLanguage;
 import com.example.carescheduling.data.Local.DatabaseTable.Prefix;
+import com.example.carescheduling.data.Local.DatabaseTable.ProfileInfo;
 import com.example.carescheduling.data.Local.DatabaseTable.Religion;
 import com.example.carescheduling.data.Local.DatabaseTable.SexualityType;
 import com.example.carescheduling.data.Local.SessionManager;
@@ -491,13 +495,38 @@ public class EditProfileInfo extends BaseFragment implements Common, EditProfile
                     if (aBoolean != null) {
                         if (aBoolean) {
                             // on back press
-                            if (getActivity() != null)
-                                getActivity().onBackPressed();
+                            SaveDataToRoom();
+
                         }
                     }
                 }
             });
         }
+    }
+
+
+    private void SaveDataToRoom() {
+        ProfileInfo editProfileInfoBean = new ProfileInfo();
+        editProfileInfoBean.setFirstName(fragmentEditProfileInfoBinding.edtFirstName.getText().toString());
+        editProfileInfoBean.setMiddleName(fragmentEditProfileInfoBinding.edtMiddleName.getText().toString());
+        editProfileInfoBean.setSurName(fragmentEditProfileInfoBinding.edtSurname.getText().toString());
+        editProfileInfoBean.setMaidenName(fragmentEditProfileInfoBinding.edtMaidenName.getText().toString());
+        editProfileInfoBean.setDateOfBirth(fragmentEditProfileInfoBinding.txtDateOfBirth.getText().toString());
+        editProfileInfoBean.setGender((String) fragmentEditProfileInfoBinding.spinnerGender.getSelectedItem());
+        editProfileInfoBean.setPrefix((String) fragmentEditProfileInfoBinding.spinnerPrefix.getSelectedItem());
+        editProfileInfoBean.setLanguage((String) fragmentEditProfileInfoBinding.spinnerLanguage.getSelectedItem());
+        editProfileInfoBean.setMaritalStatus((String) fragmentEditProfileInfoBinding.spinnerMaritalStatus.getSelectedItem());
+        editProfileInfoBean.setEthnicity((String) fragmentEditProfileInfoBinding.spinnerEthnicity.getSelectedItem());
+        editProfileInfoBean.setReligion((String) fragmentEditProfileInfoBinding.spinnerReligion.getSelectedItem());
+        editProfileInfoBean.setSexuality((String) fragmentEditProfileInfoBinding.spinnerSexuality.getSelectedItem());
+        editProfileInfoBean.setNationality((String) fragmentEditProfileInfoBinding.spinnerNationality.getSelectedItem());
+        editProfileInfoBean.setDisabaility((String) fragmentEditProfileInfoBinding.spinnerDisability.getSelectedItem());
+        editProfileInfoBean.setDisability(true);
+
+        DatabaseInitializer.populateAsyncProfileInfo(AppDataBase.getAppDatabase(getActivity()), editProfileInfoBean);
+
+        if (getActivity() != null)
+            getActivity().onBackPressed();
     }
 
     private boolean validation() {

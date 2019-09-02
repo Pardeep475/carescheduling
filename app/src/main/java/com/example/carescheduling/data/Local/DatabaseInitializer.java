@@ -2,6 +2,10 @@ package com.example.carescheduling.data.Local;
 
 import android.os.AsyncTask;
 import android.util.Log;
+
+import com.example.carescheduling.Ui.Profile.bean.ImageDataBean;
+import com.example.carescheduling.Ui.Profile.bean.PersonEmailList;
+import com.example.carescheduling.Ui.Profile.bean.PersonPhoneList;
 import com.example.carescheduling.data.Local.DatabaseTable.AddressAllData;
 import com.example.carescheduling.data.Local.DatabaseTable.AddressType;
 import com.example.carescheduling.data.Local.DatabaseTable.CountryCode;
@@ -11,6 +15,7 @@ import com.example.carescheduling.data.Local.DatabaseTable.Ethnicity;
 import com.example.carescheduling.data.Local.DatabaseTable.Gender;
 import com.example.carescheduling.data.Local.DatabaseTable.MaritialStatus;
 import com.example.carescheduling.data.Local.DatabaseTable.Nationality;
+import com.example.carescheduling.data.Local.DatabaseTable.PersonAllAddressEntity;
 import com.example.carescheduling.data.Local.DatabaseTable.PersonLanguage;
 import com.example.carescheduling.data.Local.DatabaseTable.PhoneType;
 import com.example.carescheduling.data.Local.DatabaseTable.Prefix;
@@ -20,6 +25,7 @@ import com.example.carescheduling.data.Local.DatabaseTable.Religion;
 import com.example.carescheduling.data.Local.DatabaseTable.SexualityType;
 import com.example.carescheduling.data.Local.DatabaseTable.UserInfo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -144,6 +150,163 @@ public class DatabaseInitializer {
     public static void populateAsyncUserInfo(@NonNull final AppDataBase db, UserInfo list) {
         PopulateDbAsyncUserInfo task = new PopulateDbAsyncUserInfo(db, list);
         task.execute();
+    }
+
+    //   ImageDataBean
+    public static void populateAsyncImageDataBean(@NonNull final AppDataBase db, List<ImageDataBean> list) {
+        PopulateDbAsyncImageDataBean task = new PopulateDbAsyncImageDataBean(db, list);
+        task.execute();
+    }
+
+    //ImageDataBean
+    private static class PopulateDbAsyncImageDataBean extends AsyncTask<Void, Void, Void> {
+
+        private final AppDataBase mDb;
+        private List<ImageDataBean> list;
+
+        PopulateDbAsyncImageDataBean(AppDataBase db, List<ImageDataBean> list) {
+            mDb = db;
+            this.list = list;
+        }
+
+        @Override
+        protected Void doInBackground(final Void... params) {
+            populateWithImageDataBeanData(mDb, list);
+            return null;
+        }
+
+    }
+
+    private static void populateWithImageDataBeanData(AppDataBase db, List<ImageDataBean> list) {
+        int count = db.profileDao().countImageDataBean();
+        if (count > 0)
+            db.profileDao().deleteAll();
+        for (ImageDataBean user : list) {
+            addUserImageDataBean(db, user);
+        }
+        Log.d(DatabaseInitializer.TAG, "ImageDataBean Count: " + db.profileDao().countImageDataBean());
+//        Toast.makeText(this, "Rows Count: " + userList.size(), Toast.LENGTH_SHORT).show();
+    }
+
+    private static void addUserImageDataBean(final AppDataBase db, ImageDataBean user) {
+        db.profileDao().insertImageDataBean(user);
+    }
+
+    //   PersonAllAddressEntity
+    public static void populateAsyncPersonAllAddressEntity(@NonNull final AppDataBase db, List<PersonAllAddressEntity> list) {
+        PopulateDbAsyncPersonAllAddressEntity task = new PopulateDbAsyncPersonAllAddressEntity(db, list);
+        task.execute();
+    }
+
+    private static class PopulateDbAsyncPersonAllAddressEntity extends AsyncTask<Void, Void, Void> {
+
+        private final AppDataBase mDb;
+        private List<PersonAllAddressEntity> list;
+
+        PopulateDbAsyncPersonAllAddressEntity(AppDataBase db, List<PersonAllAddressEntity> list) {
+            mDb = db;
+            this.list = list;
+        }
+
+        @Override
+        protected Void doInBackground(final Void... params) {
+            populateWithPersonAllAddressEntityData(mDb, list);
+            return null;
+        }
+
+    }
+
+    private static void populateWithPersonAllAddressEntityData(AppDataBase db, List<PersonAllAddressEntity> list) {
+        int count = db.profileDao().countPersonAllAddressEntity();
+        if (count > 0)
+            db.profileDao().deletePersonAllAddressEntity();
+        for (PersonAllAddressEntity user : list) {
+            addUserPersonAllAddressEntity(db, user);
+        }
+        Log.d(DatabaseInitializer.TAG, "PersonAllAddressEntity Count: " + db.profileDao().countPersonAllAddressEntity());
+//        Toast.makeText(this, "Rows Count: " + userList.size(), Toast.LENGTH_SHORT).show();
+    }
+
+    private static void addUserPersonAllAddressEntity(final AppDataBase db, PersonAllAddressEntity user) {
+        db.profileDao().insertPersonAllAddressEntity(user);
+    }
+
+    //   PersonEmailList
+    public static void populateAsyncPersonEmailList(@NonNull final AppDataBase db, List<PersonEmailList> list) {
+        PopulateDbAsyncPersonEmailList task = new PopulateDbAsyncPersonEmailList(db, list);
+        task.execute();
+    }
+
+    private static class PopulateDbAsyncPersonEmailList extends AsyncTask<Void, Void, Void> {
+
+        private final AppDataBase mDb;
+        private List<PersonEmailList> list;
+
+        PopulateDbAsyncPersonEmailList(AppDataBase db, List<PersonEmailList> list) {
+            mDb = db;
+            this.list = list;
+        }
+
+        @Override
+        protected Void doInBackground(final Void... params) {
+            populateWithPersonEmailListData(mDb, list);
+            return null;
+        }
+
+    }
+
+    private static void populateWithPersonEmailListData(AppDataBase db, List<PersonEmailList> list) {
+        int count = db.profileDao().countPersonEmailList();
+        if (count > 0)
+            db.profileDao().deletePersonEmailList();
+        for (PersonEmailList user : list) {
+            addUserPersonEmailList(db, user);
+        }
+        Log.d(DatabaseInitializer.TAG, "PersonEmailList Count: " + db.profileDao().countPersonEmailList());
+//        Toast.makeText(this, "Rows Count: " + userList.size(), Toast.LENGTH_SHORT).show();
+    }
+
+    private static void addUserPersonEmailList(final AppDataBase db, PersonEmailList user) {
+        db.profileDao().insertPersonEmailList(user);
+    }
+
+    //   PersonPhoneList
+    public static void populateAsyncPersonPhoneList(@NonNull final AppDataBase db, List<PersonPhoneList> list) {
+        PopulateDbAsyncPersonPhoneList task = new PopulateDbAsyncPersonPhoneList(db, list);
+        task.execute();
+    }
+
+    private static class PopulateDbAsyncPersonPhoneList extends AsyncTask<Void, Void, Void> {
+
+        private final AppDataBase mDb;
+        private List<PersonPhoneList> list;
+
+        PopulateDbAsyncPersonPhoneList(AppDataBase db, List<PersonPhoneList> list) {
+            mDb = db;
+            this.list = list;
+        }
+
+        @Override
+        protected Void doInBackground(final Void... params) {
+            populateWithPersonPhoneListData(mDb, list);
+            return null;
+        }
+
+    }
+
+    private static void populateWithPersonPhoneListData(AppDataBase db, List<PersonPhoneList> list) {
+        int count = db.profileDao().countPersonPhoneList();
+        if (count > 0)
+            db.profileDao().deletePersonPhoneList();
+        for (PersonPhoneList user : list) {
+            addUserPersonPhoneList(db, user);
+        }
+        Log.d(DatabaseInitializer.TAG, "PersonPhoneList Count: " + db.profileDao().countPersonPhoneList());
+//        Toast.makeText(this, "Rows Count: " + userList.size(), Toast.LENGTH_SHORT).show();
+    }
+
+    private static void addUserPersonPhoneList(final AppDataBase db, PersonPhoneList user) {
+        db.profileDao().insertPersonPhoneList(user);
     }
 
 //       AddressAllData

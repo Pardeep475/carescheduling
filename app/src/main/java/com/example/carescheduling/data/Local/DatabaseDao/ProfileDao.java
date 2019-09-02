@@ -1,10 +1,8 @@
 package com.example.carescheduling.data.Local.DatabaseDao;
 
-import com.example.carescheduling.Ui.Dashboard.beans.ProfileResultBean;
-import com.example.carescheduling.Ui.Profile.bean.EditAllAddressData;
-import com.example.carescheduling.Ui.Profile.bean.EditProfileInfoBean;
-import com.example.carescheduling.Ui.Profile.bean.FragmentChangePasswordBean;
-import com.example.carescheduling.data.Local.DatabaseTable.AddressAllData;
+import com.example.carescheduling.Ui.Profile.bean.ImageDataBean;
+import com.example.carescheduling.Ui.Profile.bean.PersonEmailList;
+import com.example.carescheduling.Ui.Profile.bean.PersonPhoneList;
 import com.example.carescheduling.data.Local.DatabaseTable.AddressType;
 import com.example.carescheduling.data.Local.DatabaseTable.CountryCode;
 import com.example.carescheduling.data.Local.DatabaseTable.DisabilityType;
@@ -13,6 +11,7 @@ import com.example.carescheduling.data.Local.DatabaseTable.Ethnicity;
 import com.example.carescheduling.data.Local.DatabaseTable.Gender;
 import com.example.carescheduling.data.Local.DatabaseTable.MaritialStatus;
 import com.example.carescheduling.data.Local.DatabaseTable.Nationality;
+import com.example.carescheduling.data.Local.DatabaseTable.PersonAllAddressEntity;
 import com.example.carescheduling.data.Local.DatabaseTable.PersonLanguage;
 import com.example.carescheduling.data.Local.DatabaseTable.PhoneType;
 import com.example.carescheduling.data.Local.DatabaseTable.Prefix;
@@ -22,6 +21,7 @@ import com.example.carescheduling.data.Local.DatabaseTable.Religion;
 import com.example.carescheduling.data.Local.DatabaseTable.SexualityType;
 import com.example.carescheduling.data.Local.DatabaseTable.UserInfo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.lifecycle.LiveData;
@@ -88,18 +88,27 @@ public interface ProfileDao {
     @Query("SELECT * FROM ProfileMainData")
     LiveData<ProfileMainData> getAllProfileMainData();
 
-//    //   Get All  EditProfileInfoBean
+    //    //   Get All  EditProfileInfoBean
     @Query("SELECT * FROM ProfileInfo")
     LiveData<ProfileInfo> getAllProfileInfo();
 
+    //    //   Get All  PersonAllAddressEntity
+    @Query("SELECT * FROM PersonAllAddressEntity")
+    LiveData<List<PersonAllAddressEntity>> getAllPersonAllAddressEntity();
+    //    //   Get All  PersonPhoneList
+    @Query("SELECT * FROM PersonPhoneList")
+    LiveData<List<PersonPhoneList>> getAllPersonPhoneList();
+    //    //   Get All  PersonEmailList
+    @Query("SELECT * FROM PersonEmailList")
+    LiveData<List<PersonEmailList>> getAllPersonEmailList();
 
-////    //   Get All  EditAllAddressData
-//    @Query("SELECT * FROM AddressAllData")
-//    LiveData<AddressAllData> getAllAddressAllData();
-
-//    //   Get All   FragmentChangePasswordBean
+    //    //   Get All   FragmentChangePasswordBean
     @Query("SELECT * FROM user_info")
     LiveData<UserInfo> getAllUserInfo();
+
+    // get image list
+    @Query("SELECT * FROM ImageDataBean")
+    LiveData<List<ImageDataBean>> getAllImageDataBean();
 
 //    @Query("SELECT * FROM user where first_name LIKE  :firstName AND last_name LIKE :lastName")
 //    User findByName(String firstName, String lastName);
@@ -156,11 +165,11 @@ public interface ProfileDao {
     @Query("SELECT COUNT(*) from EmailType")
     int countEmailType();
 
-   //   Get All  ProfileResultBean
+    //   Get All  ProfileResultBean
     @Query("SELECT COUNT(*)  FROM ProfileInfo")
     int countProfileInfo();
 
-//       Get All  EditProfileInfoBean
+    //       Get All  EditProfileInfoBean
     @Query("SELECT COUNT(*)  FROM ProfileMainData")
     int countProfileMainData();
 
@@ -168,9 +177,23 @@ public interface ProfileDao {
 //    @Query("SELECT COUNT(*)  FROM AddressAllData")
 //    int countAddressAllData();
 
-//       Get All  FragmentChangePasswordBean
+    //       Get All  FragmentChangePasswordBean
     @Query("SELECT COUNT(*)  FROM user_info")
     int countUserInfo();
+
+    @Query("SELECT COUNT(*) FROM ImageDataBean")
+    int countImageDataBean();
+
+    //    //   Get All  PersonAllAddressEntity
+    @Query("SELECT COUNT(*) FROM PersonAllAddressEntity")
+    int countPersonAllAddressEntity();
+    //    //   Get All  PersonPhoneList
+    @Query("SELECT COUNT(*) FROM PersonPhoneList")
+    int countPersonPhoneList();
+    //    //   Get All  PersonEmailList
+    @Query("SELECT COUNT(*) FROM PersonEmailList")
+    int countPersonEmailList();
+
 
 
     //    insert all Languages
@@ -225,17 +248,30 @@ public interface ProfileDao {
     @Insert
     void insertAllEmailType(EmailType... personLanguages);
 
-//    insert All  ProfileResultBean
+    //    insert All  ProfileResultBean
     @Insert
     void insertProfileInfo(ProfileInfo profileResultBean);
+
     //   insert All  EditProfileInfoBean
     @Insert
     void insertProfileMainData(ProfileMainData editProfileInfoBean);
 
-//    @Insert
-//    void insertAddressAllData(AddressAllData editAllAddressData);
     @Insert
     void insertUserInfo(UserInfo editAllAddressData);
+
+    @Insert
+    void insertImageDataBean(ImageDataBean imageDataBean);
+
+
+    //   insert All  EditProfileInfoBean
+    @Insert
+    void insertPersonAllAddressEntity(PersonAllAddressEntity editProfileInfoBean);
+
+    @Insert
+    void insertPersonPhoneList(PersonPhoneList editAllAddressData);
+
+    @Insert
+    void insertPersonEmailList(PersonEmailList imageDataBean);
 
 
     @Delete
@@ -293,7 +329,7 @@ public interface ProfileDao {
     @Query("DELETE  FROM EmailType")
     public void deleteAllEmailType();
 
-//    //   Get All  ProfileResultBean
+    //    //   Get All  ProfileResultBean
     @Query("DELETE  FROM ProfileInfo")
     public void deleteProfileInfo();
 
@@ -308,5 +344,18 @@ public interface ProfileDao {
     //   Get All  FragmentChangePasswordBean
     @Query("DELETE  FROM user_info")
     public void deleteUserInfo();
+
+    @Query("DELETE  FROM ImageDataBean")
+    public void deleteImageDataBean();
+
+    //    //   Get All  PersonAllAddressEntity
+    @Query("DELETE FROM PersonAllAddressEntity")
+     public void deletePersonAllAddressEntity();
+    //    //   Get All  PersonPhoneList
+    @Query("DELETE FROM PersonPhoneList")
+     public void deletePersonPhoneList();
+    //    //   Get All  PersonEmailList
+    @Query("DELETE FROM PersonEmailList")
+     public void deletePersonEmailList();
 
 }

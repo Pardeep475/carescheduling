@@ -23,10 +23,13 @@ import com.example.carescheduling.Ui.Profile.bean.AddressByPostCode;
 import com.example.carescheduling.Ui.Profile.bean.AddressData;
 import com.example.carescheduling.Ui.Profile.bean.EditAdressBeanRetro;
 import com.example.carescheduling.Ui.Profile.bean.PersonAddressList;
+import com.example.carescheduling.Ui.Profile.bean.PersonEmailList;
 import com.example.carescheduling.Ui.Profile.bean.ProfileAddressBean;
 import com.example.carescheduling.Ui.Profile.presenter.ProfileAddressClick;
 import com.example.carescheduling.Utils.ConnectivityReceiver;
 import com.example.carescheduling.Utils.Constants;
+import com.example.carescheduling.data.Local.AppDataBase;
+import com.example.carescheduling.data.Local.DatabaseInitializer;
 import com.example.carescheduling.data.Local.DatabaseTable.AddressType;
 import com.example.carescheduling.data.Local.DatabaseTable.Nationality;
 import com.example.carescheduling.databinding.ProfileAddressBinding;
@@ -42,6 +45,7 @@ public class ProfileAddress extends BaseFragment implements Common, ProfileAddre
     private PersonAddressList profileBean;
     ArrayList<PersonAddressList> personAddressList = new ArrayList();
     private List<AddressData> addressTypesList = new ArrayList<>();
+    private int position;
 
     // TODO: Rename and change types and number of parameters
     public static ProfileAddress newInstance(String value, PersonAddressList profileBean, ArrayList<PersonAddressList> personAddressList) {
@@ -70,6 +74,7 @@ public class ProfileAddress extends BaseFragment implements Common, ProfileAddre
         // Inflate the layout for this fragment
         profileAddressBinding = DataBindingUtil.inflate(inflater, R.layout.profile_address
                 , container, false);
+
         View view = profileAddressBinding.getRoot();
         setUpView(view);
         return view;
@@ -77,6 +82,7 @@ public class ProfileAddress extends BaseFragment implements Common, ProfileAddre
     }
 
     private void setUpView(View view) {
+
         setCommonData();
         profileAddressViewModel = ViewModelProviders.of(this).get(ProfileAddressViewModel.class);
         sessionManager = getSessionManager();
@@ -85,7 +91,13 @@ public class ProfileAddress extends BaseFragment implements Common, ProfileAddre
         profileAddressBinding.spinnerAddressType.setClickable(false);
 
 //        setProfileAddressData();
-        fetchAddressFromPostalCode();
+        if (getContext() != null) {
+            if (ConnectivityReceiver.isNetworkAvailable(getContext()))
+                fetchAddressFromPostalCode();
+            else {
+                showAToast("please check your internet connection");
+            }
+        }
         setAddressTypeData();
         setNationalityData();
         if (profileBean != null && profileBean.getPersonAddress() != null && profileBean.getPersonAddress().getIsDefaultAddress() != null)
@@ -325,6 +337,15 @@ public class ProfileAddress extends BaseFragment implements Common, ProfileAddre
         } catch (Exception e) {
             hideDialog();
             Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    private void getPosition() {
+        for (int i = 0; i < personAddressList.size(); i++) {
+            if (personAddressList.get(i).getAddressTypeName().equalsIgnoreCase(stringValue)) {
+                position = i;
+            }
         }
     }
 }

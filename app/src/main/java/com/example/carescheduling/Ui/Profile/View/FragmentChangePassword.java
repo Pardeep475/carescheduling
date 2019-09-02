@@ -192,8 +192,9 @@ public class FragmentChangePassword extends BaseFragment implements Common, Frag
                             fragmentChangePasswordBean.setPasswordAns(passwordAns != null ? passwordAns : "");
                             fragmentChangePasswordBean.setUserName(userName != null ? userName : "");
                             fragmentChangePasswordBean.setPasswordQuestion(passwordQus != null ? passwordQus : "");
-                            setMyUserInfo(fragmentChangePasswordBean);
+
                             fragmentChangePasswordBinding.setFragmentChangePasswordBean(fragmentChangePasswordBean);
+                            setMyUserInfo();
                             setDataOriginal();
                         } else {
                             setNoDataFound();
@@ -263,6 +264,7 @@ public class FragmentChangePassword extends BaseFragment implements Common, Frag
                             hideDialog();
                             if (s != null) {
                                 if (s) {
+
                                     GetUserInfoValid();
                                 }
                             }
@@ -276,6 +278,7 @@ public class FragmentChangePassword extends BaseFragment implements Common, Frag
                             hideDialog();
                             if (s != null) {
                                 if (s) {
+
                                     GetUserInfoValid();
                                 }
                             }
@@ -307,6 +310,16 @@ public class FragmentChangePassword extends BaseFragment implements Common, Frag
         }
 
     }
+
+    private void setMyUserInfo() {
+        UserInfo fragmentChangePasswordBean = new UserInfo();
+        fragmentChangePasswordBean.setPasswordQuestion(fragmentChangePasswordBinding.txtQuestion.getText().toString());
+        fragmentChangePasswordBean.setUserName(fragmentChangePasswordBinding.edtUserName.getText().toString());
+        fragmentChangePasswordBean.setPasswordAns(fragmentChangePasswordBinding.edtAns.getText().toString());
+        DatabaseInitializer.populateAsyncUserInfo(AppDataBase.getAppDatabase(getActivity()), fragmentChangePasswordBean);
+    }
+
+
 
     private EditUserWithUserNameRetro getEditUserWithUserName() {
 //        BranchId,CustomerId,PasswordQuestion,PasswordQuestionAnswer,PersonId,UserName
@@ -363,4 +376,7 @@ public class FragmentChangePassword extends BaseFragment implements Common, Frag
         }
 
     }
+
+
+
 }

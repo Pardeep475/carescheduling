@@ -24,20 +24,30 @@ import com.example.carescheduling.Ui.Common.CommonBean;
 import com.example.carescheduling.Ui.Dashboard.view.Dashboard;
 import com.example.carescheduling.Ui.Profile.ViewModel.EditProfileAddressViewModel;
 import com.example.carescheduling.Ui.Profile.bean.EditAllAddressData;
+import com.example.carescheduling.Ui.Profile.bean.PersonAddress;
 import com.example.carescheduling.Ui.Profile.bean.PersonAddressList;
 import com.example.carescheduling.Ui.Profile.bean.PersonEmailList;
 import com.example.carescheduling.Ui.Profile.bean.PersonPhoneList;
+import com.example.carescheduling.Ui.Profile.bean.ProfileAllData;
 import com.example.carescheduling.Ui.Profile.presenter.EditProfileAddressClick;
 import com.example.carescheduling.Utils.ConnectivityReceiver;
+import com.example.carescheduling.data.Local.AppDataBase;
+import com.example.carescheduling.data.Local.DatabaseInitializer;
+import com.example.carescheduling.data.Local.DatabaseTable.PersonAllAddressEntity;
 import com.example.carescheduling.databinding.FragmentEditProfileAddressBinding;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class EditProfileAddress extends BaseFragment implements Common, EditProfileAddressClick {
 
     private FragmentEditProfileAddressBinding editProfileAddressBinding;
     private EditAllAddressData profileResultBean;
     private EditProfileAddressViewModel editProfileAddressViewModel;
+    private boolean isPhone, isAddress, isEmail;
+    private ArrayList<PersonAddressList> addressLists ;
+    private ArrayList<PersonEmailList> emailLists ;
+    private ArrayList<PersonPhoneList> phoneLists;
 
     public static EditProfileAddress newInstance() {
         return new EditProfileAddress();
@@ -85,6 +95,9 @@ public class EditProfileAddress extends BaseFragment implements Common, EditProf
 
 
     private void setProfileInfoBeanData() {
+        addressLists = new ArrayList<>();
+        phoneLists = new ArrayList<>();
+        emailLists = new ArrayList<>();
         if (getActivity() != null) {
             if (ConnectivityReceiver.isNetworkAvailable(getActivity())) {
                 showDialog();
@@ -94,36 +107,11 @@ public class EditProfileAddress extends BaseFragment implements Common, EditProf
                                 @Override
                                 public void onChanged(EditAllAddressData editProfileInfoBean) {
                                     hideDialog();
-                                    profileResultBean = editProfileInfoBean;
-                                    if (profileResultBean != null && getView() != null) {
-                                        if (profileResultBean.getPersonAddressList() != null) {
-                                            editProfileAddressBinding.setPersonAddressList(profileResultBean.getPersonAddressList().size());
-                                            addRadioButtonsAddress(getView(), profileResultBean.getPersonAddressList(), R.id.rb_address);
-                                        } else {
-                                            editProfileAddressBinding.setPersonAddressList(0);
-                                            addRadioButtonsAddress(getView(), profileResultBean.getPersonAddressList(), R.id.rb_address);
-                                        }
-                                        if (profileResultBean.getPersonEmailList() != null) {
-                                            editProfileAddressBinding.setPersonEmailList(profileResultBean.getPersonEmailList().size());
-                                            addRadioButtonsPhone(getView(), profileResultBean.getPersonPhoneList(), R.id.rb_phone);
-                                        } else {
-                                            editProfileAddressBinding.setPersonEmailList(0);
-                                            addRadioButtonsPhone(getView(), profileResultBean.getPersonPhoneList(), R.id.rb_phone);
-                                        }
-                                        if (profileResultBean.getPersonPhoneList() != null) {
-                                            editProfileAddressBinding.setPersonPhoneList(profileResultBean.getPersonPhoneList().size());
-                                            addRadioButtonsEmail(getView(), profileResultBean.getPersonEmailList(), R.id.rb_email);
-                                        } else {
-                                            editProfileAddressBinding.setPersonPhoneList(0);
-                                            addRadioButtonsEmail(getView(), profileResultBean.getPersonEmailList(), R.id.rb_email);
-                                        }
-                                    } else {
-                                        editProfileAddressBinding.setPersonAddressList(0);
-                                        editProfileAddressBinding.setPersonEmailList(0);
-                                        editProfileAddressBinding.setPersonPhoneList(0);
+                                    if (editProfileInfoBean != null) {
+                                        profileResultBean = editProfileInfoBean;
+                                        setDataToRoom();
+                                        setDataInflate();
                                     }
-
-
                                 }
                             });
 
@@ -133,8 +121,132 @@ public class EditProfileAddress extends BaseFragment implements Common, EditProf
 
                 }
             } else {
-                Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
+                setDataLocalY();
             }
+        }
+    }
+
+    private void setDataToRoom() {
+        if (profileResultBean.getPersonEmailList() != null && profileResultBean.getPersonEmailList().size() > 0) {
+            // person email list
+            DatabaseInitializer.populateAsyncPersonEmailList(AppDataBase.getAppDatabase(getActivity()), profileResultBean.getPersonEmailList());
+        }
+        if (profileResultBean.getPersonPhoneList() != null && profileResultBean.getPersonPhoneList().size() > 0) {
+            // person email list
+            DatabaseInitializer.populateAsyncPersonPhoneList(AppDataBase.getAppDatabase(getActivity()), profileResultBean.getPersonPhoneList());
+        }
+
+
+        if (profileResultBean.getPersonAddressList() != null && profileResultBean.getPersonAddressList().size() > 0) {
+            // person email list
+//            DatabaseInitializer.populateAsyncImageDataBean(AppDataBase.getAppDatabase(getApplication()), profileResultBean.getPersonImageList());
+            List<PersonAllAddressEntity> list = new ArrayList<>();
+            for (int i = 0; i < profileResultBean.getPersonAddressList().size(); i++) {
+                PersonAllAddressEntity personAllAddressEntity = new PersonAllAddressEntity();
+                personAllAddressEntity.setPostCode(profileResultBean.getPersonAddressList().get(i).getPostCode());
+                personAllAddressEntity.setCountryCode(profileResultBean.getPersonAddressList().get(i).getCountryCode());
+                personAllAddressEntity.setDefaultAddress(profileResultBean.getPersonAddressList().get(i).getDefaultAddress());
+                personAllAddressEntity.setAddressTypeName(profileResultBean.getPersonAddressList().get(i).getAddressTypeName());
+                personAllAddressEntity.setAddressId(profileResultBean.getPersonAddressList().get(i).getAddressId());
+                list.add(personAllAddressEntity);
+            }
+
+            DatabaseInitializer.populateAsyncPersonAllAddressEntity(AppDataBase.getAppDatabase(getActivity()), list);
+        }
+    }
+
+
+    private void setDataLocalY() {
+        editProfileAddressViewModel.getDataFromLocalAddress(getActivity()).observe(this, new Observer<ArrayList<PersonAddressList>>() {
+            @Override
+            public void onChanged(ArrayList<PersonAddressList> personAddressLists) {
+                isAddress = true;
+                if (personAddressLists != null && personAddressLists.size() > 0)
+                    addressLists.addAll(personAddressLists);
+
+                if (isAddress && isEmail && isPhone) {
+                    setLocalDataToModal();
+                }
+            }
+        });
+        editProfileAddressViewModel.getDataFromLocalEmail(getActivity()).observe(this, new Observer<ArrayList<PersonEmailList>>() {
+            @Override
+            public void onChanged(ArrayList<PersonEmailList> personEmailLists) {
+                isEmail = true;
+                if (personEmailLists != null && personEmailLists.size() > 0)
+                    emailLists.addAll(personEmailLists);
+                if (isAddress && isEmail && isPhone) {
+                    setLocalDataToModal();
+                }
+            }
+        });
+
+        editProfileAddressViewModel.getDataFromLocalPhone(getActivity()).observe(this, new Observer<ArrayList<PersonPhoneList>>() {
+            @Override
+            public void onChanged(ArrayList<PersonPhoneList> personPhoneLists) {
+                isPhone = true;
+                if (personPhoneLists != null && personPhoneLists.size() > 0)
+                    phoneLists.addAll(personPhoneLists);
+                if (isAddress && isEmail && isPhone) {
+                    setLocalDataToModal();
+                }
+            }
+        });
+    }
+
+    private void setLocalDataToModal() {
+        final EditAllAddressData editAllAddressData = new EditAllAddressData();
+        editAllAddressData.setPersonPhoneList(phoneLists);
+        editAllAddressData.setPersonEmailList(emailLists);
+        editAllAddressData.setPersonAddressList(addressLists);
+
+        profileResultBean = editAllAddressData;
+        setDataInflate();
+    }
+
+
+    private void setDataInflate() {
+//
+        if (profileResultBean != null && getView() != null) {
+            if (profileResultBean.getPersonAddressList() != null) {
+                editProfileAddressBinding.setPersonAddressList(profileResultBean.getPersonAddressList().size());
+                addRadioButtonsAddress(getView(), profileResultBean.getPersonAddressList(), R.id.rb_address);
+            } else {
+                editProfileAddressBinding.setPersonAddressList(0);
+                addRadioButtonsAddress(getView(), profileResultBean.getPersonAddressList(), R.id.rb_address);
+            }
+            if (profileResultBean.getPersonEmailList() != null) {
+                editProfileAddressBinding.setPersonEmailList(profileResultBean.getPersonEmailList().size());
+                addRadioButtonsPhone(getView(), profileResultBean.getPersonPhoneList(), R.id.rb_phone);
+            } else {
+                editProfileAddressBinding.setPersonEmailList(0);
+                addRadioButtonsPhone(getView(), profileResultBean.getPersonPhoneList(), R.id.rb_phone);
+            }
+            if (profileResultBean.getPersonPhoneList() != null) {
+                editProfileAddressBinding.setPersonPhoneList(profileResultBean.getPersonPhoneList().size());
+                addRadioButtonsEmail(getView(), profileResultBean.getPersonEmailList(), R.id.rb_email);
+            } else {
+                editProfileAddressBinding.setPersonPhoneList(0);
+                addRadioButtonsEmail(getView(), profileResultBean.getPersonEmailList(), R.id.rb_email);
+            }
+        } else {
+            editProfileAddressBinding.setPersonAddressList(0);
+            editProfileAddressBinding.setPersonEmailList(0);
+            editProfileAddressBinding.setPersonPhoneList(0);
+        }
+    }
+
+    private void removeViewAddress(RadioGroup radioGroup) {
+        int count = radioGroup.getChildCount();
+        if (count > 0) {
+            ((ViewGroup) radioGroup.getChildAt(0).getParent()).removeAllViews();
+//            for (int i = count - 1; i >= 0; i--) {
+//                View o = radioGroup.getChildAt(i);
+//                ((ViewGroup) o.getParent().getParent()).removeView(o);
+////                if (o instanceof RadioButton) {
+////                    radioGroup.removeViewAt(i);
+////                }
+//            }
         }
     }
 
@@ -146,11 +258,13 @@ public class EditProfileAddress extends BaseFragment implements Common, EditProf
             for (int i = 0; i < arrayList.size(); i++) {
                 RadioButton rdbtn = new RadioButton(getActivity());
                 rdbtn.setId(View.generateViewId());
-                rdbtn.setText(arrayList.get(i).getPersonAddress().getAddressTypeName());
-                rdbtn.setChecked(arrayList.get(i).getPersonAddress().getIsDefaultAddress());
+                rdbtn.setText(arrayList.get(i).getAddressTypeName());
+                rdbtn.setChecked(arrayList.get(i).getDefaultAddress());
                 ll.addView(rdbtn);
             }
         }
+
+
 //        ((ViewGroup) view.findViewById(id)).addView(ll);
 
     }
@@ -384,8 +498,6 @@ public class EditProfileAddress extends BaseFragment implements Common, EditProf
             }
         }
     }
-
-
 
 
     private void setFragment(Fragment fragment) {

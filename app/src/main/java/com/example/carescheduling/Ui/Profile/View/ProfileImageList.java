@@ -37,6 +37,7 @@ import com.example.carescheduling.Ui.Profile.Adapter.ProfileImageListAdapter;
 import com.example.carescheduling.Ui.Profile.ViewModel.ProfileImageListViewModel;
 import com.example.carescheduling.Ui.Profile.bean.DeleteImageRetro;
 import com.example.carescheduling.Ui.Profile.bean.GetMyPicturesEditBeanRetro;
+import com.example.carescheduling.Ui.Profile.bean.ImageDataBean;
 import com.example.carescheduling.Ui.Profile.presenter.IDeleteClick;
 import com.example.carescheduling.Utils.ConnectivityReceiver;
 import com.example.carescheduling.databinding.FragmentProfileImageListBinding;
@@ -82,19 +83,31 @@ public class ProfileImageList extends BaseFragment implements Common, IDeleteCli
         profileImageListBinding.rcvImages.showShimmerAdapter();
         profileImageListBinding.rcvImages.setLayoutManager(new GridLayoutManager(getActivity(), 2));
 
-
         try {
             if (getActivity() != null && ConnectivityReceiver.isNetworkAvailable(getActivity())) {
                 FetchProfileListImages();
             } else {
-                Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
+//                setDataFromLocal();
             }
         } catch (Exception e) {
             profileImageListBinding.rcvImages.hideShimmerAdapter();
-
             showAToast(e.toString());
         }
 
+    }
+
+    private void setDataFromLocal(){
+        profileImageListViewModel.getDataFromLocal(getActivity()).observe(this, new Observer<ArrayList<ImageDataBean>>() {
+            @Override
+            public void onChanged(ArrayList<ImageDataBean> profileImageRetro) {
+                if (profileImageRetro != null) {
+                    setDataList(profileImageRetro);
+                }else{
+                    Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
+                    profileImageListBinding.rcvImages.hideShimmerAdapter();
+                }
+            }
+        });
     }
 
     private void setCommonData() {
@@ -114,25 +127,24 @@ public class ProfileImageList extends BaseFragment implements Common, IDeleteCli
 
             profileImageListViewModel.getProfileImages(getSessionManager().getPersonId()
                     , getSessionManager().getCustomerId(),
-                    getSessionManager().getBranchId()).observe(this, new Observer<ArrayList<GetMyPicturesEditBeanRetro.DataList>>() {
+                    getSessionManager().getBranchId()).observe(this, new Observer<ArrayList<ImageDataBean>>() {
                 @Override
-                public void onChanged(ArrayList<GetMyPicturesEditBeanRetro.DataList> profileImageRetro) {
+                public void onChanged(ArrayList<ImageDataBean> profileImageRetro) {
                     if (profileImageRetro != null) {
-
                         setDataList(profileImageRetro);
+                    }else{
+                        profileImageListBinding.rcvImages.hideShimmerAdapter();
                     }
                 }
             });
         } catch (Exception e) {
-
             profileImageListBinding.rcvImages.hideShimmerAdapter();
             Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
         }
 
-
     }
 
-    private void setDataList(ArrayList<GetMyPicturesEditBeanRetro.DataList> profileImageRetro) {
+    private void setDataList(ArrayList<ImageDataBean> profileImageRetro) {
         profileImageListBinding.rcvImages.hideShimmerAdapter();
         if (profileImageRetro.size() > 0) {
             imageTypeUrl = profileImageRetro.get(0).getImageHexString();
@@ -236,7 +248,7 @@ public class ProfileImageList extends BaseFragment implements Common, IDeleteCli
     }
 
     @Override
-    public void iDeleteImage(GetMyPicturesEditBeanRetro.DataList deleteImage) {
+    public void iDeleteImage(ImageDataBean deleteImage) {
         customDialog(deleteImage);
     }
 
@@ -248,7 +260,7 @@ public class ProfileImageList extends BaseFragment implements Common, IDeleteCli
     }
 
 
-    public void customDialog(final GetMyPicturesEditBeanRetro.DataList deleteImage) {
+    public void customDialog(final ImageDataBean deleteImage) {
         if (getActivity() != null) {
             dialog = new Dialog(getActivity());//,android.R.style.Theme_Translucent_NoTitleBar
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -289,7 +301,7 @@ public class ProfileImageList extends BaseFragment implements Common, IDeleteCli
         }
     }
 
-    private void deletePhoto(GetMyPicturesEditBeanRetro.DataList deleteImage) {
+    private void deletePhoto(ImageDataBean deleteImage) {
         DeleteImageRetro deleteImageRetro = new DeleteImageRetro();
         deleteImageRetro.setDefault(deleteImage.getIsDefault());
         deleteImageRetro.setPersonId(deleteImage.getPersonId());
@@ -326,7 +338,7 @@ public class ProfileImageList extends BaseFragment implements Common, IDeleteCli
     }
 
 
-    private void UpdateUserImageRetro(GetMyPicturesEditBeanRetro.DataList deleteImage) {
+    private void UpdateUserImageRetro(ImageDataBean deleteImage) {
         DeleteImageRetro deleteImageRetro = new DeleteImageRetro();
         deleteImageRetro.setDefault(true);
         deleteImageRetro.setPersonId(deleteImage.getPersonId());

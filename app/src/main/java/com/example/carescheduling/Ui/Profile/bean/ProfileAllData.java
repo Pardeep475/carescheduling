@@ -4,7 +4,8 @@ package com.example.carescheduling.Ui.Profile.bean;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
+import java.util.List;
+import java.util.List;
 
 public class ProfileAllData {
 
@@ -118,19 +119,19 @@ public class ProfileAllData {
         private String personDefaultPhoneNumber;
         @SerializedName("PersonEmailList")
         @Expose
-        private ArrayList<PersonEmailList> personEmailList = null;
+        private List<PersonEmailList> personEmailList = null;
         @SerializedName("PersonId")
         @Expose
         private String personId;
         @SerializedName("PersonImageList")
         @Expose
-        private ArrayList<Object> personImageList = null;
+        private List<ImageDataBean> personImageList = null;
         @SerializedName("PersonName")
         @Expose
         private String personName;
         @SerializedName("PersonPhoneList")
         @Expose
-        private ArrayList<PersonPhoneList> personPhoneList = null;
+        private List<PersonPhoneList> personPhoneList = null;
         @SerializedName("PrefixTypeName")
         @Expose
         private String prefixTypeName;
@@ -148,7 +149,7 @@ public class ProfileAllData {
         private String userName;
         @SerializedName("personAddressList")
         @Expose
-        private ArrayList<PersonAddressList> personAddressList = null;
+        private List<PersonAddressList> personAddressList = null;
 
         public String getDateOfBirth() {
             return dateOfBirth;
@@ -286,11 +287,11 @@ public class ProfileAllData {
             this.personDefaultPhoneNumber = personDefaultPhoneNumber;
         }
 
-        public ArrayList<PersonEmailList> getPersonEmailList() {
+        public List<PersonEmailList> getPersonEmailList() {
             return personEmailList;
         }
 
-        public void setPersonEmailList(ArrayList<PersonEmailList> personEmailList) {
+        public void setPersonEmailList(List<PersonEmailList> personEmailList) {
             this.personEmailList = personEmailList;
         }
 
@@ -302,11 +303,11 @@ public class ProfileAllData {
             this.personId = personId;
         }
 
-        public ArrayList<Object> getPersonImageList() {
+        public List<ImageDataBean> getPersonImageList() {
             return personImageList;
         }
 
-        public void setPersonImageList(ArrayList<Object> personImageList) {
+        public void setPersonImageList(List<ImageDataBean> personImageList) {
             this.personImageList = personImageList;
         }
 
@@ -318,11 +319,11 @@ public class ProfileAllData {
             this.personName = personName;
         }
 
-        public ArrayList<PersonPhoneList> getPersonPhoneList() {
+        public List<PersonPhoneList> getPersonPhoneList() {
             return personPhoneList;
         }
 
-        public void setPersonPhoneList(ArrayList<PersonPhoneList> personPhoneList) {
+        public void setPersonPhoneList(List<PersonPhoneList> personPhoneList) {
             this.personPhoneList = personPhoneList;
         }
 
@@ -366,11 +367,11 @@ public class ProfileAllData {
             this.userName = userName;
         }
 
-        public ArrayList<PersonAddressList> getPersonAddressList() {
+        public List<PersonAddressList> getPersonAddressList() {
             return personAddressList;
         }
 
-        public void setPersonAddressList(ArrayList<PersonAddressList> personAddressList) {
+        public void setPersonAddressList(List<PersonAddressList> personAddressList) {
             this.personAddressList = personAddressList;
         }
 

@@ -11,16 +11,23 @@ import com.example.carescheduling.Ui.Dashboard.view.Dashboard;
 import com.example.carescheduling.Ui.Profile.bean.EditAllAddressData;
 import com.example.carescheduling.Ui.Profile.bean.EditProfileInfoBean;
 import com.example.carescheduling.Ui.Profile.bean.FragmentChangePasswordBean;
+import com.example.carescheduling.Ui.Profile.bean.ImageDataBean;
+import com.example.carescheduling.Ui.Profile.bean.PersonEmailList;
+import com.example.carescheduling.Ui.Profile.bean.PersonPhoneList;
 import com.example.carescheduling.Ui.Profile.bean.ProfileAllData;
 import com.example.carescheduling.data.Local.AppDataBase;
 import com.example.carescheduling.data.Local.DatabaseInitializer;
 import com.example.carescheduling.data.Local.DatabaseTable.AddressAllData;
+import com.example.carescheduling.data.Local.DatabaseTable.PersonAllAddressEntity;
 import com.example.carescheduling.data.Local.DatabaseTable.ProfileInfo;
 import com.example.carescheduling.data.Local.DatabaseTable.ProfileMainData;
 import com.example.carescheduling.data.Local.DatabaseTable.UserInfo;
 import com.example.carescheduling.data.Network.ApiClient;
 import com.example.carescheduling.data.Network.ApiService;
 import com.google.gson.JsonElement;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -104,7 +111,8 @@ public class LoginViewModalSF extends AndroidViewModel {
         mainFrontData(profileAllData);
         EditProfileInfo(profileAllData);
         setMyUserInfo(profileAllData);
-//        EditALLAddressData(profileAllData);
+        setImageData(profileAllData);
+        EditALLAddressData(profileAllData);
 
         goToDashboard(context);
     }
@@ -157,17 +165,48 @@ public class LoginViewModalSF extends AndroidViewModel {
         DatabaseInitializer.populateAsyncUserInfo(AppDataBase.getAppDatabase(getApplication()), fragmentChangePasswordBean);
     }
 
-//    private void EditALLAddressData(ProfileAllData profileAllData) {
-//        AddressAllData editAllAddressData = new AddressAllData();
-//        if (profileAllData.getData().getPersonAddressList() != null)
-//            editAllAddressData.setPersonAddressList(profileAllData.getData().getPersonAddressList());
-//        if (profileAllData.getData().getPersonEmailList() != null)
-//            editAllAddressData.setPersonEmailList(profileAllData.getData().getPersonEmailList());
-//        if (profileAllData.getData().getPersonPhoneList() != null)
-//            editAllAddressData.setPersonPhoneList(profileAllData.getData().getPersonPhoneList());
-//
+    private void setImageData(ProfileAllData profileAllData){
+        if (profileAllData.getData().getPersonImageList() != null && profileAllData.getData().getPersonImageList().size() > 0){
+            DatabaseInitializer.populateAsyncImageDataBean(AppDataBase.getAppDatabase(getApplication()), profileAllData.getData().getPersonImageList());
+        }
+    }
+
+    private void EditALLAddressData(ProfileAllData profileAllData) {
+        if (profileAllData.getData().getPersonEmailList() != null && profileAllData.getData().getPersonEmailList().size() > 0){
+            // person email list
+            DatabaseInitializer.populateAsyncPersonEmailList(AppDataBase.getAppDatabase(getApplication()), profileAllData.getData().getPersonEmailList());
+        }
+        if (profileAllData.getData().getPersonPhoneList() != null && profileAllData.getData().getPersonPhoneList().size() > 0){
+            // person email list
+            DatabaseInitializer.populateAsyncPersonPhoneList(AppDataBase.getAppDatabase(getApplication()), profileAllData.getData().getPersonPhoneList());
+        }
+
+
+
+        if (profileAllData.getData().getPersonAddressList() != null && profileAllData.getData().getPersonAddressList().size() > 0){
+            // person email list
+//            DatabaseInitializer.populateAsyncImageDataBean(AppDataBase.getAppDatabase(getApplication()), profileAllData.getData().getPersonImageList());
+            List<PersonAllAddressEntity>  list = new ArrayList<>();
+            for (int i = 0; i < profileAllData.getData().getPersonAddressList().size(); i++) {
+                PersonAllAddressEntity personAllAddressEntity = new PersonAllAddressEntity();
+                personAllAddressEntity.setPostCode(profileAllData.getData().getPersonAddressList().get(i).getPostCode());
+                personAllAddressEntity.setCountryCode(profileAllData.getData().getPersonAddressList().get(i).getCountryCode());
+                personAllAddressEntity.setDefaultAddress(profileAllData.getData().getPersonAddressList().get(i).getDefaultAddress());
+                personAllAddressEntity.setAddressTypeName(profileAllData.getData().getPersonAddressList().get(i).getAddressTypeName());
+                personAllAddressEntity.setAddressId(profileAllData.getData().getPersonAddressList().get(i).getAddressId());
+                /*personAllAddressEntity.setAddressId(profileAllData.getData().getPersonAddressList().get(i).getPersonAddress().getAddressId());
+                personAllAddressEntity.setAddressTypeName(profileAllData.getData().getPersonAddressList().get(i).getPersonAddress().getAddressTypeName());
+                personAllAddressEntity.setPersonId(profileAllData.getData().getPersonAddressList().get(i).getPersonAddress().getPersonId());
+                personAllAddressEntity.setCustomerId(profileAllData.getData().getPersonAddressList().get(i).getPersonAddress().getCustomerId());
+//                personAllAddressEntity.setDefaultAddress(profileAllData.getData().getPersonAddressList().get(i).getPersonAddress().getIsDefaultAddress());*/
+                list.add(personAllAddressEntity);
+            }
+
+            DatabaseInitializer.populateAsyncPersonAllAddressEntity(AppDataBase.getAppDatabase(getApplication()), list);
+        }
+
 //        DatabaseInitializer.populateAsyncAddressAllData(AppDataBase.getAppDatabase(getApplication()), editAllAddressData);
-//    }
+    }
 
     private String checkIsNotNull(String value) {
         return value != null && !value.equalsIgnoreCase("") && !value.equalsIgnoreCase("null") ? value : "N/A";

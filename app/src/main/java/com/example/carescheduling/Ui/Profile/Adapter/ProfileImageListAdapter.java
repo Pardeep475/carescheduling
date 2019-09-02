@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Profile.View.EditProfile;
 import com.example.carescheduling.Ui.Profile.bean.GetMyPicturesEditBeanRetro;
+import com.example.carescheduling.Ui.Profile.bean.ImageDataBean;
 import com.example.carescheduling.Ui.Profile.bean.ProfileImageList;
 import com.example.carescheduling.Ui.Profile.presenter.IDeleteClick;
 import com.example.carescheduling.databinding.ItemProfileImageListBinding;
@@ -35,12 +36,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class ProfileImageListAdapter extends RecyclerView.Adapter<ProfileImageListAdapter.MyViewHolder> {
     private ItemProfileImageListBinding itemProfileImageListBinding;
-    private ArrayList<GetMyPicturesEditBeanRetro.DataList> arrayList;
+    private ArrayList<ImageDataBean> arrayList;
     private Context context;
     private IDeleteClick iDeleteClick;
     private LayoutInflater inflater;
 
-    public ProfileImageListAdapter(ArrayList<GetMyPicturesEditBeanRetro.DataList> arrayList, Context context, IDeleteClick iDeleteClick) {
+    public ProfileImageListAdapter(ArrayList<ImageDataBean> arrayList, Context context, IDeleteClick iDeleteClick) {
         this.arrayList = arrayList;
         this.context = context;
         this.iDeleteClick = iDeleteClick;
@@ -86,7 +87,7 @@ public class ProfileImageListAdapter extends RecyclerView.Adapter<ProfileImageLi
     }
 
 
-    private void customDialog(final GetMyPicturesEditBeanRetro.DataList deleteImages) {
+    private void customDialog(final ImageDataBean deleteImages) {
         final Dialog dialog = new Dialog(context);//,android.R.style.Theme_Translucent_NoTitleBar
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.item_delete_image);

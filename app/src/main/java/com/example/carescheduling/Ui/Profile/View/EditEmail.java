@@ -22,6 +22,8 @@ import com.example.carescheduling.Ui.Profile.bean.EditEmailRetroBean;
 import com.example.carescheduling.Ui.Profile.bean.PersonEmailList;
 import com.example.carescheduling.Utils.ConnectivityReceiver;
 import com.example.carescheduling.Utils.Constants;
+import com.example.carescheduling.data.Local.AppDataBase;
+import com.example.carescheduling.data.Local.DatabaseInitializer;
 import com.example.carescheduling.data.Local.DatabaseTable.EmailType;
 import com.example.carescheduling.databinding.FragmentEditEmailBinding;
 
@@ -34,6 +36,7 @@ public class EditEmail extends BaseFragment implements Common {
     private PersonEmailList profileBean;
     private EditEmailViewModel editEmailViewModel;
     private ArrayList<PersonEmailList> personEmailList;
+    private int position;
 
     public static EditEmail newInstance(String value, PersonEmailList profileBean, ArrayList<PersonEmailList> personEmailList) {
         EditEmail editEmail = new EditEmail();
@@ -66,6 +69,7 @@ public class EditEmail extends BaseFragment implements Common {
     }
 
     private void setUpView(View view) {
+        getPosition();
         setCommonData();
         editEmailViewModel = ViewModelProviders.of(this).get(EditEmailViewModel.class);
         setEmailType();
@@ -156,9 +160,7 @@ public class EditEmail extends BaseFragment implements Common {
                         hideDialog();
                         if (s != null) {
                             if (s) {
-                                if (getActivity() != null) {
-                                    getActivity().onBackPressed();
-                                }
+                                setEmailDataToRoom();
                             }
                         }
 
@@ -175,7 +177,7 @@ public class EditEmail extends BaseFragment implements Common {
     private boolean TypeNameAlreadyExist() {
         if (personEmailList == null)
             return false;
-        if (stringValue.equalsIgnoreCase((String) editEmailBinding.spinnerEmailType.getSelectedItem()) )
+        if (stringValue.equalsIgnoreCase((String) editEmailBinding.spinnerEmailType.getSelectedItem()))
             return false;
         for (int i = 0; i < personEmailList.size(); i++) {
             if (personEmailList.get(i).getEmailTypeName().equalsIgnoreCase((String) editEmailBinding.spinnerEmailType.getSelectedItem())) {
@@ -206,6 +208,31 @@ public class EditEmail extends BaseFragment implements Common {
             return false;
         }
         return true;
+    }
+
+    private void setEmailDataToRoom() {
+        PersonEmailList editEmailRetroBean = new PersonEmailList();
+        editEmailRetroBean.setCustomerId(getSessionManager().getCustomerId());
+        editEmailRetroBean.setPersonId(getSessionManager().getPersonId());
+        editEmailRetroBean.setEmailTypeName((String) editEmailBinding.spinnerEmailType.getSelectedItem());
+        editEmailRetroBean.setEmailAddress(editEmailBinding.edtEmailAddress.getText().toString());
+        editEmailRetroBean.setIsDefaultEmail(editEmailBinding.rbDefaultEmail.isChecked());
+
+        personEmailList.set(position,editEmailRetroBean);
+
+        DatabaseInitializer.populateAsyncPersonEmailList(AppDataBase.getAppDatabase(getActivity()), personEmailList);
+
+        if (getActivity() != null) {
+            getActivity().onBackPressed();
+        }
+    }
+
+    private void getPosition() {
+        for (int i = 0; i < personEmailList.size(); i++) {
+            if (personEmailList.get(i).getEmailTypeName().equalsIgnoreCase(stringValue)) {
+                position = i;
+            }
+        }
     }
 }
 

@@ -8,10 +8,13 @@ import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.carescheduling.Ui.Profile.View.EditProfile;
 import com.example.carescheduling.Ui.Profile.bean.DeleteImageRetro;
 import com.example.carescheduling.Ui.Profile.bean.GetMyPicturesEditBeanRetro;
+import com.example.carescheduling.Ui.Profile.bean.ImageDataBean;
 import com.example.carescheduling.Ui.Profile.bean.ProfileImageList;
 import com.example.carescheduling.Ui.Profile.bean.ProfileImageRetro;
+import com.example.carescheduling.data.Local.AppDataBase;
 import com.example.carescheduling.data.Network.ApiClient;
 import com.example.carescheduling.data.Network.ApiService;
 import com.google.gson.JsonElement;
@@ -20,11 +23,13 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -61,8 +66,8 @@ public class ProfileImageListViewModel extends AndroidViewModel {
     }
 
 
-    public LiveData<ArrayList<GetMyPicturesEditBeanRetro.DataList>> getProfileImages(String personId, String customerId, String branchId) {
-        final MutableLiveData<ArrayList<GetMyPicturesEditBeanRetro.DataList>> data = new MutableLiveData<>();
+    public LiveData<ArrayList<ImageDataBean>> getProfileImages(String personId, String customerId, String branchId) {
+        final MutableLiveData<ArrayList<ImageDataBean>> data = new MutableLiveData<>();
 
         Disposable disposable = apiService.GetMyPicturesEdit(personId, customerId, branchId)
                 .subscribeOn(Schedulers.io())
@@ -90,6 +95,21 @@ public class ProfileImageListViewModel extends AndroidViewModel {
         return data;
     }
 
+    public LiveData<ArrayList<ImageDataBean>> getDataFromLocal(Context activity){
+        final MutableLiveData<ArrayList<ImageDataBean>> data = new MutableLiveData<>();
+        AppDataBase.getAppDatabase(context).profileDao().getAllImageDataBean().observe(((EditProfile) activity), new Observer<List<ImageDataBean>>() {
+            @Override
+            public void onChanged(List<ImageDataBean> profileInfo) {
+                if (profileInfo != null&& profileInfo.size() >0) {
+                    Log.e("getting_profile_data", profileInfo.get(0).getImageId());
+                    ArrayList<ImageDataBean> arrayList = new ArrayList<>(profileInfo);
+                    data.setValue(arrayList);
+                }
+            }
+        });
+
+        return data;
+    }
 
     public Bitmap ImageFromBase64(String img) {
         byte[] decodedString = Base64.decode(img, Base64.DEFAULT);

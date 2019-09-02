@@ -10,13 +10,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-//@Entity(tableName = "EditAllAddressData")
 public class EditAllAddressData {
-//    @PrimaryKey(autoGenerate = true)
-//    @ColumnInfo(name = "id")
-//    @NonNull
-//    private int id;
-
         @SerializedName("BranchId")
         @Expose
         private String branchId;

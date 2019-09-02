@@ -19,9 +19,12 @@ import com.example.carescheduling.Ui.Common.CommonBean;
 import com.example.carescheduling.Ui.Profile.Adapter.CustomAdapter;
 import com.example.carescheduling.Ui.Profile.ViewModel.EditPhoneNumberViewModel;
 import com.example.carescheduling.Ui.Profile.bean.EditNumberBeanRetro;
+import com.example.carescheduling.Ui.Profile.bean.PersonEmailList;
 import com.example.carescheduling.Ui.Profile.bean.PersonPhoneList;
 import com.example.carescheduling.Utils.ConnectivityReceiver;
 import com.example.carescheduling.Utils.Constants;
+import com.example.carescheduling.data.Local.AppDataBase;
+import com.example.carescheduling.data.Local.DatabaseInitializer;
 import com.example.carescheduling.data.Local.DatabaseTable.CountryCode;
 import com.example.carescheduling.data.Local.DatabaseTable.PhoneType;
 import com.example.carescheduling.databinding.FragmentEditPhoneNumberBinding;
@@ -35,7 +38,7 @@ public class EditPhoneNumber extends BaseFragment implements Common {
     private PersonPhoneList profileBean;
     private EditPhoneNumberViewModel editPhoneNumberViewModel;
     private ArrayList<PersonPhoneList> personPhoneList;
-
+    private int position;
     public static EditPhoneNumber newInstance(String value, PersonPhoneList profileBean, ArrayList<PersonPhoneList> personPhoneList) {
         EditPhoneNumber editPhoneNumber = new EditPhoneNumber();
         Bundle bundle = new Bundle();
@@ -67,6 +70,7 @@ public class EditPhoneNumber extends BaseFragment implements Common {
     }
 
     private void setUpView(View view) {
+        getPosition();
         setCommonData();
         sessionManager = getSessionManager();
         editPhoneNumberViewModel = ViewModelProviders.of(this).get(EditPhoneNumberViewModel.class);
@@ -182,9 +186,7 @@ public class EditPhoneNumber extends BaseFragment implements Common {
                         hideDialog();
                         if (s != null) {
                             if (s) {
-                                if (getActivity() != null) {
-                                    getActivity().onBackPressed();
-                                }
+                                setEmailDataToRoom();
                             }
                         }
 
@@ -237,5 +239,31 @@ public class EditPhoneNumber extends BaseFragment implements Common {
             return false;
         }
         return true;
+    }
+
+    private void setEmailDataToRoom() {
+        PersonPhoneList editPhoneNumberBean = new PersonPhoneList();
+        editPhoneNumberBean.setCustomerId(getSessionManager().getCustomerId());
+        editPhoneNumberBean.setPersonId(getSessionManager().getPersonId());
+        editPhoneNumberBean.setCountryTelephonePrefix((String) editPhoneNumberBinding.spinnerCountryCode.getSelectedItem());
+        editPhoneNumberBean.setPhoneNumber(editPhoneNumberBinding.edtNumber.getText().toString());
+        editPhoneNumberBean.setPhoneTypeName((String) editPhoneNumberBinding.spinnerPhoneType.getSelectedItem());
+        editPhoneNumberBean.setIsDefaultPhone(editPhoneNumberBinding.rbDefaultNumber.isChecked());
+        editPhoneNumberBean.setCanNotCall(editPhoneNumberBinding.rbDoNotCall.isChecked());
+        personPhoneList.set(position,editPhoneNumberBean);
+
+        DatabaseInitializer.populateAsyncPersonPhoneList(AppDataBase.getAppDatabase(getActivity()), personPhoneList);
+
+        if (getActivity() != null) {
+            getActivity().onBackPressed();
+        }
+    }
+
+    private void getPosition() {
+        for (int i = 0; i < personPhoneList.size(); i++) {
+            if (personPhoneList.get(i).getPhoneTypeName().equalsIgnoreCase(stringValue)) {
+                position = i;
+            }
+        }
     }
 }
