@@ -118,7 +118,7 @@ public interface HomeDeo {
 
     // get All ClientSummary
     @Query("SELECT * FROM ClientSummary WHERE BookingId = :bookingId")
-    LiveData<List<ClientSummary>> getAllClientSummary(String bookingId);
+    LiveData<ClientSummary> getAllClientSummary(String bookingId);
 
     //    get ClientSummary count
     @Query("SELECT COUNT(*) from ClientSummary")

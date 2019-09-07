@@ -21,6 +21,7 @@ import com.example.carescheduling.Ui.Common.Common;
 import com.example.carescheduling.Ui.Common.CommonBean;
 import com.example.carescheduling.Ui.HomeScreen.ViewModel.ClientInfoDocumentsViewModel;
 import com.example.carescheduling.Ui.HomeScreen.adapter.ClientInfoDocumentsAdapter;
+import com.example.carescheduling.Ui.HomeScreen.beans.ClientBookingScreenModel;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientNoteAdapterBean;
 import com.example.carescheduling.Ui.HomeScreen.presenter.BackPressedClick;
 import com.example.carescheduling.Utils.ConnectivityReceiver;
@@ -57,15 +58,32 @@ public class ClientInfoDocuments extends BaseFragment implements Common {
             if (ConnectivityReceiver.isNetworkAvailable(getActivity())) {
                 setUpRecyclerView(view);
             } else {
-                setNoDataFound();
-                Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
+                getDataFromRoom();
+//                setNoDataFound();
+//                Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
-            setNoDataFound();
-            Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+            getDataFromRoom();
+//            setNoDataFound();
+//            Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
         }
 
 
+    }
+    private void getDataFromRoom() {
+        mViewModel.getDataFromLocal(getActivity(), getSessionManager().getBookingId()).observe(this, new Observer<ArrayList<ClientNoteAdapterBean>>() {
+            @Override
+            public void onChanged(ArrayList<ClientNoteAdapterBean> clientNoteAdapterBeans) {
+                if (clientNoteAdapterBeans != null && clientNoteAdapterBeans.size() > 0) {
+                    clientInfoDocumentsFragmentBinding.rcvClientInfoDocuments.setLayoutManager(new LinearLayoutManager(getActivity()));
+                    ClientInfoDocumentsAdapter clientInfoDocumentsAdapter = new ClientInfoDocumentsAdapter(getActivity(), clientNoteAdapterBeans);
+                    clientInfoDocumentsFragmentBinding.rcvClientInfoDocuments.setAdapter(clientInfoDocumentsAdapter);
+                    setDataOriginal();
+                } else {
+                    setNoDataFound();
+                }
+            }
+        });
     }
 
     private void setCommonData() {
@@ -95,7 +113,8 @@ public class ClientInfoDocuments extends BaseFragment implements Common {
                     clientInfoDocumentsFragmentBinding.rcvClientInfoDocuments.setAdapter(clientInfoDocumentsAdapter);
                     setDataOriginal();
                 } else {
-                    setNoDataFound();
+                    getDataFromRoom();
+//                    setNoDataFound();
                 }
             }
         });

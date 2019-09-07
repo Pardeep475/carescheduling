@@ -8,17 +8,23 @@ import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.carescheduling.Ui.Dashboard.beans.ClientContactList;
+import com.example.carescheduling.Ui.HomeScreen.beans.ClientBookingScreenModel;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientCareContactsBean;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientContactsBean;
+import com.example.carescheduling.Ui.Profile.View.EditProfile;
+import com.example.carescheduling.data.Local.AppDataBase;
 import com.example.carescheduling.data.Network.ApiClient;
 import com.example.carescheduling.data.Network.ApiService;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -97,6 +103,40 @@ public class ClientContactsViewModel extends AndroidViewModel {
         return clientContactsBeanArrayList;
     }
 
+    public LiveData<ArrayList<ClientContactsBean>> getDataFromLocal(Context activity, String bookingId){
+        final MutableLiveData<ArrayList<ClientContactsBean>> data = new MutableLiveData<>();
+        AppDataBase.getAppDatabase(getApplication()).homeDeo().getAllClientContactList(bookingId).observe(((EditProfile) activity), new Observer<List<ClientContactList>>() {
+            @Override
+            public void onChanged(List<ClientContactList> clientContactLists) {
+                if (clientContactLists != null) {
+                    data.setValue(getClientCareContact(clientContactLists));
+                }else{
+                    data.setValue(null);
+                }
+            }
+        });
+        return data;
+    }
+
+    private ArrayList<ClientContactsBean> getClientCareContact(List<ClientContactList> careContactsBean) {
+        ArrayList<ClientContactsBean> clientContactsBeanArrayList = new ArrayList<>();
+
+            for (int i = 0; i < careContactsBean.size(); i++) {
+                ClientContactsBean clientContactsBean = new ClientContactsBean();
+                clientContactsBean.setEmail(checkIsNotNull(careContactsBean.get(i).getEmailAddress()));
+                clientContactsBean.setMobile(checkIsNotNull(careContactsBean.get(i).getPersonPhone()));
+                clientContactsBean.setTelephone("N/A");
+                clientContactsBean.setType(checkIsNotNull(careContactsBean.get(i).getContactTypeName()));
+                clientContactsBean.setName(checkIsNotNull(careContactsBean.get(i).getPersonName()));
+//                if (!checkIsNotNullWithOutNA(careContactsBean.get(i).getImageHexString()).equalsIgnoreCase(""))
+//                    clientContactsBean.setImage(ImageFromBase64(careContactsBean.get(i).getImageHexString()));
+                clientContactsBean.setAddress(careContactsBean.get(i).getPersonAddress());
+
+                clientContactsBeanArrayList.add(clientContactsBean);
+            }
+
+        return clientContactsBeanArrayList;
+    }
 
     private String checkIsNotNull(String value) {
         return value != null && !value.equalsIgnoreCase("") && !value.equalsIgnoreCase("null") ? value : "N/A";

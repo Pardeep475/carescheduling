@@ -22,6 +22,7 @@ import com.example.carescheduling.Ui.Common.Common;
 import com.example.carescheduling.Ui.Common.CommonBean;
 import com.example.carescheduling.Ui.HomeScreen.ViewModel.ClientInfoNotesViewModel;
 import com.example.carescheduling.Ui.HomeScreen.adapter.ClientNoteAdapter;
+import com.example.carescheduling.Ui.HomeScreen.beans.ClientBookingScreenModel;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientCareNoteBean;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientNoteAdapterBean;
 import com.example.carescheduling.Ui.HomeScreen.presenter.BackPressedClick;
@@ -59,12 +60,14 @@ public class ClientInfoNotesFragment extends BaseFragment implements Common {
             if (ConnectivityReceiver.isNetworkAvailable(getActivity())) {
                 setUpData(view);
             } else {
-                setNoDataFound();
-                Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
+//                setNoDataFound();
+//                Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
+                getDataFromRoom();
             }
 
         } catch (Exception e) {
-            setNoDataFound();
+//            setNoDataFound();
+            getDataFromRoom();
             Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
         }
 
@@ -81,6 +84,28 @@ public class ClientInfoNotesFragment extends BaseFragment implements Common {
         commonBean.setTitle("Notes");
         clientInfoNotesFragmentBinding.setCommonData(commonBean);
         clientInfoNotesFragmentBinding.setCommonClick(this);
+    }
+
+    private void getDataFromRoom() {
+
+        mViewModel.getDataFromLocal(getActivity(), getSessionManager().getBookingId()).observe(this, new Observer<ArrayList<ClientNoteAdapterBean>>() {
+            @Override
+            public void onChanged(ArrayList<ClientNoteAdapterBean> clientNoteAdapterBeans) {
+                if (clientNoteAdapterBeans != null && clientNoteAdapterBeans.size() > 0) {
+                    clientInfoNotesFragmentBinding.setClientNoteAdapterBean(clientNoteAdapterBeans.get(0));
+//                    clientNoteAdapterBeans.remove(0);
+                    clientInfoNotesFragmentBinding.rcvClientNotes.setLayoutManager(new LinearLayoutManager(getActivity()));
+                    ClientNoteAdapter clientDisabilitiesAdapter = new ClientNoteAdapter(getActivity(), clientNoteAdapterBeans);
+                    clientInfoNotesFragmentBinding.rcvClientNotes.setAdapter(clientDisabilitiesAdapter);
+
+                    setDataOriginal();
+                } else {
+//                    setNoDataFound();
+                    getDataFromRoom();
+                }
+                clientInfoNotesFragmentBinding.slDemo.stopShimmerAnimation();
+            }
+        });
     }
 
     private void setUpData(View view) {
@@ -100,7 +125,8 @@ public class ClientInfoNotesFragment extends BaseFragment implements Common {
 
                     setDataOriginal();
                 } else {
-                    setNoDataFound();
+//                    setNoDataFound();
+                    getDataFromRoom();
                 }
                 clientInfoNotesFragmentBinding.slDemo.stopShimmerAnimation();
             }

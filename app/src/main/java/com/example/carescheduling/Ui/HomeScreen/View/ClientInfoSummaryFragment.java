@@ -68,11 +68,13 @@ public class ClientInfoSummaryFragment extends BaseFragment implements Common {
             if (ConnectivityReceiver.isNetworkAvailable(getActivity())) {
                 setUpData();
             } else {
-                setNoDataFound();
-                Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
+//                setNoDataFound();
+                getDataFromRoom();
+                //Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
-            setNoDataFound();
+//            setNoDataFound();
+            getDataFromRoom();
             Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
         }
 
@@ -99,14 +101,31 @@ public class ClientInfoSummaryFragment extends BaseFragment implements Common {
             @Override
             public void onChanged(ClientBookingScreenModel clientCareSummaryBean) {
                 if (clientCareSummaryBean != null) {
-                        clientInfoSummaryFragmentBinding.setClientBookingScreenModel(clientCareSummaryBean);
-                        setDataOriginal();
-                    } else {
-                        Toast.makeText(getActivity(),"Something went wrong", Toast.LENGTH_SHORT).show();
-                        setNoDataFound();
-                    }
+                    clientInfoSummaryFragmentBinding.setClientBookingScreenModel(clientCareSummaryBean);
+                    setDataOriginal();
+                } else {
+//                        Toast.makeText(getActivity(),"Something went wrong", Toast.LENGTH_SHORT).show();
+                    getDataFromRoom();
+                }
 
                 clientInfoSummaryFragmentBinding.slDemo.stopShimmerAnimation();
+            }
+        });
+    }
+
+    private void getDataFromRoom() {
+        mViewModel.getDataFromLocal(getActivity(), getSessionManager().getBookingId()).observe(this, new Observer<ClientBookingScreenModel>() {
+            @Override
+            public void onChanged(ClientBookingScreenModel clientBookingScreenModel) {
+                if (clientBookingScreenModel != null) {
+                    clientBookingModel = clientBookingScreenModel;
+                    getSessionManager().setBookingId(clientBookingModel.getBookingId());
+                    clientInfoSummaryFragmentBinding.setClientBookingScreenModel(clientBookingScreenModel);
+                    setDataOriginal();
+                } else {
+                    Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
+                    setNoDataFound();
+                }
             }
         });
     }

@@ -13,6 +13,7 @@ import com.example.carescheduling.Ui.Common.CommonBean;
 import com.example.carescheduling.Ui.Dashboard.beans.ClientDisabilityList;
 import com.example.carescheduling.Ui.HomeScreen.ViewModel.ClientDisabilitiesViewModel;
 import com.example.carescheduling.Ui.HomeScreen.adapter.ClientDisabilitiesAdapter;
+import com.example.carescheduling.Ui.HomeScreen.beans.ClientBookingScreenModel;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientDisabilityBean;
 import com.example.carescheduling.Ui.HomeScreen.presenter.BackPressedClick;
 import com.example.carescheduling.Utils.ConnectivityReceiver;
@@ -55,15 +56,34 @@ public class ClientDisabilitiesFragment extends BaseFragment implements Common {
             if (ConnectivityReceiver.isNetworkAvailable(getActivity())) {
                 setUpRecyclerView(view);
             } else {
-                setNoDataFound();
-                Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
+//                setNoDataFound();
+                getDataFromRoom();
+//                Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
-            setNoDataFound();
-            Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+            getDataFromRoom();
+//            setNoDataFound();
+//            Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
         }
 
 
+    }
+
+
+    private void getDataFromRoom() {
+        clientDisabilitiesViewModel.getDataFromLocal(getActivity(), getSessionManager().getBookingId()).observe(this, new Observer<ArrayList<ClientDisabilityList>>() {
+            @Override
+            public void onChanged(ArrayList<ClientDisabilityList> data) {
+                if (data != null && data.size() > 0) {
+                    clientInfoDisabilitiesFragmentBinding.disabilitiesRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
+                    ClientDisabilitiesAdapter clientDisabilitiesAdapter = new ClientDisabilitiesAdapter(getActivity(), data);
+                    clientInfoDisabilitiesFragmentBinding.disabilitiesRecyclerview.setAdapter(clientDisabilitiesAdapter);
+                    setDataOriginal();
+                } else {
+                    setNoDataFound();
+                }
+            }
+        });
     }
 
     private void setCommonData() {
@@ -91,7 +111,7 @@ public class ClientDisabilitiesFragment extends BaseFragment implements Common {
                             clientInfoDisabilitiesFragmentBinding.disabilitiesRecyclerview.setAdapter(clientDisabilitiesAdapter);
                             setDataOriginal();
                         } else {
-                            setNoDataFound();
+                            getDataFromRoom();
                         }
                     }
                 });

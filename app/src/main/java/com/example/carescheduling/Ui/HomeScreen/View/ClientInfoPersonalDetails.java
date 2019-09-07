@@ -2,6 +2,7 @@ package com.example.carescheduling.Ui.HomeScreen.View;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import com.example.carescheduling.Ui.Base.BaseFragment;
 import com.example.carescheduling.Ui.Common.Common;
 import com.example.carescheduling.Ui.Common.CommonBean;
 import com.example.carescheduling.Ui.HomeScreen.ViewModel.ClientInfoPersonalDetailsViewModel;
+import com.example.carescheduling.Ui.HomeScreen.beans.ClientBookingScreenModel;
 import com.example.carescheduling.Ui.HomeScreen.presenter.BackPressedClick;
 import com.example.carescheduling.Ui.Profile.bean.EditProfileInfoBean;
 import com.example.carescheduling.Utils.ConnectivityReceiver;
@@ -51,15 +53,35 @@ public class ClientInfoPersonalDetails extends BaseFragment implements Common {
             if (ConnectivityReceiver.isNetworkAvailable(getActivity())) {
                 setClientPersonalDetails();
             } else {
-                setNoDataFound();
-                Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
+//                setNoDataFound();
+//                Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
+                getDataFromRoom();
             }
         } catch (Exception e) {
-            setNoDataFound();
+//            setNoDataFound();
+            getDataFromRoom();
             Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
         }
 
     }
+
+    private void getDataFromRoom() {
+      /*  mViewModel.getDataFromLocal(getActivity(), getSessionManager().getBookingId()).observe(this, new Observer<ClientBookingScreenModel>() {
+            @Override
+            public void onChanged(ClientBookingScreenModel clientBookingScreenModel) {
+                if (clientBookingScreenModel != null) {
+                    clientBookingModel = clientBookingScreenModel;
+                    getSessionManager().setBookingId(clientBookingModel.getBookingId());
+                    blankFragmentBinding.setClientBookingScreenModel(clientBookingScreenModel);
+                    setDataOriginal();
+                } else {
+                    Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
+                    setNoDataFound();
+                }
+            }
+        });*/
+    }
+
 
     private void setCommonData() {
         CommonBean commonBean = new CommonBean();
@@ -83,7 +105,8 @@ public class ClientInfoPersonalDetails extends BaseFragment implements Common {
                     clientInfoPersonalDetailsFragmentBinding.setEditProfileInfoBean(editProfileInfoBean);
                     setDataOriginal();
                 } else {
-                    setNoDataFound();
+//                    setNoDataFound();
+                    getDataFromRoom();
                 }
                 clientInfoPersonalDetailsFragmentBinding.slDemo.stopShimmerAnimation();
             }

@@ -7,6 +7,11 @@ import android.widget.Toast;
 
 import com.example.carescheduling.Ui.Dashboard.beans.AllHomeData;
 import com.example.carescheduling.Ui.Dashboard.beans.ClientBookingListModel;
+import com.example.carescheduling.Ui.Dashboard.beans.ClientContactList;
+import com.example.carescheduling.Ui.Dashboard.beans.ClientDisabilityList;
+import com.example.carescheduling.Ui.Dashboard.beans.ClientDocumentList;
+import com.example.carescheduling.Ui.Dashboard.beans.ClientMedicalForMobileList;
+import com.example.carescheduling.Ui.Dashboard.beans.ClientNoteList;
 import com.example.carescheduling.Ui.Dashboard.beans.EditMyProfile;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientBookingScreenModel;
 import com.example.carescheduling.data.Local.AppDataBase;
@@ -106,6 +111,76 @@ public class DashboardViewModel extends AndroidViewModel {
 
     private void setDataToDatabase(AllHomeData allHomeData) {
         getClientBookingScreenModelData(allHomeData);
+        getClientNoteList(allHomeData);
+        getClientContactList(allHomeData);
+        getClientDocumentList(allHomeData);
+        getClientMedicalList(allHomeData);
+        getClientDisabilitiesList(allHomeData);
+    }
+
+    private void getClientNoteList(AllHomeData allHomeData) {
+        List<ClientNoteList> clientNoteLists = new ArrayList<>();
+        for (int i = 0; i < allHomeData.getDataList().size(); i++) {
+            if (allHomeData.getDataList().get(i).getClientNoteList() != null)
+            for (int j = 0; j < allHomeData.getDataList().get(i).getClientNoteList().size() ; j++) {
+                ClientNoteList clientNoteList =allHomeData.getDataList().get(i).getClientNoteList().get(j);
+                clientNoteList.setBookingId(allHomeData.getDataList().get(i).getClientBookingId());
+                clientNoteLists.add(clientNoteList);
+            }
+        }
+        DatabaseInitializerHome.populateAsyncClientNoteList(AppDataBase.getAppDatabase(getApplication()), clientNoteLists);
+    }
+
+    private void getClientContactList(AllHomeData allHomeData) {
+        List<ClientContactList> clientNoteLists = new ArrayList<>();
+        for (int i = 0; i < allHomeData.getDataList().size(); i++) {
+            if (allHomeData.getDataList().get(i).getClientContactList() != null)
+            for (int j = 0; j < allHomeData.getDataList().get(i).getClientContactList().size() ; j++) {
+                ClientContactList clientNoteList =allHomeData.getDataList().get(i).getClientContactList().get(j);
+                clientNoteList.setBookingId(allHomeData.getDataList().get(i).getClientBookingId());
+                clientNoteLists.add(clientNoteList);
+            }
+        }
+        DatabaseInitializerHome.populateAsyncClientContactList(AppDataBase.getAppDatabase(getApplication()), clientNoteLists);
+    }
+
+    private void getClientDocumentList(AllHomeData allHomeData) {
+        List<ClientDocumentList> clientNoteLists = new ArrayList<>();
+        for (int i = 0; i < allHomeData.getDataList().size(); i++) {
+            if (allHomeData.getDataList().get(i).getClientDocumentList() != null)
+            for (int j = 0; j < allHomeData.getDataList().get(i).getClientDocumentList().size() ; j++) {
+                ClientDocumentList clientNoteList =allHomeData.getDataList().get(i).getClientDocumentList().get(j);
+                clientNoteList.setBookingId(allHomeData.getDataList().get(i).getClientBookingId());
+                clientNoteLists.add(clientNoteList);
+            }
+        }
+        DatabaseInitializerHome.populateAsyncClientDocumentList(AppDataBase.getAppDatabase(getApplication()), clientNoteLists);
+    }
+
+    private void getClientMedicalList(AllHomeData allHomeData) {
+        List<ClientMedicalForMobileList> clientNoteLists = new ArrayList<>();
+        for (int i = 0; i < allHomeData.getDataList().size(); i++) {
+            if (allHomeData.getDataList().get(i).getClientMedicalForMobileList() != null)
+            for (int j = 0; j < allHomeData.getDataList().get(i).getClientMedicalForMobileList().size() ; j++) {
+                ClientMedicalForMobileList clientNoteList =allHomeData.getDataList().get(i).getClientMedicalForMobileList().get(j);
+                clientNoteList.setBookingId(allHomeData.getDataList().get(i).getClientBookingId());
+                clientNoteLists.add(clientNoteList);
+            }
+        }
+        DatabaseInitializerHome.populateAsyncClientMedicalForMobileList(AppDataBase.getAppDatabase(getApplication()), clientNoteLists);
+    }
+
+    private void getClientDisabilitiesList(AllHomeData allHomeData) {
+        List<ClientDisabilityList> clientNoteLists = new ArrayList<>();
+        for (int i = 0; i < allHomeData.getDataList().size(); i++) {
+            if (allHomeData.getDataList().get(i).getClientDisabilityList() != null)
+            for (int j = 0; j < allHomeData.getDataList().get(i).getClientDisabilityList().size() ; j++) {
+                ClientDisabilityList clientNoteList =allHomeData.getDataList().get(i).getClientDisabilityList().get(j);
+                clientNoteList.setBookingId(allHomeData.getDataList().get(i).getClientBookingId());
+                clientNoteLists.add(clientNoteList);
+            }
+        }
+        DatabaseInitializerHome.populateAsyncClientDisabilityList(AppDataBase.getAppDatabase(getApplication()), clientNoteLists);
     }
 
     private void getClientBookingScreenModelData(AllHomeData data) {

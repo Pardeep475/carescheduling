@@ -22,6 +22,7 @@ import com.example.carescheduling.Ui.Common.Common;
 import com.example.carescheduling.Ui.Common.CommonBean;
 import com.example.carescheduling.Ui.HomeScreen.ViewModel.ClientContactsViewModel;
 import com.example.carescheduling.Ui.HomeScreen.adapter.ClientContactsAdapter;
+import com.example.carescheduling.Ui.HomeScreen.beans.ClientBookingScreenModel;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientContactsBean;
 import com.example.carescheduling.Ui.HomeScreen.presenter.BackPressedClick;
 import com.example.carescheduling.Utils.ConnectivityReceiver;
@@ -57,12 +58,14 @@ public class ClientContactsFragment extends BaseFragment implements Common {
             if (ConnectivityReceiver.isNetworkAvailable(getActivity())) {
                 setUpRecyclerView(view);
             } else {
-                setNoDataFound();
-                Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
+                getDataFromRoom();
+//                setNoDataFound();
+//                Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
-            setNoDataFound();
-            Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+            getDataFromRoom();
+//            setNoDataFound();
+//            Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
         }
 
 
@@ -80,6 +83,26 @@ public class ClientContactsFragment extends BaseFragment implements Common {
         clientContactsFragmentBinding.setCommonClick(this);
     }
 
+
+    private void getDataFromRoom() {
+
+        mViewModel.getDataFromLocal(getActivity(), getSessionManager().getBookingId()).observe(this, new Observer<ArrayList<ClientContactsBean>>() {
+            @Override
+            public void onChanged(ArrayList<ClientContactsBean> clientContactsBeans) {
+                if (clientContactsBeans != null && clientContactsBeans.size() > 0) {
+                    clientContactsFragmentBinding.rcvClientContacts.setLayoutManager(new LinearLayoutManager(getActivity()));
+                    ClientContactsAdapter clientContactsAdapter = new ClientContactsAdapter(getActivity(), clientContactsBeans);
+                    clientContactsFragmentBinding.rcvClientContacts.setAdapter(clientContactsAdapter);
+                    setDataOriginal();
+                } else {
+//                    getDataFromRoom();
+                    setNoDataFound();
+                }
+            }
+        });
+    }
+
+
     private void setUpRecyclerView(View view) {
         http:
 //mobile.rota.services/CssMobileRestfulService.svc/GetClientContacts///
@@ -94,7 +117,8 @@ public class ClientContactsFragment extends BaseFragment implements Common {
                     clientContactsFragmentBinding.rcvClientContacts.setAdapter(clientContactsAdapter);
                     setDataOriginal();
                 } else {
-                    setNoDataFound();
+                    getDataFromRoom();
+//                    setNoDataFound();
                 }
             }
         });

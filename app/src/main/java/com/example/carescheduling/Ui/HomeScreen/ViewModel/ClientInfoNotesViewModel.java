@@ -6,17 +6,23 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.carescheduling.Ui.Dashboard.beans.ClientNoteList;
+import com.example.carescheduling.Ui.HomeScreen.beans.ClientBookingScreenModel;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientCareNoteBean;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientNoteAdapterBean;
+import com.example.carescheduling.Ui.Profile.View.EditProfile;
+import com.example.carescheduling.data.Local.AppDataBase;
 import com.example.carescheduling.data.Network.ApiClient;
 import com.example.carescheduling.data.Network.ApiService;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -88,6 +94,39 @@ public class ClientInfoNotesViewModel extends AndroidViewModel {
                 noteAdapterBeans.add(clientNoteAdapterBean);
             }
         }
+        return noteAdapterBeans;
+    }
+    public LiveData<ArrayList<ClientNoteAdapterBean>> getDataFromLocal(Context activity, String bookingId){
+        final MutableLiveData<ArrayList<ClientNoteAdapterBean>> data = new MutableLiveData<>();
+        AppDataBase.getAppDatabase(getApplication()).homeDeo().getAllClientNoteList(bookingId).observe(((EditProfile) activity), new Observer<List<ClientNoteList>>() {
+            @Override
+            public void onChanged(List<ClientNoteList> clientNoteLists) {
+                if (clientNoteLists != null) {
+                    data.setValue(getClientAdapterBean(clientNoteLists));
+                }else{
+                    data.setValue(null);
+                }
+            }
+        });
+
+
+        return data;
+    }
+
+    private ArrayList<ClientNoteAdapterBean> getClientAdapterBean(List<ClientNoteList> clientCareNoteBean) {
+        ArrayList<ClientNoteAdapterBean> noteAdapterBeans = new ArrayList<>();
+
+            for (int i = 0; i < clientCareNoteBean.size(); i++) {
+                ClientNoteAdapterBean clientNoteAdapterBean = new ClientNoteAdapterBean();
+                clientNoteAdapterBean.setDate(checkIsNotNull(clientCareNoteBean.get(i).getDate()));
+                clientNoteAdapterBean.setDescription(checkIsNotNull(clientCareNoteBean.get(i).getFullNote()));
+                clientNoteAdapterBean.setShortDescription(checkIsNotNull(clientCareNoteBean.get(i).getTitle()));
+                clientNoteAdapterBean.setTitle(checkIsNotNull(clientCareNoteBean.get(i).getTitle()));
+                clientNoteAdapterBean.setWrittenBy(checkIsNotNull(clientCareNoteBean.get(i).getWrittenBy()));
+
+                noteAdapterBeans.add(clientNoteAdapterBean);
+            }
+
         return noteAdapterBeans;
     }
 

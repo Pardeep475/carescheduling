@@ -8,17 +8,23 @@ import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.carescheduling.Ui.Dashboard.beans.ClientMedicalForMobileList;
+import com.example.carescheduling.Ui.HomeScreen.beans.ClientBookingScreenModel;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientCareMedicalBean;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientMedicalBeanAdapter;
+import com.example.carescheduling.Ui.Profile.View.EditProfile;
+import com.example.carescheduling.data.Local.AppDataBase;
 import com.example.carescheduling.data.Network.ApiClient;
 import com.example.carescheduling.data.Network.ApiService;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -95,6 +101,42 @@ public class ClientInfoMedicalViewModel extends AndroidViewModel {
         return clientMedicalBeanAdapters;
     }
 
+    public LiveData<ArrayList<ClientMedicalBeanAdapter>> getDataFromLocal(Context activity, String bookingId){
+        final MutableLiveData<ArrayList<ClientMedicalBeanAdapter>> data = new MutableLiveData<>();
+
+        AppDataBase.getAppDatabase(getApplication()).homeDeo().getAllClientMedicalForMobileList(bookingId).observe(((EditProfile) activity), new Observer<List<ClientMedicalForMobileList>>() {
+            @Override
+            public void onChanged(List<ClientMedicalForMobileList> clientMedicalForMobileLists) {
+                if (clientMedicalForMobileLists != null) {
+                    data.setValue(getMedication(clientMedicalForMobileLists));
+                }else{
+                    data.setValue(null);
+                }
+            }
+        });
+
+
+        return data;
+    }
+
+    private ArrayList<ClientMedicalBeanAdapter> getMedication(List<ClientMedicalForMobileList> body) {
+        ArrayList<ClientMedicalBeanAdapter> clientMedicalBeanAdapters = new ArrayList<>();
+
+            for (int i = 0; i < body.size(); i++) {
+                ClientMedicalBeanAdapter clientMedicalBeanAdapter = new ClientMedicalBeanAdapter();
+                clientMedicalBeanAdapter.setDescription(
+                        checkIsNotNullWithOutNA(body.get(i).getDescription())
+                               /* + " pill in the " +
+                                checkIsNotNullWithOutNA(body.get(i).getClientMedicationFrequencyModel().getPeriod())*/);
+                clientMedicalBeanAdapter.setMedicationName(checkIsNotNull(body.get(i).getMedicalName()));
+                clientMedicalBeanAdapter.setMedicationQuantity(checkIsNotNullWithOutNA(body.get(i).getMedicationQuantity())
+                        /*+ checkIsNotNullWithOutNA(body.get(i).getClientMedicationFrequencyModel().getMedicationStrenghtUnitName())*/);
+                clientMedicalBeanAdapter.setDate(checkIsNotNullWithOutNA(body.get(i).getDate()));
+                clientMedicalBeanAdapters.add(clientMedicalBeanAdapter);
+            }
+
+        return clientMedicalBeanAdapters;
+    }
 
     private String checkIsNotNull(String value) {
         return value != null && !value.equalsIgnoreCase("") && !value.equalsIgnoreCase("null") ? value : "N/A";

@@ -5,17 +5,24 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.carescheduling.Ui.Dashboard.beans.ClientDisabilityList;
+import com.example.carescheduling.Ui.Dashboard.beans.ClientDocumentList;
+import com.example.carescheduling.Ui.HomeScreen.beans.ClientBookingScreenModel;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientCareDocumentBean;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientNoteAdapterBean;
+import com.example.carescheduling.Ui.Profile.View.EditProfile;
+import com.example.carescheduling.data.Local.AppDataBase;
 import com.example.carescheduling.data.Network.ApiClient;
 import com.example.carescheduling.data.Network.ApiService;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -87,6 +94,36 @@ public class ClientInfoDocumentsViewModel extends AndroidViewModel {
                 noteAdapterBeans.add(clientNoteAdapterBean);
             }
         }
+        return noteAdapterBeans;
+    }
+
+    public LiveData<ArrayList<ClientNoteAdapterBean>> getDataFromLocal(Context activity, String bookingId){
+        final MutableLiveData<ArrayList<ClientNoteAdapterBean>> data = new MutableLiveData<>();
+        AppDataBase.getAppDatabase(getApplication()).homeDeo().getAllClientDocumentList(bookingId).observe(((EditProfile) activity), new Observer<List<ClientDocumentList>>() {
+            @Override
+            public void onChanged(List<ClientDocumentList> clientDocumentLists) {
+                if (clientDocumentLists != null) {
+                    data.setValue(getClientAdapterBean(clientDocumentLists));
+                }else{
+                    data.setValue(null);
+                }
+            }
+        });
+        return data;
+    }
+    private ArrayList<ClientNoteAdapterBean> getClientAdapterBean(List<ClientDocumentList> clientCareNoteBean) {
+        ArrayList<ClientNoteAdapterBean> noteAdapterBeans = new ArrayList<>();
+
+            for (int i = 0; i < clientCareNoteBean.size(); i++) {
+                ClientNoteAdapterBean clientNoteAdapterBean = new ClientNoteAdapterBean();
+                clientNoteAdapterBean.setDate(checkIsNotNull(clientCareNoteBean.get(i).getDate()));
+//                clientNoteAdapterBean.setDescription(checkIsNotNull(clientCareNoteBean.get(i).getDocument().getDocumentFile()));
+//                clientNoteAdapterBean.setShortDescription(checkIsNotNull(clientCareNoteBean.get(i).getDocument().getDocumentTypeName()));
+                clientNoteAdapterBean.setTitle(checkIsNotNull(clientCareNoteBean.get(i).getDocumentTitle()));
+
+                noteAdapterBeans.add(clientNoteAdapterBean);
+            }
+
         return noteAdapterBeans;
     }
 

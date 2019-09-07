@@ -11,6 +11,8 @@ import android.widget.Toast;
 import com.example.carescheduling.Ui.Dashboard.beans.ClientSummary;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientBookingScreenModel;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientCareSummaryBean;
+import com.example.carescheduling.Ui.Profile.View.EditProfile;
+import com.example.carescheduling.data.Local.AppDataBase;
 import com.example.carescheduling.data.Network.ApiClient;
 import com.example.carescheduling.data.Network.ApiService;
 
@@ -20,6 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -87,6 +90,24 @@ public class ClientInfoSummaryViewModel extends AndroidViewModel {
 
         return clientBookingScreenModel;
     }
+
+    public LiveData<ClientBookingScreenModel> getDataFromLocal(Context activity,String bookingId){
+        final MutableLiveData<ClientBookingScreenModel> data = new MutableLiveData<>();
+        AppDataBase.getAppDatabase(getApplication()).homeDeo().getAllClientBookingScreenModel(bookingId)
+                .observe(((EditProfile) activity), new Observer<ClientBookingScreenModel>() {
+                    @Override
+                    public void onChanged(ClientBookingScreenModel profileInfo) {
+                        if (profileInfo != null) {
+                            data.setValue(profileInfo);
+                        }else{
+                            data.setValue(null);
+                        }
+                    }
+                });
+
+        return data;
+    }
+
 
     private String checkIsNotNull(String value) {
         return value != null && !value.equalsIgnoreCase("") && !value.equalsIgnoreCase("null") ? value : "N/A";

@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseFragment;
@@ -21,8 +22,10 @@ import com.example.carescheduling.Ui.Common.Common;
 import com.example.carescheduling.Ui.Common.CommonBean;
 import com.example.carescheduling.Ui.HomeScreen.ViewModel.ClientInfoMedicalViewModel;
 import com.example.carescheduling.Ui.HomeScreen.adapter.ClientInfoMedicationAdapter;
+import com.example.carescheduling.Ui.HomeScreen.beans.ClientBookingScreenModel;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientMedicalBeanAdapter;
 import com.example.carescheduling.Ui.HomeScreen.presenter.BackPressedClick;
+import com.example.carescheduling.Utils.ConnectivityReceiver;
 import com.example.carescheduling.databinding.ClientInfoMedicalFragmentBinding;
 
 import java.util.ArrayList;
@@ -52,10 +55,37 @@ public class ClientInfoMedical extends BaseFragment implements Common {
         mViewModel = ViewModelProviders.of(this).get(ClientInfoMedicalViewModel.class);
 //        setUpRecyclerView(view);
         setDataOriginal();
-        getClientTabletsInfo();
-
+        try {
+            if (ConnectivityReceiver.isNetworkAvailable(getActivity())) {
+                getClientTabletsInfo();
+            } else {
+                getDataFromRoom();
+            }
+        } catch (Exception e) {
+            getDataFromRoom();
+            hideDialog();
+            Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+        }
 
     }
+
+    private void getDataFromRoom() {
+        mViewModel.getDataFromLocal(getActivity(), getSessionManager().getBookingId()).observe(this,new Observer<ArrayList<ClientMedicalBeanAdapter>>() {
+            @Override
+            public void onChanged(ArrayList<ClientMedicalBeanAdapter> clientMedicalBeanAdapters) {
+                if (getActivity() != null && clientMedicalBeanAdapters != null && clientMedicalBeanAdapters.size() > 0) {
+                    clientInfoDocumentsFragmentBinding.rcvClientInfoMedication.setLayoutManager(new LinearLayoutManager(getActivity()));
+                    ClientInfoMedicationAdapter clientInfoMedicationAdapter = new ClientInfoMedicationAdapter(getActivity(), clientMedicalBeanAdapters);
+                    clientInfoDocumentsFragmentBinding.rcvClientInfoMedication.setAdapter(clientInfoMedicationAdapter);
+                    clientInfoDocumentsFragmentBinding.rcvClientInfoMedication.hideShimmerAdapter();
+                } else {
+                    setNoDataFound();
+                }
+
+            }
+        });
+    }
+
 
     private void setCommonData() {
         CommonBean commonBean = new CommonBean();
@@ -102,7 +132,7 @@ public class ClientInfoMedical extends BaseFragment implements Common {
                     clientInfoDocumentsFragmentBinding.rcvClientInfoMedication.setAdapter(clientInfoMedicationAdapter);
                     clientInfoDocumentsFragmentBinding.rcvClientInfoMedication.hideShimmerAdapter();
                 } else {
-                    setNoDataFound();
+                    getDataFromRoom();
                 }
 
             }
