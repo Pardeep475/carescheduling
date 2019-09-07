@@ -10,7 +10,7 @@
 
         <variable
             name="clientDisabilityBean"
-            type="com.example.carescheduling.Ui.HomeScreen.beans.ClientDisabilityBean.DataList" />
+            type="com.example.carescheduling.Ui.Dashboard.beans.ClientDisabilityList" />
 
         <variable
             name="pos"

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.carescheduling.Ui.Dashboard.beans.ClientDisabilityList;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientDisabilityBean;
 import com.example.carescheduling.data.Network.ApiClient;
 import com.example.carescheduling.data.Network.ApiService;
@@ -37,8 +38,8 @@ public class ClientDisabilitiesViewModel extends AndroidViewModel {
     }
 
 
-    public LiveData<ArrayList<ClientDisabilityBean.DataList>> getDisabilities(String customerId, String branchId, String clientId) {
-        final MutableLiveData<ArrayList<ClientDisabilityBean.DataList>> data = new MutableLiveData<>();
+    public LiveData<ArrayList<ClientDisabilityList>> getDisabilities(String customerId, String branchId, String clientId) {
+        final MutableLiveData<ArrayList<ClientDisabilityList>> data = new MutableLiveData<>();
         try {
 
             Disposable disposable = apiService.GetClientDisabilities(customerId,branchId,clientId)

@@ -1,6 +1,8 @@
 package com.example.carescheduling.Ui.HomeScreen.beans;
 
 import java.util.List;
+
+import com.example.carescheduling.Ui.Dashboard.beans.ClientNoteList;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -11,7 +13,7 @@ public class ClientCareNoteBean {
     private Object data;
     @SerializedName("DataList")
     @Expose
-    private List<DataList> dataList = null;
+    private List<ClientNoteList> dataList = null;
     @SerializedName("Exception")
     @Expose
     private Object exception;
@@ -30,11 +32,11 @@ public class ClientCareNoteBean {
         this.data = data;
     }
 
-    public List<DataList> getDataList() {
+    public List<ClientNoteList> getDataList() {
         return dataList;
     }
 
-    public void setDataList(List<DataList> dataList) {
+    public void setDataList(List<ClientNoteList> dataList) {
         this.dataList = dataList;
     }
 

@@ -309,6 +309,12 @@ public class DatabaseInitializer {
         db.profileDao().insertPersonPhoneList(user);
     }
 
+
+
+
+
+
+
 //       AddressAllData
 //    public static void populateAsyncAddressAllData(@NonNull final AppDataBase db, AddressAllData list) {
 //        PopulateDbAsyncAddressAllData task = new PopulateDbAsyncAddressAllData(db, list);

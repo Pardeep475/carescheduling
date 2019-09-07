@@ -8,8 +8,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.carescheduling.Ui.HomeScreen.beans.ClientCareContactsBean;
-import com.example.carescheduling.Ui.HomeScreen.beans.ClientContactsBean;
+import com.example.carescheduling.Ui.Dashboard.beans.ClientTaskList;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientTaskRetroBean;
 import com.example.carescheduling.Ui.HomeScreen.beans.Tasks;
 import com.example.carescheduling.data.Network.ApiClient;
@@ -78,7 +77,7 @@ public class ClientTasksViewModel extends AndroidViewModel {
         return data;
     }
 
-    private ArrayList<Tasks> getClientTasksArrayList(ArrayList<ClientTaskRetroBean.DataList> clientTasks) {
+    private ArrayList<Tasks> getClientTasksArrayList(ArrayList<ClientTaskList> clientTasks) {
         ArrayList<Tasks> tasksArrayList = new ArrayList<>();
         for (int i = 0; i < clientTasks.size(); i++) {
             Tasks tasks = new Tasks();

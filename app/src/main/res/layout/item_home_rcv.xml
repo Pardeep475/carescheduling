@@ -2,41 +2,15 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-
-        <variable
-            name="homeScreenOnClick"
-            type="com.example.carescheduling.Ui.Dashboard.presenter.HomeScreenOnClick" />
-<variable
-    name="pos"
-    type="int"/>
-        <variable
-            name="item"
-            type="String" />
-    </data>
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/ten_dp"
         android:layout_marginStart="@dimen/ten_dp"
+        android:layout_marginTop="@dimen/ten_dp"
         android:layout_marginEnd="@dimen/ten_dp"
         android:background="@drawable/start_profile_views_bg"
         android:onClick="@{(v)->homeScreenOnClick.OnClickHomeScreen(pos)}"
         android:paddingTop="@dimen/ten_dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/sixteen_dp"
-            android:layout_marginRight="@dimen/sixteen_dp"
-            android:padding="@dimen/sixteen_dp"
-            android:textSize="@dimen/eighteen_sp"
-            android:fontFamily="@font/rubik_light"
-            android:text="@{item}"
-            android:textColor="@color/white" />
 
         <ImageView
             android:id="@+id/img_next_arrow"
@@ -50,6 +24,34 @@
             android:tint="@color/white"
             app:srcCompat="@drawable/ic_right_arrow" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/sixteen_dp"
+            android:layout_marginRight="@dimen/sixteen_dp"
+            android:fontFamily="@font/rubik_light"
+            android:padding="@dimen/sixteen_dp"
+            android:text="@{item}"
+            android:textColor="@color/white"
+            android:textSize="@dimen/eighteen_sp" />
+
     </RelativeLayout>
+
+    <data>
+
+        <variable
+            name="homeScreenOnClick"
+            type="com.example.carescheduling.Ui.Dashboard.presenter.HomeScreenOnClick" />
+
+        <variable
+            name="pos"
+            type="int" />
+
+        <variable
+            name="item"
+            type="String" />
+    </data>
 </layout>
 

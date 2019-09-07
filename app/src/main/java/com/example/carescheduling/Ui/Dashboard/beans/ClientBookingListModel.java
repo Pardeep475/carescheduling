@@ -3,7 +3,8 @@ package com.example.carescheduling.Ui.Dashboard.beans;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ClientBookingListModel {
+public class
+ClientBookingListModel {
 
     @SerializedName("Data")
     @Expose

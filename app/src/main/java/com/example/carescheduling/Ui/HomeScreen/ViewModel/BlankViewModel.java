@@ -1,6 +1,7 @@
 package com.example.carescheduling.Ui.HomeScreen.ViewModel;
 
 import android.app.Application;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
@@ -11,6 +12,10 @@ import com.example.carescheduling.Ui.Dashboard.beans.ClientBookingListModel;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientBookingScreenModel;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientCarePlan;
 import com.example.carescheduling.Ui.HomeScreen.beans.Tasks;
+import com.example.carescheduling.Ui.Profile.View.EditProfile;
+import com.example.carescheduling.Ui.Profile.bean.EditProfileInfoBean;
+import com.example.carescheduling.data.Local.AppDataBase;
+import com.example.carescheduling.data.Local.DatabaseTable.ProfileInfo;
 import com.example.carescheduling.data.Local.SessionManager;
 import com.example.carescheduling.data.Network.ApiClient;
 import com.example.carescheduling.data.Network.ApiService;
@@ -21,6 +26,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -73,6 +79,24 @@ public class BlankViewModel extends AndroidViewModel {
         return data;
     }
 
+
+    public LiveData<ClientBookingScreenModel> getDataFromLocal(Context activity,String bookingId){
+        final MutableLiveData<ClientBookingScreenModel> data = new MutableLiveData<>();
+        AppDataBase.getAppDatabase(getApplication()).homeDeo().getAllClientBookingScreenModel(bookingId)
+                .observe(((EditProfile) activity), new Observer<ClientBookingScreenModel>() {
+            @Override
+            public void onChanged(ClientBookingScreenModel profileInfo) {
+                if (profileInfo != null) {
+                    data.setValue(profileInfo);
+                }else{
+                    data.setValue(null);
+                }
+            }
+        });
+
+        return data;
+    }
+
     private ClientBookingScreenModel getClientData(ClientBookingListModel.Data data) {
         SessionManager sessionManager = new SessionManager(getApplication());
         if (!checkIsNotNull(data.getClientPersonId()).equalsIgnoreCase("N/A"))
@@ -81,8 +105,8 @@ public class BlankViewModel extends AndroidViewModel {
         clientBookingScreenModel.setName(checkIsNotNull(data.getClientName()));
         clientBookingScreenModel.setDate(checkIsNotNull(data.getBookingStartTime()) + " " + checkIsNotNull(data.getBookingDate()));
         clientBookingScreenModel.setTime(checkIsNotNull(data.getBookingStartTime()) + " - " + checkIsNotNull(data.getBookingEndTime()));
-        if (!checkIsNotNull(data.getImageHexString()).equalsIgnoreCase("N/A"))
-            clientBookingScreenModel.setImage(ImageFromBase64(data.getImageHexString()));
+//        if (!checkIsNotNull(data.getImageHexString()).equalsIgnoreCase("N/A"))
+//            clientBookingScreenModel.setImage(ImageFromBase64(data.getImageHexString()));
         clientBookingScreenModel.setAddress(checkIsNotNull(data.getPersonAddress()));
         clientBookingScreenModel.setTelephone(checkIsNotNull(data.getClientPhoneNumber()));
         clientBookingScreenModel.setBookingId(checkIsNotNull(data.getClientBookingId()));

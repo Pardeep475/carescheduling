@@ -4,38 +4,11 @@
     xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-        <variable
-            name="commonData"
-            type="com.example.carescheduling.Ui.Common.CommonBean" />
-
-        <variable
-            name="commonClick"
-            type="com.example.carescheduling.Ui.Common.Common" />
-
-
-        <variable
-            name="myNextVisitClick"
-            type="com.example.carescheduling.Ui.HomeScreen.presenter.MyNextVisitClick" />
-
-        <variable
-            name="clientBookingScreenModel"
-            type="com.example.carescheduling.Ui.HomeScreen.beans.ClientBookingScreenModel" />
-    </data>
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
         tools:context=".Ui.HomeScreen.View.BlankFragment">
-
-        <include
-            android:id="@+id/rl_tool"
-            layout="@layout/toolbar_layout"
-            bind:commonClick="@{commonClick}"
-            bind:commonData="@{commonData}" />
-
 
         <ScrollView
             android:id="@+id/s_blank"
@@ -52,6 +25,83 @@
                 android:layout_marginEnd="@dimen/sixteen_dp"
                 android:layout_marginBottom="@dimen/sixteen_dp">
 
+                <Button
+                    android:id="@+id/btn_more_client_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txt_telephone"
+                    android:layout_marginTop="@dimen/fifty_dp"
+                    android:background="@color/blue"
+                    android:fontFamily="@font/rubik_medium"
+                    android:onClick="@{(v)->myNextVisitClick.moreClientInfoClick()}"
+                    android:text="@string/more_info_client"
+                    android:textColor="@color/white" />
+
+                <Button
+                    android:id="@+id/btn_today_client_task"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/btn_more_client_info"
+                    android:layout_marginTop="@dimen/five_dp"
+                    android:background="@color/blue"
+                    android:fontFamily="@font/rubik_medium"
+                    android:onClick="@{(v)-> myNextVisitClick.ClientTask()}"
+                    android:text="@string/todays_client_task"
+                    android:textColor="@color/white" />
+
+                <Button
+                    android:id="@+id/btn_need_direction"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/btns_layout"
+                    android:layout_marginTop="@dimen/five_dp"
+                    android:background="@color/blue"
+                    android:fontFamily="@font/rubik_medium"
+                    android:text="@string/need_direction"
+                    android:textColor="@color/white" />
+
+                <ImageView
+                    android:id="@+id/img_visit_person"
+                    android:layout_width="@dimen/eighty_dp"
+                    android:layout_height="@dimen/eighty_dp"
+                    android:layout_alignParentEnd="true"
+                    android:contentDescription="@string/user_profile"
+
+                    app:srcCompat="@drawable/user_placeholder" />
+
+
+                <LinearLayout
+                    android:id="@+id/btns_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/btn_today_client_task"
+                    android:layout_marginTop="@dimen/five_dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btn_barcode"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/five_dp"
+                        android:layout_weight="1"
+                        android:background="@color/blue"
+                        android:fontFamily="@font/rubik_medium"
+                        android:onClick="@{(v)->myNextVisitClick.BarcodeClick()}"
+                        android:text="@string/barcode"
+                        android:textColor="@color/white" />
+
+                    <Button
+                        android:id="@+id/btn_read_nfc"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/blue"
+                        android:fontFamily="@font/rubik_medium"
+                        android:onClick="@{(v)->myNextVisitClick.NfcClick()}"
+                        android:text="@string/read_nfc"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+                <!--app:setImage="@{clientBookingScreenModel.image}"-->
                 <TextView
                     android:id="@+id/edt_visit_person_name"
                     android:layout_width="wrap_content"
@@ -71,6 +121,7 @@
                     android:text="@{clientBookingScreenModel.date}"
                     android:textColor="@color/red"
                     android:textSize="@dimen/forteen_sp" />
+
 
                 <TextView
                     android:id="@+id/txt_visit_person_timing"
@@ -95,16 +146,6 @@
                     android:text="@{clientBookingScreenModel.time}"
                     android:textColor="@color/black"
                     android:textSize="@dimen/forteen_sp" />
-
-
-                <ImageView
-                    android:id="@+id/img_visit_person"
-                    android:layout_width="@dimen/eighty_dp"
-                    android:layout_height="@dimen/eighty_dp"
-                    android:layout_alignParentEnd="true"
-                    android:contentDescription="@string/user_profile"
-                    app:setImage="@{clientBookingScreenModel.image}"
-                    app:srcCompat="@drawable/user_placeholder" />
 
                 <TextView
                     android:id="@+id/txt_running_late"
@@ -138,7 +179,6 @@
                     android:textSize="@dimen/forteen_sp"
                     android:visibility="gone" />
 
-
                 <TextView
                     android:id="@+id/txt_next_upcoming_visit"
                     android:layout_width="wrap_content"
@@ -160,6 +200,7 @@
                     android:text="@{clientBookingScreenModel.name}"
                     android:textColor="@color/black"
                     android:textSize="@dimen/forteen_sp" />
+
 
                 <TextView
                     android:id="@+id/txt_person_address"
@@ -206,77 +247,24 @@
                     android:textSize="@dimen/forteen_sp" />
 
 
-                <Button
-                    android:id="@+id/btn_more_client_info"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/txt_telephone"
-                    android:layout_marginTop="@dimen/fifty_dp"
-                    android:background="@color/blue"
-                    android:fontFamily="@font/rubik_medium"
-                    android:onClick="@{(v)->myNextVisitClick.moreClientInfoClick()}"
-                    android:text="@string/more_info_client"
-                    android:textColor="@color/white" />
-
-                <Button
-                    android:id="@+id/btn_today_client_task"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/btn_more_client_info"
-                    android:layout_marginTop="@dimen/five_dp"
-                    android:background="@color/blue"
-                    android:fontFamily="@font/rubik_medium"
-                    android:onClick="@{(v)-> myNextVisitClick.ClientTask()}"
-                    android:text="@string/todays_client_task"
-                    android:textColor="@color/white" />
-
-                <LinearLayout
-                    android:id="@+id/btns_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/btn_today_client_task"
-                    android:layout_marginTop="@dimen/five_dp"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/btn_barcode"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/five_dp"
-                        android:layout_weight="1"
-                        android:onClick="@{(v)->myNextVisitClick.BarcodeClick()}"
-                        android:background="@color/blue"
-                        android:fontFamily="@font/rubik_medium"
-                        android:text="@string/barcode"
-                        android:textColor="@color/white" />
-
-                    <Button
-                        android:id="@+id/btn_read_nfc"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@color/blue"
-                        android:onClick="@{(v)->myNextVisitClick.NfcClick()}"
-                        android:fontFamily="@font/rubik_medium"
-                        android:text="@string/read_nfc"
-                        android:textColor="@color/white" />
-                </LinearLayout>
-
-                <Button
-                    android:id="@+id/btn_need_direction"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/btns_layout"
-                    android:layout_marginTop="@dimen/five_dp"
-                    android:background="@color/blue"
-                    android:fontFamily="@font/rubik_medium"
-                    android:text="@string/need_direction"
-                    android:textColor="@color/white" />
-
-
             </RelativeLayout>
 
         </ScrollView>
+
+
+        <include
+            android:id="@+id/rl_tool"
+            layout="@layout/toolbar_layout"
+            bind:commonClick="@{commonClick}"
+            bind:commonData="@{commonData}" />
+
+        <include
+            android:id="@+id/rl_no_data_found"
+            layout="@layout/no_data_found"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/rl_tool"
+            android:visibility="gone" />
 
         <io.supercharge.shimmerlayout.ShimmerLayout
             android:id="@+id/sl_demo"
@@ -290,13 +278,25 @@
 
         </io.supercharge.shimmerlayout.ShimmerLayout>
 
-        <include
-            android:id="@+id/rl_no_data_found"
-            layout="@layout/no_data_found"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/rl_tool"
-            android:visibility="gone" />
-
     </RelativeLayout>
+
+    <data>
+
+        <variable
+            name="commonData"
+            type="com.example.carescheduling.Ui.Common.CommonBean" />
+
+        <variable
+            name="commonClick"
+            type="com.example.carescheduling.Ui.Common.Common" />
+
+
+        <variable
+            name="myNextVisitClick"
+            type="com.example.carescheduling.Ui.HomeScreen.presenter.MyNextVisitClick" />
+
+        <variable
+            name="clientBookingScreenModel"
+            type="com.example.carescheduling.Ui.HomeScreen.beans.ClientBookingScreenModel" />
+    </data>
 </layout>

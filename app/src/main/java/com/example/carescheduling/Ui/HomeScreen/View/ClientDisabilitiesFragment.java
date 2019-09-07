@@ -10,6 +10,7 @@ import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseFragment;
 import com.example.carescheduling.Ui.Common.Common;
 import com.example.carescheduling.Ui.Common.CommonBean;
+import com.example.carescheduling.Ui.Dashboard.beans.ClientDisabilityList;
 import com.example.carescheduling.Ui.HomeScreen.ViewModel.ClientDisabilitiesViewModel;
 import com.example.carescheduling.Ui.HomeScreen.adapter.ClientDisabilitiesAdapter;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientDisabilityBean;
@@ -81,9 +82,9 @@ public class ClientDisabilitiesFragment extends BaseFragment implements Common {
         clientDisabilitiesViewModel.getDisabilities(getSessionManager().getCustomerId(),
                 getSessionManager().getBranchId(),
                 getSessionManager().getClientId()).observe(this
-                , new Observer<ArrayList<ClientDisabilityBean.DataList>>() {
+                , new Observer<ArrayList<ClientDisabilityList>>() {
                     @Override
-                    public void onChanged(ArrayList<ClientDisabilityBean.DataList> data) {
+                    public void onChanged(ArrayList<ClientDisabilityList> data) {
                         if (data != null && data.size() > 0) {
                             clientInfoDisabilitiesFragmentBinding.disabilitiesRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
                             ClientDisabilitiesAdapter clientDisabilitiesAdapter = new ClientDisabilitiesAdapter(getActivity(), data);

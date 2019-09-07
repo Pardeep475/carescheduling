@@ -1,5 +1,6 @@
 package com.example.carescheduling.Ui.HomeScreen.beans;
 
+import com.example.carescheduling.Ui.Dashboard.beans.PersonDetail;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -7,7 +8,7 @@ public class ClientCarePersonalDetailsBean {
 
     @SerializedName("Data")
     @Expose
-    private Data data;
+    private PersonDetail data;
     @SerializedName("DataList")
     @Expose
     private Object dataList;
@@ -21,11 +22,11 @@ public class ClientCarePersonalDetailsBean {
     @Expose
     private Boolean success;
 
-    public Data getData() {
+    public PersonDetail getData() {
         return data;
     }
 
-    public void setData(Data data) {
+    public void setData(PersonDetail data) {
         this.data = data;
     }
 

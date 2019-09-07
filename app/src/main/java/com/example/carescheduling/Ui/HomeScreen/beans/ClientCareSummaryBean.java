@@ -1,5 +1,6 @@
 package com.example.carescheduling.Ui.HomeScreen.beans;
 
+import com.example.carescheduling.Ui.Dashboard.beans.ClientSummary;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -7,7 +8,7 @@ public class ClientCareSummaryBean {
 
     @SerializedName("Data")
     @Expose
-    private Data data;
+    private ClientSummary data;
     @SerializedName("DataList")
     @Expose
     private Object dataList;
@@ -21,11 +22,11 @@ public class ClientCareSummaryBean {
     @Expose
     private Boolean success;
 
-    public Data getData() {
+    public ClientSummary getData() {
         return data;
     }
 
-    public void setData(Data data) {
+    public void setData(ClientSummary data) {
         this.data = data;
     }
 
@@ -59,64 +60,5 @@ public class ClientCareSummaryBean {
 
     public void setSuccess(Boolean success) {
         this.success = success;
-    }
-    public class Data {
-
-        @SerializedName("ClientAddress")
-        @Expose
-        private String clientAddress;
-        @SerializedName("ClientDescription")
-        @Expose
-        private String clientDescription;
-        @SerializedName("ClientId")
-        @Expose
-        private String clientId;
-        @SerializedName("ClientImage")
-        @Expose
-        private String clientImage;
-        @SerializedName("ClientName")
-        @Expose
-        private String clientName;
-
-        public String getClientAddress() {
-            return clientAddress;
-        }
-
-        public void setClientAddress(String clientAddress) {
-            this.clientAddress = clientAddress;
-        }
-
-        public String getClientDescription() {
-            return clientDescription;
-        }
-
-        public void setClientDescription(String clientDescription) {
-            this.clientDescription = clientDescription;
-        }
-
-        public String getClientId() {
-            return clientId;
-        }
-
-        public void setClientId(String clientId) {
-            this.clientId = clientId;
-        }
-
-        public String getClientImage() {
-            return clientImage;
-        }
-
-        public void setClientImage(String clientImage) {
-            this.clientImage = clientImage;
-        }
-
-        public String getClientName() {
-            return clientName;
-        }
-
-        public void setClientName(String clientName) {
-            this.clientName = clientName;
-        }
-
     }
 }

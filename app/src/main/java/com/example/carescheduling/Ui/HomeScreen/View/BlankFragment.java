@@ -146,19 +146,40 @@ public class BlankFragment extends BaseFragment implements Common, MyNextVisitCl
                                 blankFragmentBinding.setClientBookingScreenModel(clientBookingListModel);
                                 setDataOriginal();
                             } else {
-                                setNoDataFound();
+//                                setNoDataFound();
+
+                                getDataFromRoom();
                             }
 
                         }
                     });
                 } catch (Exception e) {
                     hideDialog();
+                    getDataFromRoom();
                     Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
                 }
             } else {
-                Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
+                getDataFromRoom();
             }
         }
+    }
+
+    private void getDataFromRoom() {
+        mViewModel.getDataFromLocal(getActivity(), getSessionManager().getBookingId()).observe(this, new Observer<ClientBookingScreenModel>() {
+            @Override
+            public void onChanged(ClientBookingScreenModel clientBookingScreenModel) {
+                if (clientBookingScreenModel != null) {
+                    clientBookingModel = clientBookingScreenModel;
+                    getSessionManager().setBookingId(clientBookingModel.getBookingId());
+                    blankFragmentBinding.setClientBookingScreenModel(clientBookingScreenModel);
+                    setDataOriginal();
+                } else {
+                    Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
+                    setNoDataFound();
+                }
+            }
+        });
     }
 
 

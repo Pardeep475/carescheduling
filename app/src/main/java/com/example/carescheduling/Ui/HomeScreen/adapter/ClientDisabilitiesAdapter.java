@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.carescheduling.R;
+import com.example.carescheduling.Ui.Dashboard.beans.ClientDisabilityList;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientDisabilityBean;
 import com.example.carescheduling.Ui.HomeScreen.presenter.MoreInfoClick;
 import com.example.carescheduling.databinding.ItemsClientInfoDisabilitiesBinding;
@@ -19,9 +20,9 @@ import androidx.recyclerview.widget.RecyclerView;
 public class ClientDisabilitiesAdapter extends RecyclerView.Adapter<ClientDisabilitiesAdapter.MyViewHolder> implements MoreInfoClick {
     private Context context;
     private ItemsClientInfoDisabilitiesBinding itemsClientInfoDisabilitiesBinding;
-    private ArrayList<ClientDisabilityBean.DataList> dataList;
+    private ArrayList<ClientDisabilityList> dataList;
 
-    public ClientDisabilitiesAdapter(Context context, ArrayList<ClientDisabilityBean.DataList> dataList) {
+    public ClientDisabilitiesAdapter(Context context, ArrayList<ClientDisabilityList> dataList) {
         this.context = context;
         this.dataList = dataList;
     }

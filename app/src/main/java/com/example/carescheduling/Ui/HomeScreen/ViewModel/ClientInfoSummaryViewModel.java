@@ -8,6 +8,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.carescheduling.Ui.Dashboard.beans.ClientSummary;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientBookingScreenModel;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientCareSummaryBean;
 import com.example.carescheduling.data.Network.ApiClient;
@@ -76,11 +77,11 @@ public class ClientInfoSummaryViewModel extends AndroidViewModel {
         return data;
     }
 
-    private ClientBookingScreenModel getClientInfo(ClientCareSummaryBean.Data data) {
+    private ClientBookingScreenModel getClientInfo(ClientSummary data) {
         ClientBookingScreenModel clientBookingScreenModel = new ClientBookingScreenModel();
         clientBookingScreenModel.setName(checkIsNotNull(data.getClientName()));
-         if (!checkIsNotNull(data.getClientImage()).equalsIgnoreCase("N/A"))
-            clientBookingScreenModel.setImage(ImageFromBase64(data.getClientImage()));
+//         if (!checkIsNotNull(data.getClientImage()).equalsIgnoreCase("N/A"))
+//            clientBookingScreenModel.setImage(ImageFromBase64(data.getClientImage()));
         clientBookingScreenModel.setAddress(checkIsNotNull(data.getClientAddress()));
         clientBookingScreenModel.setDiscreption(checkIsNotNull(data.getClientDescription()));
 

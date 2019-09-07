@@ -88,9 +88,9 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="@dimen/ten_dp"
                     android:contentDescription="@string/user_profile"
-                    app:setImage="@{clientBookingScreenModel.image}"
-                    app:srcCompat="@drawable/user_placeholder" />
 
+                    app:srcCompat="@drawable/user_placeholder" />
+<!-- app:setImage="@{clientBookingScreenModel.image}"-->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

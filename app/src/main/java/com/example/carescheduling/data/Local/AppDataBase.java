@@ -2,9 +2,18 @@ package com.example.carescheduling.data.Local;
 
 import android.content.Context;
 
+import com.example.carescheduling.Ui.Dashboard.beans.ClientContactList;
+import com.example.carescheduling.Ui.Dashboard.beans.ClientDisabilityList;
+import com.example.carescheduling.Ui.Dashboard.beans.ClientDocumentList;
+import com.example.carescheduling.Ui.Dashboard.beans.ClientMedicalForMobileList;
+import com.example.carescheduling.Ui.Dashboard.beans.ClientNoteList;
+import com.example.carescheduling.Ui.Dashboard.beans.ClientSummary;
+import com.example.carescheduling.Ui.Dashboard.beans.ClientTaskList;
+import com.example.carescheduling.Ui.HomeScreen.beans.ClientBookingScreenModel;
 import com.example.carescheduling.Ui.Profile.bean.ImageDataBean;
 import com.example.carescheduling.Ui.Profile.bean.PersonEmailList;
 import com.example.carescheduling.Ui.Profile.bean.PersonPhoneList;
+import com.example.carescheduling.data.Local.DatabaseDao.HomeDeo;
 import com.example.carescheduling.data.Local.DatabaseDao.ProfileDao;
 import com.example.carescheduling.data.Local.DatabaseTable.AddressType;
 import com.example.carescheduling.data.Local.DatabaseTable.CountryCode;
@@ -34,12 +43,16 @@ import androidx.room.RoomDatabase;
         , Nationality.class, Prefix.class, Religion.class, DisabilityType.class, SexualityType.class
         , CountryCode.class, PhoneType.class, AddressType.class, EmailType.class, ProfileMainData.class
         , UserInfo.class, PersonEmailList.class, PersonPhoneList.class, ProfileInfo.class, PersonAllAddressEntity.class
-        , ImageDataBean.class}, version = 2, exportSchema = false)
+        , ImageDataBean.class, ClientContactList.class, ClientDisabilityList.class, ClientDocumentList.class
+        , ClientMedicalForMobileList.class, ClientNoteList.class, ClientSummary.class, ClientTaskList.class
+        , ClientBookingScreenModel.class}
+        , version = 3, exportSchema = false)
 public abstract class AppDataBase extends RoomDatabase {
 
     private static AppDataBase INSTANCE;
 
     public abstract ProfileDao profileDao();
+    public abstract HomeDeo homeDeo();
 
     public static AppDataBase getAppDatabase(Context context) {
         if (INSTANCE == null) {

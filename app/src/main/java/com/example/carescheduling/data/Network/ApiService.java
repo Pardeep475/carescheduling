@@ -1,5 +1,6 @@
 package com.example.carescheduling.data.Network;
 
+import com.example.carescheduling.Ui.Dashboard.beans.AllHomeData;
 import com.example.carescheduling.Ui.Dashboard.beans.ClientBookingListModel;
 import com.example.carescheduling.Ui.Dashboard.beans.EditMyProfile;
 import com.example.carescheduling.Ui.Dashboard.beans.GetMyProfileHome;
@@ -38,7 +39,6 @@ import com.example.carescheduling.Ui.Profile.bean.EditUserWithoutUserNameRetro;
 import com.example.carescheduling.Ui.Profile.bean.GetMyPicturesEditBeanRetro;
 import com.example.carescheduling.Ui.Profile.bean.GetMyProfileEdit;
 import com.example.carescheduling.Ui.Profile.bean.PersonAddress;
-import com.example.carescheduling.Ui.Profile.bean.PersonAddressList;
 import com.example.carescheduling.Ui.Profile.bean.PersonEmailList;
 import com.example.carescheduling.Ui.Profile.bean.PersonPhoneList;
 import com.example.carescheduling.Ui.Profile.bean.ProfileAllData;
@@ -69,6 +69,12 @@ public interface ApiService {
 
     @GET("GetProfileImage/{person_id}/{branch_id}/{customer_id}/Small")
     Observable<Response<ProfileImageRetro>> getProfileImages(@Path("person_id") String PersonId, @Path("customer_id") String CustomerId, @Path("branch_id") String BranchId);
+
+    @GET("GetHomeAllData/{person_id}/{customerId}/{branch_id}")
+    Observable<Response<AllHomeData>> GetAllHomeData(
+            @Path("person_id") String PersonId,
+            @Path("customerId") String customerId,
+            @Path("branch_id") String BranchId);
 
 
     @GET("GetCustomerWithoutAddressByCustomerId/{customer_id}")

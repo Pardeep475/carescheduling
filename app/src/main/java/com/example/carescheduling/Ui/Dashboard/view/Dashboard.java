@@ -83,12 +83,14 @@ public class Dashboard extends BaseActivity {
         setFragment(SettingF.newInstance());
 
         getDefaultData();
-
+        setUpAllHomeData();
     }
 
     //                android:text="Monday 14 of July 2016 02:34"
 
-
+    private void setUpAllHomeData() {
+        dashboardViewModel.GetAllHomeDataApi(getSessionManager().getPersonId(), getSessionManager().getCustomerId(), getSessionManager().getBranchId());
+    }
 
     private void getDefaultData() {
         if (ConnectivityReceiver.isNetworkAvailable(this)) {
