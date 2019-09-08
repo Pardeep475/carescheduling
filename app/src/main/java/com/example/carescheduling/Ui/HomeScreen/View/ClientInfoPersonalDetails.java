@@ -66,20 +66,19 @@ public class ClientInfoPersonalDetails extends BaseFragment implements Common {
     }
 
     private void getDataFromRoom() {
-      /*  mViewModel.getDataFromLocal(getActivity(), getSessionManager().getBookingId()).observe(this, new Observer<ClientBookingScreenModel>() {
+        mViewModel.getDataFromLocal(getActivity(), getSessionManager().getBookingId()).observe(this, new Observer<EditProfileInfoBean>() {
             @Override
-            public void onChanged(ClientBookingScreenModel clientBookingScreenModel) {
-                if (clientBookingScreenModel != null) {
-                    clientBookingModel = clientBookingScreenModel;
-                    getSessionManager().setBookingId(clientBookingModel.getBookingId());
-                    blankFragmentBinding.setClientBookingScreenModel(clientBookingScreenModel);
+            public void onChanged(EditProfileInfoBean editProfileInfoBean) {
+                if (editProfileInfoBean != null) {
+                    clientInfoPersonalDetailsFragmentBinding.setEditProfileInfoBean(editProfileInfoBean);
                     setDataOriginal();
                 } else {
-                    Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
                     setNoDataFound();
+//                    getDataFromRoom();
                 }
+                clientInfoPersonalDetailsFragmentBinding.slDemo.stopShimmerAnimation();
             }
-        });*/
+        });
     }
 
 

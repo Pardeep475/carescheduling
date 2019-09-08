@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.carescheduling.Ui.Dashboard.beans.PersonDetail;
 import com.example.carescheduling.Ui.HomeScreen.View.ClientInfoPersonalDetails;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientBookingScreenModel;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientCarePersonalDetailsBean;
@@ -113,22 +114,48 @@ public class ClientInfoPersonalDetailsViewModel extends AndroidViewModel {
         return editProfileInfoBean;
     }
 
-//    public LiveData<ClientBookingScreenModel> getDataFromLocal(Context activity, String bookingId){
-//        final MutableLiveData<ClientBookingScreenModel> data = new MutableLiveData<>();
-//        AppDataBase.getAppDatabase(getApplication()).homeDeo().getAll(bookingId)
-//                .observe(((EditProfile) activity), new Observer<ClientBookingScreenModel>() {
-//                    @Override
-//                    public void onChanged(ClientBookingScreenModel profileInfo) {
-//                        if (profileInfo != null) {
-//                            data.setValue(profileInfo);
-//                        }else{
-//                            data.setValue(null);
-//                        }
-//                    }
-//                });
-//
-//        return data;
-//    }
+    public LiveData<EditProfileInfoBean> getDataFromLocal(Context activity, String bookingId){
+        final MutableLiveData<EditProfileInfoBean> data = new MutableLiveData<>();
+        AppDataBase.getAppDatabase(getApplication()).homeDeo().getAllPersonDetail(bookingId).observe(((EditProfile) activity), new Observer<PersonDetail>() {
+            @Override
+            public void onChanged(PersonDetail personDetail) {
+                if (personDetail != null) {
+                    data.setValue(getProfileData(personDetail));
+                }else{
+                    data.setValue(null);
+                }
+            }
+        });
+
+        return data;
+    }
+
+    private EditProfileInfoBean getProfileData(PersonDetail clientCarePersonalDetailsBean) {
+        EditProfileInfoBean editProfileInfoBean = new EditProfileInfoBean();
+            editProfileInfoBean.setFirstName(checkIsNotNull(clientCarePersonalDetailsBean.getFirstName()));
+            editProfileInfoBean.setMiddleName(checkIsNotNull((String) clientCarePersonalDetailsBean.getMiddleName()));
+            editProfileInfoBean.setMaidenName(checkIsNotNull((String) clientCarePersonalDetailsBean.getMaidenName()));
+            editProfileInfoBean.setSurName(checkIsNotNull(clientCarePersonalDetailsBean.getSurname()));
+            editProfileInfoBean.setDateOfBirth(checkIsNotNull(clientCarePersonalDetailsBean.getDateOfBirth()));
+            editProfileInfoBean.setGender(checkIsNotNull(clientCarePersonalDetailsBean.getGenderTypeName()));
+            editProfileInfoBean.setPrefix(checkIsNotNull(clientCarePersonalDetailsBean.getPrefixTypeName()));
+            editProfileInfoBean.setLanguage(checkIsNotNull(clientCarePersonalDetailsBean.getLanguageName()));
+            editProfileInfoBean.setNationality(checkIsNotNull(clientCarePersonalDetailsBean.getNationality()));
+
+
+// marital status
+            editProfileInfoBean.setMaritalStatus(checkIsNotNull(clientCarePersonalDetailsBean.getMaritialStatus()));
+            // ethnicity
+            editProfileInfoBean.setEthnicity(checkIsNotNull(clientCarePersonalDetailsBean.getEthnicity()));
+            // disability
+            editProfileInfoBean.setDisability(false);
+            editProfileInfoBean.setDisabaility(checkIsNotNull(clientCarePersonalDetailsBean.getDisability()));
+// religion
+            editProfileInfoBean.setReligion(checkIsNotNull(clientCarePersonalDetailsBean.getReligion()));
+            editProfileInfoBean.setSexuality(checkIsNotNull(clientCarePersonalDetailsBean.getSexuality()));
+
+        return editProfileInfoBean;
+    }
 
 
     private String checkIsNotNull(String value) {

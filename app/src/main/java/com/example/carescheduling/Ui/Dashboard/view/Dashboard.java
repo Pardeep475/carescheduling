@@ -52,6 +52,7 @@ public class Dashboard extends BaseActivity {
     private ActivityDashboardBinding activityDashboardBinding;
     private DashboardViewModel dashboardViewModel;
     private SessionManager sessionManager;
+    private boolean isDefaultData, isHomeData;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -81,7 +82,7 @@ public class Dashboard extends BaseActivity {
         dashboardViewModel = ViewModelProviders.of(this).get(DashboardViewModel.class);
         activityDashboardBinding.navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         setFragment(SettingF.newInstance());
-
+        showDialog();
         getDefaultData();
         setUpAllHomeData();
     }
@@ -89,29 +90,52 @@ public class Dashboard extends BaseActivity {
     //                android:text="Monday 14 of July 2016 02:34"
 
     private void setUpAllHomeData() {
-        dashboardViewModel.GetAllHomeDataApi(getSessionManager().getPersonId(), getSessionManager().getCustomerId(), getSessionManager().getBranchId());
+        if (ConnectivityReceiver.isNetworkAvailable(this)) {
+            try {
+                dashboardViewModel.GetAllHomeDataApi(getSessionManager().getPersonId(), getSessionManager().getCustomerId(), getSessionManager().getBranchId()).observe(this, new Observer<Boolean>() {
+                    @Override
+                    public void onChanged(Boolean aBoolean) {
+                        isHomeData = true;
+                        if (isDefaultData && isHomeData)
+                            hideDialog();
+                    }
+                });
+            }catch (Exception e) {
+
+                isHomeData = true;
+                if (isDefaultData && isHomeData)
+                    hideDialog();
+                Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            hideDialog();
+            Toast.makeText(this, "please check your internet connection", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void getDefaultData() {
         if (ConnectivityReceiver.isNetworkAvailable(this)) {
             try {
                 LiveData<EditMyProfile> editMyProfileLiveData = dashboardViewModel.getEditMyProfileData(sessionManager.getCustomerId());
-
-                showDialog();
                 editMyProfileLiveData.observe(this, new Observer<EditMyProfile>() {
                     @Override
                     public void onChanged(EditMyProfile editMyProfile) {
-                        hideDialog();
+                        isDefaultData = true;
+                        if (isDefaultData && isHomeData)
+                            hideDialog();
                         if (editMyProfile != null) {
                             parseData(editMyProfile);
                         }
                     }
                 });
             } catch (Exception e) {
-                hideDialog();
+                isDefaultData = true;
+                if (isDefaultData && isHomeData)
+                    hideDialog();
                 Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
             }
         } else {
+            hideDialog();
             Toast.makeText(this, "please check your internet connection", Toast.LENGTH_SHORT).show();
         }
     }

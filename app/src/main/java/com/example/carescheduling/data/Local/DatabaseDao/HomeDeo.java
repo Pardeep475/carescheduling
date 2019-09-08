@@ -7,7 +7,9 @@ import com.example.carescheduling.Ui.Dashboard.beans.ClientMedicalForMobileList;
 import com.example.carescheduling.Ui.Dashboard.beans.ClientNoteList;
 import com.example.carescheduling.Ui.Dashboard.beans.ClientSummary;
 import com.example.carescheduling.Ui.Dashboard.beans.ClientTaskList;
+import com.example.carescheduling.Ui.Dashboard.beans.PersonDetail;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientBookingScreenModel;
+import com.example.carescheduling.Ui.HomeScreen.beans.ScheduleClients;
 
 import java.util.List;
 
@@ -147,4 +149,37 @@ public interface HomeDeo {
     //   delete All  ClientTaskList
     @Query("DELETE FROM ClientTaskList")
     public void deleteClientTaskList();
+
+
+    // get All PersonDetail
+    @Query("SELECT * FROM PersonDetail WHERE BookingId = :bookingId")
+    LiveData<PersonDetail> getAllPersonDetail(String bookingId);
+
+    //    get PersonDetail count
+    @Query("SELECT COUNT(*) from PersonDetail")
+    int countPersonDetail();
+
+    // insert all PersonDetail
+    @Insert
+    void insertPersonDetail(PersonDetail... personDetail);
+
+    //   delete All  PersonDetail
+    @Query("DELETE FROM PersonDetail")
+    public void deletePersonDetail();
+
+    // get All ScheduleClients
+    @Query("SELECT * FROM ScheduleClients WHERE BookingId = :bookingId")
+    LiveData<List<ScheduleClients>> getAllScheduleClients(String bookingId);
+
+    //    get ScheduleClients count
+    @Query("SELECT COUNT(*) from ScheduleClients")
+    int countScheduleClients();
+
+    // insert all ScheduleClients
+    @Insert
+    void insertScheduleClients(ScheduleClients... scheduleClients);
+
+    //   delete All  ScheduleClients
+    @Query("DELETE FROM ScheduleClients")
+    public void deleteScheduleClients();
 }

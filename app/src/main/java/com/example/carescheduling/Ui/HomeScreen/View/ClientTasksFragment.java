@@ -73,12 +73,14 @@ public class ClientTasksFragment extends BaseFragment implements Common, IClient
                 if (ConnectivityReceiver.isNetworkAvailable(getActivity())) {
                     getClientTasks();
                 } else {
-                    setNoDataFound();
-                    Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
+                    getDataFromRoom();
+//                    setNoDataFound();
+//                    Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
                 }
             } catch (Exception e) {
-                setNoDataFound();
-                Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+                getDataFromRoom();
+//                setNoDataFound();
+//                Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
             }
         } else {
             tasksArrayList = getItemArrayList();
@@ -86,6 +88,22 @@ public class ClientTasksFragment extends BaseFragment implements Common, IClient
         }
 
 
+    }
+
+
+    private void getDataFromRoom() {
+        mViewModel.getDataFromLocal(getActivity(), getSessionManager().getBookingId()).observe(this, new Observer<ArrayList<Tasks>>() {
+            @Override
+            public void onChanged(ArrayList<Tasks> clientsTasks) {
+                if (clientsTasks != null) {
+                    getSessionManager().setClientTasks(gson.toJson(clientsTasks));
+                    tasksArrayList = clientsTasks;
+                    setReylerViewData();
+                } else {
+                    setNoDataFound();
+                }
+            }
+        });
     }
 
     private ArrayList<Tasks> getItemArrayList() {
@@ -107,7 +125,8 @@ public class ClientTasksFragment extends BaseFragment implements Common, IClient
                     tasksArrayList = clientsTasks;
                     setReylerViewData();
                 } else {
-                    setNoDataFound();
+                    getDataFromRoom();
+//                    setNoDataFound();
                 }
             }
         });

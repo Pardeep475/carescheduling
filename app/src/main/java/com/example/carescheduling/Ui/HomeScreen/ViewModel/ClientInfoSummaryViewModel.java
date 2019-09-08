@@ -93,12 +93,12 @@ public class ClientInfoSummaryViewModel extends AndroidViewModel {
 
     public LiveData<ClientBookingScreenModel> getDataFromLocal(Context activity,String bookingId){
         final MutableLiveData<ClientBookingScreenModel> data = new MutableLiveData<>();
-        AppDataBase.getAppDatabase(getApplication()).homeDeo().getAllClientBookingScreenModel(bookingId)
-                .observe(((EditProfile) activity), new Observer<ClientBookingScreenModel>() {
+        AppDataBase.getAppDatabase(getApplication()).homeDeo().getAllClientSummary(bookingId)
+                .observe(((EditProfile) activity), new Observer<ClientSummary>() {
                     @Override
-                    public void onChanged(ClientBookingScreenModel profileInfo) {
+                    public void onChanged(ClientSummary profileInfo) {
                         if (profileInfo != null) {
-                            data.setValue(profileInfo);
+                            data.setValue(getClientInfo(profileInfo));
                         }else{
                             data.setValue(null);
                         }

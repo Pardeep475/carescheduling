@@ -9,17 +9,23 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.carescheduling.Ui.Dashboard.beans.ClientTaskList;
+import com.example.carescheduling.Ui.HomeScreen.beans.ClientBookingScreenModel;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientTaskRetroBean;
 import com.example.carescheduling.Ui.HomeScreen.beans.Tasks;
+import com.example.carescheduling.Ui.Profile.View.EditProfile;
+import com.example.carescheduling.Ui.Profile.bean.ImageDataBean;
+import com.example.carescheduling.data.Local.AppDataBase;
 import com.example.carescheduling.data.Network.ApiClient;
 import com.example.carescheduling.data.Network.ApiService;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -90,6 +96,24 @@ public class ClientTasksViewModel extends AndroidViewModel {
         }
 
         return tasksArrayList;
+    }
+
+    public LiveData<ArrayList<Tasks>> getDataFromLocal(Context activity, String bookingId){
+        final MutableLiveData<ArrayList<Tasks>> data = new MutableLiveData<>();
+
+        AppDataBase.getAppDatabase(getApplication()).homeDeo().getAllClientTaskList(bookingId).observe(((EditProfile) activity), new Observer<List<ClientTaskList>>() {
+            @Override
+            public void onChanged(List<ClientTaskList> clientTaskLists) {
+                if (clientTaskLists != null) {
+                    ArrayList<ClientTaskList> arrayList = new ArrayList<>(clientTaskLists);
+                    data.setValue(getClientTasksArrayList(arrayList));
+                }else{
+                    data.setValue(null);
+                }
+            }
+        });
+
+        return data;
     }
 
 

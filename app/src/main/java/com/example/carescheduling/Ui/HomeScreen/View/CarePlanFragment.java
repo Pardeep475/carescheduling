@@ -16,9 +16,11 @@ import com.example.carescheduling.Ui.Common.ScrollViewExt;
 import com.example.carescheduling.Ui.Common.ScrollViewListener;
 import com.example.carescheduling.Ui.HomeScreen.ViewModel.CarePlanViewModal;
 import com.example.carescheduling.Ui.HomeScreen.adapter.CarePlanAdapter;
+import com.example.carescheduling.Ui.HomeScreen.beans.ClientBookingScreenModel;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientCarePlan;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientInfoCarePlanRetro;
 import com.example.carescheduling.Ui.HomeScreen.beans.ScheduleClientList;
+import com.example.carescheduling.Ui.HomeScreen.beans.ScheduleClients;
 import com.example.carescheduling.Ui.HomeScreen.presenter.BackPressedClick;
 import com.example.carescheduling.Ui.HomeScreen.presenter.CarePlanAdapterClick;
 import com.example.carescheduling.Utils.ConnectivityReceiver;
@@ -36,7 +38,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 public class CarePlanFragment extends BaseFragment implements Common, CarePlanAdapterClick, ScrollViewListener {
     private ClientInfoCarePlanFragmentBinding clientInfoCarePlanFragmentBinding;
     private CarePlanViewModal carePlanViewModal;
-    private ArrayList<ClientInfoCarePlanRetro.DataList> dataListArrayList;
+    private ArrayList<ScheduleClients> dataListArrayList;
     private int startPosition = 0;
     private int endPosition = 25;
 
@@ -65,15 +67,34 @@ public class CarePlanFragment extends BaseFragment implements Common, CarePlanAd
                 setUpRecyclerView(view);
             } else {
                 hideDialog();
-                setNoDataFound();
-                Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
+                getDataFromRoom();
+//                setNoDataFound();
+//                Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
             hideDialog();
-            setNoDataFound();
-            Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+            getDataFromRoom();
+//            setNoDataFound();
+//            Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    private void getDataFromRoom() {
+        carePlanViewModal.getDataFromLocal(getActivity(), getSessionManager().getBookingId()).observe(this,
+                new Observer<ArrayList<ScheduleClients>>() {
+                    @Override
+                    public void onChanged(ArrayList<ScheduleClients> data) {
+                        if (data != null && data.size() > 0) {
+                            dataListArrayList = data;
+                            clientInfoCarePlanFragmentBinding.llCarePlan.removeAllViews();
+                            setLayoutDynamic(clientInfoCarePlanFragmentBinding.llCarePlan, data);
+                            setDataOriginal();
+                        } else {
+                            setNoDataFound();
+                        }
+                    }
+                });
     }
 
     private void setCommonData() {
@@ -95,16 +116,17 @@ public class CarePlanFragment extends BaseFragment implements Common, CarePlanAd
                     getSessionManager().getBranchId(),
                     getSessionManager().getClientId()
             ).observe(this,
-                    new Observer<ArrayList<ClientInfoCarePlanRetro.DataList>>() {
+                    new Observer<ArrayList<ScheduleClients>>() {
                         @Override
-                        public void onChanged(ArrayList<ClientInfoCarePlanRetro.DataList> data) {
+                        public void onChanged(ArrayList<ScheduleClients> data) {
                             if (data != null && data.size() > 0) {
                                 dataListArrayList = data;
                                 clientInfoCarePlanFragmentBinding.llCarePlan.removeAllViews();
                                 setLayoutDynamic(clientInfoCarePlanFragmentBinding.llCarePlan, data);
                                 setDataOriginal();
                             } else {
-                                setNoDataFound();
+//                                setNoDataFound();
+                                getDataFromRoom();
                             }
                         }
                     });
@@ -173,7 +195,7 @@ public class CarePlanFragment extends BaseFragment implements Common, CarePlanAd
 
     }
 
-    private void setLayoutDynamic(LinearLayout linearLayout, ArrayList<ClientInfoCarePlanRetro.DataList> dataLists) {
+    private void setLayoutDynamic(LinearLayout linearLayout, ArrayList<ScheduleClients> dataLists) {
         String weekday = "";
         LinearLayout ll_nested = null;
 
@@ -195,7 +217,7 @@ public class CarePlanFragment extends BaseFragment implements Common, CarePlanAd
         }
     }
 
-    private void setLayoutNested(LinearLayout linearLayout, ClientInfoCarePlanRetro.DataList dataList) {
+    private void setLayoutNested(LinearLayout linearLayout, ScheduleClients dataList) {
         View v = LayoutInflater.from(getActivity()).inflate(R.layout.item_nested_client_care_plan, null);
         linearLayout.addView(v);
         TextView txt_document = v.findViewById(R.id.txt_document);

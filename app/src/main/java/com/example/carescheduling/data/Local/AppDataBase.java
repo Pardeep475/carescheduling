@@ -9,7 +9,9 @@ import com.example.carescheduling.Ui.Dashboard.beans.ClientMedicalForMobileList;
 import com.example.carescheduling.Ui.Dashboard.beans.ClientNoteList;
 import com.example.carescheduling.Ui.Dashboard.beans.ClientSummary;
 import com.example.carescheduling.Ui.Dashboard.beans.ClientTaskList;
+import com.example.carescheduling.Ui.Dashboard.beans.PersonDetail;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientBookingScreenModel;
+import com.example.carescheduling.Ui.HomeScreen.beans.ScheduleClients;
 import com.example.carescheduling.Ui.Profile.bean.ImageDataBean;
 import com.example.carescheduling.Ui.Profile.bean.PersonEmailList;
 import com.example.carescheduling.Ui.Profile.bean.PersonPhoneList;
@@ -45,7 +47,7 @@ import androidx.room.RoomDatabase;
         , UserInfo.class, PersonEmailList.class, PersonPhoneList.class, ProfileInfo.class, PersonAllAddressEntity.class
         , ImageDataBean.class, ClientContactList.class, ClientDisabilityList.class, ClientDocumentList.class
         , ClientMedicalForMobileList.class, ClientNoteList.class, ClientSummary.class, ClientTaskList.class
-        , ClientBookingScreenModel.class}
+        , ClientBookingScreenModel.class, PersonDetail.class, ScheduleClients.class}
         , version = 3, exportSchema = false)
 public abstract class AppDataBase extends RoomDatabase {
 

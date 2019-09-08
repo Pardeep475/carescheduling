@@ -12,7 +12,7 @@ public class ClientInfoCarePlanRetro {
     private Object data;
     @SerializedName("DataList")
     @Expose
-    private ArrayList<DataList> dataList = null;
+    private ArrayList<ScheduleClients> dataList = null;
     @SerializedName("Exception")
     @Expose
     private Object exception;
@@ -31,11 +31,11 @@ public class ClientInfoCarePlanRetro {
         this.data = data;
     }
 
-    public ArrayList<DataList> getDataList() {
+    public ArrayList<ScheduleClients> getDataList() {
         return dataList;
     }
 
-    public void setDataList(ArrayList<DataList> dataList) {
+    public void setDataList(ArrayList<ScheduleClients> dataList) {
         this.dataList = dataList;
     }
 

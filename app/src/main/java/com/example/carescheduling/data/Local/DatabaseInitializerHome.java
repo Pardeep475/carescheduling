@@ -10,7 +10,9 @@ import com.example.carescheduling.Ui.Dashboard.beans.ClientMedicalForMobileList;
 import com.example.carescheduling.Ui.Dashboard.beans.ClientNoteList;
 import com.example.carescheduling.Ui.Dashboard.beans.ClientSummary;
 import com.example.carescheduling.Ui.Dashboard.beans.ClientTaskList;
+import com.example.carescheduling.Ui.Dashboard.beans.PersonDetail;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientBookingScreenModel;
+import com.example.carescheduling.Ui.HomeScreen.beans.ScheduleClients;
 
 import java.util.List;
 
@@ -335,5 +337,84 @@ public class DatabaseInitializerHome {
 
     private static void addUserClientTaskList(final AppDataBase db, ClientTaskList user) {
         db.homeDeo().insertClientTaskList(user);
+    }
+
+
+    //   PersonDetail
+    public static void populateAsyncPersonDetail(@NonNull final AppDataBase db, List<PersonDetail> list) {
+        PopulateDbAsyncPersonDetail task = new PopulateDbAsyncPersonDetail(db, list);
+        task.execute();
+    }
+
+    private static class PopulateDbAsyncPersonDetail extends AsyncTask<Void, Void, Void> {
+
+        private final AppDataBase mDb;
+        private List<PersonDetail> list;
+
+        PopulateDbAsyncPersonDetail(AppDataBase db, List<PersonDetail> list) {
+            mDb = db;
+            this.list = list;
+        }
+
+        @Override
+        protected Void doInBackground(final Void... params) {
+            populateWithPersonDetailData(mDb, list);
+            return null;
+        }
+
+    }
+
+    private static void populateWithPersonDetailData(AppDataBase db, List<PersonDetail> list) {
+        int count = db.homeDeo().countPersonDetail();
+        if (count > 0)
+            db.homeDeo().deletePersonDetail();
+        for (PersonDetail user : list) {
+            addUserPersonDetail(db, user);
+        }
+        Log.d(TAG, "PersonDetail Count: " + db.homeDeo().countPersonDetail());
+//        Toast.makeText(this, "Rows Count: " + userList.size(), Toast.LENGTH_SHORT).show();
+    }
+
+    private static void addUserPersonDetail(final AppDataBase db, PersonDetail user) {
+        db.homeDeo().insertPersonDetail(user);
+    }
+
+    //   ScheduleClients
+    public static void populateAsyncScheduleClients(@NonNull final AppDataBase db, List<ScheduleClients> list) {
+        PopulateDbAsyncScheduleClients task = new PopulateDbAsyncScheduleClients(db, list);
+        task.execute();
+    }
+
+    private static class PopulateDbAsyncScheduleClients extends AsyncTask<Void, Void, Void> {
+
+        private final AppDataBase mDb;
+        private List<ScheduleClients> list;
+
+        PopulateDbAsyncScheduleClients(AppDataBase db, List<ScheduleClients> list) {
+            mDb = db;
+            this.list = list;
+        }
+
+        @Override
+        protected Void doInBackground(final Void... params) {
+            populateWithScheduleClientsData(mDb, list);
+            return null;
+        }
+
+    }
+
+    private static void populateWithScheduleClientsData(AppDataBase db, List<ScheduleClients> list) {
+        int count = db.homeDeo().countScheduleClients();
+        if (count > 0)
+            db.homeDeo().deleteScheduleClients();
+        for (ScheduleClients user : list) {
+            addUserScheduleClients(db, user);
+        }
+        Log.d(TAG, "ScheduleClients Count: " + db.homeDeo().countScheduleClients());
+//        Toast.makeText(this, "Rows Count: " + userList.size(), Toast.LENGTH_SHORT).show();
+    }
+
+    private static void addUserScheduleClients(final AppDataBase db, ScheduleClients user) {
+        db.homeDeo().insertScheduleClients(user);
     }
 }

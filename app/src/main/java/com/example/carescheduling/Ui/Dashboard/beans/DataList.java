@@ -1,7 +1,7 @@
 package com.example.carescheduling.Ui.Dashboard.beans;
 import com.example.carescheduling.Ui.Common.ClientBarcodeList;
 import com.example.carescheduling.Ui.Common.ClientNFCList;
-import com.example.carescheduling.Ui.Common.ScheduleClients;
+import com.example.carescheduling.Ui.HomeScreen.beans.ScheduleClients;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import java.util.List;
@@ -35,7 +35,7 @@ public class DataList{
   private String BookingEndTime;
   @SerializedName("ScheduleClients")
   @Expose
-  private List<com.example.carescheduling.Ui.Common.ScheduleClients> ScheduleClients;
+  private List<ScheduleClients> ScheduleClients;
   @SerializedName("ClientSummary")
   @Expose
   private ClientSummary ClientSummary;

@@ -1,13 +1,24 @@
-package com.example.carescheduling.Ui.Common;
+package com.example.carescheduling.Ui.HomeScreen.beans;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 /**
  * Awesome Pojo Generator
  * */
+@Entity
 public class ScheduleClients{
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
+    @NonNull
+    private int id;
   @SerializedName("CustomStartHour")
   @Expose
-  private Integer CustomStartHour;
+  private String CustomStartHour;
   @SerializedName("WeekdayName")
   @Expose
   private String WeekdayName;
@@ -16,7 +27,7 @@ public class ScheduleClients{
   private String ScheduledBy;
   @SerializedName("CustomEndMinute")
   @Expose
-  private Integer CustomEndMinute;
+  private String CustomEndMinute;
   @SerializedName("IsOverRidingTimeTableStartTime")
   @Expose
   private Boolean IsOverRidingTimeTableStartTime;
@@ -28,22 +39,22 @@ public class ScheduleClients{
   private String CustomerId;
   @SerializedName("ScheduleEndDate")
   @Expose
-  private Object ScheduleEndDate;
+  private String ScheduleEndDate;
   @SerializedName("WeekRotationTypeName")
   @Expose
-  private Integer WeekRotationTypeName;
+  private String WeekRotationTypeName;
   @SerializedName("TimeTableName")
   @Expose
   private String TimeTableName;
   @SerializedName("ClientName")
   @Expose
-  private Object ClientName;
+  private String ClientName;
   @SerializedName("CustomStartMinute")
   @Expose
-  private Integer CustomStartMinute;
+  private String CustomStartMinute;
   @SerializedName("ScheduledDurationMinutes")
   @Expose
-  private Integer ScheduledDurationMinutes;
+  private String ScheduledDurationMinutes;
   @SerializedName("ClientId")
   @Expose
   private String ClientId;
@@ -52,11 +63,21 @@ public class ScheduleClients{
   private String ScheduleEnteredDate;
   @SerializedName("CustomEndHour")
   @Expose
-  private Integer CustomEndHour;
-  public void setCustomStartHour(Integer CustomStartHour){
+  private String CustomEndHour;
+    private String BookingId;
+
+    public String getBookingId() {
+        return BookingId;
+    }
+
+    public void setBookingId(String bookingId) {
+        BookingId = bookingId;
+    }
+
+    public void setCustomStartHour(String CustomStartHour){
    this.CustomStartHour=CustomStartHour;
   }
-  public Integer getCustomStartHour(){
+  public String getCustomStartHour(){
    return CustomStartHour;
   }
   public void setWeekdayName(String WeekdayName){
@@ -71,10 +92,10 @@ public class ScheduleClients{
   public String getScheduledBy(){
    return ScheduledBy;
   }
-  public void setCustomEndMinute(Integer CustomEndMinute){
+  public void setCustomEndMinute(String CustomEndMinute){
    this.CustomEndMinute=CustomEndMinute;
   }
-  public Integer getCustomEndMinute(){
+  public String getCustomEndMinute(){
    return CustomEndMinute;
   }
   public void setIsOverRidingTimeTableStartTime(Boolean IsOverRidingTimeTableStartTime){
@@ -95,16 +116,16 @@ public class ScheduleClients{
   public String getCustomerId(){
    return CustomerId;
   }
-  public void setScheduleEndDate(Object ScheduleEndDate){
+  public void setScheduleEndDate(String ScheduleEndDate){
    this.ScheduleEndDate=ScheduleEndDate;
   }
-  public Object getScheduleEndDate(){
+  public String getScheduleEndDate(){
    return ScheduleEndDate;
   }
-  public void setWeekRotationTypeName(Integer WeekRotationTypeName){
+  public void setWeekRotationTypeName(String WeekRotationTypeName){
    this.WeekRotationTypeName=WeekRotationTypeName;
   }
-  public Integer getWeekRotationTypeName(){
+  public String getWeekRotationTypeName(){
    return WeekRotationTypeName;
   }
   public void setTimeTableName(String TimeTableName){
@@ -113,22 +134,22 @@ public class ScheduleClients{
   public String getTimeTableName(){
    return TimeTableName;
   }
-  public void setClientName(Object ClientName){
+  public void setClientName(String ClientName){
    this.ClientName=ClientName;
   }
-  public Object getClientName(){
+  public String getClientName(){
    return ClientName;
   }
-  public void setCustomStartMinute(Integer CustomStartMinute){
+  public void setCustomStartMinute(String CustomStartMinute){
    this.CustomStartMinute=CustomStartMinute;
   }
-  public Integer getCustomStartMinute(){
+  public String getCustomStartMinute(){
    return CustomStartMinute;
   }
-  public void setScheduledDurationMinutes(Integer ScheduledDurationMinutes){
+  public void setScheduledDurationMinutes(String ScheduledDurationMinutes){
    this.ScheduledDurationMinutes=ScheduledDurationMinutes;
   }
-  public Integer getScheduledDurationMinutes(){
+  public String getScheduledDurationMinutes(){
    return ScheduledDurationMinutes;
   }
   public void setClientId(String ClientId){
@@ -143,10 +164,18 @@ public class ScheduleClients{
   public String getScheduleEnteredDate(){
    return ScheduleEnteredDate;
   }
-  public void setCustomEndHour(Integer CustomEndHour){
+  public void setCustomEndHour(String CustomEndHour){
    this.CustomEndHour=CustomEndHour;
   }
-  public Integer getCustomEndHour(){
+  public String getCustomEndHour(){
    return CustomEndHour;
   }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

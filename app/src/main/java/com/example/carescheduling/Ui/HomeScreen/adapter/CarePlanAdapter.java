@@ -22,7 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class CarePlanAdapter extends RecyclerView.Adapter<CarePlanAdapter.MyViewHolder> {
     private Context context;
     private HomeCarePlanSubitemsBinding homeCarePlanSubitemsBinding;
-    private ArrayList<ClientInfoCarePlanRetro.DataList> data;
+    private ArrayList<ScheduleClients> data;
     private CarePlanAdapterClick carePlanAdapterClick;
 
     public CarePlanAdapter(Context context, CarePlanAdapterClick carePlanAdapterClick) {
@@ -40,7 +40,7 @@ public class CarePlanAdapter extends RecyclerView.Adapter<CarePlanAdapter.MyView
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        ClientInfoCarePlanRetro.DataList dataList1 = data.get(position);
+        ScheduleClients dataList1 = data.get(position);
 
 //        setLayoutDynamic(homeCarePlanSubitemsBinding.llClientPlan, dataList1);
     }
