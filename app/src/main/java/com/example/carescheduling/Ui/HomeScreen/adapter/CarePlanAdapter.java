@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientCarePlan;
 import com.example.carescheduling.Ui.HomeScreen.beans.ClientInfoCarePlanRetro;
+import com.example.carescheduling.Ui.HomeScreen.beans.ScheduleClients;
 import com.example.carescheduling.Ui.HomeScreen.presenter.CarePlanAdapterClick;
 import com.example.carescheduling.databinding.HomeCarePlanSubitemsBinding;
 

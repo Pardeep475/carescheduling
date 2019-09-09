@@ -88,6 +88,10 @@ public class CarePlanFragment extends BaseFragment implements Common, CarePlanAd
                         if (data != null && data.size() > 0) {
                             dataListArrayList = data;
                             clientInfoCarePlanFragmentBinding.llCarePlan.removeAllViews();
+                            if(data.size()> 25)
+                                endPosition = 25;
+                            else
+                                endPosition = data.size();
                             setLayoutDynamic(clientInfoCarePlanFragmentBinding.llCarePlan, data);
                             setDataOriginal();
                         } else {
@@ -122,6 +126,10 @@ public class CarePlanFragment extends BaseFragment implements Common, CarePlanAd
                             if (data != null && data.size() > 0) {
                                 dataListArrayList = data;
                                 clientInfoCarePlanFragmentBinding.llCarePlan.removeAllViews();
+                                if(data.size()> 25)
+                                    endPosition = 25;
+                                else
+                                    endPosition = data.size();
                                 setLayoutDynamic(clientInfoCarePlanFragmentBinding.llCarePlan, data);
                                 setDataOriginal();
                             } else {

@@ -166,7 +166,7 @@ public interface HomeDeo {
     //   delete All  PersonDetail
     @Query("DELETE FROM PersonDetail")
     public void deletePersonDetail();
-
+// ORDER BY WeekdayName, WeekRotationTypeName DESC
     // get All ScheduleClients
     @Query("SELECT * FROM ScheduleClients WHERE BookingId = :bookingId")
     LiveData<List<ScheduleClients>> getAllScheduleClients(String bookingId);

@@ -48,7 +48,7 @@ import androidx.room.RoomDatabase;
         , ImageDataBean.class, ClientContactList.class, ClientDisabilityList.class, ClientDocumentList.class
         , ClientMedicalForMobileList.class, ClientNoteList.class, ClientSummary.class, ClientTaskList.class
         , ClientBookingScreenModel.class, PersonDetail.class, ScheduleClients.class}
-        , version = 3, exportSchema = false)
+        , version = 4, exportSchema = false)
 public abstract class AppDataBase extends RoomDatabase {
 
     private static AppDataBase INSTANCE;
