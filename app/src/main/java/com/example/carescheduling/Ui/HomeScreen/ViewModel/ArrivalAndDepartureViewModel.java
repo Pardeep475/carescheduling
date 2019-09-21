@@ -61,24 +61,33 @@ public class ArrivalAndDepartureViewModel extends AndroidViewModel {
                             if (loginBeanRetroResponse.isSuccessful() && loginBeanRetroResponse.body() != null) {
                                 JSONObject jsonObject = new JSONObject(loginBeanRetroResponse.body().toString());
                                 boolean isSuccess = jsonObject.getBoolean("Success");
-
                                 if (isSuccess) {
-                                    JSONArray jsonArray = jsonObject.getJSONArray("DataList");
-                                    if (jsonArray.length() > 0) {
-                                        JSONObject dataObj = jsonArray.getJSONObject(0);
-                                        if (dataObj.has("ClientVisitId")) {
-                                            if (dataObj.getString("ClientVisitId") != null)
-                                                data.setValue(dataObj.getString("ClientVisitId"));
-                                            else
-                                                data.setValue(null);
-                                        } else
-                                            data.setValue(null);
+                                    if(jsonObject.has("DataList")){
+                                        try{
+                                            JSONArray jsonArray = jsonObject.getJSONArray("DataList");
+                                            if (jsonArray.length() > 0) {
+                                                JSONObject dataObj = jsonArray.getJSONObject(0);
+                                                if (dataObj.has("ClientVisitId")) {
+                                                    if (dataObj.getString("ClientVisitId") != null)
+                                                        data.setValue(dataObj.getString("ClientVisitId"));
+                                                    else
+                                                        data.setValue(null);
+                                                } else
+                                                    data.setValue(null);
 
-                                    } else
+                                            } else
+                                                data.setValue(null);
+                                        }catch(Exception e){
+                                            if (jsonObject.getString("ResponseMessage") != null)
+                                                Toast.makeText(context, jsonObject.getString("ResponseMessage"), Toast.LENGTH_SHORT).show();
+                                            data.setValue(null);
+                                        }
+
+                                    }else{
                                         data.setValue(null);
+                                    }
                                 } else
                                     data.setValue(null);
-
                                 if (jsonObject.getString("ResponseMessage") != null)
                                     Toast.makeText(context, jsonObject.getString("ResponseMessage"), Toast.LENGTH_SHORT).show();
 

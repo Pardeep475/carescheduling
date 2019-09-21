@@ -32,6 +32,7 @@ import com.example.carescheduling.Ui.HomeScreen.beans.ClientInfoCarePlanRetro;
 import com.example.carescheduling.Ui.HomeScreen.beans.VisitArchiveAdapterBean;
 import com.example.carescheduling.Ui.HomeScreen.beans.VisitArchiveRetroBean;
 import com.example.carescheduling.Ui.HomeScreen.presenter.VisitArchiveClick;
+import com.example.carescheduling.Utils.ConnectivityReceiver;
 import com.example.carescheduling.databinding.VisitArchiveFragmentBinding;
 
 import java.text.SimpleDateFormat;
@@ -99,22 +100,29 @@ public class VisitArchiveFragment extends BaseFragment implements Common, VisitA
             Date date = new Date();
             formatedDate = formatter.format(date);
         }
-        mViewModel.getVisitArchiveClient(getSessionManager().getPersonId(),
-                formatedDate,
-                getSessionManager().getBranchId(),
-                getSessionManager().getCustomerId()).observe(this, new Observer<ArrayList<VisitArchiveAdapterBean>>() {
-            @Override
-            public void onChanged(ArrayList<VisitArchiveAdapterBean> visitArchiveAdapterBeans) {
-                if (getActivity() != null && visitArchiveAdapterBeans != null && visitArchiveAdapterBeans.size() > 0) {
-                    visitArchiveFragmentBinding.rcvVisitArchive.setLayoutManager(new LinearLayoutManager(getActivity()));
-                    VisitArchiveAdapter clientInfoMedicationAdapter = new VisitArchiveAdapter(getActivity(), visitArchiveAdapterBeans);
-                    visitArchiveFragmentBinding.rcvVisitArchive.setAdapter(clientInfoMedicationAdapter);
-                    visitArchiveFragmentBinding.rcvVisitArchive.hideShimmerAdapter();
-                } else {
-                    setNoDataFound();
-                }
+        if (getActivity() != null) {
+            if (ConnectivityReceiver.isNetworkAvailable(getActivity())) {
+                mViewModel.getVisitArchiveClient(getSessionManager().getPersonId(),
+                        formatedDate,
+                        getSessionManager().getBranchId(),
+                        getSessionManager().getCustomerId()).observe(this, new Observer<ArrayList<VisitArchiveAdapterBean>>() {
+                    @Override
+                    public void onChanged(ArrayList<VisitArchiveAdapterBean> visitArchiveAdapterBeans) {
+                        if (getActivity() != null && visitArchiveAdapterBeans != null && visitArchiveAdapterBeans.size() > 0) {
+                            visitArchiveFragmentBinding.rcvVisitArchive.setLayoutManager(new LinearLayoutManager(getActivity()));
+                            VisitArchiveAdapter clientInfoMedicationAdapter = new VisitArchiveAdapter(getActivity(), visitArchiveAdapterBeans);
+                            visitArchiveFragmentBinding.rcvVisitArchive.setAdapter(clientInfoMedicationAdapter);
+                            visitArchiveFragmentBinding.rcvVisitArchive.hideShimmerAdapter();
+                        } else {
+                            setNoDataFound();
+                        }
+                    }
+                });
+            }else{
+                showAToast("please check your internet connection");
+                setNoDataFound();
             }
-        });
+        }
     }
 
 

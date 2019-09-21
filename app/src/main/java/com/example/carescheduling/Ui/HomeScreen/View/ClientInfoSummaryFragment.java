@@ -4,12 +4,15 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,6 +67,7 @@ public class ClientInfoSummaryFragment extends BaseFragment implements Common {
         setCommonData();
         clientInfoSummaryFragmentBinding.slDemo.startShimmerAnimation();
         mViewModel = ViewModelProviders.of(this).get(ClientInfoSummaryViewModel.class);
+        if (getActivity()!= null)
         try {
             if (ConnectivityReceiver.isNetworkAvailable(getActivity())) {
                 setUpData();
@@ -102,6 +106,8 @@ public class ClientInfoSummaryFragment extends BaseFragment implements Common {
             public void onChanged(ClientBookingScreenModel clientCareSummaryBean) {
                 if (clientCareSummaryBean != null) {
                     clientInfoSummaryFragmentBinding.setClientBookingScreenModel(clientCareSummaryBean);
+                    if (clientCareSummaryBean.getImageString() != null && !clientCareSummaryBean.getImageString().equalsIgnoreCase("") && !clientCareSummaryBean.getImageString().equalsIgnoreCase("null"))
+                        clientInfoSummaryFragmentBinding.imgUser.setImageBitmap(ImageFromBase64(clientCareSummaryBean.getImageString()));
                     setDataOriginal();
                 } else {
 //                        Toast.makeText(getActivity(),"Something went wrong", Toast.LENGTH_SHORT).show();
@@ -112,7 +118,10 @@ public class ClientInfoSummaryFragment extends BaseFragment implements Common {
             }
         });
     }
-
+    private Bitmap ImageFromBase64(String img) {
+        byte[] decodedString = Base64.decode(img, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+    }
     private void getDataFromRoom() {
         mViewModel.getDataFromLocal(getActivity(), getSessionManager().getBookingId()).observe(this, new Observer<ClientBookingScreenModel>() {
             @Override
@@ -121,6 +130,8 @@ public class ClientInfoSummaryFragment extends BaseFragment implements Common {
                     clientBookingModel = clientBookingScreenModel;
                     getSessionManager().setBookingId(clientBookingModel.getBookingId());
                     clientInfoSummaryFragmentBinding.setClientBookingScreenModel(clientBookingScreenModel);
+                    if (clientBookingScreenModel.getImageString() != null && !clientBookingScreenModel.getImageString().equalsIgnoreCase("") && !clientBookingScreenModel.getImageString().equalsIgnoreCase("null"))
+                        clientInfoSummaryFragmentBinding.imgUser.setImageBitmap(ImageFromBase64(clientBookingScreenModel.getImageString()));
                     setDataOriginal();
                 } else {
                     Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();

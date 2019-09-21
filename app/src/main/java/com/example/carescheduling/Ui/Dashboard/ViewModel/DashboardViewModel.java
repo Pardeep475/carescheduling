@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.carescheduling.Ui.Common.ClientBarcodeList;
 import com.example.carescheduling.Ui.Dashboard.beans.AllHomeData;
 import com.example.carescheduling.Ui.Dashboard.beans.ClientBookingListModel;
 import com.example.carescheduling.Ui.Dashboard.beans.ClientContactList;
@@ -97,6 +98,8 @@ public class DashboardViewModel extends AndroidViewModel {
                             if (editMyProfileResponse.body().getDataList() != null) {
                                 setDataToDatabase(editMyProfileResponse.body());
                                 data.setValue(true);
+                            } else {
+                                data.setValue(false);
                             }
 
                         } else {
@@ -127,6 +130,7 @@ public class DashboardViewModel extends AndroidViewModel {
         getClientTaskList(allHomeData);
         getClientCarePlanList(allHomeData);
         getClientInfo(allHomeData);
+        getBarcodeLists(allHomeData);
     }
 
     private void getClientInfo(AllHomeData allHomeData) {
@@ -244,6 +248,19 @@ public class DashboardViewModel extends AndroidViewModel {
                 }
         }
         DatabaseInitializerHome.populateAsyncClientDisabilityList(AppDataBase.getAppDatabase(getApplication()), clientNoteLists);
+    }
+
+    private void getBarcodeLists(AllHomeData allHomeData) {
+        List<ClientBarcodeList> clientNoteLists = new ArrayList<>();
+        for (int i = 0; i < allHomeData.getDataList().size(); i++) {
+            if (allHomeData.getDataList().get(i).getClientBarcodeList() != null)
+                for (int j = 0; j < allHomeData.getDataList().get(i).getClientBarcodeList().size(); j++) {
+                    ClientBarcodeList clientNoteList = allHomeData.getDataList().get(i).getClientBarcodeList().get(j);
+                    clientNoteList.setBookingId(allHomeData.getDataList().get(i).getClientBookingId());
+                    clientNoteLists.add(clientNoteList);
+                }
+        }
+        DatabaseInitializerHome.populateAsyncClientBarcodeList(AppDataBase.getAppDatabase(getApplication()), clientNoteLists);
     }
 
     private void getClientBookingScreenModelData(AllHomeData data) {

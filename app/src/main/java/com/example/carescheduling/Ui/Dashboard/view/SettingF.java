@@ -19,6 +19,7 @@ import com.example.carescheduling.Ui.Common.Common;
 import com.example.carescheduling.Ui.Common.CommonBean;
 import com.example.carescheduling.Ui.Dashboard.presenter.ProfileClickHandler;
 import com.example.carescheduling.Ui.LoginActivity.View.LoginActivity;
+import com.example.carescheduling.data.Local.AppDataBase;
 import com.example.carescheduling.databinding.FragmentSettingBinding;
 
 public class SettingF extends BaseFragment implements Common {
@@ -73,11 +74,13 @@ public class SettingF extends BaseFragment implements Common {
 
     @Override
     public void rightClick() {
-        sessionManager.cleanAllData();
-        Intent intent = new Intent(getActivity(), LoginActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        if (getActivity() != null)
+        if (getActivity() != null) {
+            sessionManager.cleanAllData();
+            AppDataBase.getAppDatabase(getActivity()).clearAllTables();
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK  );
+            startActivity(intent);
             getActivity().finish();
+        }
     }
 }

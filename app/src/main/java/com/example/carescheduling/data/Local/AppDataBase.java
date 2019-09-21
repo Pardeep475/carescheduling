@@ -2,6 +2,7 @@ package com.example.carescheduling.data.Local;
 
 import android.content.Context;
 
+import com.example.carescheduling.Ui.Common.ClientBarcodeList;
 import com.example.carescheduling.Ui.Dashboard.beans.ClientContactList;
 import com.example.carescheduling.Ui.Dashboard.beans.ClientDisabilityList;
 import com.example.carescheduling.Ui.Dashboard.beans.ClientDocumentList;
@@ -47,8 +48,8 @@ import androidx.room.RoomDatabase;
         , UserInfo.class, PersonEmailList.class, PersonPhoneList.class, ProfileInfo.class, PersonAllAddressEntity.class
         , ImageDataBean.class, ClientContactList.class, ClientDisabilityList.class, ClientDocumentList.class
         , ClientMedicalForMobileList.class, ClientNoteList.class, ClientSummary.class, ClientTaskList.class
-        , ClientBookingScreenModel.class, PersonDetail.class, ScheduleClients.class}
-        , version = 4, exportSchema = false)
+        , ClientBookingScreenModel.class, PersonDetail.class, ScheduleClients.class, ClientBarcodeList.class}
+        , version = 6, exportSchema = false)
 public abstract class AppDataBase extends RoomDatabase {
 
     private static AppDataBase INSTANCE;

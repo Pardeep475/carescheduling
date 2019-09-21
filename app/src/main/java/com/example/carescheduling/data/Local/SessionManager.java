@@ -89,4 +89,13 @@ public class SessionManager {
     public String getClientVisitId() {
         return sharedPreferences.getString(Constants.CLIENT_VISIT_ID, null);
     }
+
+    public void setOffline(boolean barcodeId) {
+        sharedPreferenceEditor.putBoolean(Constants.IS_OFFLINE, barcodeId).commit();
+    }
+
+    public boolean getOffline() {
+        return sharedPreferences.getBoolean(Constants.IS_OFFLINE, false);
+    }
+
 }

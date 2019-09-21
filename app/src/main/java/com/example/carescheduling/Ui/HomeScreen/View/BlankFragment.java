@@ -6,10 +6,15 @@ import androidx.lifecycle.ViewModelProviders;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.nfc.NfcAdapter;
+import android.nfc.NfcManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,6 +22,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.provider.Settings;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,6 +78,7 @@ public class BlankFragment extends BaseFragment implements Common, MyNextVisitCl
             getClientBookingList();
         } catch (Exception e) {
             hideDialog();
+            getDataFromRoom();
             Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
         }
         blankFragmentBinding.setMyNextVisitClick(this);
@@ -106,10 +113,21 @@ public class BlankFragment extends BaseFragment implements Common, MyNextVisitCl
         else
             requestStoragePermission();
     }
-
+    // https://stackoverflow.com/questions/34882171/testing-an-app-by-faking-nfc-tag-scan
+// https://www.learn2crack.com/2016/10/android-reading-and-writing-nfc-tags.html
     @Override
     public void NfcClick() {
-
+        if (getActivity() != null) {
+            NfcManager manager = (NfcManager) getActivity().getSystemService(Context.NFC_SERVICE);
+            NfcAdapter adapter = manager.getDefaultAdapter();
+            if (adapter != null && adapter.isEnabled()) {
+                showAToast("your device support nfc");
+                //Yes NFC available
+            } else {
+                showAToast("your device doesn't support nfc");
+                //Your device doesn't support NFC
+            }
+        }
     }
 
     private void setFragment(Fragment fragment) {
@@ -129,6 +147,11 @@ public class BlankFragment extends BaseFragment implements Common, MyNextVisitCl
 
     }
 
+    private Bitmap ImageFromBase64(String img) {
+        byte[] decodedString = Base64.decode(img, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+    }
+
     private void getClientBookingList() {
         if (getActivity() != null) {
             if (ConnectivityReceiver.isNetworkAvailable(getActivity())) {
@@ -144,6 +167,8 @@ public class BlankFragment extends BaseFragment implements Common, MyNextVisitCl
                                 clientBookingModel = clientBookingListModel;
                                 getSessionManager().setBookingId(clientBookingModel.getBookingId());
                                 blankFragmentBinding.setClientBookingScreenModel(clientBookingListModel);
+                                if (clientBookingListModel.getImageString() != null && !clientBookingListModel.getImageString().equalsIgnoreCase("") && !clientBookingListModel.getImageString().equalsIgnoreCase("null"))
+                                    blankFragmentBinding.imgVisitPerson.setImageBitmap(ImageFromBase64(clientBookingListModel.getImageString()));
                                 setDataOriginal();
                             } else {
 //                                setNoDataFound();
@@ -173,6 +198,8 @@ public class BlankFragment extends BaseFragment implements Common, MyNextVisitCl
                     clientBookingModel = clientBookingScreenModel;
                     getSessionManager().setBookingId(clientBookingModel.getBookingId());
                     blankFragmentBinding.setClientBookingScreenModel(clientBookingScreenModel);
+                    if (clientBookingScreenModel.getImageString() != null && !clientBookingScreenModel.getImageString().equalsIgnoreCase("") && !clientBookingScreenModel.getImageString().equalsIgnoreCase("null"))
+                        blankFragmentBinding.imgVisitPerson.setImageBitmap(ImageFromBase64(clientBookingScreenModel.getImageString()));
                     setDataOriginal();
                 } else {
                     Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();

@@ -36,11 +36,13 @@ public class LoginFSecond extends BaseFragment implements View.OnClickListener {
     private static final String USER_EMAIL = "USER_EMAIL";
     private static final String USER_PASSWORD = "USER_PASSWORD";
     private static final String DATA = "data";
+    private static final String REMEMBER_ME = "remember_me";
 
     // TODO: Rename and change types of parameters
     private String userEmail, userPassword;
     private ArrayList<LoginBeanRetro.BranchList> branchList;
     private String personId, branchId, customerId;
+    private boolean isRememberMe;
     // TODO: data binding
 //    private FragmentLoginFsecondBinding loginFSecondBinding;
     // TODO: view modal
@@ -52,11 +54,12 @@ public class LoginFSecond extends BaseFragment implements View.OnClickListener {
     }
 
     // TODO: Rename and change types and number of parameters
-    public static LoginFSecond newInstance(String param1, String userPassword, LoginBeanRetro.Data data) {
+    public static LoginFSecond newInstance(String param1, String userPassword, LoginBeanRetro.Data data,boolean isRemember) {
         LoginFSecond fragment = new LoginFSecond();
         Bundle args = new Bundle();
         args.putString(USER_EMAIL, param1);
         args.putString(USER_PASSWORD, userPassword);
+        args.putBoolean(REMEMBER_ME, isRemember);
         args.putSerializable(DATA, data);
         fragment.setArguments(args);
         return fragment;
@@ -68,6 +71,7 @@ public class LoginFSecond extends BaseFragment implements View.OnClickListener {
         if (getArguments() != null) {
             userEmail = getArguments().getString(USER_EMAIL);
             userPassword = getArguments().getString(USER_PASSWORD);
+            isRememberMe = getArguments().getBoolean(REMEMBER_ME,false);
             LoginBeanRetro.Data data = (LoginBeanRetro.Data) getArguments().getSerializable(DATA);
             if (data != null) {
                 if (data.getBranchList() != null)
@@ -137,7 +141,7 @@ public class LoginFSecond extends BaseFragment implements View.OnClickListener {
                         sessionManager.setBranchId(branchList.get(appCompatSpinner.getSelectedItemPosition()).getBranchId());
                         sessionManager.setPersonId(personId);
                         sessionManager.setCustomerId(customerId);
-                        sessionManager.setUserLogin(true);
+                        sessionManager.setUserLogin(isRememberMe);
                         setAllProfileData();
 
                     }
@@ -161,10 +165,4 @@ public class LoginFSecond extends BaseFragment implements View.OnClickListener {
         });
     }
 
-    /*db.profileDao().getAllEditAllAddressData().observe((LifecycleOwner) activity, new Observer<EditAllAddressData>() {
-            @Override
-            public void onChanged(EditAllAddressData editAllAddressData) {
-                editAllAddressDataFinal[0] = editAllAddressData;
-            }
-        });*/
 }

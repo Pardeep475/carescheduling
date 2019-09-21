@@ -5,19 +5,22 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.carescheduling.R;
 import com.example.carescheduling.Ui.Base.BaseFragment;
+import com.example.carescheduling.Ui.Common.ClientBarcodeList;
 import com.example.carescheduling.Ui.Common.Common;
 import com.example.carescheduling.Ui.Common.CommonBean;
 import com.example.carescheduling.Ui.HomeScreen.ViewModel.ScannerFragmentViewModal;
-import com.example.carescheduling.Ui.HomeScreen.beans.ClientBookingScreenModel;
 import com.example.carescheduling.Ui.HomeScreen.beans.MatchingClientBarcodeForLoginRetro;
 import com.example.carescheduling.Ui.HomeScreen.beans.ScanBean;
+import com.example.carescheduling.Ui.HomeScreen.beans.ScannerDataBean;
 import com.example.carescheduling.Utils.ConnectivityReceiver;
+import com.example.carescheduling.data.Local.AppDataBase;
 import com.example.carescheduling.databinding.FragmentScannerViewBinding;
 import com.google.zxing.Result;
+
+import java.util.List;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
@@ -63,8 +66,6 @@ public class ScannerFragment extends BaseFragment implements ZXingScannerView.Re
 
     @Override
     public void handleResult(Result rawResult) {
-        Toast.makeText(getActivity(), "Contents = " + rawResult.getText() +
-                ", Format = " + rawResult.getBarcodeFormat().name(), Toast.LENGTH_SHORT).show();
         gettingBarcodeString(rawResult.getText());
     }
 
@@ -114,12 +115,64 @@ public class ScannerFragment extends BaseFragment implements ZXingScannerView.Re
                     });
                 } catch (Exception e) {
                     hideDialog();
-                    Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+                    loadLocal(barcodeStringId);
                 }
             } else {
-                Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
+                loadLocal(barcodeStringId);
             }
         }
+    }
+
+    private void loadLocal(final String barcodeStringId) {
+        AppDataBase.getAppDatabase(getActivity())
+                .homeDeo()
+                .getAllClientBarcodeList(getSessionManager().getBookingId()).observe(this, new Observer<List<ClientBarcodeList>>() {
+            @Override
+            public void onChanged(List<ClientBarcodeList> clientBarcodeLists) {
+                if (clientBarcodeLists != null && clientBarcodeLists.size() > 0) {
+                    int count = 0;
+                    for (int i = 0; i < clientBarcodeLists.size(); i++) {
+                        ClientBarcodeList clientBarcodeList = clientBarcodeLists.get(i);
+                        if (clientBarcodeList.getIsDefault()) {
+                            if (barcodeStringId.equalsIgnoreCase(clientBarcodeList.getBarcodeInfoString())) {
+                                count++;
+                                ScanBean scanBean = new ScanBean();
+                                ScannerDataBean scannerDataBean = new ScannerDataBean();
+                                scannerDataBean.setBarcodeId(clientBarcodeList.getBarcodeId());
+                                scanBean.setData(scannerDataBean);
+//                                ScannerDataBean.setBranchId(getSessionManager().getBranchId());
+//                                ScannerDataBean.setClientPersonId(getSessionManager().getClientId());
+//                                ScannerDataBean.setEmployeePersonId(getSessionManager().getPersonId());
+//                                ScannerDataBean.setCustomerId(getSessionManager().getCustomerId());
+                                setFragment(ArrivalAndDepartureFragment.newInstance(scanBean, "Barcode"));
+                            }
+                        }else {
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    previewCamera();
+                                }
+                            }, 1000);
+                        }
+                    }
+                    if (count ==0){
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                previewCamera();
+                            }
+                        }, 1000);
+                    }
+                } else {
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            previewCamera();
+                        }
+                    }, 1000);
+                }
+            }
+        });
     }
 
     private void previewCamera() {

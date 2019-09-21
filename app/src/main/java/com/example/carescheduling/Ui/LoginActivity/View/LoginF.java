@@ -17,6 +17,7 @@ import com.example.carescheduling.Ui.LoginActivity.ViewModal.LoginViewModel;
 import com.example.carescheduling.Ui.LoginActivity.beans.LoginBeanData;
 import com.example.carescheduling.Ui.LoginActivity.beans.LoginBeanRetro;
 import com.example.carescheduling.Ui.LoginActivity.presenter.LoginPresenter;
+import com.example.carescheduling.Ui.Profile.bean.ProfileAllData;
 import com.example.carescheduling.Utils.ConnectivityReceiver;
 import com.example.carescheduling.databinding.FragmentLoginBinding;
 
@@ -111,12 +112,19 @@ public class LoginF extends BaseFragment implements LoginPresenter {
             public void onChanged(LoginBeanRetro loginBeanRetro) {
                 hideDialog();
                 Log.e("LoginSuccess", "liveData");
+                getSessionManager().setOffline(fragmentLoginBinding.cbRememberMe.isChecked());
                 if (loginBeanRetro != null && loginBeanRetro.getSuccess()) {
-                    if (loginBeanRetro.getData().getBranchList().size() > 0) {
+                    if (loginBeanRetro.getData().getBranchList().size() == 1) {
+                        getSessionManager().setBranchId(loginBeanRetro.getData().getBranchList().get(0).getBranchId());
+                        getSessionManager().setPersonId(loginBeanRetro.getData().getPersonId());
+                        getSessionManager().setCustomerId(loginBeanRetro.getData().getCustomerId());
+                        getSessionManager().setUserLogin(fragmentLoginBinding.cbRememberMe.isChecked());
+                        setAllProfileData();
+                    } else if (loginBeanRetro.getData().getBranchList().size() > 1) {
                         getSessionManager().setCurrentPassword(fragmentLoginBinding.edtPassword.getText().toString());
-                        goToLoginFSecond(userEmail, userPassword, loginBeanRetro.getData());
+                        goToLoginFSecond(userEmail, userPassword, loginBeanRetro.getData(), fragmentLoginBinding.cbRememberMe.isChecked());
                     } else {
-                        setDashboard(loginBeanRetro.getData());
+                        showAToast("Branch not found");
                     }
                 } else {
                     if (loginBeanRetro != null)
@@ -126,6 +134,24 @@ public class LoginF extends BaseFragment implements LoginPresenter {
             }
         });
     }
+
+
+    private void setAllProfileData() {
+        showDialog();
+
+        loginViewModel.getPersonAllData(sessionManager.getPersonId(), sessionManager.getCustomerId()
+                , sessionManager.getBranchId(), "Small").observe(this, new Observer<ProfileAllData>() {
+            @Override
+            public void onChanged(ProfileAllData profileAllData) {
+                hideDialog();
+                if (profileAllData != null && getActivity() != null) {
+                    loginViewModel.setDefaultData(getActivity(), profileAllData);
+
+                }
+            }
+        });
+    }
+
 
     private void setDashboard(LoginBeanRetro.Data dashboard) {
 //    sessionManager.setBranchId(dashboard.getBranchId());
@@ -141,10 +167,10 @@ public class LoginF extends BaseFragment implements LoginPresenter {
         startActivity(intent);
     }
 
-    private void goToLoginFSecond(String email, String userPassword, LoginBeanRetro.Data data) {
+    private void goToLoginFSecond(String email, String userPassword, LoginBeanRetro.Data data, boolean isRemamberMe) {
         if (getActivity() != null) {
             getActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.rl_main_login, LoginFSecond.newInstance(email, userPassword, data)).commitAllowingStateLoss();
+                    .replace(R.id.rl_main_login, LoginFSecond.newInstance(email, userPassword, data, isRemamberMe)).commitAllowingStateLoss();
         }
     }
 }

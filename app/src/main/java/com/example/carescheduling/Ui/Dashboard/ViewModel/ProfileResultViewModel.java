@@ -270,7 +270,8 @@ public class ProfileResultViewModel extends AndroidViewModel {
                 if (profileMainData != null) {
                     Log.e("getting_profile_data", profileMainData.getEmail());
                    data.setValue(getPersonFullDataFromLocal(profileMainData));
-                }
+                }else
+                    data.setValue(null);
             }
         });
         return data;

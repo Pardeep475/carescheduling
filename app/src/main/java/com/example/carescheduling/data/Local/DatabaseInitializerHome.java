@@ -3,6 +3,7 @@ package com.example.carescheduling.data.Local;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.example.carescheduling.Ui.Common.ClientBarcodeList;
 import com.example.carescheduling.Ui.Dashboard.beans.ClientContactList;
 import com.example.carescheduling.Ui.Dashboard.beans.ClientDisabilityList;
 import com.example.carescheduling.Ui.Dashboard.beans.ClientDocumentList;
@@ -416,5 +417,45 @@ public class DatabaseInitializerHome {
 
     private static void addUserScheduleClients(final AppDataBase db, ScheduleClients user) {
         db.homeDeo().insertScheduleClients(user);
+    }
+
+
+    //   ClientBarcodeList
+    public static void populateAsyncClientBarcodeList(@NonNull final AppDataBase db, List<ClientBarcodeList> list) {
+        PopulateDbAsyncClientBarcodeList task = new PopulateDbAsyncClientBarcodeList(db, list);
+        task.execute();
+    }
+
+    private static class PopulateDbAsyncClientBarcodeList extends AsyncTask<Void, Void, Void> {
+
+        private final AppDataBase mDb;
+        private List<ClientBarcodeList> list;
+
+        PopulateDbAsyncClientBarcodeList(AppDataBase db, List<ClientBarcodeList> list) {
+            mDb = db;
+            this.list = list;
+        }
+
+        @Override
+        protected Void doInBackground(final Void... params) {
+            populateWithClientBarcodeListData(mDb, list);
+            return null;
+        }
+
+    }
+
+    private static void populateWithClientBarcodeListData(AppDataBase db, List<ClientBarcodeList> list) {
+        int count = db.homeDeo().countClientBarcodeList();
+        if (count > 0)
+            db.homeDeo().deleteClientBarcodeList();
+        for (ClientBarcodeList user : list) {
+            addUserClientBarcodeList(db, user);
+        }
+        Log.d(TAG, "ClientBarcodeList Count: " + db.homeDeo().countClientBarcodeList());
+//        Toast.makeText(this, "Rows Count: " + userList.size(), Toast.LENGTH_SHORT).show();
+    }
+
+    private static void addUserClientBarcodeList(final AppDataBase db, ClientBarcodeList user) {
+        db.homeDeo().insertClientBarcodeList(user);
     }
 }

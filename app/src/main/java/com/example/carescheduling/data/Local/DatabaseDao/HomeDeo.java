@@ -1,5 +1,6 @@
 package com.example.carescheduling.data.Local.DatabaseDao;
 
+import com.example.carescheduling.Ui.Common.ClientBarcodeList;
 import com.example.carescheduling.Ui.Dashboard.beans.ClientContactList;
 import com.example.carescheduling.Ui.Dashboard.beans.ClientDisabilityList;
 import com.example.carescheduling.Ui.Dashboard.beans.ClientDocumentList;
@@ -182,4 +183,20 @@ public interface HomeDeo {
     //   delete All  ScheduleClients
     @Query("DELETE FROM ScheduleClients")
     public void deleteScheduleClients();
+
+    // get All ClientBarcodeList
+    @Query("SELECT * FROM ClientBarcodeList WHERE bookingId = :bookingId")
+    LiveData<List<ClientBarcodeList>> getAllClientBarcodeList(String bookingId);
+
+    //    get ClientBarcodeList count
+    @Query("SELECT COUNT(*) from ClientBarcodeList")
+    int countClientBarcodeList();
+
+    // insert all ClientBarcodeList
+    @Insert
+    void insertClientBarcodeList(ClientBarcodeList... ClientBarcodeList);
+
+    //   delete All  ClientBarcodeList
+    @Query("DELETE FROM ClientBarcodeList")
+    public void deleteClientBarcodeList();
 }
