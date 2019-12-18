@@ -9,6 +9,7 @@ import com.example.carescheduling.Ui.Common.ClientBarcodeList;
 import com.example.carescheduling.Ui.Dashboard.beans.AllHomeData;
 import com.example.carescheduling.Ui.Dashboard.beans.ClientBookingListModel;
 import com.example.carescheduling.Ui.Dashboard.beans.ClientContactList;
+import com.example.carescheduling.Ui.Dashboard.beans.ClientDateId;
 import com.example.carescheduling.Ui.Dashboard.beans.ClientDisabilityList;
 import com.example.carescheduling.Ui.Dashboard.beans.ClientDocumentList;
 import com.example.carescheduling.Ui.Dashboard.beans.ClientMedicalForMobileList;
@@ -25,13 +26,17 @@ import com.example.carescheduling.data.Local.SessionManager;
 import com.example.carescheduling.data.Network.ApiClient;
 import com.example.carescheduling.data.Network.ApiService;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -265,16 +270,41 @@ public class DashboardViewModel extends AndroidViewModel {
 
     private void getClientBookingScreenModelData(AllHomeData data) {
         List<ClientBookingScreenModel> clientBookingScreenModels = new ArrayList<>();
+        List<ClientDateId> clientDateIds = new ArrayList<>();
+        boolean isFirst = false;
         for (int i = 0; i < data.getDataList().size(); i++) {
             SessionManager sessionManager = new SessionManager(getApplication());
             ClientBookingScreenModel clientBookingScreenModel = new ClientBookingScreenModel();
-            if (i == 0) {
-                if (!checkIsNotNull(data.getDataList().get(i).getClientPersonId()).equalsIgnoreCase("N/A"))
-                    sessionManager.setClientId(data.getDataList().get(i).getClientPersonId());
-                if (!checkIsNotNull(data.getDataList().get(i).getClientBookingId()).equalsIgnoreCase("N/A"))
-                    sessionManager.setBookingId(data.getDataList().get(i).getClientBookingId());
 
+//             clientDateIds.add(new ClientDateId(data.getDataList().get(i).getBookingDate(),data.getDataList().get(i).getClientPersonId()));
+//         new model added here
+            clientDateIds.add(new ClientDateId(data.getDataList().get(i).getBookingDate(), data.getDataList().get(i).getClientPersonId(),
+                    data.getDataList().get(i).getClientBookingId(),
+                    data.getDataList().get(i).getBookingStartTime(),
+                    data.getDataList().get(i).getBookingEndTime()));
+
+
+            if (data.getDataList().get(i).getBookingDate() != null) {
+
+                String time = data.getDataList().get(i).getBookingDate() + " " + data.getDataList().get(i).getBookingStartTime() + ":00";
+                if (getTimeLong(time) > getCurrentTimeStamp()) {
+                    if (!isFirst) {
+                        isFirst = true;
+                        if (!checkIsNotNull(data.getDataList().get(i).getClientPersonId()).equalsIgnoreCase("N/A"))
+                            sessionManager.setClientId(data.getDataList().get(i).getClientPersonId());
+                        if (!checkIsNotNull(data.getDataList().get(i).getClientBookingId()).equalsIgnoreCase("N/A"))
+                            sessionManager.setBookingId(data.getDataList().get(i).getClientBookingId());
+                    }
+                }
+
+            } else {
+                if (!checkIsNotNull(data.getDataList().get(0).getClientPersonId()).equalsIgnoreCase("N/A"))
+                    sessionManager.setClientId(data.getDataList().get(0).getClientPersonId());
+                if (!checkIsNotNull(data.getDataList().get(0).getClientBookingId()).equalsIgnoreCase("N/A"))
+                    sessionManager.setBookingId(data.getDataList().get(0).getClientBookingId());
             }
+
+
             clientBookingScreenModel.setBookingId(checkIsNotNull(data.getDataList().get(i).getClientBookingId()));
             clientBookingScreenModel.setName(checkIsNotNull(data.getDataList().get(i).getClientName()));
             clientBookingScreenModel.setDate(checkIsNotNull(data.getDataList().get(i).getBookingStartTime()) + " " + checkIsNotNull(data.getDataList().get(i).getBookingDate()));
@@ -285,8 +315,29 @@ public class DashboardViewModel extends AndroidViewModel {
             clientBookingScreenModel.setTelephone(checkIsNotNull(data.getDataList().get(i).getClientPhoneNumber()));
             clientBookingScreenModels.add(clientBookingScreenModel);
         }
+//        clientDateIds.size();
 
         DatabaseInitializerHome.populateAsyncClientBookingScreenModel(AppDataBase.getAppDatabase(getApplication()), clientBookingScreenModels);
+    }
+
+
+    private long getCurrentTimeStamp() {
+        long time = System.currentTimeMillis();
+        return time;
+    }
+
+    private long getTimeLong(String time) {
+        Log.e("my_time_stamp", "getTimeLong: " + time);
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+            Date date = sdf.parse(time);
+
+            return date.getTime();
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return 0;
+        }
     }
 
     private String checkIsNotNull(String value) {

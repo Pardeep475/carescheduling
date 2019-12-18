@@ -156,6 +156,20 @@
     <string name="make_default">Make Default</string>
     <string name="this_barcode_belongs_to">This barcode belongs to :</string>
     <string name="registerred_time_and_date_is">Registerred time and date is :</string>
+    <string name="arrival">Arrival</string>
+    <string name="departure">Departure</string>
+    <string name="please_choose_arrival_type">Please choose arrival type</string>
+    <string name="visit_arrival">Visit Arrival</string>
+    <string name="date">Date</string>
+    <string name="time_without_colon">Time</string>
+    <string name="visit_departure">Visit Departure</string>
+    <string name="info_client">Client Info</string>
+    <string name="my_task">My Task</string>
+    <string name="success">Success</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="done">Done</string>
+    <string name="is_disability">Is Disability</string>
 
     <string-array name="home_array">
         <item>My Next Visit</item>

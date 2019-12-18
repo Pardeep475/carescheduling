@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,8 @@ import com.example.carescheduling.Utils.ConnectivityReceiver;
 import com.example.carescheduling.databinding.ClientInfoSummaryFragmentBinding;
 
 import java.io.Serializable;
+
+import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class ClientInfoSummaryFragment extends BaseFragment implements Common {
 
@@ -128,7 +131,8 @@ public class ClientInfoSummaryFragment extends BaseFragment implements Common {
             public void onChanged(ClientBookingScreenModel clientBookingScreenModel) {
                 if (clientBookingScreenModel != null) {
                     clientBookingModel = clientBookingScreenModel;
-                    getSessionManager().setBookingId(clientBookingModel.getBookingId());
+//                    getSessionManager().setBookingId(clientBookingModel.getBookingId());
+//                    Log.e("booking_id", "onChanged: client summry "+ getSessionManager().getBookingId());
                     clientInfoSummaryFragmentBinding.setClientBookingScreenModel(clientBookingScreenModel);
                     if (clientBookingScreenModel.getImageString() != null && !clientBookingScreenModel.getImageString().equalsIgnoreCase("") && !clientBookingScreenModel.getImageString().equalsIgnoreCase("null"))
                         clientInfoSummaryFragmentBinding.imgUser.setImageBitmap(ImageFromBase64(clientBookingScreenModel.getImageString()));

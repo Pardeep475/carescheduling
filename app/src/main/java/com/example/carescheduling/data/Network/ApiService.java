@@ -142,7 +142,7 @@ public interface ApiService {
                                                                     @Path("branchId") String branchId,
                                                                     @Path("clientId") String clientId);
 
-    @GET("GetClientMedical/{customerId}/{branchId}/{clientId}")
+    @GET("GetClientMadical/{customerId}/{branchId}/{clientId}")
     Observable<Response<ClientCareMedicalBean>> GetClientMedical(@Path("customerId") String customerId,
                                                                  @Path("branchId") String branchId,
                                                                  @Path("clientId") String clientId);
@@ -263,7 +263,7 @@ public interface ApiService {
     Observable<Response<ScanBean>> MatchingClientNFCForLogin(
             @Body MatchingClientNFCForLoginRetro matchingClientNFCForLoginRetro);
 
-    @POST("MatchingClientBarcodeForLogin")
+    @POST("MatchingClientBarcodeForLoginAndLogout")
     Observable<Response<ScanBean>> MatchingClientBarcodeForLogin(
             @Body MatchingClientBarcodeForLoginRetro matchingClientNFCForLoginRetro);
 

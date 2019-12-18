@@ -23,6 +23,7 @@ import androidx.fragment.app.Fragment;
 
 import android.provider.Settings;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,7 @@ import com.example.carescheduling.Ui.HomeScreen.beans.Tasks;
 import com.example.carescheduling.Ui.HomeScreen.presenter.MyNextVisitClick;
 import com.example.carescheduling.Ui.Profile.View.EditProfileImage;
 import com.example.carescheduling.Utils.ConnectivityReceiver;
+import com.example.carescheduling.Utils.CustomDialogClass;
 import com.example.carescheduling.databinding.BlankFragmentBinding;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
@@ -50,6 +52,8 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class BlankFragment extends BaseFragment implements Common, MyNextVisitClick {
 
@@ -103,30 +107,40 @@ public class BlankFragment extends BaseFragment implements Common, MyNextVisitCl
 
     @Override
     public void ClientTask() {
-        setFragment(ClientTasksFragment.newInstance());
+        setFragment(ClientTasksFragment.newInstance("Not Clickable"));
     }
 
     @Override
     public void BarcodeClick() {
-        if (checkWriteExternalPermission())
-            setFragment(ScannerFragment.newInstance());
-        else
-            requestStoragePermission();
+        if (getActivity() != null) {
+            CustomDialogClass cdd = new CustomDialogClass(getActivity(), "Arrival", null);
+            cdd.show();
+        } else {
+            showAToast("Something went wrong");
+        }
     }
+
+
+    private void showBarcodeDialog() {
+
+    }
+
+
     // https://stackoverflow.com/questions/34882171/testing-an-app-by-faking-nfc-tag-scan
 // https://www.learn2crack.com/2016/10/android-reading-and-writing-nfc-tags.html
     @Override
     public void NfcClick() {
         if (getActivity() != null) {
-            NfcManager manager = (NfcManager) getActivity().getSystemService(Context.NFC_SERVICE);
-            NfcAdapter adapter = manager.getDefaultAdapter();
-            if (adapter != null && adapter.isEnabled()) {
-                showAToast("your device support nfc");
-                //Yes NFC available
-            } else {
-                showAToast("your device doesn't support nfc");
-                //Your device doesn't support NFC
-            }
+            setFragment(DepartureNew.newInstance());
+//            NfcManager manager = (NfcManager) getActivity().getSystemService(Context.NFC_SERVICE);
+//            NfcAdapter adapter = manager.getDefaultAdapter();
+//            if (adapter != null && adapter.isEnabled()) {
+//                showAToast("your device support nfc");
+//                //Yes NFC available
+//            } else {
+//                showAToast("your device doesn't support nfc");
+//                //Your device doesn't support NFC
+//            }
         }
     }
 
@@ -166,14 +180,14 @@ public class BlankFragment extends BaseFragment implements Common, MyNextVisitCl
                             if (clientBookingListModel != null) {
                                 clientBookingModel = clientBookingListModel;
                                 getSessionManager().setBookingId(clientBookingModel.getBookingId());
+                                Log.e("booking_id", "onChanged: blank fragment 2 " + getSessionManager().getBookingId());
                                 blankFragmentBinding.setClientBookingScreenModel(clientBookingListModel);
                                 if (clientBookingListModel.getImageString() != null && !clientBookingListModel.getImageString().equalsIgnoreCase("") && !clientBookingListModel.getImageString().equalsIgnoreCase("null"))
                                     blankFragmentBinding.imgVisitPerson.setImageBitmap(ImageFromBase64(clientBookingListModel.getImageString()));
                                 setDataOriginal();
                             } else {
-//                                setNoDataFound();
-
-                                getDataFromRoom();
+                                setNoDataFound();
+                                //getDataFromRoom();
                             }
 
                         }
@@ -190,13 +204,26 @@ public class BlankFragment extends BaseFragment implements Common, MyNextVisitCl
         }
     }
 
+/*    @Override
+    public void onResume() {
+        super.onResume();
+        if (ConnectivityReceiver.isNetworkAvailable(getActivity())) {
+                    // do Nothing
+        }
+        else{
+            getDataFromRoom();
+        }
+        }*/
+
     private void getDataFromRoom() {
+
         mViewModel.getDataFromLocal(getActivity(), getSessionManager().getBookingId()).observe(this, new Observer<ClientBookingScreenModel>() {
             @Override
             public void onChanged(ClientBookingScreenModel clientBookingScreenModel) {
                 if (clientBookingScreenModel != null) {
                     clientBookingModel = clientBookingScreenModel;
                     getSessionManager().setBookingId(clientBookingModel.getBookingId());
+                    Log.e("booking_id", "onChanged: booking bragment 1" + getSessionManager().getBookingId());
                     blankFragmentBinding.setClientBookingScreenModel(clientBookingScreenModel);
                     if (clientBookingScreenModel.getImageString() != null && !clientBookingScreenModel.getImageString().equalsIgnoreCase("") && !clientBookingScreenModel.getImageString().equalsIgnoreCase("null"))
                         blankFragmentBinding.imgVisitPerson.setImageBitmap(ImageFromBase64(clientBookingScreenModel.getImageString()));
@@ -235,42 +262,42 @@ public class BlankFragment extends BaseFragment implements Common, MyNextVisitCl
         return (res1 == PackageManager.PERMISSION_GRANTED && res2 == PackageManager.PERMISSION_GRANTED && res3 == PackageManager.PERMISSION_GRANTED);
     }
 
-    private void requestStoragePermission() {
-        Dexter.withActivity(getActivity())
-                .withPermissions(
-                        Manifest.permission.READ_EXTERNAL_STORAGE,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.CAMERA
-                )
-                .withListener(new MultiplePermissionsListener() {
-                    @Override
-                    public void onPermissionsChecked(MultiplePermissionsReport report) {
-                        // check if all permissions are granted
-                        if (report.areAllPermissionsGranted()) {
-                            setFragment(ScannerFragment.newInstance());
-                        } else
-                            requestStoragePermission();
-
-                        // check for permanent denial of any permission
-                        if (report.isAnyPermissionPermanentlyDenied()) {
-                            showSettingsDialog();
-                        }
-                    }
-
-                    @Override
-                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
-                        token.continuePermissionRequest();
-                    }
-                }).
-                withErrorListener(new PermissionRequestErrorListener() {
-                    @Override
-                    public void onError(DexterError error) {
-
-                    }
-                })
-                .onSameThread()
-                .check();
-    }
+//    public void requestStoragePermission() {
+//        Dexter.withActivity(getActivity())
+//                .withPermissions(
+//                        Manifest.permission.READ_EXTERNAL_STORAGE,
+//                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+//                        Manifest.permission.CAMERA
+//                )
+//                .withListener(new MultiplePermissionsListener() {
+//                    @Override
+//                    public void onPermissionsChecked(MultiplePermissionsReport report) {
+//                        // check if all permissions are granted
+//                        if (report.areAllPermissionsGranted()) {
+//                            setFragment(ScannerFragment.newInstance());
+//                        } else
+//                            requestStoragePermission();
+//
+//                        // check for permanent denial of any permission
+//                        if (report.isAnyPermissionPermanentlyDenied()) {
+//                            showSettingsDialog();
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+//                        token.continuePermissionRequest();
+//                    }
+//                }).
+//                withErrorListener(new PermissionRequestErrorListener() {
+//                    @Override
+//                    public void onError(DexterError error) {
+//
+//                    }
+//                })
+//                .onSameThread()
+//                .check();
+//    }
 
     private void showSettingsDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());

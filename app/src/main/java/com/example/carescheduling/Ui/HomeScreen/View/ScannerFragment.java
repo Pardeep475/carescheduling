@@ -1,5 +1,7 @@
 package com.example.carescheduling.Ui.HomeScreen.View;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -22,18 +24,37 @@ import com.google.zxing.Result;
 
 import java.util.List;
 
+import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 public class ScannerFragment extends BaseFragment implements ZXingScannerView.ResultHandler, Common {
     private FragmentScannerViewBinding fragmentScannerViewBinding;
     private ScannerFragmentViewModal mViewModel;
 
-    public static ScannerFragment newInstance() {
-        return new ScannerFragment();
+    private String type;
+    private String noteText;
+
+    public static ScannerFragment newInstance(String type,String noteText) {
+        ScannerFragment scannerFragment = new ScannerFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("TYPE", type);
+        bundle.putString("NOTE_TEXT", noteText);
+        scannerFragment.setArguments(bundle);
+        return scannerFragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            type = getArguments().getString("TYPE", "Arrival");
+            noteText = getArguments().getString("NOTE_TEXT", "");
+        }
     }
 
     @Override
@@ -97,17 +118,20 @@ public class ScannerFragment extends BaseFragment implements ZXingScannerView.Re
                     matchingClientBarcodeForLoginRetro.setClientPersonId(getSessionManager().getClientId());
                     matchingClientBarcodeForLoginRetro.setEmployeePersonId(getSessionManager().getPersonId());
                     matchingClientBarcodeForLoginRetro.setCustomerId(getSessionManager().getCustomerId());
+                    matchingClientBarcodeForLoginRetro.setClientBookingId(getSessionManager().getBookingId());
+                    matchingClientBarcodeForLoginRetro.setIsDeparture(false);
                     mViewModel.getMatchingClientBarcodeForLogin(matchingClientBarcodeForLoginRetro).observe(this, new Observer<ScanBean>() {
                         @Override
                         public void onChanged(ScanBean scanBean) {
                             hideDialog();
                             if (scanBean != null && scanBean.getSuccess() && scanBean.getData() != null) {
-                                setFragment(ArrivalAndDepartureFragment.newInstance(scanBean, "Barcode"));
+                                setData(scanBean, "Barcode");
                             } else {
                                 new Handler().postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
-                                        previewCamera();
+//                                        previewCamera();
+                                        showAlertDialog();
                                     }
                                 }, 1000);
                             }
@@ -116,11 +140,35 @@ public class ScannerFragment extends BaseFragment implements ZXingScannerView.Re
                 } catch (Exception e) {
                     hideDialog();
                     loadLocal(barcodeStringId);
+//                    showAlertDialog();
                 }
             } else {
                 loadLocal(barcodeStringId);
             }
         }
+    }
+
+    private void showAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Barcode not found. Scan Again ?");
+        builder.setMessage("Press OK to scan again");
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+                previewCamera();
+//                openSettings();
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+                getActivity().onBackPressed();
+            }
+        });
+        builder.show();
+
     }
 
     private void loadLocal(final String barcodeStringId) {
@@ -144,9 +192,10 @@ public class ScannerFragment extends BaseFragment implements ZXingScannerView.Re
 //                                ScannerDataBean.setClientPersonId(getSessionManager().getClientId());
 //                                ScannerDataBean.setEmployeePersonId(getSessionManager().getPersonId());
 //                                ScannerDataBean.setCustomerId(getSessionManager().getCustomerId());
-                                setFragment(ArrivalAndDepartureFragment.newInstance(scanBean, "Barcode"));
+                                setData(scanBean, "Barcode");
+//                                setFragment(ArrivalAndDepartureFragment.newInstance(scanBean, "Barcode"));
                             }
-                        }else {
+                        } else {
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
@@ -155,7 +204,7 @@ public class ScannerFragment extends BaseFragment implements ZXingScannerView.Re
                             }, 1000);
                         }
                     }
-                    if (count ==0){
+                    if (count == 0) {
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
@@ -173,6 +222,33 @@ public class ScannerFragment extends BaseFragment implements ZXingScannerView.Re
                 }
             }
         });
+    }
+
+    private void setData(ScanBean scanBean, String scanType) {
+        if (scanBean != null) {
+            if (scanBean.getData() != null) {
+
+                if (type.equalsIgnoreCase("Arrival")) {
+                    if (scanBean.getData().getClientVisitId() != null) {
+                        setFragment(ManualLogoutFragment.newInstance(scanBean, scanType));
+                    } else {
+                        setFragment(ArrivalAndDepartureFragment.newInstance(scanBean, scanType, type, scanBean.getData().getClientVisitId(), noteText));
+                    }
+                } else {
+                    if (scanBean.getData().getClientVisitId() != null) {
+                        setFragment(ArrivalAndDepartureFragment.newInstance(scanBean, scanType, type, scanBean.getData().getClientVisitId(), noteText));
+                    } else {
+                        showAToast("Please update arrival first.");
+                    }
+                }
+
+
+            } else {
+                showAToast("Something went wrong");
+            }
+        } else {
+            showAToast("Something went wrong");
+        }
     }
 
     private void previewCamera() {

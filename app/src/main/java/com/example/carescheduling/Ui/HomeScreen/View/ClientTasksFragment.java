@@ -37,18 +37,28 @@ public class ClientTasksFragment extends BaseFragment implements Common, IClient
 
     private ClientTasksViewModel mViewModel;
     private ArrayList<Tasks> tasksArrayList = new ArrayList<>();
-    private ClientTasksFragmentBinding clientTasksFragmentBinding;
     private Gson gson = new Gson();
+    private ClientTasksFragmentBinding clientTasksFragmentBinding;
     private ClientTasksAdapter clientInfoDocumentsAdapter;
+    private String type = "Not Clickable";
 
-    public static ClientTasksFragment newInstance() {
-        return new ClientTasksFragment();
+    public static ClientTasksFragment newInstance(String type) {
+        ClientTasksFragment clientTasksFragment = new ClientTasksFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("TYPE", type);
+        clientTasksFragment.setArguments(bundle);
+        return clientTasksFragment;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        try {
+            if (getArguments() != null)
+                type = getArguments().getString("TYPE");
+        } catch (Exception e) {
+            showAToast(e.toString());
+        }
     }
 
     @Override
@@ -176,17 +186,30 @@ public class ClientTasksFragment extends BaseFragment implements Common, IClient
 
     @Override
     public void itemTaskClick(int pos, Tasks tasks) {
-        if (tasks.isCompleted()) {
-            tasks.setCompleted(false);
-            getItemArrayList().get(pos).setCompleted(false);
-        } else {
-            tasks.setCompleted(true);
-            getItemArrayList().get(pos).setCompleted(true);
-        }
-        clientInfoDocumentsAdapter.notifyItemChanged(pos, tasks);
+        if (type.equalsIgnoreCase("Not Clickable"))
+            return;
 
-//        clientInfoDocumentsAdapter.setData(tasksArrayList);
-        getSessionManager().setClientTasks(gson.toJson(tasksArrayList));
+        //ClientTaskSaveFragment
+        setFragment(ClientTaskSaveFragment.newInstance(pos));
 
+
+//        if (tasks.isCompleted()) {
+//            tasks.setCompleted(false);
+//            getItemArrayList().get(pos).setCompleted(false);
+//        } else {
+//            tasks.setCompleted(true);
+//            getItemArrayList().get(pos).setCompleted(true);
+//        }
+//        clientInfoDocumentsAdapter.notifyItemChanged(pos, tasks);
+//
+////        clientInfoDocumentsAdapter.setData(tasksArrayList);
+//        getSessionManager().setClientTasks(gson.toJson(tasksArrayList));
+
+    }
+
+    private void setFragment(Fragment fragment) {
+        if (getActivity() != null)
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fm_edit_container, fragment).addToBackStack(null).commitAllowingStateLoss();
     }
 }

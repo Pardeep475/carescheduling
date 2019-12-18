@@ -61,6 +61,7 @@
                 android:fontFamily="@font/rubik_medium"
                 android:paddingStart="@dimen/ten_dp"
                 android:paddingTop="@dimen/five_dp"
+                android:visibility="gone"
                 android:paddingEnd="@dimen/ten_dp"
                 android:paddingBottom="@dimen/five_dp"
                 android:textSize="@dimen/sixteen_sp" />

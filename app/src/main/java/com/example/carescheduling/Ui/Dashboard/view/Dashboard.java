@@ -81,7 +81,8 @@ public class Dashboard extends BaseActivity {
         sessionManager = getSessionManager();
         dashboardViewModel = ViewModelProviders.of(this).get(DashboardViewModel.class);
         activityDashboardBinding.navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        setFragment(SettingF.newInstance());
+        activityDashboardBinding.navigation.setSelectedItemId(R.id.navigation_dashboard);
+        setFragment(HomeF.newInstance());
         showDialog();
         getDefaultData();
         setUpAllHomeData();

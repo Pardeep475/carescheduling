@@ -86,13 +86,13 @@ public class VisitArchiveRetroBean {
         @SerializedName("ClientPhoneNumber")
         @Expose
         private String clientPhoneNumber;
-        @SerializedName("EmailAddress")
+        @SerializedName("ClientEmailAddress")
         @Expose
         private Object emailAddress;
         @SerializedName("ImageHexString")
         @Expose
         private Object imageHexString;
-        @SerializedName("PersonAddress")
+        @SerializedName("ClientAddress")
         @Expose
         private String personAddress;
         @SerializedName("Weekdayname")

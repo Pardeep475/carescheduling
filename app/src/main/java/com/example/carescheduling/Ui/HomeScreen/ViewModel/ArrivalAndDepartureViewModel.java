@@ -78,7 +78,8 @@ public class ArrivalAndDepartureViewModel extends AndroidViewModel {
                                             } else
                                                 data.setValue(null);
                                         }catch(Exception e){
-                                            if (jsonObject.getString("ResponseMessage") != null)
+                                            if (jsonObject.getString("ResponseMessage") != null
+                                                    && !jsonObject.getString("ResponseMessage").contains("barcode not found"))
                                                 Toast.makeText(context, jsonObject.getString("ResponseMessage"), Toast.LENGTH_SHORT).show();
                                             data.setValue(null);
                                         }
@@ -88,7 +89,8 @@ public class ArrivalAndDepartureViewModel extends AndroidViewModel {
                                     }
                                 } else
                                     data.setValue(null);
-                                if (jsonObject.getString("ResponseMessage") != null)
+                                if (jsonObject.getString("ResponseMessage") != null
+                                        && !jsonObject.getString("ResponseMessage").contains("barcode not found"))
                                     Toast.makeText(context, jsonObject.getString("ResponseMessage"), Toast.LENGTH_SHORT).show();
 
                             } else
@@ -125,7 +127,8 @@ public class ArrivalAndDepartureViewModel extends AndroidViewModel {
                                 JSONObject jsonObject = new JSONObject(loginBeanRetroResponse.body().toString());
                                 boolean isSuccess = jsonObject.getBoolean("Success");
                                 data.setValue(isSuccess);
-                                if (jsonObject.getString("ResponseMessage") != null)
+                                if (jsonObject.getString("ResponseMessage") != null
+                                        && !jsonObject.getString("ResponseMessage").contains("barcode not found"))
                                     Toast.makeText(context, jsonObject.getString("ResponseMessage"), Toast.LENGTH_SHORT).show();
 
                             }

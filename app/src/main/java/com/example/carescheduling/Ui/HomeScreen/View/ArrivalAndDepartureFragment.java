@@ -4,6 +4,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -27,6 +28,7 @@ import com.example.carescheduling.Ui.HomeScreen.beans.EmployeeClientVisitForDepa
 import com.example.carescheduling.Ui.HomeScreen.beans.ScanBean;
 import com.example.carescheduling.Ui.HomeScreen.beans.Tasks;
 import com.example.carescheduling.Ui.HomeScreen.presenter.IArrivalAndDepartureClick;
+import com.example.carescheduling.Ui.Profile.View.EditProfile;
 import com.example.carescheduling.Utils.ConnectivityReceiver;
 import com.example.carescheduling.databinding.ArrivalAndDepartureFragmentBinding;
 import com.google.gson.Gson;
@@ -44,13 +46,19 @@ public class ArrivalAndDepartureFragment extends BaseFragment implements Common,
     private ScanBean scanBean;
     private String scanType;
     private String barcodeId;
+    private String type;
+    private String customerVisitId;
+    private String noteText;
     private Gson gson = new Gson();
 
-    public static ArrivalAndDepartureFragment newInstance(ScanBean scanBean, String scanType) {
+    public static ArrivalAndDepartureFragment newInstance(ScanBean scanBean, String scanType, String type, String customerVisitId, String noteText) {
         ArrivalAndDepartureFragment arrivalAndDepartureFragment = new ArrivalAndDepartureFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable("SCAN_BEAN", scanBean);
         bundle.putSerializable("SCAN_TYPE", scanType);
+        bundle.putSerializable("TYPE", type);
+        bundle.putSerializable("CUSTOMER_VISIT_ID", customerVisitId);
+        bundle.putSerializable("NOTE_TEXT", noteText);
         arrivalAndDepartureFragment.setArguments(bundle);
         return arrivalAndDepartureFragment;
     }
@@ -61,6 +69,9 @@ public class ArrivalAndDepartureFragment extends BaseFragment implements Common,
         if (getArguments() != null) {
             scanBean = (ScanBean) getArguments().getSerializable("SCAN_BEAN");
             scanType = getArguments().getString("SCAN_TYPE");
+            type = getArguments().getString("TYPE");
+            customerVisitId = getArguments().getString("CUSTOMER_VISIT_ID");
+            noteText = getArguments().getString("NOTE_TEXT");
             barcodeId = scanBean.getData().getBarcodeId();
         }
     }
@@ -77,7 +88,13 @@ public class ArrivalAndDepartureFragment extends BaseFragment implements Common,
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(ArrivalAndDepartureViewModel.class);
         // TODO: Use the ViewModel
-
+        if (type.equalsIgnoreCase("Arrival")) {
+            arrivalAndDepartureFragmentBinding.btnDeparture.setVisibility(View.GONE);
+            arrivalAndDepartureFragmentBinding.btnArrival.setVisibility(View.VISIBLE);
+        } else {
+            arrivalAndDepartureFragmentBinding.btnDeparture.setVisibility(View.VISIBLE);
+            arrivalAndDepartureFragmentBinding.btnArrival.setVisibility(View.GONE);
+        }
         setCommonData();
         setData();
         arrivalAndDepartureFragmentBinding.setIArrivalAndDepartureClick(this);
@@ -130,31 +147,33 @@ public class ArrivalAndDepartureFragment extends BaseFragment implements Common,
 
     @Override
     public void departureClick() {
-        if (sessionManager.getClientVisitId() == null) {
-            showAToast("You have to register arrival time first");
-            return;
-        }
-        if (getActivity() != null && ConnectivityReceiver.isNetworkAvailable(getActivity())) {
-            showDialog();
-            mViewModel.getEmployeeClientVisitForDeparture(getEmployeeClientVisitForDepartureRetro()).observe(this, new Observer<Boolean>() {
-                @Override
-                public void onChanged(Boolean s) {
-                    hideDialog();
-                    if (s != null) {
-                        if (s) {
-                            getSessionManager().setClientVisitId(null);
-                            getSessionManager().setClientTasks(null);
-                            if (getActivity() != null) {
-                                getActivity().onBackPressed();
-                            }
-                        }
-                    }
+        getEmployeeClientVisitForDepartureRetro();
 
-                }
-            });
-        } else {
-            Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
-        }
+
+
+//        if (getActivity() != null && ConnectivityReceiver.isNetworkAvailable(getActivity())) {
+//            showDialog();
+//            mViewModel.getEmployeeClientVisitForDeparture(getEmployeeClientVisitForDepartureRetro()).observe(this, new Observer<Boolean>() {
+//                @Override
+//                public void onChanged(Boolean s) {
+//                    hideDialog();
+//                    if (s != null) {
+//                        if (s) {
+//                            getSessionManager().setClientVisitId(null);
+//                            getSessionManager().setClientTasks(null);
+//                            if (getActivity() != null) {
+//                                getActivity().finish();
+//                                Intent intent = new Intent(getActivity(), EditProfile.class);
+//                                intent.putExtra("pos", 0);
+//                                startActivity(intent);
+//                            }
+//                        }
+//                    }
+//                }
+//            });
+//        } else {
+//            Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
+//        }
     }
 
 
@@ -167,7 +186,11 @@ public class ArrivalAndDepartureFragment extends BaseFragment implements Common,
                     hideDialog();
                     if (s != null) {
                         getSessionManager().setClientVisitId(s);
-
+                        if (getActivity() != null)
+                            getActivity().finish();
+                        Intent intent = new Intent(getActivity(), EditProfile.class);
+                        intent.putExtra("pos", 0);
+                        startActivity(intent);
                     }
 
                 }
@@ -186,28 +209,30 @@ public class ArrivalAndDepartureFragment extends BaseFragment implements Common,
         employeeClientVisitForArrivalRetro.setBookingId(getSessionManager().getBookingId());
         employeeClientVisitForArrivalRetro.setBranchId(getSessionManager().getBranchId());
         employeeClientVisitForArrivalRetro.setClientId(getSessionManager().getClientId());
-        employeeClientVisitForArrivalRetro.setClientName(arrivalAndDepartureFragmentBinding.txtClientName.getText().toString());
+//        employeeClientVisitForArrivalRetro.setClientName(arrivalAndDepartureFragmentBinding.txtClientName.getText().toString());
         employeeClientVisitForArrivalRetro.setVisitArrivalRegisterredBy(getSessionManager().getPersonId());
-        employeeClientVisitForArrivalRetro.setVisitDepartureRegisteredBy(null);
+//        employeeClientVisitForArrivalRetro.setVisitDepartureRegisteredBy(null);
         employeeClientVisitForArrivalRetro.setCustomerId(getSessionManager().getCustomerId());
         employeeClientVisitForArrivalRetro.setDepartureRegistrationType(scanType);
         employeeClientVisitForArrivalRetro.setEmployeeId(getSessionManager().getPersonId());
-        employeeClientVisitForArrivalRetro.setLastLogOutOfEmployee(null);
+//        employeeClientVisitForArrivalRetro.setLastLogOutOfEmployee(null);
         employeeClientVisitForArrivalRetro.setSuggestedLogInTime(getTime());
+        employeeClientVisitForArrivalRetro.setClientBookingId(getSessionManager().getBookingId());
         employeeClientVisitForArrivalRetro.setVisitDate(getDate());
         employeeClientVisitForArrivalRetro.setVisitIdentificationTypeName(null);
-
         employeeClientVisitForArrivalRetros.add(employeeClientVisitForArrivalRetro);
         return employeeClientVisitForArrivalRetros;
     }
 
     private EmployeeClientVisitForDepartureRetro getEmployeeClientVisitForDepartureRetro() {
         EmployeeClientVisitForDepartureRetro employeeClientVisitForDepartureRetro = new EmployeeClientVisitForDepartureRetro();
-        employeeClientVisitForDepartureRetro.setClientVisitId(getSessionManager().getClientVisitId());
+        employeeClientVisitForDepartureRetro.setClientVisitId(customerVisitId);
         employeeClientVisitForDepartureRetro.setCustomerId(getSessionManager().getCustomerId());
-        employeeClientVisitForDepartureRetro.setDepartureRegistrationTypeName("Manual");
+        employeeClientVisitForDepartureRetro.setClientBookingId(getSessionManager().getBookingId());
+        employeeClientVisitForDepartureRetro.setDepartureRegistrationTypeName(scanType);
         employeeClientVisitForDepartureRetro.setVisitDepartureRegisteredBy(getSessionManager().getPersonId());
         employeeClientVisitForDepartureRetro.setVisitRegisteredDeparture(getFullDate());
+        employeeClientVisitForDepartureRetro.setVisitNoteText(noteText);
         if (getSessionManager().getClientTasks() != null)
             employeeClientVisitForDepartureRetro.setClientVisitTaskList(getTaskList());
 
@@ -221,10 +246,12 @@ public class ArrivalAndDepartureFragment extends BaseFragment implements Common,
         if (getItemArrayList() != null) {
             for (int i = 0; i < getItemArrayList().size(); i++) {
                 ClientVisitTaskList clientVisitTaskList = new ClientVisitTaskList();
-                clientVisitTaskList.setNoteText(tasksArrayList.get(i).getInstruction());
+                clientVisitTaskList.setNoteText(tasksArrayList.get(i).getNote());
                 clientVisitTaskList.setNoteTypeName(tasksArrayList.get(i).getTaskName());
                 clientVisitTaskList.setTaskId(tasksArrayList.get(i).getTaskId());
                 clientVisitTaskList.setTaskIsCompleted(tasksArrayList.get(i).isCompleted());
+
+                Log.e("TASK_LIST","  "+clientVisitTaskList.getNoteText());
                 list.add(clientVisitTaskList);
             }
         }

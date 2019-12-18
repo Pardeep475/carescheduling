@@ -86,7 +86,7 @@
                         android:background="@color/blue"
                         android:fontFamily="@font/rubik_medium"
                         android:onClick="@{(v)->myNextVisitClick.BarcodeClick()}"
-                        android:text="@string/barcode"
+                        android:text="@string/arrival"
                         android:textColor="@color/white" />
 
                     <Button
@@ -97,7 +97,7 @@
                         android:background="@color/blue"
                         android:fontFamily="@font/rubik_medium"
                         android:onClick="@{(v)->myNextVisitClick.NfcClick()}"
-                        android:text="@string/read_nfc"
+                        android:text="@string/departure"
                         android:textColor="@color/white" />
                 </LinearLayout>
                 <!--app:setImage="@{clientBookingScreenModel.image}"-->

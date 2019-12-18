@@ -28,6 +28,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -60,11 +61,13 @@ public class BlankViewModel extends AndroidViewModel {
                         if (loginBeanRetroResponse.isSuccessful()) {
                             if (loginBeanRetroResponse.body() != null && loginBeanRetroResponse.body().getData() != null)
                                 data.setValue(getClientData(loginBeanRetroResponse.body().getData()));
-                            else
+                            else {
+                                Toast.makeText(getApplication(), loginBeanRetroResponse.message(), Toast.LENGTH_SHORT).show();
                                 data.setValue(null);
+                            }
                         } else {
                             data.setValue(null);
-                            Toast.makeText(getApplication(), loginBeanRetroResponse.message(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplication(), (String) loginBeanRetroResponse.body().getResponseMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 }, new Consumer<Throwable>() {
@@ -80,19 +83,19 @@ public class BlankViewModel extends AndroidViewModel {
     }
 
 
-    public LiveData<ClientBookingScreenModel> getDataFromLocal(Context activity,String bookingId){
+    public LiveData<ClientBookingScreenModel> getDataFromLocal(Context activity, String bookingId) {
         final MutableLiveData<ClientBookingScreenModel> data = new MutableLiveData<>();
         AppDataBase.getAppDatabase(getApplication()).homeDeo().getAllClientBookingScreenModel(bookingId)
                 .observe(((EditProfile) activity), new Observer<ClientBookingScreenModel>() {
-            @Override
-            public void onChanged(ClientBookingScreenModel profileInfo) {
-                if (profileInfo != null) {
-                    data.setValue(profileInfo);
-                }else{
-                    data.setValue(null);
-                }
-            }
-        });
+                    @Override
+                    public void onChanged(ClientBookingScreenModel profileInfo) {
+                        if (profileInfo != null) {
+                            data.setValue(profileInfo);
+                        } else {
+                            data.setValue(null);
+                        }
+                    }
+                });
 
         return data;
     }
@@ -100,7 +103,7 @@ public class BlankViewModel extends AndroidViewModel {
     private ClientBookingScreenModel getClientData(ClientBookingListModel.Data data) {
         SessionManager sessionManager = new SessionManager(getApplication());
         if (!checkIsNotNull(data.getClientPersonId()).equalsIgnoreCase("N/A"))
-        sessionManager.setClientId(data.getClientPersonId());
+            sessionManager.setClientId(data.getClientPersonId());
         ClientBookingScreenModel clientBookingScreenModel = new ClientBookingScreenModel();
         clientBookingScreenModel.setName(checkIsNotNull(data.getClientName()));
         clientBookingScreenModel.setDate(checkIsNotNull(data.getBookingStartTime()) + " " + checkIsNotNull(data.getBookingDate()));

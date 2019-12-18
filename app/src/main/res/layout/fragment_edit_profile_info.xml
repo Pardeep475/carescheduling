@@ -43,6 +43,7 @@
 
         <ScrollView
             android:layout_width="match_parent"
+            android:fillViewport="true"
             android:layout_height="match_parent">
 
             <LinearLayout
@@ -339,13 +340,26 @@
                         android:paddingEnd="@dimen/ten_dp" />
                 </LinearLayout>
 
+
+                <Switch
+                    android:id="@+id/swt_is_disability"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/twenty_dp"
+                    android:layout_marginEnd="@dimen/twenty_dp"
+                    android:checked="@{profileInfoBean.disability}"
+                    android:fontFamily="@font/rubik_medium"
+                    android:paddingStart="@dimen/twenty_dp"
+                    android:text="@string/is_disability"
+                    android:textColor="@color/black" />
+
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/twenty_dp"
                     android:layout_marginEnd="@dimen/twenty_dp"
-                    android:orientation="horizontal"
-                    android:visibility="@{profileInfoBean.disability ? View.VISIBLE :View.GONE}">
+                    android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="0dp"
@@ -449,3 +463,9 @@
         </ScrollView>
     </LinearLayout>
 </layout>
+
+
+    <!--
+
+
+    -->

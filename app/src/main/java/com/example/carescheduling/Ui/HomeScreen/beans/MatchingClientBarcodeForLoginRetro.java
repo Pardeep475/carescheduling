@@ -1,7 +1,25 @@
 package com.example.carescheduling.Ui.HomeScreen.beans;
 
 public class MatchingClientBarcodeForLoginRetro {
-    private String 	ClientPersonId,BarcodeInfoString,CustomerId,BranchId,EmployeePersonId;
+    private String ClientPersonId, BarcodeInfoString, CustomerId, BranchId, EmployeePersonId, ClientBookingId;
+    private boolean IsDeparture;
+
+
+    public String getClientBookingId() {
+        return ClientBookingId;
+    }
+
+    public void setClientBookingId(String clientBookingId) {
+        ClientBookingId = clientBookingId;
+    }
+
+    public boolean getIsDeparture() {
+        return IsDeparture;
+    }
+
+    public void setIsDeparture(boolean isDeparture) {
+        IsDeparture = isDeparture;
+    }
 
     public String getClientPersonId() {
         return ClientPersonId;

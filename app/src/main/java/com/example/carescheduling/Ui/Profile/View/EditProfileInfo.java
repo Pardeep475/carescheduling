@@ -105,7 +105,6 @@ public class EditProfileInfo extends BaseFragment implements Common, EditProfile
     }
 
     private void setProfileInfoBeanData() {
-        setSpinnerData();
         if (getActivity() != null) {
             if (ConnectivityReceiver.isNetworkAvailable(getActivity())) {
                 showDialog();
@@ -117,6 +116,7 @@ public class EditProfileInfo extends BaseFragment implements Common, EditProfile
                                     hideDialog();
                                     editProfileBean = editProfileInfoBean;
                                     if (editProfileInfoBean != null) {
+                                        setSpinnerData();
                                         fragmentEditProfileInfoBinding.setDate(editProfileInfoBean.getDateOfBirth());
                                         fragmentEditProfileInfoBinding.setProfileInfoBean(editProfileInfoBean);
                                     }
@@ -137,6 +137,7 @@ public class EditProfileInfo extends BaseFragment implements Common, EditProfile
                     public void onChanged(EditProfileInfoBean editProfileInfoBean) {
                         editProfileBean = editProfileInfoBean;
                         if (editProfileInfoBean != null) {
+                            setSpinnerData();
                             fragmentEditProfileInfoBinding.setDate(editProfileInfoBean.getDateOfBirth());
                             fragmentEditProfileInfoBinding.setProfileInfoBean(editProfileInfoBean);
                         } else {
@@ -379,7 +380,7 @@ public class EditProfileInfo extends BaseFragment implements Common, EditProfile
                             R.layout.item_spinner_sf, R.id.title, arrayList);
                     fragmentEditProfileInfoBinding.spinnerGender.setAdapter(adapter);
                     if (editProfileBean != null) {
-                        if (editProfileBean.getMaritalStatus() != null) {
+                        if (editProfileBean.getGender() != null) {
                             int pos = adapter.getPosition(editProfileBean.getGender());
                             fragmentEditProfileInfoBinding.spinnerGender.setSelection(pos);
                         }
@@ -485,7 +486,7 @@ public class EditProfileInfo extends BaseFragment implements Common, EditProfile
                     (String) fragmentEditProfileInfoBinding.spinnerMaritalStatus.getSelectedItem(), (String) fragmentEditProfileInfoBinding.spinnerEthnicity.getSelectedItem(),
                     (String) fragmentEditProfileInfoBinding.spinnerDisability.getSelectedItem(), (String) fragmentEditProfileInfoBinding.spinnerReligion.getSelectedItem(),
                     (String) fragmentEditProfileInfoBinding.spinnerSexuality.getSelectedItem(), (String) fragmentEditProfileInfoBinding.spinnerNationality.getSelectedItem(),
-                    editProfileBean.isDisability()
+                    fragmentEditProfileInfoBinding.swtIsDisability.isChecked()
             );
             showDialog();
             editProfileInfoViewModel.UpdateProfile(editProfileInfoBeanRetro).observe(this, new Observer<Boolean>() {
@@ -521,7 +522,7 @@ public class EditProfileInfo extends BaseFragment implements Common, EditProfile
         editProfileInfoBean.setSexuality((String) fragmentEditProfileInfoBinding.spinnerSexuality.getSelectedItem());
         editProfileInfoBean.setNationality((String) fragmentEditProfileInfoBinding.spinnerNationality.getSelectedItem());
         editProfileInfoBean.setDisabaility((String) fragmentEditProfileInfoBinding.spinnerDisability.getSelectedItem());
-        editProfileInfoBean.setDisability(true);
+        editProfileInfoBean.setDisability(fragmentEditProfileInfoBinding.swtIsDisability.isChecked());
 
         DatabaseInitializer.populateAsyncProfileInfo(AppDataBase.getAppDatabase(getActivity()), editProfileInfoBean);
 

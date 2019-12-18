@@ -237,7 +237,8 @@ public class AddAddress extends BaseFragment implements Common, ProfileAddressCl
         if (personAddressList == null)
             return false;
         for (int i = 0; i < personAddressList.size(); i++) {
-            if (personAddressList.get(i).getPersonAddress().getAddressTypeName().equalsIgnoreCase((String)profileAddressBinding.spinnerAddressType.getSelectedItem())) {
+            if (personAddressList.get(i).getAddressTypeName() != null)
+            if (personAddressList.get(i).getAddressTypeName().equalsIgnoreCase((String)profileAddressBinding.spinnerAddressType.getSelectedItem())) {
                 return true;
             }
         }

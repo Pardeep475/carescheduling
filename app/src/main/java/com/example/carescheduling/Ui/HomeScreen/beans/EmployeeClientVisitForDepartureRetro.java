@@ -2,7 +2,9 @@ package com.example.carescheduling.Ui.HomeScreen.beans;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
+
 public class EmployeeClientVisitForDepartureRetro {
 
     @SerializedName("VisitDepartureRegisteredBy")
@@ -23,6 +25,29 @@ public class EmployeeClientVisitForDepartureRetro {
     @SerializedName("ClientVisitTaskList")
     @Expose
     private List<ClientVisitTaskList> clientVisitTaskList = null;
+    @SerializedName("VisitNoteText")
+    @Expose
+    private String VisitNoteText;
+
+    @SerializedName("clientBookingId")
+    @Expose
+    private String clientBookingId;
+
+    public String getClientBookingId() {
+        return clientBookingId;
+    }
+
+    public void setClientBookingId(String clientBookingId) {
+        this.clientBookingId = clientBookingId;
+    }
+
+    public String getVisitNoteText() {
+        return VisitNoteText;
+    }
+
+    public void setVisitNoteText(String visitNoteText) {
+        VisitNoteText = visitNoteText;
+    }
 
     public String getVisitDepartureRegisteredBy() {
         return visitDepartureRegisteredBy;

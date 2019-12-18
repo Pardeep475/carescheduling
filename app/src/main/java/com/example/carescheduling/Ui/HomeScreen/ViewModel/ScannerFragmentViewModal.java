@@ -59,8 +59,12 @@ public class ScannerFragmentViewModal extends AndroidViewModel {
                                 } else {
                                     data.setValue(null);
                                 }
-                                if (loginBeanRetroResponse.body() != null && loginBeanRetroResponse.body().getResponseMessage() != null) {
-                                    Toast.makeText(getApplication(), (String) loginBeanRetroResponse.body().getResponseMessage(), Toast.LENGTH_SHORT).show();
+                                if (loginBeanRetroResponse.body() != null &&
+                                        loginBeanRetroResponse.body().getResponseMessage() != null
+                                        && !loginBeanRetroResponse.body().getResponseMessage().toString().contains("barcode not found"))
+
+                                {
+//                                    Toast.makeText(getApplication(), (String) loginBeanRetroResponse.body().getResponseMessage(), Toast.LENGTH_SHORT).show();
                                 }
                             }
                         }

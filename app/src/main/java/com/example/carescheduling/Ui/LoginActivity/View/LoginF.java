@@ -1,9 +1,12 @@
 package com.example.carescheduling.Ui.LoginActivity.View;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,28 +24,41 @@ import com.example.carescheduling.Ui.Profile.bean.ProfileAllData;
 import com.example.carescheduling.Utils.ConnectivityReceiver;
 import com.example.carescheduling.databinding.FragmentLoginBinding;
 
+import java.io.BufferedInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 
 public class LoginF extends BaseFragment implements LoginPresenter {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String TAG = "LoginF";
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private Handler handler;
+
+    ProgressDialog progressDialog;
+
 
     // TODO: data binding
     private FragmentLoginBinding fragmentLoginBinding;
 
-    private LoginViewModel loginViewModel;
+    public LoginViewModel loginViewModel;
 
 
     public LoginF() {
@@ -68,6 +84,15 @@ public class LoginF extends BaseFragment implements LoginPresenter {
         fragmentLoginBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false);
         View view = fragmentLoginBinding.getRoot();
         setUpLayout(view);
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMax(100);
+        progressDialog.setProgressNumberFormat(null);
+//        progressDialog.setProgressPercentFormat(null);
+        progressDialog.setMessage("Signing In...");
+        progressDialog.setCancelable(false);
+        progressDialog.setTitle("Please wait...");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+
         return view;
 //        return inflater.inflate( R.layout.fragment_login,container,false);
     }
@@ -75,6 +100,7 @@ public class LoginF extends BaseFragment implements LoginPresenter {
 
     private void setUpLayout(View view) {
         loginViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
+//        LoginBeanData loginBeanData = new LoginBeanData("testuser@betterhealthcare.co.uk", "test");
         LoginBeanData loginBeanData = new LoginBeanData("pardeep@felagi.in", "pardeep");
         fragmentLoginBinding.setLoginBeanData(loginBeanData);
         fragmentLoginBinding.setLoginPresenter(this);
@@ -106,12 +132,33 @@ public class LoginF extends BaseFragment implements LoginPresenter {
         final String userEmail = fragmentLoginBinding.edtEmail.getText().toString();
         final String userPassword = fragmentLoginBinding.edtPassword.getText().toString();
         showDialog();
+
+        // show it
+//        progressDialog.show();
         LiveData<LoginBeanRetro> beanRetroLiveData = loginViewModel.getUserData(userEmail, userPassword);
         beanRetroLiveData.observe(this, new Observer<LoginBeanRetro>() {
             @Override
             public void onChanged(LoginBeanRetro loginBeanRetro) {
                 hideDialog();
-                Log.e("LoginSuccess", "liveData");
+//                progressDialog.dismiss();
+                handler = new Handler();
+                handler.postDelayed(
+                        new Runnable() {
+                            @Override
+                            public void run() {
+                                int prog = progressDialog.getProgress();
+                                if (prog < 98) {
+                                    if (prog >= 20)
+                                        progressDialog.setMessage("Loading Data...");
+                                    int a = progressDialog.getProgress() + 1;
+                                    progressDialog.setProgress(a);
+                                    handler.postDelayed(this, 90);
+                                }
+                            }
+                        }, 0
+                );
+
+                Log.e("Logi nSuccess", "liveData");
                 getSessionManager().setOffline(fragmentLoginBinding.cbRememberMe.isChecked());
                 if (loginBeanRetro != null && loginBeanRetro.getSuccess()) {
                     if (loginBeanRetro.getData().getBranchList().size() == 1) {
@@ -137,17 +184,26 @@ public class LoginF extends BaseFragment implements LoginPresenter {
 
 
     private void setAllProfileData() {
-        showDialog();
+//        showDialog();
+        progressDialog.show();
 
         loginViewModel.getPersonAllData(sessionManager.getPersonId(), sessionManager.getCustomerId()
                 , sessionManager.getBranchId(), "Small").observe(this, new Observer<ProfileAllData>() {
             @Override
-            public void onChanged(ProfileAllData profileAllData) {
-                hideDialog();
-                if (profileAllData != null && getActivity() != null) {
-                    loginViewModel.setDefaultData(getActivity(), profileAllData);
+            public void onChanged(final ProfileAllData profileAllData) {
+//                hideDialog();
+                handler.removeCallbacksAndMessages(null);
+                progressDialog.setProgress(100);
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        progressDialog.dismiss();
+                        if (profileAllData != null && getActivity() != null) {
+                            loginViewModel.setDefaultData(getActivity(), profileAllData);
 
-                }
+                        }
+                    }
+                }, 500);
             }
         });
     }
@@ -173,4 +229,5 @@ public class LoginF extends BaseFragment implements LoginPresenter {
                     .replace(R.id.rl_main_login, LoginFSecond.newInstance(email, userPassword, data, isRemamberMe)).commitAllowingStateLoss();
         }
     }
+
 }

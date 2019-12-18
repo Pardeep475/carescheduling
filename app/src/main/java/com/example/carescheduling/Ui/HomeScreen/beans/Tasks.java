@@ -3,8 +3,16 @@ package com.example.carescheduling.Ui.HomeScreen.beans;
 import java.io.Serializable;
 
 public class Tasks implements Serializable {
-    private String instruction, taskId, taskName, visitShiftName, visitTiming;
+    private String instruction, taskId, taskName, visitShiftName, visitTiming, note;
     private boolean isCompleted;
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
 
     public String getInstruction() {
         return instruction;

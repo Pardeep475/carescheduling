@@ -1,129 +1,151 @@
 package com.example.carescheduling.Ui.HomeScreen.beans;
 
-public class EmployeeClientVisitForArrivalRetro {
-    private String ArrivalRegistrationType = "Barcode";
-    private String DepartureRegistrationType = "Barcode";
-    private String BookingId,BranchId,ClientId,ClientName,VisitArrivalRegisterredBy,VisitDepartureRegisteredBy,CustomerId
-            ,EmployeeId,LastLogOutOfEmployee,SuggestedLogInTime,VisitDate,VisitIdentificationTypeName,BarcodeId;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
+public class EmployeeClientVisitForArrivalRetro {
+    @SerializedName("ArrivalRegistrationType")
+    @Expose
+    private String arrivalRegistrationType;
+    @SerializedName("BarcodeId")
+    @Expose
+    private String barcodeId;
+    @SerializedName("BookingId")
+    @Expose
+    private String bookingId;
+    @SerializedName("clientBookingId")
+    @Expose
+    private String clientBookingId;
+    @SerializedName("BranchId")
+    @Expose
+    private String branchId;
+    @SerializedName("ClientId")
+    @Expose
+    private String clientId;
+    @SerializedName("VisitArrivalRegisterredBy")
+    @Expose
+    private String visitArrivalRegisterredBy;
+    @SerializedName("CustomerId")
+    @Expose
+    private String customerId;
+    @SerializedName("DepartureRegistrationType")
+    @Expose
+    private String departureRegistrationType;
+    @SerializedName("EmployeeId")
+    @Expose
+    private String employeeId;
+    @SerializedName("SuggestedLogInTime")
+    @Expose
+    private String suggestedLogInTime;
+    @SerializedName("VisitDate")
+    @Expose
+    private String visitDate;
+    @SerializedName("VisitIdentificationTypeName")
+    @Expose
+    private Object visitIdentificationTypeName;
 
     public String getArrivalRegistrationType() {
-        return ArrivalRegistrationType;
+        return arrivalRegistrationType;
     }
 
     public void setArrivalRegistrationType(String arrivalRegistrationType) {
-        ArrivalRegistrationType = arrivalRegistrationType;
-    }
-
-    public String getDepartureRegistrationType() {
-        return DepartureRegistrationType;
-    }
-
-    public void setDepartureRegistrationType(String departureRegistrationType) {
-        DepartureRegistrationType = departureRegistrationType;
-    }
-
-    public String getBookingId() {
-        return BookingId;
-    }
-
-    public void setBookingId(String bookingId) {
-        BookingId = bookingId;
-    }
-
-    public String getBranchId() {
-        return BranchId;
-    }
-
-    public void setBranchId(String branchId) {
-        BranchId = branchId;
-    }
-
-    public String getClientId() {
-        return ClientId;
-    }
-
-    public void setClientId(String clientId) {
-        ClientId = clientId;
-    }
-
-    public String getClientName() {
-        return ClientName;
-    }
-
-    public void setClientName(String clientName) {
-        ClientName = clientName;
-    }
-
-    public String getVisitArrivalRegisterredBy() {
-        return VisitArrivalRegisterredBy;
-    }
-
-    public void setVisitArrivalRegisterredBy(String visitArrivalRegisterredBy) {
-        VisitArrivalRegisterredBy = visitArrivalRegisterredBy;
-    }
-
-    public String getVisitDepartureRegisteredBy() {
-        return VisitDepartureRegisteredBy;
-    }
-
-    public void setVisitDepartureRegisteredBy(String visitDepartureRegisteredBy) {
-        VisitDepartureRegisteredBy = visitDepartureRegisteredBy;
-    }
-
-    public String getCustomerId() {
-        return CustomerId;
-    }
-
-    public void setCustomerId(String customerId) {
-        CustomerId = customerId;
-    }
-
-    public String getEmployeeId() {
-        return EmployeeId;
-    }
-
-    public void setEmployeeId(String employeeId) {
-        EmployeeId = employeeId;
-    }
-
-    public String getLastLogOutOfEmployee() {
-        return LastLogOutOfEmployee;
-    }
-
-    public void setLastLogOutOfEmployee(String lastLogOutOfEmployee) {
-        LastLogOutOfEmployee = lastLogOutOfEmployee;
-    }
-
-    public String getSuggestedLogInTime() {
-        return SuggestedLogInTime;
-    }
-
-    public void setSuggestedLogInTime(String suggestedLogInTime) {
-        SuggestedLogInTime = suggestedLogInTime;
-    }
-
-    public String getVisitDate() {
-        return VisitDate;
-    }
-
-    public void setVisitDate(String visitDate) {
-        VisitDate = visitDate;
-    }
-
-    public String getVisitIdentificationTypeName() {
-        return VisitIdentificationTypeName;
-    }
-
-    public void setVisitIdentificationTypeName(String visitIdentificationTypeName) {
-        VisitIdentificationTypeName = visitIdentificationTypeName;
+        this.arrivalRegistrationType = arrivalRegistrationType;
     }
 
     public String getBarcodeId() {
-        return BarcodeId;
+        return barcodeId;
     }
 
     public void setBarcodeId(String barcodeId) {
-        BarcodeId = barcodeId;
+        this.barcodeId = barcodeId;
     }
+
+    public String getBookingId() {
+        return bookingId;
+    }
+
+    public void setBookingId(String bookingId) {
+        this.bookingId = bookingId;
+    }
+
+    public String getClientBookingId() {
+        return clientBookingId;
+    }
+
+    public void setClientBookingId(String clientBookingId) {
+        this.clientBookingId = clientBookingId;
+    }
+
+    public String getBranchId() {
+        return branchId;
+    }
+
+    public void setBranchId(String branchId) {
+        this.branchId = branchId;
+    }
+
+    public String getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
+    }
+
+    public String getVisitArrivalRegisterredBy() {
+        return visitArrivalRegisterredBy;
+    }
+
+    public void setVisitArrivalRegisterredBy(String visitArrivalRegisterredBy) {
+        this.visitArrivalRegisterredBy = visitArrivalRegisterredBy;
+    }
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
+
+    public String getDepartureRegistrationType() {
+        return departureRegistrationType;
+    }
+
+    public void setDepartureRegistrationType(String departureRegistrationType) {
+        this.departureRegistrationType = departureRegistrationType;
+    }
+
+    public String getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(String employeeId) {
+        this.employeeId = employeeId;
+    }
+
+    public String getSuggestedLogInTime() {
+        return suggestedLogInTime;
+    }
+
+    public void setSuggestedLogInTime(String suggestedLogInTime) {
+        this.suggestedLogInTime = suggestedLogInTime;
+    }
+
+    public String getVisitDate() {
+        return visitDate;
+    }
+
+    public void setVisitDate(String visitDate) {
+        this.visitDate = visitDate;
+    }
+
+    public Object getVisitIdentificationTypeName() {
+        return visitIdentificationTypeName;
+    }
+
+    public void setVisitIdentificationTypeName(Object visitIdentificationTypeName) {
+        this.visitIdentificationTypeName = visitIdentificationTypeName;
+    }
+
 }

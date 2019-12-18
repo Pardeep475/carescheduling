@@ -7,6 +7,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -119,6 +120,7 @@ public class ProfileAddress extends BaseFragment implements Common, ProfileAddre
     }
 
     private void setAddressTypeData() {
+        Log.e("profile_address", "   setAddress data");
         profileAddressViewModel.getAddressType().observe(this, new Observer<List<AddressType>>() {
             @Override
             public void onChanged(List<AddressType> addressTypes) {
@@ -143,6 +145,7 @@ public class ProfileAddress extends BaseFragment implements Common, ProfileAddre
     }
 
     private void setNationalityData() {
+        Log.e("profile_address", "   set nationality data ");
         profileAddressViewModel.getNationality().observe(this, new Observer<List<Nationality>>() {
             @Override
             public void onChanged(List<Nationality> nationalities) {
@@ -187,6 +190,7 @@ public class ProfileAddress extends BaseFragment implements Common, ProfileAddre
 
     @Override
     public void fetchAddressFromPostalCode() {
+        Log.e("profile_address", "   fetch address from postal code");
         showDialog();
         String nationality, postCode;
         if (profileAddressBinding.spinnerAddressType.getSelectedItemPosition() <= 0) {
@@ -256,6 +260,7 @@ public class ProfileAddress extends BaseFragment implements Common, ProfileAddre
 
 
     private void setDataRemote() {
+        Log.e("profile_address", "   set data remote");
         if (getActivity() != null && ConnectivityReceiver.isNetworkAvailable(getActivity())) {
             if (validation()) {
                 if (TypeNameAlreadyExist()) {
@@ -287,19 +292,22 @@ public class ProfileAddress extends BaseFragment implements Common, ProfileAddre
     }
 
     private boolean TypeNameAlreadyExist() {
+        Log.e("profile_address", "   type name alredy exist");
         if (personAddressList == null)
             return false;
         if (stringValue.equalsIgnoreCase((String) profileAddressBinding.spinnerAddressType.getSelectedItem()))
             return false;
         for (int i = 0; i < personAddressList.size(); i++) {
-            if (personAddressList.get(i).getPersonAddress().getAddressTypeName().equalsIgnoreCase((String) profileAddressBinding.spinnerAddressType.getSelectedItem())) {
-                return true;
-            }
+            if (personAddressList.get(i).getAddressTypeName() != null)
+                if (personAddressList.get(i).getAddressTypeName().equalsIgnoreCase((String) profileAddressBinding.spinnerAddressType.getSelectedItem())) {
+                    return true;
+                }
         }
         return false;
     }
 
     private EditAdressBeanRetro getAddAddressBean() {
+        Log.e("profile_address", "   get add address bean");
         EditAdressBeanRetro editAdressBeanRetro = new EditAdressBeanRetro();
         editAdressBeanRetro.setAddressTypeName((String) profileAddressBinding.spinnerAddressType.getSelectedItem());
         editAdressBeanRetro.setAddressId(String.valueOf(addressTypesList.get(profileAddressBinding.spinnerAddress.getSelectedItemPosition()).getAddressId()));
@@ -313,6 +321,7 @@ public class ProfileAddress extends BaseFragment implements Common, ProfileAddre
 
 
     private boolean validation() {
+        Log.e("profile_address", "   validation");
         if (profileAddressBinding.spinnerAddressType.getSelectedItemPosition() <= 0) {
             showAToast("please select address type");
             return false;
@@ -326,12 +335,14 @@ public class ProfileAddress extends BaseFragment implements Common, ProfileAddre
 
     @Override
     public void leftClick() {
+        Log.e("profile_address", "   left click");
         if (getActivity() != null)
             getActivity().onBackPressed();
     }
 
     @Override
     public void rightClick() {
+        Log.e("profile_address", "   right click");
         try {
             setDataRemote();
         } catch (Exception e) {

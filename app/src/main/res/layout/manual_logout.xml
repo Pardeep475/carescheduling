@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="commonData"
+            type="com.example.carescheduling.Ui.Common.CommonBean" />
+
+        <variable
+            name="commonClick"
+            type="com.example.carescheduling.Ui.Common.Common" />
+<variable
+    name="iManualLogout"
+    type="com.example.carescheduling.Ui.HomeScreen.presenter.IManualLogout" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <include
+            android:id="@+id/rl_tool"
+            layout="@layout/toolbar_layout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            bind:commonClick="@{commonClick}"
+            bind:commonData="@{commonData}" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/rubik_medium"
+            android:paddingStart="15dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="15dp"
+            android:paddingBottom="10dp"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            android:text="Choose visit:"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toStartOf="@+id/txt_client_name"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rl_tool" />
+
+        <TextView
+            android:id="@+id/txt_client_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="@font/rubik_light"
+            android:hint="Client Name"
+            android:paddingStart="15dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="15dp"
+            android:paddingBottom="10dp"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="@+id/textView2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toEndOf="@+id/textView2"
+            app:layout_constraintTop_toTopOf="@+id/textView2" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="48dp"
+            android:fontFamily="@font/rubik_medium"
+            android:paddingStart="15dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="15dp"
+            android:paddingBottom="10dp"
+            android:text="@string/visit_arrival"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_client_name" />
+
+        <TextView
+            android:id="@+id/txt_date_arrival_d"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/rubik_medium"
+            android:paddingStart="15dp"
+            android:text="@string/date"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+        <TextView
+            android:id="@+id/txt_date_arrival"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="@font/rubik_medium"
+            android:gravity="end"
+            android:hint="@string/date"
+            android:paddingEnd="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_date_arrival_d"
+            app:layout_constraintEnd_toStartOf="@+id/img_date_arrival"
+            app:layout_constraintStart_toEndOf="@+id/txt_date_arrival_d"
+            app:layout_constraintTop_toTopOf="@+id/txt_date_arrival_d" />
+
+        <ImageView
+            android:id="@+id/img_date_arrival"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_date_arrival"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/txt_date_arrival"
+            app:srcCompat="@drawable/ic_calendar" />
+
+        <TextView
+            android:id="@+id/txt_time_arrival_d"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/rubik_medium"
+            android:paddingStart="15dp"
+            android:text="@string/time_without_colon"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/img_date_arrival" />
+
+        <TextView
+            android:id="@+id/txt_time_arrival"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="@font/rubik_medium"
+            android:gravity="end"
+            android:hint="@string/time_without_colon"
+            android:paddingEnd="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_time_arrival_d"
+            app:layout_constraintEnd_toStartOf="@+id/img_time_arrival"
+            app:layout_constraintStart_toEndOf="@+id/txt_time_arrival_d"
+            app:layout_constraintTop_toTopOf="@+id/txt_time_arrival_d" />
+
+        <ImageView
+            android:id="@+id/img_time_arrival"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_time_arrival"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/txt_time_arrival"
+            app:srcCompat="@drawable/ic_calendar" />
+
+
+        <TextView
+            android:id="@+id/txt_departure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="48dp"
+            android:fontFamily="@font/rubik_medium"
+            android:paddingStart="15dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="15dp"
+            android:paddingBottom="10dp"
+            android:text="@string/visit_departure"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/img_time_arrival" />
+
+        <TextView
+            android:id="@+id/txt_date_departure_d"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/rubik_medium"
+            android:paddingStart="15dp"
+            android:text="@string/date"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_departure" />
+
+        <TextView
+            android:id="@+id/txt_date_departure"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="@font/rubik_medium"
+            android:gravity="end"
+            android:hint="@string/date"
+            android:paddingEnd="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_date_departure_d"
+            app:layout_constraintEnd_toStartOf="@+id/img_date_departure"
+            app:layout_constraintStart_toEndOf="@+id/txt_date_departure_d"
+            app:layout_constraintTop_toTopOf="@+id/txt_date_departure_d" />
+
+        <ImageView
+            android:id="@+id/img_date_departure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_date_departure"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/txt_date_departure"
+            app:srcCompat="@drawable/ic_calendar" />
+
+        <TextView
+            android:id="@+id/txt_time_departure_d"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/rubik_medium"
+            android:paddingStart="15dp"
+            android:text="@string/time_without_colon"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/img_date_departure" />
+
+        <TextView
+            android:id="@+id/txt_time_departure"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="@font/rubik_medium"
+            android:gravity="end"
+            android:hint="@string/time_without_colon"
+            android:paddingEnd="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_time_departure_d"
+            app:layout_constraintEnd_toStartOf="@+id/img_time_departure"
+            app:layout_constraintStart_toEndOf="@+id/txt_time_departure_d"
+            app:layout_constraintTop_toTopOf="@+id/txt_time_departure_d" />
+
+        <ImageView
+            android:id="@+id/img_time_departure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:onClick="@{(v) -> iManualLogout.departureTime()}"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_time_departure"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/txt_time_departure"
+            app:srcCompat="@drawable/ic_calendar" />
+
+        <TextView
+            android:id="@+id/txt_barcode"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:background="@color/red"
+            android:fontFamily="@font/rubik_medium"
+            android:gravity="center"
+            android:paddingTop="15dp"
+            android:onClick="@{(v) -> iManualLogout.cancel()}"
+            android:paddingBottom="15dp"
+            android:text="@string/cancel"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_nfc"
+            app:layout_constraintEnd_toStartOf="@+id/txt_nfc"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/txt_nfc" />
+
+        <TextView
+            android:id="@+id/txt_nfc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="10dp"
+            android:background="@color/blue"
+            android:fontFamily="@font/rubik_medium"
+            android:gravity="center"
+            android:onClick="@{(v) -> iManualLogout.save()}"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:text="@string/save"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toEndOf="@+id/txt_barcode"
+            app:layout_constraintTop_toBottomOf="@+id/img_time_departure" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

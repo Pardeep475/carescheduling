@@ -152,7 +152,8 @@ public class EditProfileAddressViewModel extends AndroidViewModel {
                             JSONObject jsonObject = new JSONObject(loginBeanRetroResponse.body().toString());
                             boolean isSuccess = jsonObject.getBoolean("Success");
                             data.setValue(isSuccess);
-                            if (jsonObject.getString("ResponseMessage") != null)
+                            if (jsonObject.getString("ResponseMessage") != null
+                            && !jsonObject.getString("ResponseMessage").contains("barcode not found"))
                                 Toast.makeText(context, jsonObject.getString("ResponseMessage"), Toast.LENGTH_SHORT).show();
 
                         }

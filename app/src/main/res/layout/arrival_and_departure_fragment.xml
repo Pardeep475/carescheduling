@@ -138,7 +138,7 @@
                 android:textColor="@color/white"
                 android:layout_marginTop="@dimen/ten_dp"
                 android:fontFamily="@font/rubik_light"
-                android:text="Arrival"
+                android:text="@string/arrival"
                 android:textSize="@dimen/twenty_sp" />
 
             <TextView
@@ -147,6 +147,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/ten_dp"
                 android:gravity="center"
+                android:visibility="gone"
                 android:id="@+id/btn_departure"
                 android:background="@color/red"
                 android:onClick="@{(v)->iArrivalAndDepartureClick.departureClick()}"
@@ -154,7 +155,7 @@
                 android:paddingTop="@dimen/fiften_dp"
                 android:paddingBottom="@dimen/fiften_dp"
                 android:fontFamily="@font/rubik_light"
-                android:text="Departure"
+                android:text="@string/departure"
                 android:textSize="@dimen/twenty_sp" />
 
 

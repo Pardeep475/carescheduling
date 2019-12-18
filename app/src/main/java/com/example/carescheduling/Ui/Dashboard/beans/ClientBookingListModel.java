@@ -87,7 +87,7 @@ ClientBookingListModel {
         @SerializedName("ImageHexString")
         @Expose
         private String imageHexString;
-        @SerializedName("PersonAddress")
+        @SerializedName("ClientAddress")
         @Expose
         private String personAddress;
         @SerializedName("Weekdayname")
