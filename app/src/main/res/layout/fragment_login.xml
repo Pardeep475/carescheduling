@@ -23,7 +23,7 @@
             android:layout_height="@dimen/one_fifty_dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/fifty_dp"
-            android:src="@drawable/logo" />
+            android:src="@drawable/carescheduling_logo" />
 
 
         <EditText

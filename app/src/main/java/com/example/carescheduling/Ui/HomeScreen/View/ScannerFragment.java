@@ -39,7 +39,7 @@ public class ScannerFragment extends BaseFragment implements ZXingScannerView.Re
     private String type;
     private String noteText;
 
-    public static ScannerFragment newInstance(String type,String noteText) {
+    public static ScannerFragment newInstance(String type, String noteText) {
         ScannerFragment scannerFragment = new ScannerFragment();
         Bundle bundle = new Bundle();
         bundle.putString("TYPE", type);
@@ -119,7 +119,10 @@ public class ScannerFragment extends BaseFragment implements ZXingScannerView.Re
                     matchingClientBarcodeForLoginRetro.setEmployeePersonId(getSessionManager().getPersonId());
                     matchingClientBarcodeForLoginRetro.setCustomerId(getSessionManager().getCustomerId());
                     matchingClientBarcodeForLoginRetro.setClientBookingId(getSessionManager().getBookingId());
-                    matchingClientBarcodeForLoginRetro.setIsDeparture(false);
+                    if (type.equalsIgnoreCase("Arrival"))
+                        matchingClientBarcodeForLoginRetro.setIsDeparture(false);
+                    else
+                        matchingClientBarcodeForLoginRetro.setIsDeparture(true);
                     mViewModel.getMatchingClientBarcodeForLogin(matchingClientBarcodeForLoginRetro).observe(this, new Observer<ScanBean>() {
                         @Override
                         public void onChanged(ScanBean scanBean) {

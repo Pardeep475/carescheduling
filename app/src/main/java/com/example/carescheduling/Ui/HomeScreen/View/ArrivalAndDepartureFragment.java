@@ -147,33 +147,33 @@ public class ArrivalAndDepartureFragment extends BaseFragment implements Common,
 
     @Override
     public void departureClick() {
-        getEmployeeClientVisitForDepartureRetro();
+//        getEmployeeClientVisitForDepartureRetro();
 
 
 
-//        if (getActivity() != null && ConnectivityReceiver.isNetworkAvailable(getActivity())) {
-//            showDialog();
-//            mViewModel.getEmployeeClientVisitForDeparture(getEmployeeClientVisitForDepartureRetro()).observe(this, new Observer<Boolean>() {
-//                @Override
-//                public void onChanged(Boolean s) {
-//                    hideDialog();
-//                    if (s != null) {
-//                        if (s) {
-//                            getSessionManager().setClientVisitId(null);
-//                            getSessionManager().setClientTasks(null);
-//                            if (getActivity() != null) {
-//                                getActivity().finish();
-//                                Intent intent = new Intent(getActivity(), EditProfile.class);
-//                                intent.putExtra("pos", 0);
-//                                startActivity(intent);
-//                            }
-//                        }
-//                    }
-//                }
-//            });
-//        } else {
-//            Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
-//        }
+        if (getActivity() != null && ConnectivityReceiver.isNetworkAvailable(getActivity())) {
+            showDialog();
+            mViewModel.getEmployeeClientVisitForDeparture(getEmployeeClientVisitForDepartureRetro()).observe(this, new Observer<Boolean>() {
+                @Override
+                public void onChanged(Boolean s) {
+                    hideDialog();
+                    if (s != null) {
+                        if (s) {
+                            getSessionManager().setClientVisitId(null);
+                            getSessionManager().setClientTasks(null);
+                            if (getActivity() != null) {
+                                getActivity().finish();
+                                Intent intent = new Intent(getActivity(), EditProfile.class);
+                                intent.putExtra("pos", 0);
+                                startActivity(intent);
+                            }
+                        }
+                    }
+                }
+            });
+        } else {
+            Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
+        }
     }
 
 
