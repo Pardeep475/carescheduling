@@ -2,6 +2,7 @@ package com.example.carescheduling.data.Local;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.example.carescheduling.Utils.Constants;
 
@@ -15,7 +16,14 @@ public class SessionManager {
     }
 
     public void cleanAllData() {
+        String userName = getUserName();
+        String password = getPassword();
+        Log.e("SAVE_USER_DATA", "Starting  " + userName + "    " + password);
         sharedPreferenceEditor.clear().commit();
+        setUserName(userName);
+        setPassword(password);
+
+        Log.e("SAVE_USER_DATA", "after  " + getUserName() + "    " + getPassword());
     }
 
     public boolean IsUserLogin() {
@@ -96,6 +104,23 @@ public class SessionManager {
 
     public boolean getOffline() {
         return sharedPreferences.getBoolean(Constants.IS_OFFLINE, false);
+    }
+
+
+    public void setUserName(String userName) {
+        sharedPreferenceEditor.putString(Constants.USER_NAME, userName).commit();
+    }
+
+    public String getUserName() {
+        return sharedPreferences.getString(Constants.USER_NAME, null);
+    }
+
+    public void setPassword(String password) {
+        sharedPreferenceEditor.putString(Constants.PASSWORD, password).commit();
+    }
+
+    public String getPassword() {
+        return sharedPreferences.getString(Constants.PASSWORD, null);
     }
 
 }

@@ -26,6 +26,8 @@ public class Constants {
     public static String IS_OFFLINE = "is_offline";
     public static String CLIENT_ID = "client_id";
     public static String CLIENT_TASK = "client_tasks";
+    public static String USER_NAME = "user_name";
+    public static String PASSWORD = "password";
     public static final int REQUEST_CAMERA = 1111;
     public static final int SELECT_FILE = 1112;
 }

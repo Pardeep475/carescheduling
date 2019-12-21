@@ -22,6 +22,7 @@ import com.example.carescheduling.Ui.LoginActivity.beans.LoginBeanRetro;
 import com.example.carescheduling.Ui.LoginActivity.presenter.LoginPresenter;
 import com.example.carescheduling.Ui.Profile.bean.ProfileAllData;
 import com.example.carescheduling.Utils.ConnectivityReceiver;
+import com.example.carescheduling.data.Local.SessionManager;
 import com.example.carescheduling.databinding.FragmentLoginBinding;
 
 import java.io.BufferedInputStream;
@@ -59,7 +60,7 @@ public class LoginF extends BaseFragment implements LoginPresenter {
     private FragmentLoginBinding fragmentLoginBinding;
 
     public LoginViewModel loginViewModel;
-
+    private SessionManager sessionManager;
 
     public LoginF() {
         // Required empty public constructor
@@ -101,8 +102,15 @@ public class LoginF extends BaseFragment implements LoginPresenter {
     private void setUpLayout(View view) {
         loginViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
 //        LoginBeanData loginBeanData = new LoginBeanData("testuser@betterhealthcare.co.uk", "test");
-        LoginBeanData loginBeanData = new LoginBeanData("pardeep@felagi.in", "pardeep");
-        fragmentLoginBinding.setLoginBeanData(loginBeanData);
+        if (getActivity() != null)
+            sessionManager = new SessionManager(getActivity());
+
+        if (sessionManager != null && sessionManager.getUserName() != null && sessionManager.getPassword() != null) {
+
+            LoginBeanData loginBeanData = new LoginBeanData(sessionManager.getUserName(), sessionManager.getPassword());
+//          LoginBeanData loginBeanData = new LoginBeanData("pardeep@felagi.in", "pardeep");
+            fragmentLoginBinding.setLoginBeanData(loginBeanData);
+        }
         fragmentLoginBinding.setLoginPresenter(this);
     }
 
@@ -131,6 +139,15 @@ public class LoginF extends BaseFragment implements LoginPresenter {
     private void checkLogin() {
         final String userEmail = fragmentLoginBinding.edtEmail.getText().toString();
         final String userPassword = fragmentLoginBinding.edtPassword.getText().toString();
+        if (fragmentLoginBinding.cbRememberMe.isChecked()) {
+            sessionManager.setUserName(userEmail);
+            sessionManager.setPassword(userPassword);
+        } else {
+            sessionManager.setUserName(null);
+            sessionManager.setPassword(null);
+        }
+        Log.e("SAVE_USER_DATA", "Login  " + sessionManager.getUserName() + "    " + sessionManager.getPassword());
+
         showDialog();
 
         // show it
