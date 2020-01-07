@@ -6,7 +6,7 @@
 
         <variable
             name="moreInfoClick"
-            type="com.example.carescheduling.Ui.HomeScreen.presenter.MoreInfoClick" />
+            type="css.mobile.carescheduling.Ui.HomeScreen.presenter.MoreInfoClick" />
 
         <variable
             name="pos"
@@ -14,7 +14,7 @@
 
         <variable
             name="clientContactsBean"
-            type="com.example.carescheduling.Ui.HomeScreen.beans.ClientContactsBean" />
+            type="css.mobile.carescheduling.Ui.HomeScreen.beans.ClientContactsBean" />
 
     </data>
 

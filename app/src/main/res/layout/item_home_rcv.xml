@@ -43,7 +43,7 @@
 
         <variable
             name="homeScreenOnClick"
-            type="com.example.carescheduling.Ui.Dashboard.presenter.HomeScreenOnClick" />
+            type="css.mobile.carescheduling.Ui.Dashboard.presenter.HomeScreenOnClick" />
 
         <variable
             name="pos"

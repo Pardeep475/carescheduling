@@ -8,18 +8,18 @@
 
         <variable
             name="commonData"
-            type="com.example.carescheduling.Ui.Common.CommonBean" />
+            type="css.mobile.carescheduling.Ui.Common.CommonBean" />
 
         <variable
             name="commonClick"
-            type="com.example.carescheduling.Ui.Common.Common" />
+            type="css.mobile.carescheduling.Ui.Common.Common" />
     </data>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
-        tools:context=".Ui.Dashboard.view.HomeF">
+        tools:context="css.mobile.carescheduling.Ui.Dashboard.view.HomeF">
 
         <include
             android:id="@+id/rl_tool"

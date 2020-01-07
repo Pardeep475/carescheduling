@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
-        tools:context=".Ui.HomeScreen.View.BlankFragment">
+        tools:context="css.mobile.carescheduling.Ui.HomeScreen.View.BlankFragment">
 
         <ScrollView
             android:id="@+id/s_blank"
@@ -55,6 +55,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/btns_layout"
                     android:layout_marginTop="@dimen/five_dp"
+                    android:visibility="gone"
                     android:background="@color/blue"
                     android:fontFamily="@font/rubik_medium"
                     android:text="@string/need_direction"
@@ -283,19 +284,19 @@
 
         <variable
             name="commonData"
-            type="com.example.carescheduling.Ui.Common.CommonBean" />
+            type="css.mobile.carescheduling.Ui.Common.CommonBean" />
 
         <variable
             name="commonClick"
-            type="com.example.carescheduling.Ui.Common.Common" />
+            type="css.mobile.carescheduling.Ui.Common.Common" />
 
 
         <variable
             name="myNextVisitClick"
-            type="com.example.carescheduling.Ui.HomeScreen.presenter.MyNextVisitClick" />
+            type="css.mobile.carescheduling.Ui.HomeScreen.presenter.MyNextVisitClick" />
 
         <variable
             name="clientBookingScreenModel"
-            type="com.example.carescheduling.Ui.HomeScreen.beans.ClientBookingScreenModel" />
+            type="css.mobile.carescheduling.Ui.HomeScreen.beans.ClientBookingScreenModel" />
     </data>
 </layout>

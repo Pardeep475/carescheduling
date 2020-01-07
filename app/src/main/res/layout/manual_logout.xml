@@ -8,14 +8,14 @@
 
         <variable
             name="commonData"
-            type="com.example.carescheduling.Ui.Common.CommonBean" />
+            type="css.mobile.carescheduling.Ui.Common.CommonBean" />
 
         <variable
             name="commonClick"
-            type="com.example.carescheduling.Ui.Common.Common" />
+            type="css.mobile.carescheduling.Ui.Common.Common" />
 <variable
     name="iManualLogout"
-    type="com.example.carescheduling.Ui.HomeScreen.presenter.IManualLogout" />
+    type="css.mobile.carescheduling.Ui.HomeScreen.presenter.IManualLogout" />
 
     </data>
 

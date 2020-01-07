@@ -8,16 +8,16 @@
 
         <variable
             name="commonData"
-            type="com.example.carescheduling.Ui.Common.CommonBean" />
+            type="css.mobile.carescheduling.Ui.Common.CommonBean" />
 
         <variable
             name="commonClick"
-            type="com.example.carescheduling.Ui.Common.Common" />
+            type="css.mobile.carescheduling.Ui.Common.Common" />
 
 
         <variable
             name="backPressedClick"
-            type="com.example.carescheduling.Ui.HomeScreen.presenter.BackPressedClick" />
+            type="css.mobile.carescheduling.Ui.HomeScreen.presenter.BackPressedClick" />
     </data>
 
     <RelativeLayout
@@ -60,7 +60,7 @@
         <!--android:layout_height="match_parent"-->
         <!--android:layout_below="@+id/rl_tool"-->
         <!--android:visibility="gone"/>-->
-        <com.example.carescheduling.Ui.Common.ScrollViewExt
+        <css.mobile.carescheduling.Ui.Common.ScrollViewExt
             android:id="@+id/sv_care_plan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -71,7 +71,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical" />
-        </com.example.carescheduling.Ui.Common.ScrollViewExt>
+        </css.mobile.carescheduling.Ui.Common.ScrollViewExt>
 
         <include
             android:id="@+id/rl_no_data_found"

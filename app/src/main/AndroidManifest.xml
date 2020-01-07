@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.carescheduling">
+    package="css.mobile.carescheduling">
     <uses-permission android:name="android.permission.NFC" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -27,14 +27,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".Ui.Profile.View.EditProfile"
+        <activity android:name="css.mobile.carescheduling.Ui.Profile.View.EditProfile"
             android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".Ui.Dashboard.view.Dashboard"
+            android:name="css.mobile.carescheduling.Ui.Dashboard.view.Dashboard"
             android:screenOrientation="portrait"
             android:label="@string/title_activity_dashboard" />
-        <activity android:name=".Splash.View.SplashActivity"
+        <activity android:name="css.mobile.carescheduling.Splash.View.SplashActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -42,7 +42,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Ui.LoginActivity.View.LoginActivity"
+        <activity android:name="css.mobile.carescheduling.Ui.LoginActivity.View.LoginActivity"
             android:screenOrientation="portrait"/>
 
         <provider

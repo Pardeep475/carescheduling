@@ -8,19 +8,19 @@
 
         <variable
             name="editClickHandler"
-            type="com.example.carescheduling.Ui.Dashboard.presenter.EditProfileClickHandler" />
+            type="css.mobile.carescheduling.Ui.Dashboard.presenter.EditProfileClickHandler" />
 
         <variable
             name="commonData"
-            type="com.example.carescheduling.Ui.Common.CommonBean" />
+            type="css.mobile.carescheduling.Ui.Common.CommonBean" />
 
         <variable
             name="commonClick"
-            type="com.example.carescheduling.Ui.Common.Common" />
+            type="css.mobile.carescheduling.Ui.Common.Common" />
 
         <variable
             name="profileEditBean"
-            type="com.example.carescheduling.Ui.Dashboard.beans.ProfileResultBean" />
+            type="css.mobile.carescheduling.Ui.Dashboard.beans.ProfileResultBean" />
     </data>
 
     <LinearLayout

@@ -8,11 +8,11 @@
 
         <variable
             name="commonData"
-            type="com.example.carescheduling.Ui.Common.CommonBean" />
+            type="css.mobile.carescheduling.Ui.Common.CommonBean" />
 
         <variable
             name="commonClick"
-            type="com.example.carescheduling.Ui.Common.Common" />
+            type="css.mobile.carescheduling.Ui.Common.Common" />
 
     </data>
 
@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
-        tools:context=".Ui.Dashboard.view.SettingF">
+        tools:context="css.mobile.carescheduling.Ui.Dashboard.view.SettingF">
 
         <include
             layout="@layout/toolbar_layout"
@@ -32,8 +32,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:textSize="@dimen/twenty_five_sp"
             android:fontFamily="@font/rubik_medium"
-            android:text="@string/hello_blank_fragment" />
+            android:text="@string/coming_soon" />
 
     </RelativeLayout>
 

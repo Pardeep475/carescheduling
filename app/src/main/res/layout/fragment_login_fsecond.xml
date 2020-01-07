@@ -23,7 +23,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Ui.LoginActivity.View.LoginFSecond">
+    tools:context="css.mobile.carescheduling.Ui.LoginActivity.View.LoginFSecond">
 
     <LinearLayout
         android:layout_width="match_parent"

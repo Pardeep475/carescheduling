@@ -6,7 +6,7 @@
     <data>
         <variable
             name="backPressedClick"
-            type="com.example.carescheduling.Ui.HomeScreen.presenter.BackPressedClick" />
+            type="css.mobile.carescheduling.Ui.HomeScreen.presenter.BackPressedClick" />
     </data>
 
     <RelativeLayout

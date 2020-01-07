@@ -8,15 +8,15 @@
 
         <variable
             name="visitArchiveClick"
-            type="com.example.carescheduling.Ui.HomeScreen.presenter.VisitArchiveClick" />
+            type="css.mobile.carescheduling.Ui.HomeScreen.presenter.VisitArchiveClick" />
 
         <variable
             name="commonData"
-            type="com.example.carescheduling.Ui.Common.CommonBean" />
+            type="css.mobile.carescheduling.Ui.Common.CommonBean" />
 
         <variable
             name="commonClick"
-            type="com.example.carescheduling.Ui.Common.Common" />
+            type="css.mobile.carescheduling.Ui.Common.Common" />
 
         <variable
             name="date"
@@ -28,7 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
-        tools:context=".Ui.HomeScreen.View.VisitArchiveFragment">
+        tools:context="css.mobile.carescheduling.Ui.HomeScreen.View.VisitArchiveFragment">
 
         <include
             android:id="@+id/rl_tool"

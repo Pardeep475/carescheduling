@@ -6,15 +6,15 @@
 
         <variable
             name="iclientTaskSaveNote"
-            type="com.example.carescheduling.Ui.HomeScreen.presenter.IClientTaskSaveNote" />
+            type="css.mobile.carescheduling.Ui.HomeScreen.presenter.IClientTaskSaveNote" />
 
         <variable
             name="commonData"
-            type="com.example.carescheduling.Ui.Common.CommonBean" />
+            type="css.mobile.carescheduling.Ui.Common.CommonBean" />
 
         <variable
             name="commonClick"
-            type="com.example.carescheduling.Ui.Common.Common" />
+            type="css.mobile.carescheduling.Ui.Common.Common" />
 
     </data>
 

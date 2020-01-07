@@ -8,11 +8,11 @@
 
         <variable
             name="commonData"
-            type="com.example.carescheduling.Ui.Common.CommonBean" />
+            type="css.mobile.carescheduling.Ui.Common.CommonBean" />
 
         <variable
             name="commonClick"
-            type="com.example.carescheduling.Ui.Common.Common" />
+            type="css.mobile.carescheduling.Ui.Common.Common" />
 
     </data>
 
@@ -21,7 +21,7 @@
         android:layout_height="match_parent"
         android:background="@color/white"
         android:orientation="vertical"
-        tools:context=".Ui.Profile.View.ProfileImageList">
+        tools:context="css.mobile.carescheduling.Ui.Profile.View.ProfileImageList">
 
         <include
             android:id="@+id/rl_tool"

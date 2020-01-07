@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/fm_edit_container"
-        tools:context=".Ui.Profile.View.EditProfile">
+        tools:context="css.mobile.carescheduling.Ui.Profile.View.EditProfile">
 
     </FrameLayout>
 </layout>

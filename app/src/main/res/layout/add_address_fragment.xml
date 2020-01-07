@@ -7,19 +7,19 @@
 
         <variable
             name="profileAddressBean"
-            type="com.example.carescheduling.Ui.Profile.bean.ProfileAddressBean" />
+            type="css.mobile.carescheduling.Ui.Profile.bean.ProfileAddressBean" />
 
         <variable
             name="profileAddressClick"
-            type="com.example.carescheduling.Ui.Profile.presenter.ProfileAddressClick" />
+            type="css.mobile.carescheduling.Ui.Profile.presenter.ProfileAddressClick" />
 
         <variable
             name="commonData"
-            type="com.example.carescheduling.Ui.Common.CommonBean" />
+            type="css.mobile.carescheduling.Ui.Common.CommonBean" />
 
         <variable
             name="commonClick"
-            type="com.example.carescheduling.Ui.Common.Common" />
+            type="css.mobile.carescheduling.Ui.Common.Common" />
     </data>
 
     <RelativeLayout
@@ -36,7 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/rl_tool"
-            tools:context=".Ui.Profile.View.ProfileAddress">
+            tools:context="css.mobile.carescheduling.Ui.Profile.View.ProfileAddress">
 
             <LinearLayout
                 android:layout_width="match_parent"

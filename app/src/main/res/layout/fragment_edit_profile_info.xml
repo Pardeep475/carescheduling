@@ -10,19 +10,19 @@
 
         <variable
             name="profileInfoBean"
-            type="com.example.carescheduling.Ui.Profile.bean.EditProfileInfoBean" />
+            type="css.mobile.carescheduling.Ui.Profile.bean.EditProfileInfoBean" />
 
         <variable
             name="commonData"
-            type="com.example.carescheduling.Ui.Common.CommonBean" />
+            type="css.mobile.carescheduling.Ui.Common.CommonBean" />
 
         <variable
             name="commonClick"
-            type="com.example.carescheduling.Ui.Common.Common" />
+            type="css.mobile.carescheduling.Ui.Common.Common" />
 
         <variable
             name="editProfileInfoClick"
-            type="com.example.carescheduling.Ui.Profile.presenter.EditProfileInfoClick" />
+            type="css.mobile.carescheduling.Ui.Profile.presenter.EditProfileInfoClick" />
 
         <variable
             name="date"
@@ -33,7 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".Ui.Profile.View.EditProfileInfo">
+        tools:context="css.mobile.carescheduling.Ui.Profile.View.EditProfileInfo">
 
         <include
             android:id="@+id/rl_tool"

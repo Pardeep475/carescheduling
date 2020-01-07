@@ -8,22 +8,22 @@
 
         <variable
             name="commonData"
-            type="com.example.carescheduling.Ui.Common.CommonBean" />
+            type="css.mobile.carescheduling.Ui.Common.CommonBean" />
 
         <variable
             name="commonClick"
-            type="com.example.carescheduling.Ui.Common.Common" />
+            type="css.mobile.carescheduling.Ui.Common.Common" />
 
         <variable
             name="idepartureNewFragmentClick"
-            type="com.example.carescheduling.Ui.HomeScreen.presenter.IDepartureNewFragmentClick" />
+            type="css.mobile.carescheduling.Ui.HomeScreen.presenter.IDepartureNewFragmentClick" />
     </data>
 
     <RelativeLayout
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".Ui.HomeScreen.View.DepartureNew">
+        tools:context="css.mobile.carescheduling.Ui.HomeScreen.View.DepartureNew">
 
         <include
             android:id="@+id/rl_tool"
@@ -129,6 +129,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@color/blue"
+                    android:visibility="gone"
                     android:fontFamily="@font/rubik_medium"
                     android:onClick="@{v->idepartureNewFragmentClick.readNfcClick()}"
                     android:text="@string/read_nfc"
@@ -150,6 +151,7 @@
                     android:layout_marginEnd="@dimen/five_dp"
                     android:layout_weight="1"
                     android:background="@color/blue"
+                    android:visibility="gone"
                     android:fontFamily="@font/rubik_medium"
                     android:onClick="@{v->idepartureNewFragmentClick.clientInfoClick()}"
                     android:text="@string/info_client"

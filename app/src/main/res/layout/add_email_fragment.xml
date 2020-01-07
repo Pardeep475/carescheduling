@@ -8,22 +8,22 @@
 
         <variable
             name="editEmailBean"
-            type="com.example.carescheduling.Ui.Profile.bean.EditEmailBean" />
+            type="css.mobile.carescheduling.Ui.Profile.bean.EditEmailBean" />
 
         <variable
             name="commonData"
-            type="com.example.carescheduling.Ui.Common.CommonBean" />
+            type="css.mobile.carescheduling.Ui.Common.CommonBean" />
 
         <variable
             name="commonClick"
-            type="com.example.carescheduling.Ui.Common.Common" />
+            type="css.mobile.carescheduling.Ui.Common.Common" />
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".Ui.Profile.View.AddEmail">
+        tools:context="css.mobile.carescheduling.Ui.Profile.View.AddEmail">
 
         <include
             android:id="@+id/rl_tool"

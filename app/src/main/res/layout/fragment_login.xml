@@ -5,11 +5,11 @@
 
         <variable
             name="loginBeanData"
-            type="com.example.carescheduling.Ui.LoginActivity.beans.LoginBeanData" />
+            type="css.mobile.carescheduling.Ui.LoginActivity.beans.LoginBeanData" />
 
         <variable
             name="loginPresenter"
-            type="com.example.carescheduling.Ui.LoginActivity.presenter.LoginPresenter" />
+            type="css.mobile.carescheduling.Ui.LoginActivity.presenter.LoginPresenter" />
     </data>
 
     <RelativeLayout
@@ -93,6 +93,7 @@
             android:layout_marginBottom="@dimen/sixteen_dp"
             android:fontFamily="@font/rubik_medium"
             android:paddingTop="@dimen/five_dp"
+            android:visibility="gone"
             android:paddingBottom="@dimen/five_dp"
             android:text="@string/forgot_password"
             android:textAlignment="center"
@@ -114,6 +115,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/cb_remember_me"
             android:layout_marginStart="@dimen/sixteen_dp"
+            android:visibility="gone"
             android:fontFamily="@font/rubik_medium"
             android:text="@string/log_on_offline" />
     </RelativeLayout>

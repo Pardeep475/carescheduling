@@ -6,7 +6,7 @@
 
         <variable
             name="clientMedicalBeanAdapter"
-            type="com.example.carescheduling.Ui.HomeScreen.beans.ClientMedicalBeanAdapter" />
+            type="css.mobile.carescheduling.Ui.HomeScreen.beans.ClientMedicalBeanAdapter" />
     </data>
 
     <androidx.cardview.widget.CardView

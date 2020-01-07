@@ -8,15 +8,15 @@
 
         <variable
             name="clientNoteAdapterBean"
-            type="com.example.carescheduling.Ui.HomeScreen.beans.ClientNoteAdapterBean" />
+            type="css.mobile.carescheduling.Ui.HomeScreen.beans.ClientNoteAdapterBean" />
 
         <variable
             name="commonData"
-            type="com.example.carescheduling.Ui.Common.CommonBean" />
+            type="css.mobile.carescheduling.Ui.Common.CommonBean" />
 
         <variable
             name="commonClick"
-            type="com.example.carescheduling.Ui.Common.Common" />
+            type="css.mobile.carescheduling.Ui.Common.Common" />
 
 
     </data>

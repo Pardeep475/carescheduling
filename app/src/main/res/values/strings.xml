@@ -170,14 +170,15 @@
     <string name="yes">Yes</string>
     <string name="done">Done</string>
     <string name="is_disability">Is Disability</string>
+    <string name="coming_soon">Coming Soon</string>
 
     <string-array name="home_array">
         <item>My Next Visit</item>
-        <item>Directions</item>
+        <!--<item>Directions</item>-->
         <item>Todays Visits</item>
         <item>Visit Archive</item>
-        <item>My Time</item>
-        <item>Hours and Exspenses</item>
+        <!--<item>My Time</item>
+        <item>Hours and Exspenses</item>-->
     </string-array>
     <string-array name="directions_array">
         <item>For My Next Visit</item>

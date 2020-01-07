@@ -8,15 +8,15 @@
 
         <variable
             name="commonData"
-            type="com.example.carescheduling.Ui.Common.CommonBean" />
+            type="css.mobile.carescheduling.Ui.Common.CommonBean" />
 
         <variable
             name="iImageClick"
-            type="com.example.carescheduling.Ui.Profile.presenter.IImageClick" />
+            type="css.mobile.carescheduling.Ui.Profile.presenter.IImageClick" />
 
         <variable
             name="commonClick"
-            type="com.example.carescheduling.Ui.Common.Common" />
+            type="css.mobile.carescheduling.Ui.Common.Common" />
 
         <variable
             name="imageUrl"
