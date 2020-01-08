@@ -44,7 +44,7 @@ public class EditProfile extends AppCompatActivity {
             case 1: {
 //                setFragment(DirectionsFragment.newInstance());
 //                setFragment(TodaysVisitFragment.newInstance());
-                VisitArchiveFragment.newInstance(false);
+                setFragment(VisitArchiveFragment.newInstance(false));
                 break;
             }
             case 2: {

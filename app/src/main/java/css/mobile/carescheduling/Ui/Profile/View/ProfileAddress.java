@@ -202,6 +202,9 @@ public class ProfileAddress extends BaseFragment implements Common, ProfileAddre
         } else {
             postCode = profileAddressBinding.edtPostCode.getText().toString();
         }
+        if (profileBean.getDefaultAddress() != null) {
+            profileAddressBinding.rbIsDefault.setChecked(profileBean.getDefaultAddress());
+        }
         profileAddressViewModel.getAddressByPostCode(stringValue, nationality, postCode).observe(this, new Observer<AddressByPostCode>() {
             @Override
             public void onChanged(AddressByPostCode addressByPostCode) {
@@ -311,8 +314,8 @@ public class ProfileAddress extends BaseFragment implements Common, ProfileAddre
         editAdressBeanRetro.setCustomerId(getSessionManager().getCustomerId());
         editAdressBeanRetro.setPersonId(getSessionManager().getPersonId());
         editAdressBeanRetro.setDefaultAddress(profileAddressBinding.rbIsDefault.isChecked());
-        editAdressBeanRetro.setOldAddressId(String.valueOf(profileBean.getPersonAddress().getAddressId()));
-        editAdressBeanRetro.setOldAddressTypeName(profileBean.getPersonAddress().getAddressTypeName());
+        editAdressBeanRetro.setOldAddressId(String.valueOf(profileBean.getAddressId()));
+        editAdressBeanRetro.setOldAddressTypeName(profileBean.getAddressTypeName());
         return editAdressBeanRetro;
     }
 

@@ -13,6 +13,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.Toast;
 
@@ -82,6 +83,17 @@ public class EditProfileInfo extends BaseFragment implements Common, EditProfile
         setProfileInfoBeanData();
         fragmentEditProfileInfoBinding.setEditProfileInfoClick(this);
 
+        fragmentEditProfileInfoBinding.swtIsDisability.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    fragmentEditProfileInfoBinding.llDisability.setVisibility(View.VISIBLE);
+                } else {
+                    fragmentEditProfileInfoBinding.llDisability.setVisibility(View.GONE);
+                }
+            }
+        });
+
     }
 
 
@@ -112,6 +124,12 @@ public class EditProfileInfo extends BaseFragment implements Common, EditProfile
                                         setSpinnerData();
                                         fragmentEditProfileInfoBinding.setDate(editProfileInfoBean.getDateOfBirth());
                                         fragmentEditProfileInfoBinding.setProfileInfoBean(editProfileInfoBean);
+                                        fragmentEditProfileInfoBinding.swtIsDisability.setChecked(editProfileInfoBean.isDisability());
+                                        if (editProfileInfoBean.isDisability()) {
+                                            fragmentEditProfileInfoBinding.llDisability.setVisibility(View.VISIBLE);
+                                        } else {
+                                            fragmentEditProfileInfoBinding.llDisability.setVisibility(View.GONE);
+                                        }
                                     }
 
                                 }
@@ -527,20 +545,11 @@ public class EditProfileInfo extends BaseFragment implements Common, EditProfile
         if (TextUtils.isEmpty(fragmentEditProfileInfoBinding.edtFirstName.getText().toString())) {
             showAToast("please select first name");
             return false;
-        } else if (TextUtils.isEmpty(fragmentEditProfileInfoBinding.edtMiddleName.getText().toString())) {
-            showAToast("please select middle name");
-            return false;
         } else if (TextUtils.isEmpty(fragmentEditProfileInfoBinding.edtSurname.getText().toString())) {
             showAToast("please select surname name");
             return false;
-        } else if (TextUtils.isEmpty(fragmentEditProfileInfoBinding.edtMaidenName.getText().toString())) {
-            showAToast("please select maiden name");
-            return false;
         } else if (TextUtils.isEmpty(fragmentEditProfileInfoBinding.txtDateOfBirth.getText().toString())) {
             showAToast("please select date of birth");
-            return false;
-        } else if ((fragmentEditProfileInfoBinding.spinnerGender.getSelectedItemPosition() - 1) < 0) {
-            showAToast("please select gender type");
             return false;
         } else if ((fragmentEditProfileInfoBinding.spinnerGender.getSelectedItemPosition() - 1) < 0) {
             showAToast("please select gender type");
@@ -557,7 +566,7 @@ public class EditProfileInfo extends BaseFragment implements Common, EditProfile
         } else if ((fragmentEditProfileInfoBinding.spinnerEthnicity.getSelectedItemPosition() - 1) < 0) {
             showAToast("please select ethnicity");
             return false;
-        } else if ((fragmentEditProfileInfoBinding.spinnerDisability.getSelectedItemPosition() - 1) < 0) {
+        } else if ((fragmentEditProfileInfoBinding.spinnerDisability.getSelectedItemPosition() - 1) < 0  && fragmentEditProfileInfoBinding.swtIsDisability.isChecked()) {
             showAToast("please select disability");
             return false;
         } else if ((fragmentEditProfileInfoBinding.spinnerReligion.getSelectedItemPosition() - 1) < 0) {

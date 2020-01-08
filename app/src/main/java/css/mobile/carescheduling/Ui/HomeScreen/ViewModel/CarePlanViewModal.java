@@ -55,11 +55,11 @@ public class CarePlanViewModal extends AndroidViewModel {
                             Log.e("LoginSuccess", "success");
                             if (loginBeanRetroResponse.isSuccessful()) {
                                 if (loginBeanRetroResponse.body() != null && loginBeanRetroResponse.body().getDataList() != null && loginBeanRetroResponse.body().getDataList().size() > 0) {
-                                    ArrayList<ScheduleClients> clientLists = new ArrayList<>();
+                                    /*ArrayList<ScheduleClients> clientLists = new ArrayList<>();
                                     for (int i = 0; i < loginBeanRetroResponse.body().getDataList().size(); i++) {
                                         clientLists.addAll(loginBeanRetroResponse.body().getDataList());
-                                    }
-                                    data.setValue(clientLists);
+                                    }*/
+                                    data.setValue(loginBeanRetroResponse.body().getDataList());
                                 } else {
                                     data.setValue(null);
                                     Toast.makeText(getApplication(), (String) loginBeanRetroResponse.body().getResponseMessage(), Toast.LENGTH_SHORT).show();

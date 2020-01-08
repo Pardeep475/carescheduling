@@ -323,7 +323,7 @@ public class EditProfileAddress extends BaseFragment implements Common, EditProf
         String address = getRadioGroupText(editProfileAddressBinding.rbAddress);
         if (!address.isEmpty()) {
             for (int i = 0; i < profileResultBean.getPersonAddressList().size(); i++) {
-                if (profileResultBean.getPersonAddressList().get(i).getPersonAddress().getAddressTypeName().equalsIgnoreCase(address)) {
+                if (profileResultBean.getPersonAddressList().get(i).getAddressTypeName().equalsIgnoreCase(address)) {
                     setFragment(ProfileAddress.newInstance(address, profileResultBean.getPersonAddressList().get(i), profileResultBean.getPersonAddressList()));
                     return;
                 }

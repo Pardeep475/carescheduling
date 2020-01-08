@@ -1,6 +1,7 @@
 package css.mobile.carescheduling.Ui.HomeScreen.View;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,8 @@ import css.mobile.carescheduling.Utils.ConnectivityReceiver;
 import css.mobile.carescheduling.databinding.ClientInfoCarePlanFragmentBinding;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -80,7 +83,7 @@ public class CarePlanFragment extends BaseFragment implements Common, CarePlanAd
                         if (data != null && data.size() > 0) {
                             dataListArrayList = data;
                             clientInfoCarePlanFragmentBinding.llCarePlan.removeAllViews();
-                            if(data.size()> 25)
+                            if (data.size() > 25)
                                 endPosition = 25;
                             else
                                 endPosition = data.size();
@@ -117,12 +120,14 @@ public class CarePlanFragment extends BaseFragment implements Common, CarePlanAd
                         public void onChanged(ArrayList<ScheduleClients> data) {
                             if (data != null && data.size() > 0) {
                                 dataListArrayList = data;
+                                Collections.sort(dataListArrayList);
                                 clientInfoCarePlanFragmentBinding.llCarePlan.removeAllViews();
-                                if(data.size()> 25)
+                                if (data.size() > 25)
                                     endPosition = 25;
                                 else
                                     endPosition = data.size();
-                                setLayoutDynamic(clientInfoCarePlanFragmentBinding.llCarePlan, data);
+
+                                setLayoutDynamic(clientInfoCarePlanFragmentBinding.llCarePlan, dataListArrayList);
                                 setDataOriginal();
                             } else {
 //                                setNoDataFound();
@@ -199,7 +204,8 @@ public class CarePlanFragment extends BaseFragment implements Common, CarePlanAd
         String weekday = "";
         LinearLayout ll_nested = null;
 
-        for (int i = startPosition; i < endPosition; i++) {
+        for (int i = 0; i < dataListArrayList.size(); i++) {
+            Log.e("Shorting_list", dataListArrayList.get(i).getWeekRotationTypeName());
             if (!weekday.equalsIgnoreCase(dataLists.get(i).getWeekRotationTypeName())) {
                 weekday = dataLists.get(i).getWeekRotationTypeName();
                 View v = LayoutInflater.from(getActivity()).inflate(R.layout.item_linet_are_plan, null);
@@ -229,21 +235,21 @@ public class CarePlanFragment extends BaseFragment implements Common, CarePlanAd
     @Override
     public void onScrollChanged(ScrollViewExt scrollView, int x, int y, int oldx, int oldy) {
         // We take the last son in the scrollview
-        View view = (View) scrollView.getChildAt(scrollView.getChildCount() - 1);
-        int diff = (view.getBottom() - (scrollView.getHeight() + scrollView.getScrollY()));
+//        View view = (View) scrollView.getChildAt(scrollView.getChildCount() - 1);
+//        int diff = (view.getBottom() - (scrollView.getHeight() + scrollView.getScrollY()));
 
         // if diff is zero, then the bottom has been reached
-        if (diff == 0) {
-            if (dataListArrayList.size() > (endPosition + 25)) {
-                startPosition = endPosition;
-                endPosition = endPosition +25;
-                setLayoutDynamic(clientInfoCarePlanFragmentBinding.llCarePlan, dataListArrayList);
-            } else {
-                startPosition = endPosition;
-                endPosition = dataListArrayList.size();
-                setLayoutDynamic(clientInfoCarePlanFragmentBinding.llCarePlan, dataListArrayList);
-            }
+//        if (diff == 0) {
+//            if (dataListArrayList.size() > (endPosition + 25)) {
+//                startPosition = endPosition;
+//                endPosition = endPosition + 25;
+//                setLayoutDynamic(clientInfoCarePlanFragmentBinding.llCarePlan, dataListArrayList);
+//            } else {
+//                startPosition = endPosition;
+//                endPosition = dataListArrayList.size();
+//                setLayoutDynamic(clientInfoCarePlanFragmentBinding.llCarePlan, dataListArrayList);
+//            }
             // do stuff
-        }
+//        }
     }
 }

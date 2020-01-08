@@ -142,7 +142,7 @@ public interface ApiService {
                                                                     @Path("branchId") String branchId,
                                                                     @Path("clientId") String clientId);
 
-    @GET("GetClientMadical/{customerId}/{branchId}/{clientId}")
+    @GET("GetClientMedicals/{customerId}/{branchId}/{clientId}")
     Observable<Response<ClientCareMedicalBean>> GetClientMedical(@Path("customerId") String customerId,
                                                                  @Path("branchId") String branchId,
                                                                  @Path("clientId") String clientId);
