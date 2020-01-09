@@ -6,6 +6,7 @@ import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,8 @@ import css.mobile.carescheduling.Ui.LoginActivity.beans.LoginBeanRetro;
 //import com.example.carescheduling.databinding.FragmentLoginFsecondBinding;
 import css.mobile.carescheduling.Ui.Profile.bean.ProfileAllData;
 import css.mobile.carescheduling.Utils.ConnectivityReceiver;
+import css.mobile.carescheduling.Utils.FullScreenDialog;
+
 import com.google.gson.JsonElement;
 
 import java.util.ArrayList;
@@ -42,13 +45,15 @@ public class LoginFSecond extends BaseFragment implements View.OnClickListener {
     // TODO: view modal
     private LoginViewModalSF loginViewModalSF;
     private AppCompatSpinner appCompatSpinner;
+    private FullScreenDialog fullScreenDialog;
+    private Handler handler;
 
     public LoginFSecond() {
         // Required empty public constructor
     }
 
     // TODO: Rename and change types and number of parameters
-    public static LoginFSecond newInstance(String param1, String userPassword, LoginBeanRetro.Data data,boolean isRemember) {
+    public static LoginFSecond newInstance(String param1, String userPassword, LoginBeanRetro.Data data, boolean isRemember) {
         LoginFSecond fragment = new LoginFSecond();
         Bundle args = new Bundle();
         args.putString(USER_EMAIL, param1);
@@ -65,7 +70,7 @@ public class LoginFSecond extends BaseFragment implements View.OnClickListener {
         if (getArguments() != null) {
             userEmail = getArguments().getString(USER_EMAIL);
             userPassword = getArguments().getString(USER_PASSWORD);
-            isRememberMe = getArguments().getBoolean(REMEMBER_ME,false);
+            isRememberMe = getArguments().getBoolean(REMEMBER_ME, false);
             LoginBeanRetro.Data data = (LoginBeanRetro.Data) getArguments().getSerializable(DATA);
             if (data != null) {
                 if (data.getBranchList() != null)
@@ -94,6 +99,7 @@ public class LoginFSecond extends BaseFragment implements View.OnClickListener {
 //        loginFSecondBinding.spinnerLoginSf.setOnItemClickListener((AdapterView.OnItemClickListener) this);
         sessionManager = getSessionManager();
         TextView textView = view.findViewById(R.id.txt_email);
+        fullScreenDialog = new FullScreenDialog();
         textView.setText(userEmail);
         loginViewModalSF = ViewModelProviders.of(this).get(LoginViewModalSF.class);
         CustomAdapter adapter = new CustomAdapter(getActivity(),
@@ -144,19 +150,31 @@ public class LoginFSecond extends BaseFragment implements View.OnClickListener {
     }
 
     private void setAllProfileData() {
-        showDialog();
-
+        handler = new Handler();
+        if (getActivity() != null)
+            fullScreenDialog.show(getActivity().getSupportFragmentManager(), "fullScreenDialog");
         loginViewModalSF.getPersonAllData(sessionManager.getPersonId(), sessionManager.getCustomerId()
                 , sessionManager.getBranchId(), "Small").observe(this, new Observer<ProfileAllData>() {
             @Override
-            public void onChanged(ProfileAllData profileAllData) {
-                hideDialog();
-                if (profileAllData != null && getActivity() != null) {
-                    loginViewModalSF.setDefaultData(getActivity(), profileAllData);
+            public void onChanged(final ProfileAllData profileAllData) {
+                fullScreenDialog.progressFull();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        fullScreenDialog.dismiss();
+                        if (profileAllData != null && getActivity() != null) {
+                            loginViewModalSF.setDefaultData(getActivity(), profileAllData);
 
-                }
+                        }
+                    }
+                }, 500);
             }
         });
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        handler.removeCallbacksAndMessages(null);
+    }
 }

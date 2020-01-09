@@ -21,6 +21,7 @@ import css.mobile.carescheduling.Ui.LoginActivity.beans.LoginBeanRetro;
 import css.mobile.carescheduling.Ui.LoginActivity.presenter.LoginPresenter;
 import css.mobile.carescheduling.Ui.Profile.bean.ProfileAllData;
 import css.mobile.carescheduling.Utils.ConnectivityReceiver;
+import css.mobile.carescheduling.Utils.FullScreenDialog;
 import css.mobile.carescheduling.data.Local.SessionManager;
 import css.mobile.carescheduling.databinding.FragmentLoginBinding;
 
@@ -42,7 +43,7 @@ public class LoginF extends BaseFragment implements LoginPresenter {
     private String mParam2;
     private Handler handler;
 
-    ProgressDialog progressDialog;
+    private FullScreenDialog fullScreenDialog;
 
 
     // TODO: data binding
@@ -74,15 +75,6 @@ public class LoginF extends BaseFragment implements LoginPresenter {
         fragmentLoginBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false);
         View view = fragmentLoginBinding.getRoot();
         setUpLayout(view);
-        progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setMax(100);
-        progressDialog.setProgressNumberFormat(null);
-//        progressDialog.setProgressPercentFormat(null);
-        progressDialog.setMessage("Signing In...");
-        progressDialog.setCancelable(false);
-        progressDialog.setTitle("Please wait...");
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-
         return view;
 //        return inflater.inflate( R.layout.fragment_login,container,false);
     }
@@ -91,6 +83,7 @@ public class LoginF extends BaseFragment implements LoginPresenter {
     private void setUpLayout(View view) {
         loginViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
 //        LoginBeanData loginBeanData = new LoginBeanData("testuser@betterhealthcare.co.uk", "test");
+        fullScreenDialog = new FullScreenDialog();
         if (getActivity() != null)
             sessionManager = new SessionManager(getActivity());
 
@@ -147,24 +140,7 @@ public class LoginF extends BaseFragment implements LoginPresenter {
             public void onChanged(LoginBeanRetro loginBeanRetro) {
                 hideDialog();
 //                progressDialog.dismiss();
-                handler = new Handler();
-                handler.postDelayed(
-                        new Runnable() {
-                            @Override
-                            public void run() {
-                                int prog = progressDialog.getProgress();
-                                if (prog < 98) {
-                                    if (prog >= 20)
-                                        progressDialog.setMessage("Loading Data...");
-                                    int a = progressDialog.getProgress() + 1;
-                                    progressDialog.setProgress(a);
-                                    handler.postDelayed(this, 90);
-                                }
-                            }
-                        }, 0
-                );
 
-                Log.e("Logi nSuccess", "liveData");
                 getSessionManager().setOffline(fragmentLoginBinding.cbRememberMe.isChecked());
                 if (loginBeanRetro != null && loginBeanRetro.getSuccess()) {
                     if (loginBeanRetro.getData().getBranchList().size() == 1) {
@@ -190,20 +166,21 @@ public class LoginF extends BaseFragment implements LoginPresenter {
 
 
     private void setAllProfileData() {
-//        showDialog();
-        progressDialog.show();
+        handler = new Handler();
+        if (getActivity() != null)
+            fullScreenDialog.show(getActivity().getSupportFragmentManager(), "fullScreenDialog");
 
         loginViewModel.getPersonAllData(sessionManager.getPersonId(), sessionManager.getCustomerId()
                 , sessionManager.getBranchId(), "Small").observe(this, new Observer<ProfileAllData>() {
             @Override
             public void onChanged(final ProfileAllData profileAllData) {
 //                hideDialog();
-                handler.removeCallbacksAndMessages(null);
-                progressDialog.setProgress(100);
+//                handler.removeCallbacksAndMessages(null);
+                fullScreenDialog.progressFull();
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        progressDialog.dismiss();
+                        fullScreenDialog.dismiss();
                         if (profileAllData != null && getActivity() != null) {
                             loginViewModel.setDefaultData(getActivity(), profileAllData);
 
@@ -234,6 +211,13 @@ public class LoginF extends BaseFragment implements LoginPresenter {
             getActivity().getSupportFragmentManager().beginTransaction()
                     .replace(R.id.rl_main_login, LoginFSecond.newInstance(email, userPassword, data, isRemamberMe)).commitAllowingStateLoss();
         }
+    }
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        handler.removeCallbacksAndMessages(null);
     }
 
 }

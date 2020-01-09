@@ -10,10 +10,12 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.arover.moment.Moment;
+
 import css.mobile.carescheduling.R;
 import css.mobile.carescheduling.Ui.Base.BaseActivity;
 import css.mobile.carescheduling.Ui.Dashboard.view.Dashboard;
 import css.mobile.carescheduling.Ui.LoginActivity.View.LoginActivity;
+import css.mobile.carescheduling.Utils.FullScreenDialog;
 import css.mobile.carescheduling.data.Local.SessionManager;
 
 import java.text.ParseException;
@@ -34,6 +36,9 @@ public class SplashActivity extends BaseActivity {
         setContentView(R.layout.activity_splash);
         formatDate();
         initialSetUp();
+//
+//        FullScreenDialog fullScreenDialog = new FullScreenDialog();
+//        fullScreenDialog.show(getSupportFragmentManager(), "FullScreenDialog");
     }
 
     private void initialSetUp() {
