@@ -25,6 +25,7 @@ import css.mobile.carescheduling.Ui.HomeScreen.beans.Tasks;
 import css.mobile.carescheduling.Ui.HomeScreen.presenter.IClientTaskItemClick;
 import css.mobile.carescheduling.Utils.ConnectivityReceiver;
 import css.mobile.carescheduling.databinding.ClientTasksFragmentBinding;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -75,44 +76,14 @@ public class ClientTasksFragment extends BaseFragment implements Common, IClient
         clientTasksFragmentBinding.rcvClientTask.setVisibility(View.VISIBLE);
         clientTasksFragmentBinding.rcvClientTask.showShimmerAdapter();
 
-        if (getSessionManager().getClientTasks() == null ||
-                getSessionManager().getClientTasks().equalsIgnoreCase("null")) {
-            try {
-                if (ConnectivityReceiver.isNetworkAvailable(getActivity())) {
-                    getClientTasks();
-                } else {
-                    getDataFromRoom();
-//                    setNoDataFound();
-//                    Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
-                }
-            } catch (Exception e) {
-                getDataFromRoom();
-//                setNoDataFound();
-//                Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
-            }
-        } else {
+        if (getSessionManager().getClientTasks() != null || !getSessionManager().getClientTasks().equalsIgnoreCase("null")) {
             tasksArrayList = getItemArrayList();
             setReylerViewData();
+        } else {
+            setNoDataFound();
         }
-
-
     }
 
-
-    private void getDataFromRoom() {
-        mViewModel.getDataFromLocal(getActivity(), getSessionManager().getBookingId()).observe(this, new Observer<ArrayList<Tasks>>() {
-            @Override
-            public void onChanged(ArrayList<Tasks> clientsTasks) {
-                if (clientsTasks != null) {
-                    getSessionManager().setClientTasks(gson.toJson(clientsTasks));
-                    tasksArrayList = clientsTasks;
-                    setReylerViewData();
-                } else {
-                    setNoDataFound();
-                }
-            }
-        });
-    }
 
     private ArrayList<Tasks> getItemArrayList() {
         Type type = new TypeToken<ArrayList<Tasks>>() {
@@ -121,24 +92,6 @@ public class ClientTasksFragment extends BaseFragment implements Common, IClient
         return tasksArrayList;
     }
 
-    private void getClientTasks() {
-
-        mViewModel.getClientTasks(getSessionManager().getCustomerId(),
-                getSessionManager().getBranchId(),
-                getSessionManager().getClientId()).observe(this, new Observer<ArrayList<Tasks>>() {
-            @Override
-            public void onChanged(ArrayList<Tasks> clientsTasks) {
-                if (clientsTasks != null) {
-                    getSessionManager().setClientTasks(gson.toJson(clientsTasks));
-                    tasksArrayList = clientsTasks;
-                    setReylerViewData();
-                } else {
-                    getDataFromRoom();
-//                    setNoDataFound();
-                }
-            }
-        });
-    }
 
     private void setReylerViewData() {
         clientTasksFragmentBinding.rcvClientTask.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -186,23 +139,7 @@ public class ClientTasksFragment extends BaseFragment implements Common, IClient
     public void itemTaskClick(int pos, Tasks tasks) {
         if (type.equalsIgnoreCase("Not Clickable"))
             return;
-
-        //ClientTaskSaveFragment
         setFragment(ClientTaskSaveFragment.newInstance(pos));
-
-
-//        if (tasks.isCompleted()) {
-//            tasks.setCompleted(false);
-//            getItemArrayList().get(pos).setCompleted(false);
-//        } else {
-//            tasks.setCompleted(true);
-//            getItemArrayList().get(pos).setCompleted(true);
-//        }
-//        clientInfoDocumentsAdapter.notifyItemChanged(pos, tasks);
-//
-////        clientInfoDocumentsAdapter.setData(tasksArrayList);
-//        getSessionManager().setClientTasks(gson.toJson(tasksArrayList));
-
     }
 
     private void setFragment(Fragment fragment) {

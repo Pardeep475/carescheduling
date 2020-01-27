@@ -1,0 +1,26 @@
+At Login:-
+-Hide Log on offline and forgot password  ------done
+-After logon change loading screen as in wireframe. Sent Gif image in group.  ------not done
+
+Setting:-
+write "coming soon"  ------done
+
+Home:-
+-Hide Directions, My time, Hours and expenses  ------done
+-In today's visit Directly show Todays visit instead of menus  ------done
+-My Next visit, hide Need Directions?   ------done
+-On click of Arrival hide "Read NFC"   ------done
+-on click of departure hide client info and Read NFC  ------done
+-on click of my task in departure hide "N/A".  ------done
+-My next visit> Client info. Client notes and medical history keeps loading but working in ios. careplan schedule is not shown in correct format, it is shown according to group by days.   ------done
+
+
+In Profile:-
+-Update address crashing   ------done
+-In edit profile, It is always asking for Middle, maiden name. Not mandatory. Also on click of IsDisability show disabilityType dropdown else hide and unselect. if IsDisability is checked then it is mandatory else nAt Logon:-  ------done
+
+
+
+
+
+https://drive.google.com/open?id=14DZivGKmyGYKr22a9epgfBHDMi1n0rjo

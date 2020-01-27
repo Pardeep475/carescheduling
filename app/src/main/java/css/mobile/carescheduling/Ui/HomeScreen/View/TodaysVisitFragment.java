@@ -90,7 +90,7 @@ public class TodaysVisitFragment extends BaseFragment implements Common, HomeScr
     private void setFragment(Fragment fragment) {
         if (getActivity() != null) {
             getActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fm_edit_container, fragment).addToBackStack(null).commitAllowingStateLoss();
+                    .replace(R.id.fm_edit_container, fragment).addToBackStack(null).commit();
         }
     }
 }

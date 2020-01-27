@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import css.mobile.carescheduling.Ui.HomeScreen.beans.ScannerDataBean;
 import css.mobile.carescheduling.Utils.ConnectivityReceiver;
 import css.mobile.carescheduling.data.Local.AppDataBase;
 import css.mobile.carescheduling.databinding.FragmentScannerViewBinding;
+
 import com.google.zxing.Result;
 
 import java.util.List;
@@ -81,6 +83,7 @@ public class ScannerFragment extends BaseFragment implements ZXingScannerView.Re
     @Override
     public void onResume() {
         super.onResume();
+        Log.e("FragmentCount", "Scanner Fragment");
         fragmentScannerViewBinding.svScanner.setResultHandler(this);
         fragmentScannerViewBinding.svScanner.startCamera();
     }
@@ -261,6 +264,6 @@ public class ScannerFragment extends BaseFragment implements ZXingScannerView.Re
     private void setFragment(Fragment fragment) {
         if (getActivity() != null)
             getActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fm_edit_container, fragment).addToBackStack(null).commitAllowingStateLoss();
+                    .add(R.id.fm_edit_container, fragment).addToBackStack(null).commit();
     }
 }

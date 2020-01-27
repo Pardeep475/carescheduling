@@ -41,7 +41,7 @@ public class CustomDialogClass extends Dialog implements
 
     public CustomDialogClass(Activity a, String type, String clientName) {
         super(a);
-        // TODO Auto-generated constructor stub
+
         this.c = a;
         this.type = type;
         this.clientName = clientName;
@@ -111,7 +111,7 @@ public class CustomDialogClass extends Dialog implements
     private void setFragment(Fragment fragment) {
         if (c != null)
             ((EditProfile) c).getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fm_edit_container, fragment).addToBackStack(null).commitAllowingStateLoss();
+                    .add(R.id.fm_edit_container, fragment).addToBackStack(null).commit();
     }
 
     private boolean checkWriteExternalPermission() {

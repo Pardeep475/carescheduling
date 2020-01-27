@@ -26,12 +26,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
+
 import css.mobile.carescheduling.R;
 import css.mobile.carescheduling.Ui.Base.BaseFragment;
 import css.mobile.carescheduling.Ui.Common.Common;
 import css.mobile.carescheduling.Ui.Common.CommonBean;
 import css.mobile.carescheduling.Ui.HomeScreen.ViewModel.BlankViewModel;
 import css.mobile.carescheduling.Ui.HomeScreen.beans.ClientBookingScreenModel;
+import css.mobile.carescheduling.Ui.HomeScreen.beans.Tasks;
 import css.mobile.carescheduling.Ui.HomeScreen.presenter.MyNextVisitClick;
 import css.mobile.carescheduling.Utils.ConnectivityReceiver;
 import css.mobile.carescheduling.Utils.CustomDialogClass;
@@ -48,6 +53,12 @@ public class BlankFragment extends BaseFragment implements Common, MyNextVisitCl
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+    }
+
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         blankFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.blank_fragment, container, false);
@@ -57,6 +68,7 @@ public class BlankFragment extends BaseFragment implements Common, MyNextVisitCl
     }
 
     private void setUpView(View view) {
+        Log.e("FragmentCount","Blanck Fragment");
         setCommonData();
         mViewModel = ViewModelProviders.of(this).get(BlankViewModel.class);
         blankFragmentBinding.slDemo.startShimmerAnimation();
@@ -129,7 +141,7 @@ public class BlankFragment extends BaseFragment implements Common, MyNextVisitCl
     private void setFragment(Fragment fragment) {
         if (getActivity() != null)
             getActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fm_edit_container, fragment).addToBackStack(null).commitAllowingStateLoss();
+                    .add(R.id.fm_edit_container, fragment).addToBackStack(null).commit();
     }
 
     @Override
@@ -152,13 +164,11 @@ public class BlankFragment extends BaseFragment implements Common, MyNextVisitCl
         if (getActivity() != null) {
             if (ConnectivityReceiver.isNetworkAvailable(getActivity())) {
                 try {
-//                    showDialog();  // 5633D002-F453-402E-AD63-AAECA11452B5    15C7E260-5818-41AB-A3E7-F6C90F648A1D
                     mViewModel.getClientBookingList(getSessionManager().getPersonId(),
                             getSessionManager().getBranchId(),
                             getSessionManager().getCustomerId()).observe(this, new Observer<ClientBookingScreenModel>() {
                         @Override
                         public void onChanged(ClientBookingScreenModel clientBookingListModel) {
-//                            hideDialog();
                             if (clientBookingListModel != null) {
                                 clientBookingModel = clientBookingListModel;
                                 getSessionManager().setBookingId(clientBookingModel.getBookingId());
@@ -166,39 +176,28 @@ public class BlankFragment extends BaseFragment implements Common, MyNextVisitCl
                                 blankFragmentBinding.setClientBookingScreenModel(clientBookingListModel);
                                 if (clientBookingListModel.getImageString() != null && !clientBookingListModel.getImageString().equalsIgnoreCase("") && !clientBookingListModel.getImageString().equalsIgnoreCase("null"))
                                     blankFragmentBinding.imgVisitPerson.setImageBitmap(ImageFromBase64(clientBookingListModel.getImageString()));
+                                getClientTask();
                                 setDataOriginal();
                             } else {
                                 setNoDataFound();
-                                //getDataFromRoom();
                             }
 
                         }
                     });
                 } catch (Exception e) {
                     hideDialog();
+                    getClientTask();
                     getDataFromRoom();
                     Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
                 }
             } else {
-//                Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
+                getClientTask();
                 getDataFromRoom();
             }
         }
     }
 
-/*    @Override
-    public void onResume() {
-        super.onResume();
-        if (ConnectivityReceiver.isNetworkAvailable(getActivity())) {
-                    // do Nothing
-        }
-        else{
-            getDataFromRoom();
-        }
-        }*/
-
     private void getDataFromRoom() {
-
         mViewModel.getDataFromLocal(getActivity(), getSessionManager().getBookingId()).observe(this, new Observer<ClientBookingScreenModel>() {
             @Override
             public void onChanged(ClientBookingScreenModel clientBookingScreenModel) {
@@ -209,6 +208,7 @@ public class BlankFragment extends BaseFragment implements Common, MyNextVisitCl
                     blankFragmentBinding.setClientBookingScreenModel(clientBookingScreenModel);
                     if (clientBookingScreenModel.getImageString() != null && !clientBookingScreenModel.getImageString().equalsIgnoreCase("") && !clientBookingScreenModel.getImageString().equalsIgnoreCase("null"))
                         blankFragmentBinding.imgVisitPerson.setImageBitmap(ImageFromBase64(clientBookingScreenModel.getImageString()));
+                    getClientTask();
                     setDataOriginal();
                 } else {
                     Toast.makeText(getActivity(), "please check your internet connection", Toast.LENGTH_SHORT).show();
@@ -304,11 +304,56 @@ public class BlankFragment extends BaseFragment implements Common, MyNextVisitCl
 
     // navigating user to app settings
     private void openSettings() {
+        if (getActivity() == null)
+            return;
+
         Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
         Uri uri = Uri.fromParts("package", getActivity().getPackageName(), null);
         intent.setData(uri);
         startActivityForResult(intent, 101);
     }
 
+    private void getClientTask() {
+        if (getActivity() == null)
+            return;
+        try {
+            if (ConnectivityReceiver.isNetworkAvailable(getActivity())) {
+                showDialog();
+                getClientTasks();
+            } else {
+                getDataFromRoom();
+            }
+        } catch (Exception e) {
+            getDataFromRoom();
+        }
+    }
 
+
+    private void getClientTasks() {
+        mViewModel.getClientTasks(getSessionManager().getCustomerId(),
+                getSessionManager().getBranchId(),
+                getSessionManager().getClientId()).observe(this, new Observer<ArrayList<Tasks>>() {
+            @Override
+            public void onChanged(ArrayList<Tasks> clientsTasks) {
+                hideDialog();
+                if (clientsTasks != null) {
+                    getSessionManager().setClientTasks(new Gson().toJson(clientsTasks));
+                } else {
+                    getDataFromRoomClick();
+                }
+            }
+        });
+    }
+
+    private void getDataFromRoomClick() {
+        mViewModel.getDataFromLocalClientTask(getActivity(), getSessionManager().getBookingId()).observe(this, new Observer<ArrayList<Tasks>>() {
+            @Override
+            public void onChanged(ArrayList<Tasks> clientsTasks) {
+                hideDialog();
+                if (clientsTasks != null) {
+                    getSessionManager().setClientTasks(new Gson().toJson(clientsTasks));
+                }
+            }
+        });
+    }
 }

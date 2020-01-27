@@ -30,6 +30,7 @@ import css.mobile.carescheduling.Ui.HomeScreen.presenter.IArrivalAndDepartureCli
 import css.mobile.carescheduling.Ui.Profile.View.EditProfile;
 import css.mobile.carescheduling.Utils.ConnectivityReceiver;
 import css.mobile.carescheduling.databinding.ArrivalAndDepartureFragmentBinding;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -148,7 +149,6 @@ public class ArrivalAndDepartureFragment extends BaseFragment implements Common,
 //        getEmployeeClientVisitForDepartureRetro();
 
 
-
         if (getActivity() != null && ConnectivityReceiver.isNetworkAvailable(getActivity())) {
             showDialog();
             mViewModel.getEmployeeClientVisitForDeparture(getEmployeeClientVisitForDepartureRetro()).observe(this, new Observer<Boolean>() {
@@ -184,11 +184,24 @@ public class ArrivalAndDepartureFragment extends BaseFragment implements Common,
                     hideDialog();
                     if (s != null) {
                         getSessionManager().setClientVisitId(s);
-                        if (getActivity() != null)
-                            getActivity().finish();
-                        Intent intent = new Intent(getActivity(), EditProfile.class);
-                        intent.putExtra("pos", 0);
-                        startActivity(intent);
+                        if (getActivity() != null) {
+                            int fragments = getActivity().getSupportFragmentManager().getBackStackEntryCount();
+                            Log.e("FragmentCount", "" + fragments);
+                            if (type.equalsIgnoreCase("Arrival")) {
+                                /*for (int i = 0; i < fragments - 2; i++) {
+                                    Log.e("FragmentCount", i + " " + fragments);
+                                    getActivity().getSupportFragmentManager().popBackStack();
+                                }*/
+                                getActivity().onBackPressed();
+                            } else {
+                                getActivity().finish();
+                                Intent intent = new Intent(getActivity(), EditProfile.class);
+                                intent.putExtra("pos", 0);
+                                startActivity(intent);
+                            }
+                        }
+
+//
                     }
 
                 }
@@ -233,7 +246,8 @@ public class ArrivalAndDepartureFragment extends BaseFragment implements Common,
         employeeClientVisitForDepartureRetro.setVisitNoteText(noteText);
         if (getSessionManager().getClientTasks() != null)
             employeeClientVisitForDepartureRetro.setClientVisitTaskList(getTaskList());
-
+        else
+            employeeClientVisitForDepartureRetro.setClientVisitTaskList(null);
 
         return employeeClientVisitForDepartureRetro;
     }
@@ -249,7 +263,7 @@ public class ArrivalAndDepartureFragment extends BaseFragment implements Common,
                 clientVisitTaskList.setTaskId(tasksArrayList.get(i).getTaskId());
                 clientVisitTaskList.setTaskIsCompleted(tasksArrayList.get(i).isCompleted());
 
-                Log.e("TASK_LIST","  "+clientVisitTaskList.getNoteText());
+                Log.e("TASK_LIST", "  " + clientVisitTaskList.getNoteText());
                 list.add(clientVisitTaskList);
             }
         }

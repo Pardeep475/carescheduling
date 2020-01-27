@@ -5,8 +5,10 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import css.mobile.carescheduling.R;
+import css.mobile.carescheduling.Ui.HomeScreen.View.ArrivalAndDepartureFragment;
 import css.mobile.carescheduling.Ui.HomeScreen.View.BlankFragment;
 import css.mobile.carescheduling.Ui.HomeScreen.View.DirectionsFragment;
 import css.mobile.carescheduling.Ui.HomeScreen.View.HoursAndExspenses;
@@ -38,7 +40,7 @@ public class EditProfile extends AppCompatActivity {
     private void setHomeFragments(int pos) {
         switch (pos) {
             case 0: {
-                setFragment(BlankFragment.newInstance());
+                addFragment(BlankFragment.newInstance());
                 break;
             }
             case 1: {
@@ -69,17 +71,36 @@ public class EditProfile extends AppCompatActivity {
 
     private void setFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fm_edit_container, fragment).addToBackStack(null).commitAllowingStateLoss();
+                .add(R.id.fm_edit_container, fragment).addToBackStack(null).commit();
+    }
+
+    private void addFragment(Fragment fragment) {
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fm_edit_container, fragment).addToBackStack(null).commit();
     }
 
     @Override
     public void onBackPressed() {
-
         int fragmentCount = getSupportFragmentManager().getBackStackEntryCount();
-
-        if (fragmentCount > 1)
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fm_edit_container);
+        if (fragment instanceof ArrivalAndDepartureFragment) {
+            for (int i = 0; i < fragmentCount - 1; i++) {
+                Log.e("FragmentCount", "" + fragmentCount);
+                getSupportFragmentManager().popBackStackImmediate();
+            }
+        } else if (fragmentCount > 1) {
             getSupportFragmentManager().popBackStack();
-        else
+        } else {
             finish();
+        }
+    }
+
+
+    public void setOnBackPressed() {
+
+    }
+
+    public interface CustomOnBackPressed {
+        void onBackPressedCustom();
     }
 }

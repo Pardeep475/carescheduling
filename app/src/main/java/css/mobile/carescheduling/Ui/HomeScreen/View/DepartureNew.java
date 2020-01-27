@@ -99,7 +99,7 @@ public class DepartureNew extends BaseFragment implements IDepartureNewFragmentC
     private void setFragment(Fragment fragment) {
         if (getActivity() != null)
             getActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fm_edit_container, fragment).addToBackStack(null).commitAllowingStateLoss();
+                    .add(R.id.fm_edit_container, fragment).addToBackStack(null).commit();
     }
 
 

@@ -96,8 +96,8 @@ public class ClientInfoNotesFragment extends BaseFragment implements Common {
 
                     setDataOriginal();
                 } else {
-//                    setNoDataFound();
-                    getDataFromRoom();
+                    setNoDataFound();
+//                    getDataFromRoom();
                 }
                 clientInfoNotesFragmentBinding.slDemo.stopShimmerAnimation();
             }

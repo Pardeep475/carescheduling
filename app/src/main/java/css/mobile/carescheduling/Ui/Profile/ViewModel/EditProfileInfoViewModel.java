@@ -95,7 +95,7 @@ public class EditProfileInfoViewModel extends AndroidViewModel {
             editProfileInfoBean.setFirstName(checkIsNotNull(data.getFirstName()));
             editProfileInfoBean.setMiddleName(checkIsNotNull(data.getMiddleName()));
             editProfileInfoBean.setSurName(checkIsNotNull(data.getSurName()));
-            editProfileInfoBean.setMaidenName(checkIsNotNull(data.getFirstName()));
+            editProfileInfoBean.setMaidenName(checkIsNotNull(data.getMaidenName()));
             editProfileInfoBean.setGender(checkIsNotNull(data.getGenderTypeName()));
             editProfileInfoBean.setPrefix(checkIsNotNull(data.getPrefixTypeName()));
             editProfileInfoBean.setLanguage(checkIsNotNull(data.getLanguageName()));

@@ -128,14 +128,13 @@ private ClientBookingScreenModel clientBookingModel;
             }
 
         }
-        Toast.makeText(getActivity(), "" + pos, Toast.LENGTH_SHORT).show();
     }
 
 
     private void setFragment(Fragment fragment) {
         if (getActivity() != null)
             getActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fm_edit_container, fragment).addToBackStack(null).commitAllowingStateLoss();
+                    .add(R.id.fm_edit_container, fragment).addToBackStack(null).commit();
     }
 
     @Override
